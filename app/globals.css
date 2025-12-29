@@ -67,7 +67,9 @@
  --spacing: 0.25rem;
  /* website */
  --website-mobile-nav-zindex: 100;
- --website-mobile-height: 4rem;
+ --website-mobile-nav-height: 4rem;
+ --website-header-zindex: 100;
+ --website-header-height: 4rem;
 }
 
 .dark {
