@@ -1,4 +1,6 @@
 import MobileNav from './components/mobile-nav/MobileNav';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
 import ShareDictionaryProvider from './services/share-dictionary/ShareDictionaryProvider';
 import { getShareDictionary } from '@/internalization/app/dictionaries/website/share/dictionary';
 import { getMetaDictionary } from '@/internalization/app/dictionaries/meta/dictionary';
@@ -18,8 +20,10 @@ export default async function WebsiteLayout({
  return (
   <ShareDictionaryProvider metaDictionary={metaDic} shareDictionary={shareDic}>
    <div>
+    <Header />
     {children}
     <MobileNav />
+    <Footer />
    </div>
   </ShareDictionaryProvider>
  );
