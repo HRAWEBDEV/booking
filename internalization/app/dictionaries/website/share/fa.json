@@ -1,6 +1,16 @@
 {
  "title": "share dictionary",
+ "system": {
+  "modes": {
+   "light": "حالت روز",
+   "dark": "حالت شب",
+   "system": "سیستمی"
+  }
+ },
  "component": {
+  "modeController": {
+   "description": "تغییر حالت"
+  },
   "mobileNav": {
    "home": "خــانه",
    "newReserve": "رزرو جدید",
