@@ -40,7 +40,7 @@ function ModeControllerButton() {
    type='button'
    variant='outline'
    size='icon-lg'
-   className='rounded-full'
+   className='rounded-full text-neutral-700 dark:text-neutral-400'
   >
    {getModeIcon(theme as AppModes, { className: 'size-5' })}
   </Button>

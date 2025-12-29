@@ -30,7 +30,7 @@ function LocaleControllerButton() {
    type='button'
    variant='outline'
    size='icon-lg'
-   className='relative rounded-full'
+   className='relative rounded-full text-neutral-700 dark:text-neutral-400'
   >
    <div className='absolute -top-1 -end-2'>
     <Badge variant='secondary' className='p-1 rounded-full size-6'>
