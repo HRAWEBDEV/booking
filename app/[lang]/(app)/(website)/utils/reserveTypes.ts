@@ -12,19 +12,19 @@ const reserveTypes: Record<ReserveType, ReserveTypeInfo> = {
  },
  flights: {
   title: 'flights',
-  active: true,
+  active: false,
  },
  train: {
   title: 'train',
-  active: true,
+  active: false,
  },
  bus: {
   title: 'bus',
-  active: true,
+  active: false,
  },
  car: {
   title: 'car',
-  active: true,
+  active: false,
  },
 } as const;
 
