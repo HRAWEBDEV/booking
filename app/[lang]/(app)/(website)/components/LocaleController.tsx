@@ -46,7 +46,7 @@ function LocaleControllerButton() {
    <div className='hidden lg:block'>
     <DropdownMenu dir={localeInfo.contentDirection}>
      <DropdownMenuTrigger asChild>{modeButton}</DropdownMenuTrigger>
-     <DropdownMenuContent align='start' className='w-40'>
+     <DropdownMenuContent align='end' className='w-40'>
       <DropdownMenuLabel className='hidden'></DropdownMenuLabel>
       <DropdownMenuGroup>
        {Object.values(locales).map((locale) => (
