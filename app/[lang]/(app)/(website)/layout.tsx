@@ -1,3 +1,26 @@
-export default function WebsiteLayout({ children }: LayoutProps<'/[lang]'>) {
- return <div>{children}</div>;
+import MobileNav from './components/mobile-nav/MobileNav';
+import ShareDictionaryProvider from './services/share-dictionary/ShareDictionaryProvider';
+import { getShareDictionary } from '@/internalization/app/dictionaries/website/share/dictionary';
+import { getMetaDictionary } from '@/internalization/app/dictionaries/meta/dictionary';
+import { Locale } from '@/internalization/app/localization';
+
+export default async function WebsiteLayout({
+ children,
+ params,
+}: LayoutProps<'/[lang]'>) {
+ const { lang } = await params;
+ const metaDic = await getMetaDictionary({
+  locale: lang as Locale,
+ });
+ const shareDic = await getShareDictionary({
+  locale: lang as Locale,
+ });
+ return (
+  <ShareDictionaryProvider metaDictionary={metaDic} shareDictionary={shareDic}>
+   <div>
+    {children}
+    <MobileNav />
+   </div>
+  </ShareDictionaryProvider>
+ );
 }

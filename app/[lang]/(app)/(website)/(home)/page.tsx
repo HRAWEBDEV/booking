@@ -1,3 +1,3 @@
 export default function WebsitePage() {
- return <div>website page</div>;
+ return <div>home page</div>;
 }
