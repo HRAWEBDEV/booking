@@ -19,7 +19,7 @@ export default function ReservePickerTypes() {
       data-active={i === 0}
       variant='ghost'
       key={reserveType}
-      className='cursor-pointer bg-background text-primary dark:bg-background data-[active="true"]:bg-amber-200 h-auto w-auto flex-col md:min-h-24 md:min-w-24'
+      className='cursor-pointer bg-background text-primary dark:bg-background data-[active="true"]:bg-amber-200 data-[active="true"]:dark:bg-slate-800 h-auto w-auto flex-col md:min-h-24 md:min-w-24'
      >
       {getReserveTypeIcon(reserveType, {
        className: 'size-6 md:size-8',
