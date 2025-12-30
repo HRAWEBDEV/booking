@@ -12,16 +12,17 @@ export default function ReservePickerTypes() {
  } = useShareDictionary();
  return (
   <div className='grid grid-cols-5 md:flex gap-1 mb-1'>
-   {reserveTypesList.map((reserveType) => {
+   {reserveTypesList.map((reserveType, i) => {
     const reserveTypeInfo = getReserveTypeInfo(reserveType);
     return (
      <Button
-      variant='outline'
+      data-active={i === 0}
+      variant='ghost'
       key={reserveType}
-      className='cursor-pointer bg-background dark:bg-background h-auto w-auto flex-col md:min-h-24 md:min-w-24'
+      className='cursor-pointer bg-background text-primary dark:bg-background data-[active="true"]:bg-amber-200 h-auto w-auto flex-col md:min-h-24 md:min-w-24'
      >
       {getReserveTypeIcon(reserveType, {
-       className: 'size-6 md:size-8 text-primary',
+       className: 'size-6 md:size-8',
       })}
       <span className='font-medium text-neutral-700 dark:text-neutral-400'>
        {reserveTypes[reserveType]}

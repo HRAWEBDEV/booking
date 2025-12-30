@@ -12,7 +12,7 @@ const reserveTypes: Record<ReserveType, ReserveTypeInfo> = {
  },
  flights: {
   title: 'flights',
-  active: false,
+  active: true,
  },
  train: {
   title: 'train',
