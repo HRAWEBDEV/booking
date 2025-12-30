@@ -11,7 +11,7 @@ export default function ReservePickerTypes() {
   },
  } = useShareDictionary();
  return (
-  <div className='grid grid-cols-5 md:flex gap-1 mb-1 w-[min(100%,var(--website-container-max-width))] mx-auto'>
+  <div className='grid grid-cols-5 md:flex gap-1 mb-1'>
    {reserveTypesList.map((reserveType) => {
     const reserveTypeInfo = getReserveTypeInfo(reserveType);
     return (
