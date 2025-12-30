@@ -5,6 +5,7 @@ export default function HomeLayout({ children }: LayoutProps<'/[lang]'>) {
  return (
   <div>
    <Hero />
+   <ReservePicker />
    {children}
   </div>
  );
