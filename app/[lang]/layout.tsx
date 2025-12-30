@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '../globals.css';
+import 'keen-slider/keen-slider.min.css';
 import ReactQueryProvider from '@/services/react-query/ReactQueryProvider';
 import BaseConfigProvider from '@/services/base-config/BaseConfigProvider';
 import {
