@@ -34,7 +34,13 @@ export default function CitiesHotelsSection({
     {Array.from({ length: 6 }, (_, i) => i).map((i) => (
      <div key={i} className='keen-slider__slide number-slide1'>
       <Link href='#' className='flex flex-col gap-2'>
-       <div className='h-52 border border-input rounded-md'></div>
+       <div className='h-52 border border-input rounded-md overflow-hidden'>
+        <img
+         alt='city'
+         src='/images/qeshm.avif'
+         className='w-full h-full object-center object-cover'
+        />
+       </div>
        <p className='text-center font-medium text-base text-neutral-700 dark:text-neutral-400'>
         همدان
        </p>
