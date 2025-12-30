@@ -1,3 +1,9 @@
+import HotelHomePageWrapper from '../hotel/components/HotelHomePageWrapper';
+
 export default function WebsitePage() {
- return <div>home page</div>;
+ return (
+  <div>
+   <HotelHomePageWrapper />
+  </div>
+ );
 }
