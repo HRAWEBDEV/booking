@@ -14,8 +14,16 @@
    "car": "سواری"
   }
  },
-
  "component": {
+  "reservePicker": {
+   "hotelReserveFrom": {
+    "destination": "مقصد",
+    "exampleDestination": "برای مثال تهران",
+    "fromDate": "از تاریخ",
+    "toDate": "تا تاریخ",
+    "search": "جستجو"
+   }
+  },
   "modeController": {
    "description": "تغییر حالت"
   },
