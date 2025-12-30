@@ -70,6 +70,8 @@
  --website-mobile-nav-height: 4rem;
  --website-header-zindex: 30;
  --website-header-height: 4rem;
+ --website-container-max-width: 70rem;
+ --website-hero-height: 18rem;
 }
 
 [data-theme='dark'] {

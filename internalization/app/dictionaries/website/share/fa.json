@@ -5,8 +5,16 @@
    "light": "حالت روز",
    "dark": "حالت شب",
    "system": "سیستمی"
+  },
+  "reserveTypes": {
+   "hotel": "هتل",
+   "flights": "پرواز",
+   "train": "قطار",
+   "bus": "اتوبوس",
+   "car": "سواری"
   }
  },
+
  "component": {
   "modeController": {
    "description": "تغییر حالت"

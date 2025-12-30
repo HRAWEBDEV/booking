@@ -19,7 +19,7 @@ export default async function WebsiteLayout({
  });
  return (
   <ShareDictionaryProvider metaDictionary={metaDic} shareDictionary={shareDic}>
-   <div>
+   <div className='h-svh bg-neutral-100 dark:bg-neutral-900'>
     <Header />
     {children}
     <MobileNav />
