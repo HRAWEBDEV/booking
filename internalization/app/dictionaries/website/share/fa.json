@@ -15,6 +15,13 @@
   }
  },
  "component": {
+  "header": {
+   "headerNav": {
+    "support": "پشتیبانی",
+    "checkReserve": "پیگیری رزرو",
+    "aboutReserveOnline": "درباره رزرو آنلاین"
+   }
+  },
   "reservePicker": {
    "hotelReserveFrom": {
     "destination": "مقصد",
