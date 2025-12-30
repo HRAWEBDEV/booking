@@ -3,6 +3,7 @@ import { type HotelHomePageDictionary } from '@/internalization/app/dictionaries
 import { useKeenSlider } from 'keen-slider/react';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import Link from 'next/link';
+import { FaStar } from 'react-icons/fa6';
 import { Badge } from '@/components/ui/badge';
 
 export default function TrendHotelsSection({
@@ -43,6 +44,17 @@ export default function TrendHotelsSection({
         />
        </div>
        <div className='p-2'>
+        <div className='mb-1'>
+         <div className='flex gap-1 text-neutral-200 dark:text-neutral-800'>
+          {Array.from({ length: 5 }, (_, i) => i).map((i) => (
+           <FaStar
+            data-active={i <= 3}
+            key={i}
+            className='size-4 data-[active="true"]:text-orange-400 data-[active="true"]:dark:text-orange-800'
+           />
+          ))}
+         </div>
+        </div>
         <div className='mb-2'>
          <h3 className='font-medium text-base mb-1'>هتل آریا کیش</h3>
          <p className='text-xs text-neutral-600 dark:text-neutral-400'>
@@ -61,7 +73,9 @@ export default function TrendHotelsSection({
           </span>
          </div>
          <div>
-          <Badge variant='secondary'>۲۵٪ {dic.trendSections.discount}</Badge>
+          <Badge variant='secondary'>
+           {dic.trendSections.to} ۲۵٪ {dic.trendSections.discount}
+          </Badge>
          </div>
         </div>
        </div>
