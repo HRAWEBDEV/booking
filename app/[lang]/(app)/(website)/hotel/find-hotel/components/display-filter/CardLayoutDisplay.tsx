@@ -25,7 +25,7 @@ export default function CardLayoutDisplay({ dic }: { dic: ShareDictionary }) {
     >
      <TableProperties
       strokeWidth={1.6}
-      className='text-gray-400 group-hover:text-active-red/80 dark:text-gray-600 dark:group-hover:text-active-red/80'
+      className='text-gray-400 group-hover:text-active-red/80 dark:text-gray-600 dark:group-hover:text-active-red/80 rotate-180'
      />
     </Button>
    </div>
