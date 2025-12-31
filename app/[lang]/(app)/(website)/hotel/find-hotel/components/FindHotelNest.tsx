@@ -18,7 +18,7 @@ export default function FindHotelNest() {
        className='text-right text-gray-400 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 font-normal'
        href='../../'
       >
-       خانه
+       صفحه اصلی
       </BreadcrumbLink>
      </BreadcrumbItem>
      <BreadcrumbSeparator>
