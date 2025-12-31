@@ -2,6 +2,7 @@ import HeaderProfile from './HeaderProfile';
 import HeaderLogo from '../HeaderLogo';
 import HeaderNav from './HeaderNav';
 import { LocaleControllerButton } from '../LocaleController';
+import { ModeControllerButton } from '../ModeContoller';
 
 export default function Header() {
  return (
@@ -11,6 +12,7 @@ export default function Header() {
     <HeaderNav />
     <div className='flex gap-2 lg:gap-4 items-center'>
      <LocaleControllerButton />
+     <ModeControllerButton />
      <HeaderProfile />
     </div>
    </div>

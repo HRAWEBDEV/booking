@@ -38,7 +38,7 @@ function ModeControllerButton() {
  const modeButton = (
   <Button
    type='button'
-   variant='outline'
+   variant='ghost'
    size='icon-lg'
    className='rounded-full text-neutral-700 dark:text-neutral-400'
   >
