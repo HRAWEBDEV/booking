@@ -1,7 +1,18 @@
-import FindHotelNest from '@/app/[lang]/(app)/(website)/hotel/find-hotel/components/FindHotelNest';
-
-export default function FindHotelPage() {
- return <FindHotelNest />;
+import FindHotelNest from '@/app/[lang]/(app)/(website)/hotel/find-hotel/components/find-hotel-nest/FindHotelNest';
+import DisplayFilters from '@/app/[lang]/(app)/(website)/hotel/find-hotel/components/display-filter/DisplayFilters';
+import { getShareDictionary } from '@/internalization/app/dictionaries/share/dictionary';
+import { type Locale } from '@/internalization/app/localization';
+export default async function FindHotelPage(
+ props: PageProps<'/[lang]/hotel/find-hotel'>
+) {
+ const { lang } = await props.params;
+ const dic = await getShareDictionary({ locale: lang as Locale });
+ return (
+  <div className='flex flex-col gap-4'>
+   <FindHotelNest />
+   <DisplayFilters dic={dic} />
+  </div>
+ );
 }
 
 // 1. breadcrumbs -> static now / from query params later

@@ -1,3 +1,16 @@
 {
- "title": "share dictionary"
+ "title": "share dictionary",
+
+ "find_hotel": {
+  "filters": {
+   "display_sort_title": "فیلتر نمایش :",
+   "display_sort_buttons": {
+    "default": "پیشفرض",
+    "lowest_price": "کمترین قیمت",
+    "highest_price": "بیشترین قیمت",
+    "highest_rating": "بالاترین امتیاز"
+   },
+   "display_grid_title": "حالت نمایش :"
+  }
+ }
 }
