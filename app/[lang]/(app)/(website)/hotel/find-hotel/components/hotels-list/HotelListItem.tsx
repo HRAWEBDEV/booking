@@ -64,19 +64,20 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
     </div>
    </CardHeader>
    <CardContent className='px-4 flex flex-col gap-4'>
-    <div className='flex items-center justify-between'>
-     <span className='flex items-center justify-ceter gap-1'>
-      {Array.from({ length: 5 }, (_, i) => i).map((i) => (
-       <Star key={i} size={12} fill='#ed6c02' stroke='#ed6c02' />
-      ))}
-     </span>
-     <div></div>
-    </div>
-    <h3 className='font-semibold text-lg'>{dic.hotelCard.mockTitle}</h3>
-    <div>
-     <p className='text-sm text-muted-foreground'>
-      {dic.hotelCard.mockLocation}
-     </p>
+    <div className='flex flex-col gap-2'>
+     <div className='flex items-center justify-between'>
+      <span className='flex items-center justify-ceter gap-1'>
+       {Array.from({ length: 5 }, (_, i) => i).map((i) => (
+        <Star key={i} size={12} fill='#ed6c02' stroke='#ed6c02' />
+       ))}
+      </span>
+     </div>
+     <h3 className='font-semibold text-lg'>{dic.hotelCard.mockTitle}</h3>
+     <div>
+      <p className='text-sm text-muted-foreground'>
+       {dic.hotelCard.mockLocation}
+      </p>
+     </div>
     </div>
     <div className='flex items-center gap-2 flex-wrap'>
      {dic?.hotelCard?.mockAmentities?.slice(0, 3).map((item, index) => (
