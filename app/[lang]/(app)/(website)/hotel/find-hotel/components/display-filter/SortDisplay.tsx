@@ -1,32 +1,30 @@
 import { Button } from '@/components/ui/button';
-import { ShareDictionary } from '@/internalization/app/dictionaries/share/dictionary';
+import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 
-export default function SortDisplay({ dic }: { dic: ShareDictionary }) {
+export default function SortDisplay({ dic }: { dic: FindHotelDictionary }) {
  return (
   <div className='flex items-center justify-center gap-2'>
-   <span className='text-sm font-medium'>
-    {dic.find_hotel.filters.display_sort_title}
-   </span>
+   <span className='text-sm font-medium'>{dic.filters.displaySortTitle}</span>
    <div className='flex items-center justify-center gap-4'>
     <Button
      className={`bg-transparent border-none hover:bg-transparent p-0! text-gray-400 hover:text-active-red/80 dark:text-gray-600 dark:hover:text-active-red/80 font-normal text-xs cursor-pointer transition-colors`}
     >
-     {dic.find_hotel.filters.display_sort_buttons.default}
+     {dic.filters.displaySortButtons.default}
     </Button>
     <Button
      className={`bg-transparent border-none hover:bg-transparent p-0! text-gray-400 hover:text-active-red/80 dark:text-gray-600 dark:hover:text-active-red/80 font-normal text-xs cursor-pointer transition-colors`}
     >
-     {dic.find_hotel.filters.display_sort_buttons.lowest_price}
+     {dic.filters.displaySortButtons.lowestPrice}
     </Button>
     <Button
      className={`bg-transparent border-none hover:bg-transparent p-0! text-gray-400 hover:text-active-red/80 dark:text-gray-600 dark:hover:text-active-red/80 font-normal text-xs cursor-pointer transition-colors`}
     >
-     {dic.find_hotel.filters.display_sort_buttons.highest_price}
+     {dic.filters.displaySortButtons.highestPrice}
     </Button>
     <Button
      className={`bg-transparent border-none hover:bg-transparent p-0! text-gray-400 hover:text-active-red/80 dark:text-gray-600 dark:hover:text-active-red/80 font-normal text-xs cursor-pointer transition-colors`}
     >
-     {dic.find_hotel.filters.display_sort_buttons.highest_rating}
+     {dic.filters.displaySortButtons.highestRating}
     </Button>
    </div>
   </div>

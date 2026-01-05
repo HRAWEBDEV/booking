@@ -11,10 +11,10 @@ import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { ImageMinus, Star } from 'lucide-react';
-import { ShareDictionary } from '@/internalization/app/dictionaries/share/dictionary';
 import { Badge } from '@/components/ui/badge';
+import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 
-export default function HotelListItem({ dic }: { dic: ShareDictionary }) {
+export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
  const { localeInfo } = useBaseConfig();
  const [currentSlide, setCurrentSlide] = useState(0);
  const [slidesCount, setSlidesCount] = useState(0);
@@ -60,9 +60,7 @@ export default function HotelListItem({ dic }: { dic: ShareDictionary }) {
    </CardHeader>
    <CardContent className=''>
     <div className='flex items-center justify-between'>
-     <span className='font-medium text-md'>
-      {dic.find_hotel.hotel_card.mock_title}
-     </span>
+     <span className='font-medium text-md'>{dic.hotelCard.mockTitle}</span>
      <span className='flex items-center justify-center gap-1'>
       {Array.from({ length: 5 }, (_, i) => i).map((i) => (
        <Star key={i} size={16} fill='#ed6c02' stroke='#ed6c02' />
@@ -71,38 +69,36 @@ export default function HotelListItem({ dic }: { dic: ShareDictionary }) {
     </div>
     <div className='py-2'>
      <span className='text-sm text-muted-foreground'>
-      {dic.find_hotel.hotel_card.mock_location}
+      {dic.hotelCard.mockLocation}
      </span>
     </div>
     <div className='flex items-center gap-2 flex-wrap'>
-     {dic?.find_hotel?.hotel_card?.mock_amentities
-      ?.slice(0, 3)
-      .map((item, index) => (
-       <Badge
-        key={index}
-        variant='outline'
-        className='p-2 px-4 rounded-lg text-gray-600 dark:text-gray-300'
-       >
-        {item}
-       </Badge>
-      ))}
-     {(dic?.find_hotel?.hotel_card?.mock_amentities?.length ?? 0) > 3 && (
+     {dic?.hotelCard?.mockAmentities?.slice(0, 3).map((item, index) => (
+      <Badge
+       key={index}
+       variant='outline'
+       className='p-2 px-4 rounded-lg text-gray-600 dark:text-gray-300'
+      >
+       {item}
+      </Badge>
+     ))}
+     {(dic?.hotelCard?.mockAmentities?.length ?? 0) > 3 && (
       <Badge
        variant='outline'
        className='p-2 px-4 rounded-lg text-gray-600 dark:text-gray-300'
       >
-       +{(dic?.find_hotel?.hotel_card?.mock_amentities?.length ?? 0) - 3}
+       +{(dic?.hotelCard?.mockAmentities?.length ?? 0) - 3}
       </Badge>
      )}
     </div>
    </CardContent>
    <CardFooter className='gap-2 flex items-center justify-between!'>
     <div className='flex gap-1 items-center w-full'>
-     <span>{dic.find_hotel.hotel_card.from_text}</span>
+     <span>{dic.hotelCard.fromText}</span>
      <span className=''>
-      {dic.find_hotel.hotel_card.mock_base_price}
+      {dic.hotelCard.mockBasePrice}
       <span className='text-xs text-muted-foreground'>
-       / {dic.find_hotel.hotel_card.resident_unit}
+       / {dic.hotelCard.residentUnit}
       </span>
      </span>
     </div>
@@ -110,7 +106,7 @@ export default function HotelListItem({ dic }: { dic: ShareDictionary }) {
      variant='ghost'
      className='text-sm bg-primary rounded-md text-gray-200 hover:text-gray-300 dark:text-gray-600 dark:hover:text-gray-400 hover:bg-primary/90 dark:hover:bg-primary/90 cursor-pointer'
     >
-     {dic.find_hotel.hotel_card.view_more_button}
+     {dic.hotelCard.viewMoreButton}
     </Button>
    </CardFooter>
   </Card>

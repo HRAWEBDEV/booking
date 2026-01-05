@@ -1,12 +1,14 @@
-import { ShareDictionary } from '@/internalization/app/dictionaries/share/dictionary';
 import { Grid3x2, TableProperties } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-export default function CardLayoutDisplay({ dic }: { dic: ShareDictionary }) {
+import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
+export default function CardLayoutDisplay({
+ dic,
+}: {
+ dic: FindHotelDictionary;
+}) {
  return (
   <div className='lg:flex items-center gap-2 hidden'>
-   <span className='text-sm font-medium'>
-    {dic.find_hotel.filters.display_grid_title}
-   </span>
+   <span className='text-sm font-medium'>{dic.filters.displayGridTitle}</span>
    <div className='flex items-center gap-0 transition-colors'>
     <Button
      variant='ghost'

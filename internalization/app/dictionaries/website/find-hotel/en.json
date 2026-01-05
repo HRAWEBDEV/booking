@@ -1,0 +1,53 @@
+{
+ "title": "Hotel Search",
+ "filters": {
+  "displaySortTitle": "Filter Display :",
+  "displaySortButtons": {
+   "default": "Default",
+   "lowestPrice": "Lowest Price",
+   "highestPrice": "Highest Price",
+   "highestRating": "Highest Rating"
+  },
+  "displayGridTitle": "Display Mode :",
+  "sidebar": {
+   "title": "Filters",
+   "searchPlaceholder": "Hotel Name Search",
+   "priceTitle": "Price",
+   "starRatingTitle": "Hotel Star",
+   "bedCountTitle": "Bed Count",
+   "amenitiesTitle": "Hotel Amenities",
+   "applyFilters": "Apply Filters",
+   "clearFilters": "Clear Filters",
+   "starLabels": {
+    "1": "Star 1",
+    "2": "Star 2",
+    "3": "Star 3",
+    "4": "Star 4",
+    "5": "Star 5"
+   },
+   "bedLabels": {
+    "1": "1 Bed",
+    "2": "2 Bed",
+    "3": "3 Bed",
+    "4": "4 Bed",
+    "5": "5+ Bed"
+   }
+  }
+ },
+ "hotelCard": {
+  "mockTitle": "Hotel Dariush Kish",
+  "mockBasePrice": "21,000,000 Toman",
+  "residentUnit": "Night",
+  "mockRating": "5",
+  "fromText": "From",
+  "mockLocation": "Kish, Dariush Field",
+  "mockAmentities": [
+   "Transfer with cost",
+   "Parking",
+   "Hotel",
+   "Lobby",
+   "Transfer with cost"
+  ],
+  "viewMoreButton": "View More"
+ }
+}
