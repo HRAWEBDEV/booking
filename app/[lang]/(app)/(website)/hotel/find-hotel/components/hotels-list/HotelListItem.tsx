@@ -31,11 +31,17 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
 
  return (
   <Card className='w-full! shadow-none pt-0! gap-4'>
-   <CardHeader className='px-0!'>
-    <div ref={sliderRef} className='keen-slider relative'>
+   <CardHeader className='px-0!  relative'>
+    <div
+     ref={sliderRef}
+     className='keen-slider relative overflow-hidden rounded-xl rounded-b-none'
+    >
      {Array.from({ length: 2 }, (_, i) => i).map((i) => (
-      <div key={i} className='keen-slider__slide cursor-pointer'>
-       <div className='h-52 border border-input rounded-xl rounded-b-none overflow-hidden bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
+      <div
+       key={i}
+       className='keen-slider__slide cursor-pointer overflow-hidden'
+      >
+       <div className='h-52 border border-input rounded-xl rounded-b-none bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
         <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
        </div>
       </div>
