@@ -50,9 +50,26 @@
   ],
   "discountBadge": "10% Discount"
  },
+ "searchInputFilter": {
+  "placeholder": "Hotel Name Search"
+ },
+ "priceRangeFilter": {
+  "priceTitle": "Price",
+  "unit": "Toman"
+ },
  "breadCrumb": {
   "home": "Home",
   "hotel": "Hotel",
   "findHotel": "Find Hotel"
+ },
+ "starFilter": {
+  "title": "Hotel Star",
+  "starLabels": {
+   "1": "1 Star",
+   "2": "2 Star",
+   "3": "3 Star",
+   "4": "4 Star",
+   "5": "5 Star"
+  }
  }
 }

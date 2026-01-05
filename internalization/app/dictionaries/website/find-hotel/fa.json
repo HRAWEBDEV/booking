@@ -54,5 +54,22 @@
   "home": "صفحه اصلی",
   "hotel": "رزرو هتل",
   "findHotel": "جستجوی هتل"
+ },
+ "searchInputFilter": {
+  "placeholder": "جستجوی نام هتل"
+ },
+ "priceRangeFilter": {
+  "priceTitle": "قیمت",
+  "unit": "تومان"
+ },
+ "starFilter": {
+  "title": "ستاره هتل",
+  "starLabels": {
+   "1": "۱ ستاره",
+   "2": "۲ ستاره",
+   "3": "۳ ستاره",
+   "4": "۴ ستاره",
+   "5": "۵ ستاره"
+  }
  }
 }
