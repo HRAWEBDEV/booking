@@ -41,7 +41,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
        key={i}
        className='keen-slider__slide cursor-pointer overflow-hidden'
       >
-       <div className='h-52 border border-input rounded-xl rounded-b-none bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
+       <div className='h-60 border border-input rounded-xl rounded-b-none bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
         <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
        </div>
       </div>
@@ -63,7 +63,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
      )}
     </div>
    </CardHeader>
-   <CardContent className=''>
+   <CardContent className='px-4'>
     <div className='flex items-center justify-between'>
      <span className='font-medium text-md'>{dic.hotelCard.mockTitle}</span>
      <span className='flex items-center justify-center gap-1'>
