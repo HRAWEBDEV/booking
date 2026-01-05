@@ -47,8 +47,10 @@ export default function HotelListItem({ dic }: { dic: ShareDictionary }) {
         <button
          key={idx}
          onClick={() => instanceRef.current?.moveToIdx(idx)}
-         className={`size-2.5 border cursor-pointer border-gray-300 rounded-full transition-colors ${
-          currentSlide === idx ? 'bg-white' : 'bg-gray-200/80 hover:bg-white'
+         className={`h-2 border cursor-pointer border-gray-300 rounded-full transition-all ${
+          currentSlide === idx
+           ? 'bg-white w-6'
+           : 'bg-gray-200/80 hover:bg-white w-2'
          }`}
         />
        ))}
