@@ -18,7 +18,7 @@ export default function StarFilters({ dic }: { dic: FindHotelDictionary }) {
     <AccordionTrigger className='cursor-pointer'>
      {dic.starFilter.title}
     </AccordionTrigger>
-    <AccordionContent>
+    <AccordionContent className='pt-2 pb-4'>
      <div className='flex flex-col items-start gap-4'>
       {STAR_RATINGS.map((starCount) => (
        <div key={starCount} className='flex items-center gap-3'>

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import PriceRangeFilter from '../price-range-filter/PriceRangeFilter';
 import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 import StarFilters from '../star-filters/StarFilters';
+import BedFilters from '../bed-filters/BedFilters';
 
 export default function HotelFilters({ dic }: { dic: FindHotelDictionary }) {
  const [currentPriceRange, setCurrentPriceRange] = useState<number[]>([
@@ -28,6 +29,10 @@ export default function HotelFilters({ dic }: { dic: FindHotelDictionary }) {
    <Separator className='text-gray-300 dark:text-gray-600 px-2' />
    <div className='p-4 px-2'>
     <StarFilters dic={dic} />
+   </div>
+   <Separator className='text-gray-300 dark:text-gray-600 px-2' />
+   <div className='p-4 px-2'>
+    <BedFilters dic={dic} />
    </div>
   </div>
  );
