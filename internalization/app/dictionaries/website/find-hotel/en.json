@@ -49,5 +49,10 @@
    "Transfer with cost"
   ],
   "discountBadge": "10% Discount"
+ },
+ "breadCrumb": {
+  "home": "Home",
+  "hotel": "Hotel",
+  "findHotel": "Find Hotel"
  }
 }
