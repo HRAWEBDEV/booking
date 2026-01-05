@@ -27,16 +27,16 @@ export default function HotelListItem({ dic }: { dic: ShareDictionary }) {
    setSlidesCount(slider.track.details.slides.length);
   },
   rtl: localeInfo.contentDirection === 'rtl',
-  slides: { perView: 1, spacing: 0 },
+  slides: { perView: 1, spacing: 16 },
  });
 
  return (
-  <Card className='w-full shadow-none pt-0! gap-4'>
+  <Card className='w-full! shadow-none pt-0! gap-4'>
    <CardHeader className='px-0!'>
     <div ref={sliderRef} className='keen-slider relative'>
      {Array.from({ length: 2 }, (_, i) => i).map((i) => (
       <div key={i} className='keen-slider__slide cursor-pointer'>
-       <div className='h-52 border border-input rounded-lg overflow-hidden bg-gray-200 flex items-center justify-center'>
+       <div className='h-52 border border-input rounded-xl rounded-b-none overflow-hidden bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
         <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
        </div>
       </div>
