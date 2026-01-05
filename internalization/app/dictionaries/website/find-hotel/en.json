@@ -71,5 +71,15 @@
    "4": "4 Star",
    "5": "5 Star"
   }
+ },
+ "bedFilters": {
+  "title": "Bed Count",
+  "bedLabels": {
+   "1": "1 Bed",
+   "2": "2 Bed",
+   "3": "3 Bed",
+   "4": "4 Bed",
+   "5": "5+ Bed"
+  }
  }
 }

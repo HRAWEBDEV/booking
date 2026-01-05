@@ -8,13 +8,19 @@ import PriceRangeFilter from '../price-range-filter/PriceRangeFilter';
 import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 import StarFilters from '../star-filters/StarFilters';
 import BedFilters from '../bed-filters/BedFilters';
+import useStickyScroll from '@/utils/useStickyScroll';
 
 export default function HotelFilters({ dic }: { dic: FindHotelDictionary }) {
  const [currentPriceRange, setCurrentPriceRange] = useState<number[]>([
   500_000, 50_000_000,
  ]);
+ const { containerRef, stickyStyle } = useStickyScroll();
  return (
-  <div className='lg:flex flex-col hidden max-w-[240px] w-full sticky self-start top-4 border rounded-lg flex-1'>
+  <div
+   ref={containerRef}
+   style={stickyStyle}
+   className='lg:flex flex-col hidden max-w-[240px] w-full self-start top-4 border rounded-lg flex-1'
+  >
    <div className='p-4 px-2'>
     <Input type='search' placeholder={dic.searchInputFilter.placeholder} />
    </div>
