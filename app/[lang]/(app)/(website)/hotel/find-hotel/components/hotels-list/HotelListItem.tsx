@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/card';
 import { useKeenSlider } from 'keen-slider/react';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
-import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { ImageMinus, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -102,12 +101,12 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
       </span>
      </span>
     </div>
-    <Button
-     variant='ghost'
-     className='text-sm bg-primary rounded-md text-gray-200 hover:text-gray-300 dark:text-gray-600 dark:hover:text-gray-400 hover:bg-primary/90 dark:hover:bg-primary/90 cursor-pointer'
+    <Badge
+     variant='secondary'
+     className='cursor-pointer text-gray-100 px-2 py-1 dark:text-gray-300 text-xs '
     >
-     {dic.hotelCard.viewMoreButton}
-    </Button>
+     {dic.hotelCard.discountBadge}
+    </Badge>
    </CardFooter>
   </Card>
  );
