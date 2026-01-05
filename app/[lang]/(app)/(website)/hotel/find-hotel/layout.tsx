@@ -12,7 +12,7 @@ export default async function layout({
  params,
 }: {
  children: React.ReactNode;
- params: Promise<{ lang: string }>; // In Next.js 15+, params is a Promise
+ params: Promise<{ lang: string }>;
 }) {
  const { lang } = await params;
  const dic = await getFindHotelDictionary({ locale: lang as Locale });
