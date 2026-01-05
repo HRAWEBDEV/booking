@@ -1,3 +1,4 @@
+'use client';
 import {
  Breadcrumb,
  BreadcrumbItem,
@@ -7,8 +8,10 @@ import {
  BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { ChevronLeft } from 'lucide-react';
-
-export default function FindHotelNest() {
+import { useState } from 'react';
+import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
+export default function FindHotelNest({ dic }: { dic: FindHotelDictionary }) {
+ const [selectedCity] = useState('کیش');
  return (
   <>
    <Breadcrumb className='py-8'>
@@ -18,7 +21,7 @@ export default function FindHotelNest() {
        className='text-right text-gray-400 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 font-normal'
        href='../../'
       >
-       صفحه اصلی
+       {dic.breadCrumb.home}
       </BreadcrumbLink>
      </BreadcrumbItem>
      <BreadcrumbSeparator>
@@ -27,9 +30,9 @@ export default function FindHotelNest() {
      <BreadcrumbItem>
       <BreadcrumbLink
        className='text-right text-gray-400 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 font-normal'
-       href='../'
+       href={`../`}
       >
-       رزرو هتل کیش
+       {dic.breadCrumb.hotel} {selectedCity}
       </BreadcrumbLink>
      </BreadcrumbItem>
      <BreadcrumbSeparator>
@@ -37,7 +40,7 @@ export default function FindHotelNest() {
      </BreadcrumbSeparator>
      <BreadcrumbItem>
       <BreadcrumbPage className='text-right text-ginger'>
-       جستجوی هتل کیش
+       {dic.breadCrumb.findHotel} {selectedCity}
       </BreadcrumbPage>
      </BreadcrumbItem>
     </BreadcrumbList>
