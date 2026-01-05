@@ -65,13 +65,14 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
    </CardHeader>
    <CardContent className='px-4 flex flex-col gap-4'>
     <div className='flex items-center justify-between'>
-     <h3 className='font-semibold text-lg'>{dic.hotelCard.mockTitle}</h3>
-     <span className='flex items-center justify-center gap-1'>
+     <span className='flex items-center justify-ceter gap-1'>
       {Array.from({ length: 5 }, (_, i) => i).map((i) => (
-       <Star key={i} size={16} fill='#ed6c02' stroke='#ed6c02' />
+       <Star key={i} size={12} fill='#ed6c02' stroke='#ed6c02' />
       ))}
      </span>
+     <div></div>
     </div>
+    <h3 className='font-semibold text-lg'>{dic.hotelCard.mockTitle}</h3>
     <div>
      <p className='text-sm text-muted-foreground'>
       {dic.hotelCard.mockLocation}
@@ -97,7 +98,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
      )}
     </div>
    </CardContent>
-   <CardFooter className='gap-2 flex items-center justify-between!'>
+   <CardFooter className='gap-2 flex items-center justify-between! px-4'>
     <div className='flex gap-1 items-center w-full'>
      <span>{dic.hotelCard.fromText}</span>
      <div className='text-lg font-semibold'>
