@@ -5,6 +5,7 @@ export default function HotelWrapper({ dic }: { dic: PreviewHotelDictionary }) {
  return (
   <div>
    <HotelInfo dic={dic} />
+   <div></div>
   </div>
  );
 }
