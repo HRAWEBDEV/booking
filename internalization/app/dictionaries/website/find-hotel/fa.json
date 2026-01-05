@@ -1,0 +1,58 @@
+{
+ "title": "جستجوی هتل",
+ "filters": {
+  "displaySortTitle": "فیلتر نمایش :",
+  "displaySortButtons": {
+   "default": "پیشفرض",
+   "lowestPrice": "کمترین قیمت",
+   "highestPrice": "بیشترین قیمت",
+   "highestRating": "بالاترین امتیاز"
+  },
+  "displayGridTitle": "حالت نمایش :",
+  "sidebar": {
+   "title": "فیلترها",
+   "searchPlaceholder": "جستجوی نام هتل",
+   "priceTitle": "قیمت",
+   "starRatingTitle": "ستاره هتل",
+   "bedCountTitle": "تعداد تخت",
+   "amenitiesTitle": "امکانات هتل",
+   "applyFilters": "اعمال فیلتر ها",
+   "clearFilters": "حذف فیلترها",
+   "starLabels": {
+    "1": "ستاره ۱",
+    "2": "ستاره ۲",
+    "3": "ستاره ۳",
+    "4": "ستاره ۴",
+    "5": "ستاره ۵"
+   },
+   "bedLabels": {
+    "1": "۱ تخت",
+    "2": "۲ تخت",
+    "3": "۳ تخت",
+    "4": "۴ تخت",
+    "5": "۵+ تخت"
+   }
+  }
+ },
+ "hotelCard": {
+  "mockTitle": "هتل داریوش کیش",
+  "mockBasePrice": "21,000,000 تومان",
+  "residentUnit": "شبانه",
+  "mockRating": "5",
+  "fromText": "از",
+  "mockLocation": "کیش، میدان داریوش",
+  "mockAmentities": [
+   "ترانسفر رفت با هزینه",
+   "پارکینگ",
+   "استخر",
+   "لابی",
+   "ترانسفر برگشت با هزینه"
+  ],
+  "discountBadge": "۱۰٪ تخفیف"
+ },
+ "breadCrumb": {
+  "home": "صفحه اصلی",
+  "hotel": "رزرو هتل",
+  "findHotel": "جستجوی هتل"
+ }
+}
