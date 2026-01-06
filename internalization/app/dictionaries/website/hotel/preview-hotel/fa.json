@@ -14,5 +14,12 @@
   "fromDate": "از تاریخ",
   "toDate": "تا تاریخ",
   "search": "جستجو"
+ },
+ "hotelRooms": {
+  "nights": "شب",
+  "person": "نفر",
+  "addRoom": "افزودن اتاق",
+  "viewPricingCalendar": "مشاهده تقویم قیمتی",
+  "discount": "تخفیف"
  }
 }
