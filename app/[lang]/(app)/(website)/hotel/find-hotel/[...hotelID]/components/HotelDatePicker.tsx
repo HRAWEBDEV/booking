@@ -11,11 +11,11 @@ export default function HotelDatePicker({
  return (
   <form className='shadow-lg border border-input p-4 rounded-md mb-2'>
    <div className='mb-2 grid grid-cols-2 gap-4 text-xs font-medium text-neutral-600 pb-2 border-b border-input'>
-    <div className='flex flex-col gap-1 items-center p-1 rounded-md bg-neutral-100'>
+    <div className='flex flex-col gap-1 items-center p-1 rounded-md bg-neutral-100 dark:bg-neutral-900'>
      <span>{dic.hotelDatePicker.arrivalTime}</span>
      <span>12:00</span>
     </div>
-    <div className='flex flex-col gap-1 items-center p-1 rounded-md bg-neutral-100'>
+    <div className='flex flex-col gap-1 items-center p-1 rounded-md bg-neutral-100 dark:bg-neutral-900'>
      <span>{dic.hotelDatePicker.departureTime}</span>
      <span>12:00</span>
     </div>

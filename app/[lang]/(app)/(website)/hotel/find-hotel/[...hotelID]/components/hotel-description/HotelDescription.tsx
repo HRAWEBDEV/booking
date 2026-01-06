@@ -6,24 +6,27 @@ export default function HotelDescription({
  dic: PreviewHotelDictionary;
 }) {
  return (
-  <section id='hotelDescription' className='mb-4 p-4 shadow-md rounded-md'>
+  <section
+   id='hotelDescription'
+   className='mb-4 p-4 shadow-md rounded-md dark:border dark:border-input'
+  >
    <h1 className='text-2xl text-primary font-medium mb-4'>
     <span>هتل کیش</span>
    </h1>
    <div className='mb-2 grid grid-cols-2 md:grid-cols-4 gap-4 font-medium text-sm text-neutral-600 pb-2 border-b border-input'>
-    <div className='flex text-center flex-col gap-1 items-center p-2 rounded-md bg-neutral-100'>
+    <div className='flex text-center flex-col gap-1 items-center p-2 rounded-md bg-neutral-100 dark:bg-neutral-900'>
      <span>{dic.hotelDatePicker.arrivalTime}</span>
      <span>12:00</span>
     </div>
-    <div className='flex text-center flex-col gap-1 items-center p-2 rounded-md bg-neutral-100'>
+    <div className='flex text-center flex-col gap-1 items-center p-2 rounded-md bg-neutral-100 dark:bg-neutral-900'>
      <span>{dic.hotelDatePicker.departureTime}</span>
      <span>12:00</span>
     </div>
-    <div className='flex text-center flex-col gap-1 items-center p-2 rounded-md bg-neutral-100'>
+    <div className='flex text-center flex-col gap-1 items-center p-2 rounded-md bg-neutral-100 dark:bg-neutral-900'>
      <span>{dic.hotelDescription.floors}</span>
      <span>25</span>
     </div>
-    <div className='flex text-center flex-col gap-1 items-center p-2 rounded-md bg-neutral-100'>
+    <div className='flex text-center flex-col gap-1 items-center p-2 rounded-md bg-neutral-100 dark:bg-neutral-900'>
      <span>{dic.hotelDescription.rooms}</span>
      <span>12</span>
     </div>
