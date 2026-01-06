@@ -54,6 +54,7 @@ export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
        src='/images/hotelGallery.jpg'
        alt='hotel image'
        className='h-full w-full object-cover object-center'
+       loading='lazy'
       />
      </div>
     ))}
@@ -87,6 +88,7 @@ export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
         src='/images/hotelGallery.jpg'
         alt='hotel image'
         className='h-full w-full object-cover object-center'
+        loading='lazy'
        />
       </button>
      ))}
