@@ -1,4 +1,5 @@
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
+import { FaLocationDot } from 'react-icons/fa6';
 
 export default function HotelDescription({
  dic,
@@ -10,9 +11,15 @@ export default function HotelDescription({
    id='hotelDescription'
    className='mb-4 p-4 shadow-md rounded-md dark:border dark:border-input'
   >
-   <h1 className='text-2xl text-primary font-medium mb-4'>
+   <h1 className='text-2xl text-primary font-medium mb-2'>
     <span>هتل کیش</span>
    </h1>
+   <div className='text-sm lg:text-[0.9rem] text-neutral-600 dark:text-neutral-400 mb-3'>
+    <FaLocationDot className='inline size-4 text-rose-700 dark:text-rose-400' />
+    <p className='inline ms-2'>
+     لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+    </p>
+   </div>
    <div className='mb-2 grid grid-cols-2 md:grid-cols-4 gap-4 font-medium text-sm text-neutral-600 pb-2 border-b border-input'>
     <div className='flex text-center flex-col gap-1 items-center p-2 rounded-md bg-neutral-100 dark:bg-neutral-900'>
      <span>{dic.hotelDatePicker.arrivalTime}</span>
