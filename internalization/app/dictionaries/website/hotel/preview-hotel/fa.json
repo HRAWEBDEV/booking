@@ -4,6 +4,12 @@
   "star": "ستاره",
   "share": "اشتراک گذاری"
  },
+ "hotelMenuBar": {
+  "hotelFacilities": "امکانات",
+  "rooms": "اتاق‌ها",
+  "hotelDescription": "درباره هتل",
+  "cancelPolicies": "قوانین و مقررات هتل"
+ },
  "hotelDatePicker": {
   "fromDate": "از تاریخ",
   "toDate": "تا تاریخ",

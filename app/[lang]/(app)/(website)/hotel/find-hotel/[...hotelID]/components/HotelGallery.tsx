@@ -36,7 +36,7 @@ export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
   },
  });
  return (
-  <section className='flex flex-col'>
+  <section className='flex flex-col mb-4'>
    <div
     ref={bannerSlideRef}
     className='keen-slider mb-2 overflow-hidden rounded-lg'
