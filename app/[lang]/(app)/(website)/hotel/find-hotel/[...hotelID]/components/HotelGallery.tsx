@@ -7,8 +7,6 @@ import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
  const [activeBannerSliderIndex, setActiveBannderSliderIndex] = useState(0);
  const [bannerSliderCount, setBannerSliderCount] = useState(0);
- const [activeSliderIndex, setActiveSliderIndex] = useState(0);
- const [sliderCount, setSliderCount] = useState(0);
  const { localeInfo } = useBaseConfig();
  const [bannerSlideRef, bannerSliderInstance] = useKeenSlider({
   rtl: localeInfo.contentDirection === 'rtl',
@@ -21,12 +19,6 @@ export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
  });
  const [sliderRef, instanceRef] = useKeenSlider({
   rtl: localeInfo.contentDirection === 'rtl',
-  slideChanged(slider) {
-   setActiveSliderIndex(slider.track.details.rel);
-  },
-  created(slider) {
-   setSliderCount(slider.track.details.length);
-  },
   breakpoints: {
    '(max-width:980px)': {
     slides: {

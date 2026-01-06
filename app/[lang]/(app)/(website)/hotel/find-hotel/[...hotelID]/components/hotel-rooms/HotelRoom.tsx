@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { Button } from '@/components/ui/button';
 import { useKeenSlider } from 'keen-slider/react';
@@ -7,17 +8,25 @@ import { Badge } from '@/components/ui/badge';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 
 export default function HotelRoom({ dic }: { dic: PreviewHotelDictionary }) {
+ const [sliderCount, setSliderCount] = useState(0);
+ const [activeSliderIndex, setActiveSliderIndex] = useState(0);
  const { localeInfo } = useBaseConfig();
- const [bannerSlideRef] = useKeenSlider({
+ const [bannerSlideRef, instanceRef] = useKeenSlider({
   rtl: localeInfo.contentDirection === 'rtl',
+  created(slider) {
+   setSliderCount(slider.track.details.slidesLength);
+  },
+  slideChanged(slider) {
+   setActiveSliderIndex(slider.track.details.rel);
+  },
  });
  return (
   <article className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input'>
    <div
-    className='mb-4 keen-slider rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0'
+    className='mb-4 keen-slider rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative'
     ref={bannerSlideRef}
    >
-    {Array.from({ length: 10 }, (_, i) => i).map((i) => (
+    {Array.from({ length: 3 }, (_, i) => i).map((i) => (
      <div
       className='keen-slider__slide h-56 lg:h-44 rounded-md overflow-hidden'
       key={i}
@@ -29,6 +38,21 @@ export default function HotelRoom({ dic }: { dic: PreviewHotelDictionary }) {
       />
      </div>
     ))}
+    <div className='flex justify-center gap-2 py-3 absolute bottom-0 left-0 right-0'>
+     {Array.from({ length: sliderCount }, (_, i) => i).map((idx) => (
+      <button
+       key={idx}
+       onClick={() => {
+        instanceRef.current?.moveToIdx(idx);
+       }}
+       className={`h-2 border cursor-pointer border-gray-300 rounded-full transition-all ${
+        activeSliderIndex === idx
+         ? 'bg-white w-6'
+         : 'bg-gray-200/80 hover:bg-white w-2'
+       }`}
+      />
+     ))}
+    </div>
    </div>
    <main className='grow mb-2'>
     <h3 className='text-lg font-medium'>اتاق دو تخته دابل</h3>
