@@ -73,8 +73,8 @@ export default function HotelRoom({ dic }: { dic: PreviewHotelDictionary }) {
       <Badge variant='secondary' className='size-7'>
        ۲۵٪
       </Badge>
-      <div className='line-through text-sm text-red-700 dark:text-red-400'>
-       <span className='font-medium'>25,000,000</span>
+      <div className='text-sm text-red-700 dark:text-red-400'>
+       <span className='font-medium line-through'>25,000,000</span>
        <span className='ms-1 text-sm'>ریال</span>
       </div>
      </div>
