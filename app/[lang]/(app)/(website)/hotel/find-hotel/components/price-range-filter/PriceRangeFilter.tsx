@@ -25,35 +25,33 @@ export default function PriceRangeFilter({
     className='w-full '
    >
     <AccordionItem value='item-1' className='border-none'>
-     <AccordionTrigger className='cursor-pointer hover:no-underline py-2 font-semibold text-sm'>
+     <AccordionTrigger className='cursor-pointer hover:no-underline py-2 font-semibold text-base'>
       {dic.priceRangeFilter.priceTitle}
      </AccordionTrigger>
-     <AccordionContent className='pt-2 pb-4'>
+     <AccordionContent className='pt-3 pb-4'>
       <Slider
-       className='py-4 w-full **:data-[slot=slider-thumb]:size-4 cursor-pointer **:data-[slot=slider-range]:bg-blue-500'
+       className='py-4 w-full **:data-[slot=slider-thumb]:size-5 cursor-pointer **:data-[slot=slider-range]:bg-blue-500'
        value={currentPriceRange}
        onValueChange={setCurrentPriceRange}
        min={0}
        max={50_000_000}
        inverted
       />
-      <div className='flex justify-between items-center text-xs text-muted-foreground mt-2'>
-       <div className='flex flex-col items-start'>
+      <div className='flex justify-between items-center text-sm text-muted-foreground mt-3'>
+       <div className='flex flex-col items-start gap-1'>
         <span className='text-muted-foreground/70'>
          {dic.priceRangeFilter.unit}
         </span>
-        <span className='font-medium text-foreground'>
-         {currentPriceRange[0].toLocaleString('fa-IR')}{' '}
-         {dic.priceRangeFilter.unit}
+        <span className='font-medium text-foreground text-base'>
+         {currentPriceRange[0].toLocaleString('fa-IR')}
         </span>
        </div>
-       <div className='flex flex-col items-end'>
+       <div className='flex flex-col items-end gap-1'>
         <span className='text-muted-foreground/70'>
          {dic.priceRangeFilter.unit}
         </span>
-        <span className='font-medium text-foreground'>
-         {currentPriceRange[1].toLocaleString('fa-IR')}{' '}
-         {dic.priceRangeFilter.unit}
+        <span className='font-medium text-foreground text-base'>
+         {currentPriceRange[1].toLocaleString('fa-IR')}
         </span>
        </div>
       </div>

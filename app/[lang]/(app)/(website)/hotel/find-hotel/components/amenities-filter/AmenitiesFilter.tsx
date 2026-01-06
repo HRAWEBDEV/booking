@@ -36,25 +36,29 @@ export default function AmenitiesFilter({ dic }: { dic: FindHotelDictionary }) {
  return (
   <Accordion type='single' collapsible defaultValue='item-1' className='w-full'>
    <AccordionItem value='item-1' className='border-none'>
-    <AccordionTrigger className='cursor-pointer hover:no-underline py-2 font-semibold text-sm'>
+    <AccordionTrigger className='cursor-pointer hover:no-underline py-2 font-semibold text-base'>
      {dic.amenitiesFilter.title}
     </AccordionTrigger>
-    <AccordionContent className='pt-2 pb-4'>
+    <AccordionContent className='pt-3 pb-4'>
      <div className='flex flex-col gap-4'>
       <Input
        type='search'
        placeholder={dic.amenitiesFilter.searchPlaceholder}
        value={searchQuery}
        onChange={(e) => setSearchQuery(e.target.value)}
+       className='h-10 text-base'
       />
       <div className='flex flex-col items-start gap-4'>
        {filteredAmenities.map((amenityKey) => (
         <div key={amenityKey} className='flex items-center gap-3'>
          <Checkbox
-          className='cursor-pointer'
+          className='cursor-pointer size-5'
           id={`amenity-filter-${amenityKey}`}
          />
-         <Label htmlFor={`amenity-filter-${amenityKey}`}>
+         <Label
+          htmlFor={`amenity-filter-${amenityKey}`}
+          className='text-base cursor-pointer'
+         >
           {dic.amenitiesFilter.amenities[amenityKey]}
          </Label>
         </div>

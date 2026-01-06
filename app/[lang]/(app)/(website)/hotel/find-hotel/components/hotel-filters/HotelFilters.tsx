@@ -20,33 +20,37 @@ export default function HotelFilters({ dic }: { dic: FindHotelDictionary }) {
  return (
   <div
    ref={containerRef}
-   className='lg:flex flex-col hidden max-w-[240px] w-full self-start top-4 border rounded-lg flex-1'
+   className='lg:flex flex-col hidden max-w-[280px] w-full self-start top-4 rounded-xl bg-card flex-1 border border-gray-300 dark:border-gray-600'
   >
-   <div className='p-4 px-2'>
-    <Input type='search' placeholder={dic.searchInputFilter.placeholder} />
+   <div className='p-5'>
+    <Input
+     type='search'
+     placeholder={dic.searchInputFilter.placeholder}
+     className='h-11 text-base'
+    />
    </div>
-   <Separator className='text-gray-300 dark:text-gray-600 px-2' />
-   <div className='p-4 px-2'>
+   <Separator className='bg-border' />
+   <div className='p-5'>
     <PriceRangeFilter
      dic={dic}
      currentPriceRange={currentPriceRange}
      setCurrentPriceRange={setCurrentPriceRange}
     />
    </div>
-   <Separator className='text-gray-300 dark:text-gray-600 px-2' />
-   <div className='p-4 px-2'>
+   <Separator className='bg-border' />
+   <div className='p-5'>
     <StarFilters dic={dic} />
    </div>
-   <Separator className='text-gray-300 dark:text-gray-600 px-2' />
-   <div className='p-4 px-2'>
+   <Separator className='bg-border' />
+   <div className='p-5'>
     <BedFilters dic={dic} />
    </div>
-   <Separator className='text-gray-300 dark:text-gray-600 px-2' />
-   <div className='p-4 px-2'>
+   <Separator className='bg-border' />
+   <div className='p-5'>
     <AmenitiesFilter dic={dic} />
    </div>
-   <Separator className='text-gray-300 dark:text-gray-600 px-2' />
-   <div className='p-4 px-2'>
+   <Separator className='bg-border' />
+   <div className='p-5'>
     <OffersFilter dic={dic} />
    </div>
   </div>
