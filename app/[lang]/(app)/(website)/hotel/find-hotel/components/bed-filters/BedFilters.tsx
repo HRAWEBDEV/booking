@@ -8,7 +8,7 @@ import {
  AccordionTrigger,
 } from '@/components/ui/accordion';
 
-const Beds = [5, 4, 3, 2, 1] as const;
+const Beds = [1, 2, 3, 4, 5] as const;
 
 export default function BedFilters({ dic }: { dic: FindHotelDictionary }) {
  return (
