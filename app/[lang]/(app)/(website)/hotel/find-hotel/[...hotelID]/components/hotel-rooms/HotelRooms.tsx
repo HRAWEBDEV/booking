@@ -3,7 +3,7 @@ import HotelRoom from './HotelRoom';
 
 export default function HotelRooms({ dic }: { dic: PreviewHotelDictionary }) {
  return (
-  <section id='rooms' className='mb-4 grid gap-4'>
+  <section id='rooms' className='scroll-mt-16 mb-4 grid gap-4'>
    {Array.from({ length: 5 }, (_, i) => i).map((i) => (
     <HotelRoom key={i} dic={dic} />
    ))}

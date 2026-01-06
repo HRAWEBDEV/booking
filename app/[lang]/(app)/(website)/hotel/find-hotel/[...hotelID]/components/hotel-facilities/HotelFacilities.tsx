@@ -5,7 +5,7 @@ export default function HotelFacilities({}: { dic: PreviewHotelDictionary }) {
  return (
   <section
    id='hotelFacilities'
-   className='mb-4 p-4 shadow-md rounded-md grid grid-cols-2 md:grid-cols-4 gap-4 dark:border dark:border-input'
+   className='scroll-mt-16 mb-4 p-4 shadow-md rounded-md grid grid-cols-2 md:grid-cols-4 gap-4 dark:border dark:border-input'
   >
    {Array.from({ length: 12 }, (_, i) => i).map((i) => (
     <div

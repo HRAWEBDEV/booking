@@ -6,6 +6,7 @@ import HotelMenuBar from './HotelMenuBar';
 import HotelDescription from './hotel-description/HotelDescription';
 import HotelFacilities from './hotel-facilities/HotelFacilities';
 import HotelRooms from './hotel-rooms/HotelRooms';
+import HotelCancelPolicies from './hotel-cancel-policies/HotelCancelPolicies';
 
 export default function HotelWrapper({ dic }: { dic: PreviewHotelDictionary }) {
  return (
@@ -21,6 +22,7 @@ export default function HotelWrapper({ dic }: { dic: PreviewHotelDictionary }) {
      <HotelFacilities dic={dic} />
      <HotelRooms dic={dic} />
      <HotelDescription dic={dic} />
+     <HotelCancelPolicies dic={dic} />
     </div>
     <div>
      <div className='sticky top-1 hidden md:block'>

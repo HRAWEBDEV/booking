@@ -27,5 +27,8 @@
  "hotelDescription": {
   "floors": "طبقات",
   "rooms": "اتاق‌ها"
+ },
+ "hotelCancelPolicies": {
+  "title": "قوانین کنسلی"
  }
 }

@@ -9,7 +9,7 @@ export default function HotelDescription({
  return (
   <section
    id='hotelDescription'
-   className='mb-4 p-4 shadow-md rounded-md dark:border dark:border-input'
+   className='scroll-mt-16 mb-4 p-4 shadow-md rounded-md dark:border dark:border-input'
   >
    <h1 className='text-2xl text-primary font-medium mb-2'>
     <span>هتل کیش</span>
