@@ -3,6 +3,9 @@ import HotelInfo from './HotelInfo';
 import HotelGallery from './HotelGallery';
 import HotelDatePicker from './HotelDatePicker';
 import HotelMenuBar from './HotelMenuBar';
+import HotelDescription from './hotel-description/HotelDescription';
+import HotelFacilities from './hotel-facilities/HotelFacilities';
+import HotelRooms from './hotel-rooms/HotelRooms';
 
 export default function HotelWrapper({ dic }: { dic: PreviewHotelDictionary }) {
  return (
@@ -12,6 +15,9 @@ export default function HotelWrapper({ dic }: { dic: PreviewHotelDictionary }) {
     <div className='grow overflow-hidden'>
      <HotelGallery dic={dic} />
      <HotelMenuBar dic={dic} />
+     <HotelFacilities dic={dic} />
+     <HotelRooms dic={dic} />
+     <HotelDescription dic={dic} />
     </div>
     <div className='w-[18rem] shrink-0'>
      <HotelDatePicker dic={dic} />

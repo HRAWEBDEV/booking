@@ -33,7 +33,7 @@ export default function HotelMenuBar({ dic }: { dic: PreviewHotelDictionary }) {
        key={key}
        asChild
       >
-       <Link href={'#'}>
+       <Link href={`#${key}`}>
         {dic.hotelMenuBar[key as keyof typeof dic.hotelMenuBar]}
        </Link>
       </Button>
