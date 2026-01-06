@@ -14,11 +14,10 @@ export default function HotelFilters({ dic }: { dic: FindHotelDictionary }) {
  const [currentPriceRange, setCurrentPriceRange] = useState<number[]>([
   500_000, 50_000_000,
  ]);
- const { containerRef, stickyStyle } = useStickyScroll();
+ const { containerRef } = useStickyScroll();
  return (
   <div
    ref={containerRef}
-   style={stickyStyle}
    className='lg:flex flex-col hidden max-w-[240px] w-full self-start top-4 border rounded-lg flex-1'
   >
    <div className='p-4 px-2'>

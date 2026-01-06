@@ -1,47 +1,77 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-import React from 'react';
-
-export default function useStickyScroll() {
+export default function useStickyScroll(offset = 16) {
  const containerRef = useRef<HTMLDivElement>(null);
- const [stickyStyle, setStickyStyle] = useState<React.CSSProperties>({});
- const lastScrollY = useRef(0);
 
  useEffect(() => {
+  const sidebar = containerRef.current;
+  if (!sidebar) return;
+
+  let prevScrollY = window.scrollY;
+  // Track the current top offset - start at the top offset
+  let currTop = offset;
+
   const handleScroll = () => {
-   if (!containerRef.current) return;
-
-   const container = containerRef.current;
-   const rect = container.getBoundingClientRect();
-   const viewportHeight = window.innerHeight;
    const scrollY = window.scrollY;
-   const scrollingDown = scrollY > lastScrollY.current;
+   const delta = scrollY - prevScrollY;
 
-   const filterHeight = container.offsetHeight;
-
-   if (scrollingDown) {
-    // When scrolling down, stick to bottom of viewport
-    if (rect.bottom <= viewportHeight) {
-     setStickyStyle({
-      position: 'sticky',
-      top: `${viewportHeight - filterHeight - 16}px`,
-     });
-    }
-   } else {
-    // When scrolling up, stick to top
-    if (rect.top >= 16) {
-     setStickyStyle({
-      position: 'sticky',
-      top: '16px', // 1rem = 16px (top-4)
-     });
-    }
+   // Skip if no scroll happened
+   if (delta === 0) {
+    prevScrollY = scrollY;
+    return;
    }
 
-   lastScrollY.current = scrollY;
+   const viewportHeight = window.innerHeight;
+   const sidebarHeight = sidebar.offsetHeight;
+
+   // Calculate the sticky bounds
+   // maxTop: When sticking at top (top of sidebar aligns with top of viewport)
+   const maxTop = offset;
+   // minTop: When sticking at bottom (bottom of sidebar aligns with bottom of viewport)
+   const minTop = viewportHeight - sidebarHeight - offset;
+
+   // If sidebar fits in viewport, just stick at top
+   if (sidebarHeight <= viewportHeight - 2 * offset) {
+    sidebar.style.position = 'sticky';
+    sidebar.style.top = `${maxTop}px`;
+    prevScrollY = scrollY;
+    return;
+   }
+
+   // Smart sticky logic:
+   // When scrolling DOWN: decrease top (move towards minTop/bottom-stick)
+   // When scrolling UP: increase top (move towards maxTop/top-stick)
+   currTop -= delta;
+
+   // Clamp currTop between minTop and maxTop
+   if (currTop > maxTop) {
+    currTop = maxTop;
+   } else if (currTop < minTop) {
+    currTop = minTop;
+   }
+
+   sidebar.style.position = 'sticky';
+   sidebar.style.top = `${currTop}px`;
+
+   prevScrollY = scrollY;
   };
 
+  // Set initial position
+  sidebar.style.position = 'sticky';
+  sidebar.style.top = `${offset}px`;
+
   window.addEventListener('scroll', handleScroll, { passive: true });
-  return () => window.removeEventListener('scroll', handleScroll);
- }, []);
- return { containerRef, stickyStyle };
+  window.addEventListener('resize', () => {
+   // Reset on resize
+   currTop = offset;
+   handleScroll();
+  });
+
+  return () => {
+   window.removeEventListener('scroll', handleScroll);
+   window.removeEventListener('resize', handleScroll);
+  };
+ }, [offset]);
+
+ return { containerRef };
 }
