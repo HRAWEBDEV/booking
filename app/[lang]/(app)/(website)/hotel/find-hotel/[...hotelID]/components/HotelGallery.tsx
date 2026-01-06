@@ -5,6 +5,9 @@ import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 
 export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
  const { localeInfo } = useBaseConfig();
+ const [bannerSlideRef] = useKeenSlider({
+  rtl: localeInfo.contentDirection === 'rtl',
+ });
  const [sliderRef] = useKeenSlider({
   rtl: localeInfo.contentDirection === 'rtl',
   breakpoints: {
@@ -34,12 +37,22 @@ export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
  });
  return (
   <section className='flex flex-col'>
-   <div className='h-96 rounded-lg overflow-hidden mb-2'>
-    <img
-     src='/images/hotelGallery.jpg'
-     alt='hotel image'
-     className='h-full w-full object-cover object-center'
-    />
+   <div
+    ref={bannerSlideRef}
+    className='keen-slider mb-2 overflow-hidden rounded-lg'
+   >
+    {Array.from({ length: 10 }, (_, i) => i).map((i) => (
+     <div
+      className='keen-slider__slide rounded-lg h-84 overflow-hidden'
+      key={i}
+     >
+      <img
+       src='/images/hotelGallery.jpg'
+       alt='hotel image'
+       className='h-full w-full object-cover object-center'
+      />
+     </div>
+    ))}
    </div>
    <div ref={sliderRef} className='keen-slider'>
     {Array.from({ length: 10 }, (_, i) => i).map((i) => (
