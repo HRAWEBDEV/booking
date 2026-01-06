@@ -1,3 +1,12 @@
 {
- "title": ""
+ "title": "",
+ "hotelInfo": {
+  "star": "ستاره",
+  "share": "اشتراک گذاری"
+ },
+ "hotelDatePicker": {
+  "fromDate": "از تاریخ",
+  "toDate": "تا تاریخ",
+  "search": "جستجو"
+ }
 }

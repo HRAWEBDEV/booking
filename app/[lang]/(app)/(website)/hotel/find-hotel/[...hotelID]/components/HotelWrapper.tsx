@@ -1,6 +1,7 @@
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import HotelInfo from './HotelInfo';
 import HotelGallery from './HotelGallery';
+import HotelDatePicker from './HotelDatePicker';
 
 export default function HotelWrapper({ dic }: { dic: PreviewHotelDictionary }) {
  return (
@@ -12,7 +13,7 @@ export default function HotelWrapper({ dic }: { dic: PreviewHotelDictionary }) {
      <div className='h-[2000px]'></div>
     </div>
     <div className='w-[18rem] shrink-0'>
-     <div className='h-80 bg-red-50 sticky top-0'></div>
+     <HotelDatePicker dic={dic} />
     </div>
    </div>
   </>

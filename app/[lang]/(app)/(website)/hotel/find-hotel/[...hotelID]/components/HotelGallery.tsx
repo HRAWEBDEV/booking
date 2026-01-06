@@ -43,7 +43,7 @@ export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
    >
     {Array.from({ length: 10 }, (_, i) => i).map((i) => (
      <div
-      className='keen-slider__slide rounded-lg h-84 overflow-hidden'
+      className='keen-slider__slide rounded-lg h-92 overflow-hidden'
       key={i}
      >
       <img
