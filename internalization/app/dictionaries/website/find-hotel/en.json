@@ -81,5 +81,25 @@
    "4": "4 Bed",
    "5": "5+ Bed"
   }
+ },
+ "amenitiesFilter": {
+  "title": "Hotel Amenities",
+  "searchPlaceholder": "Search hotel amenities",
+  "amenities": {
+   "lobby": "Lobby",
+   "reception24h": "24h Reception",
+   "elevator": "Elevator",
+   "safeBox": "Safe Box",
+   "electricCharging": "Electric Charging"
+  }
+ },
+ "offersFilter": {
+  "title": "Offers",
+  "offers": {
+   "freeNightPackage": "Free Night Package",
+   "freeHalfBoardEntry": "Free Half Board Entry",
+   "freeCancellation": "Free Cancellation",
+   "restaurantDiscount": "Restaurant Discount"
+  }
  }
 }

@@ -81,5 +81,25 @@
    "4": "۴ تخت",
    "5": "۵+ تخت"
   }
+ },
+ "amenitiesFilter": {
+  "title": "امکانات هتل",
+  "searchPlaceholder": "جستجوی امکانات هتل",
+  "amenities": {
+   "lobby": "لابی",
+   "reception24h": "پذیرش ۲۴ ساعته",
+   "elevator": "آسانسور",
+   "safeBox": "صندوق امانات",
+   "electricCharging": "امکان شارژ وسایل اکتریکی"
+  }
+ },
+ "offersFilter": {
+  "title": "آفرها",
+  "offers": {
+   "freeNightPackage": "پکیج شب رایگان",
+   "freeHalfBoardEntry": "نیم شارژ ورود رایگان",
+   "freeCancellation": "کنسلی رایگان",
+   "restaurantDiscount": "تخفیف رستوران"
+  }
  }
 }
