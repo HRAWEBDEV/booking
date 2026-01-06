@@ -77,7 +77,7 @@ export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
     <div ref={sliderRef} className='keen-slider relative'>
      {Array.from({ length: 10 }, (_, i) => i).map((i) => (
       <button
-       className='keen-slider__slide rounded-lg size-20'
+       className='keen-slider__slide rounded-lg size-20 cursor-pointer'
        key={i}
        onClick={() => {
         bannerSliderInstance.current?.moveToIdx(i);
