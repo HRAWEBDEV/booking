@@ -22,7 +22,7 @@ export default function HotelMenuBar({ dic }: { dic: PreviewHotelDictionary }) {
  });
 
  return (
-  <section className='shadow-lg rounded-md border border-input mb-4 sticky top-4'>
+  <section className='shadow-lg rounded-md border border-input mb-4 sticky top-4 bg-background'>
    <nav ref={sliderRef} className='keen-slider'>
     {Object.keys(dic.hotelMenuBar).map((key) => {
      return (
