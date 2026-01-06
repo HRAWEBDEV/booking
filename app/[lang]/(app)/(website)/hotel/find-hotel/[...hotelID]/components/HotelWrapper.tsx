@@ -23,7 +23,7 @@ export default function HotelWrapper({ dic }: { dic: PreviewHotelDictionary }) {
      <HotelDescription dic={dic} />
     </div>
     <div>
-     <div className='sticky top-4 hidden md:block'>
+     <div className='sticky top-1 hidden md:block'>
       <HotelDatePicker dic={dic} />
      </div>
     </div>

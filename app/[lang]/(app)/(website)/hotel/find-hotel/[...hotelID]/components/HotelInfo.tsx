@@ -17,7 +17,7 @@ export default function HotelTitle({ dic }: { dic: PreviewHotelDictionary }) {
     ))}
     <span className='text-xs text-neutral-500'>(4) {dic.hotelInfo.star}</span>
    </div>
-   <h1 className='text-2xl font-medium mb-2'>
+   <h1 className='text-2xl lg:text-3xl font-medium mb-2'>
     <Button
      title={dic.hotelInfo.share}
      variant='ghost'
@@ -28,7 +28,7 @@ export default function HotelTitle({ dic }: { dic: PreviewHotelDictionary }) {
     </Button>
     <span>هتل کیش</span>
    </h1>
-   <div className='text-xs text-neutral-600 dark:text-neutral-400'>
+   <div className='text-sm lg:text-[0.9rem] text-neutral-600 dark:text-neutral-400'>
     <FaLocationDot className='inline size-4 text-rose-700 dark:text-rose-400' />
     <p className='inline ms-2'>
      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ

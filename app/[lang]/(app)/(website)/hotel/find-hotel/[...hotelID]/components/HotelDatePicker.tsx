@@ -19,7 +19,7 @@ export default function HotelDatePicker({
      <FieldLabel htmlFor='toDate'>{dic.hotelDatePicker.toDate}</FieldLabel>
      <Input />
     </Field>
-    <Button>{dic.hotelDatePicker.search}</Button>
+    <Button size='lg'>{dic.hotelDatePicker.search}</Button>
    </FieldGroup>
   </div>
  );
