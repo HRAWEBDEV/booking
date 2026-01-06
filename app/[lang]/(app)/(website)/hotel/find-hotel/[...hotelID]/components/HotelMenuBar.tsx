@@ -12,7 +12,7 @@ export default function HotelMenuBar({ dic }: { dic: PreviewHotelDictionary }) {
   breakpoints: {
    '(max-width:700px)': {
     slides: {
-     perView: 4,
+     perView: 2,
     },
    },
   },
@@ -22,21 +22,17 @@ export default function HotelMenuBar({ dic }: { dic: PreviewHotelDictionary }) {
  });
 
  return (
-  <section className='shadow-lg rounded-md border border-input mb-4 sticky top-4 bg-background'>
+  <section className='shadow-lg rounded-md border border-input mb-4 md:sticky top-4 bg-background overflow-hidden'>
    <nav ref={sliderRef} className='keen-slider'>
     {Object.keys(dic.hotelMenuBar).map((key) => {
      return (
-      <Button
-       variant='ghost'
-       size='icon'
-       className='keen-slider__slide cursor-pointer text-neutral-500'
+      <Link
        key={key}
-       asChild
+       className='keen-slider__slide text-center text-neutral-500 p-1 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-100 text-sm'
+       href={`#${key}`}
       >
-       <Link href={`#${key}`}>
-        {dic.hotelMenuBar[key as keyof typeof dic.hotelMenuBar]}
-       </Link>
-      </Button>
+       {dic.hotelMenuBar[key as keyof typeof dic.hotelMenuBar]}
+      </Link>
      );
     })}
    </nav>

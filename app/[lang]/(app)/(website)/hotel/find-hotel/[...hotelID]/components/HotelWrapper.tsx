@@ -11,16 +11,21 @@ export default function HotelWrapper({ dic }: { dic: PreviewHotelDictionary }) {
  return (
   <>
    <HotelInfo dic={dic} />
-   <div className='grid grid-cols-[1fr_18rem] gap-4 mb-4'>
-    <div>
+   <div className='grid md:grid-cols-[1fr_18rem] gap-4 mb-4'>
+    <div className='grid grid-cols-1'>
      <HotelGallery dic={dic} />
      <HotelMenuBar dic={dic} />
+     <div className='block md:hidden'>
+      <HotelDatePicker dic={dic} />
+     </div>
      <HotelFacilities dic={dic} />
      <HotelRooms dic={dic} />
      <HotelDescription dic={dic} />
     </div>
     <div>
-     <HotelDatePicker dic={dic} />
+     <div className='sticky top-4 hidden md:block'>
+      <HotelDatePicker dic={dic} />
+     </div>
     </div>
    </div>
   </>

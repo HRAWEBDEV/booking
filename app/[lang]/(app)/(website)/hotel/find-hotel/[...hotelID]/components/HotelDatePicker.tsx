@@ -9,7 +9,7 @@ export default function HotelDatePicker({
  dic: PreviewHotelDictionary;
 }) {
  return (
-  <div className='sticky top-4 shadow-lg border border-input p-4 rounded-md mb-2'>
+  <div className='shadow-lg border border-input p-4 rounded-md mb-2'>
    <FieldGroup className='gap-5'>
     <Field className='gap-2'>
      <FieldLabel htmlFor='fromDate'>{dic.hotelDatePicker.fromDate}</FieldLabel>

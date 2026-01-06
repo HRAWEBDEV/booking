@@ -54,16 +54,18 @@ export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
      </div>
     ))}
    </div>
-   <div ref={sliderRef} className='keen-slider'>
-    {Array.from({ length: 10 }, (_, i) => i).map((i) => (
-     <button className='keen-slider__slide rounded-lg size-20' key={i}>
-      <img
-       src='/images/hotelGallery.jpg'
-       alt='hotel image'
-       className='h-full w-full object-cover object-center'
-      />
-     </button>
-    ))}
+   <div className='hidden md:block'>
+    <div ref={sliderRef} className='keen-slider'>
+     {Array.from({ length: 10 }, (_, i) => i).map((i) => (
+      <button className='keen-slider__slide rounded-lg size-20' key={i}>
+       <img
+        src='/images/hotelGallery.jpg'
+        alt='hotel image'
+        className='h-full w-full object-cover object-center'
+       />
+      </button>
+     ))}
+    </div>
    </div>
   </section>
  );
