@@ -13,6 +13,8 @@
  "hotelDatePicker": {
   "fromDate": "از تاریخ",
   "toDate": "تا تاریخ",
+  "arrivalTime": "ساعت ورود",
+  "departureTime": "ساعت خروج",
   "search": "جستجو"
  },
  "hotelRooms": {
@@ -21,5 +23,9 @@
   "addRoom": "افزودن اتاق",
   "viewPricingCalendar": "مشاهده تقویم قیمتی",
   "discount": "تخفیف"
+ },
+ "hotelDescription": {
+  "floors": "طبقات",
+  "rooms": "اتاق‌ها"
  }
 }
