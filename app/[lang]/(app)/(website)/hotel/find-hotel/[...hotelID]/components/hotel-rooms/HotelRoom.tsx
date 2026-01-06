@@ -11,7 +11,7 @@ export default function HotelRoom({ dic }: { dic: PreviewHotelDictionary }) {
   rtl: localeInfo.contentDirection === 'rtl',
  });
  return (
-  <article className='border border-input shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden'>
+  <article className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden'>
    <div
     className='mb-4 keen-slider rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0'
     ref={bannerSlideRef}

@@ -2,7 +2,7 @@ import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/
 
 export default function HotelFacilities({}: { dic: PreviewHotelDictionary }) {
  return (
-  <section id='hotelFacilities' className='mb-4 h-80'>
+  <section id='hotelFacilities' className='mb-4 p-4 shadow-md rounded-md'>
    hotel facilities
   </section>
  );
