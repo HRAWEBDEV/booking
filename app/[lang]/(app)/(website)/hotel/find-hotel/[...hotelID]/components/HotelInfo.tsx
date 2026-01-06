@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 export default function HotelTitle({}: { dic: PreviewHotelDictionary }) {
  return (
-  <div className='p-4'>
+  <div className='py-4'>
    <div className='flex gap-1 mb-2 items-center'>
     {Array.from({ length: 5 }, (_, i) => i).map((i) => (
      <FaStar

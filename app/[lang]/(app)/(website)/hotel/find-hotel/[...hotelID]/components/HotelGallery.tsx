@@ -1,0 +1,57 @@
+'use client';
+import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
+import { useKeenSlider } from 'keen-slider/react';
+import { useBaseConfig } from '@/services/base-config/baseConfigContext';
+
+export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
+ const { localeInfo } = useBaseConfig();
+ const [sliderRef] = useKeenSlider({
+  rtl: localeInfo.contentDirection === 'rtl',
+  breakpoints: {
+   '(max-width:1280px)': {
+    slides: {
+     perView: 8,
+     spacing: 4,
+    },
+   },
+   '(max-width:980px)': {
+    slides: {
+     perView: 6,
+     spacing: 4,
+    },
+   },
+   '(max-width:700px)': {
+    slides: {
+     perView: 4,
+     spacing: 4,
+    },
+   },
+  },
+  slides: {
+   perView: 8,
+   spacing: 4,
+  },
+ });
+ return (
+  <section className='flex flex-col'>
+   <div className='h-96 rounded-lg overflow-hidden mb-2'>
+    <img
+     src='/images/hotelGallery.jpg'
+     alt='hotel image'
+     className='h-full w-full object-cover object-center'
+    />
+   </div>
+   <div ref={sliderRef} className='keen-slider'>
+    {Array.from({ length: 10 }, (_, i) => i).map((i) => (
+     <button className='keen-slider__slide rounded-lg size-20' key={i}>
+      <img
+       src='/images/hotelGallery.jpg'
+       alt='hotel image'
+       className='h-full w-full object-cover object-center'
+      />
+     </button>
+    ))}
+   </div>
+  </section>
+ );
+}
