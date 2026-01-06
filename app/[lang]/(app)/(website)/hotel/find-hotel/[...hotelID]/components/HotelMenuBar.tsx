@@ -22,13 +22,13 @@ export default function HotelMenuBar({ dic }: { dic: PreviewHotelDictionary }) {
  });
 
  return (
-  <section className='bg-primary shadow-lg rounded-md mb-4 md:sticky top-1 overflow-hidden z-1'>
+  <section className='bg-neutral-200 dark:bg-neutral-800 shadow-lg rounded-md mb-4 md:sticky top-1 overflow-hidden z-1'>
    <nav ref={sliderRef} className='keen-slider'>
     {Object.keys(dic.hotelMenuBar).map((key) => {
      return (
       <Link
        key={key}
-       className='keen-slider__slide text-center text-primary-foreground p-1 py-2 hover:bg-sky-800 dark:hover:bg-sky-300 text-sm'
+       className='keen-slider__slide text-center p-1 py-2 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-sm text-neutral-600 dark:text-neutral-400 font-medium'
        href={`#${key}`}
       >
        {dic.hotelMenuBar[key as keyof typeof dic.hotelMenuBar]}
