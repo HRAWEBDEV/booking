@@ -11,27 +11,21 @@ export default function HotelGallery({ dic }: { dic: PreviewHotelDictionary }) {
  const [sliderRef] = useKeenSlider({
   rtl: localeInfo.contentDirection === 'rtl',
   breakpoints: {
-   '(max-width:1280px)': {
-    slides: {
-     perView: 8,
-     spacing: 4,
-    },
-   },
    '(max-width:980px)': {
-    slides: {
-     perView: 6,
-     spacing: 4,
-    },
-   },
-   '(max-width:700px)': {
     slides: {
      perView: 4,
      spacing: 4,
     },
    },
+   '(max-width:700px)': {
+    slides: {
+     perView: 2,
+     spacing: 4,
+    },
+   },
   },
   slides: {
-   perView: 8,
+   perView: 6,
    spacing: 4,
   },
  });
