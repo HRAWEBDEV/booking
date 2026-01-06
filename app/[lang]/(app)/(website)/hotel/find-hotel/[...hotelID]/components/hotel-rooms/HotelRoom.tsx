@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useKeenSlider } from 'keen-slider/react';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { Badge } from '@/components/ui/badge';
+import { FiMinus, FiPlus } from 'react-icons/fi';
 
 export default function HotelRoom({ dic }: { dic: PreviewHotelDictionary }) {
  const { localeInfo } = useBaseConfig();
@@ -55,9 +56,19 @@ export default function HotelRoom({ dic }: { dic: PreviewHotelDictionary }) {
      </div>
     </div>
     <div className='flex flex-col gap-2'>
-     <Button size='lg' className='w-full'>
-      {dic.hotelRooms.addRoom}
-     </Button>
+     <div className='flex gap-4 items-center w-[min(100%,9rem)] mx-auto'>
+      <Button variant='outline' size='icon-lg'>
+       <FiMinus className='size-4' />
+      </Button>
+      <div className='grow text-center text-primary text-lg font-medium'>5</div>
+      <Button size='icon-lg'>
+       <FiPlus className='size-4' />
+      </Button>
+     </div>
+     {/* <Button size='lg' className='w-full'> */}
+     {/*  <FiPlus className='size-4' /> */}
+     {/*  {dic.hotelRooms.addRoom} */}
+     {/* </Button> */}
      <Button variant='outline' size='lg' className='w-full'>
       {dic.hotelRooms.viewPricingCalendar}
      </Button>
