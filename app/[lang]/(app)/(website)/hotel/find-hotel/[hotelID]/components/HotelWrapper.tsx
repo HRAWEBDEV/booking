@@ -21,14 +21,26 @@ export default function HotelWrapper({
  hotelInfo,
  hotelFacilityPromise,
  hotelImages,
+ fromDate,
+ toDate,
+ hotelID,
 }: {
  dic: PreviewHotelDictionary;
  hotelInfo: HotelInfoData;
  hotelImages: HotelImage[] | null;
  hotelFacilityPromise: Promise<HotelFacility[] | null>;
+ fromDate: string;
+ toDate: string;
+ hotelID: string;
 }) {
  return (
-  <HotelConfigProvider hotelInfo={hotelInfo} dic={dic}>
+  <HotelConfigProvider
+   hotelInfo={hotelInfo}
+   dic={dic}
+   fromDate={fromDate}
+   toDate={toDate}
+   hotelID={hotelID}
+  >
    <HotelInfo dic={dic} hotelInfo={hotelInfo} />
    <div className='grid md:grid-cols-[1fr_18rem] gap-4 mb-4'>
     <div className='grid grid-cols-1'>

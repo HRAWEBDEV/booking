@@ -18,7 +18,7 @@ import { appendApiUri } from '../../../utils/appendApiUri';
 const dateFns = supportedDateFns['en'];
 
 export default async function HotelPage(
- props: PageProps<'/[lang]/hotel/find-hotel/[...hotelID]'>,
+ props: PageProps<'/[lang]/hotel/find-hotel/[hotelID]'>,
 ) {
  const { lang, hotelID } = await props.params;
  const dic = await getPreviewHotelDictionary({
@@ -109,7 +109,10 @@ export default async function HotelPage(
    hotelInfo={hotelInfoPromise}
    hotelFacilityPromise={hotelFacilityPromise}
    hotelImages={hotelImages}
+   fromDate={fromDateQuery as string}
+   toDate={toDateQuery as string}
    dic={dic}
+   hotelID={hotelID as string}
   />
  );
 }

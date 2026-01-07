@@ -13,6 +13,9 @@ import { Calendar } from '@/components/ui/calendar';
 import { ChevronDownIcon } from 'lucide-react';
 import { useDateFns } from '@/hooks/useDateFns';
 import { type HotelInfo } from '../services/hotelApiActions';
+import { useFormContext } from 'react-hook-form';
+import { type HotelDatePickerSchema } from '../schemas/hotelDatePickerSchema';
+import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 
 export default function HotelDatePicker({
  dic,
@@ -21,17 +24,25 @@ export default function HotelDatePicker({
  dic: PreviewHotelDictionary;
  hotelInfo: HotelInfo;
 }) {
+ const { locale } = useBaseConfig();
+ const { control, watch, setValue } = useFormContext<HotelDatePickerSchema>();
  const dateFns = useDateFns();
  const [openDatePickerCalendar, setOpenDatePickerCalendar] = useState(false);
+
+ const [fromDateValue, toDateValue] = watch(['fromDate', 'toDate']);
 
  const datePickerCalendar = (
   <Calendar
    mode='range'
    numberOfMonths={2}
    startMonth={dateFns.startOfMonth(new Date())}
+   selected={{
+    from: fromDateValue || undefined,
+    to: toDateValue || undefined,
+   }}
    showOutsideDays={false}
    disabled={(date) => {
-    return date.getTime() <= new Date().getTime();
+    return date.getTime() < dateFns.startOfDay(new Date()).getTime();
    }}
   />
  );
@@ -57,10 +68,12 @@ export default function HotelDatePicker({
       type='button'
       variant='outline'
       id='fromDate'
-      className='w-32 justify-between font-normal'
+      className='w-32 justify-between font-normal text-base'
       onClick={() => setOpenDatePickerCalendar((pre) => !pre)}
      >
-      {'Select date'}
+      {fromDateValue?.toLocaleDateString(locale, {
+       dateStyle: 'full',
+      })}
       <ChevronDownIcon />
      </Button>
     </Field>
@@ -77,9 +90,11 @@ export default function HotelDatePicker({
         type='button'
         variant='outline'
         id='toDate'
-        className='w-32 justify-between font-normal'
+        className='w-32 justify-between font-normal text-base'
        >
-        {'Select date'}
+        {toDateValue?.toLocaleDateString(locale, {
+         dateStyle: 'full',
+        })}
         <ChevronDownIcon />
        </Button>
       </PopoverTrigger>
