@@ -5,7 +5,7 @@ import { axios } from '../../../utils/defaultAxios';
 export default function AxiosCredentialsInterceptor() {
  useEffect(() => {
   const requestInterceptor = axios.interceptors.request.use((config) => {
-   config.headers.set('x-token', process.env.NEXT_PUBLIC_X_AUTH);
+   config.headers.set('x-token', process.env.NEXT_PUBLIC_API_URI);
    return config;
   });
   return () => {
