@@ -40,17 +40,22 @@ export default function HotelConfigProvider({
   },
  });
 
+ const [fromDateValue, toDateValue] = datePickerFilters.watch([
+  'fromDate',
+  'toDate',
+ ]);
+
  const ctx = {
   hotelInfo,
   hotelID,
  };
 
- // useEffect(() => {
- //  const newSearchParam = new URLSearchParams(location.search);
- //  newSearchParam.set(fromDateQueryName, fromDateValue?.toISOString() || '');
- //  newSearchParam.set(toDateQueryName, toDateValue?.toISOString() || '');
- //  router.replace(`/${locale}/hotel/find-hotel/1?${newSearchParam.toString()}`);
- // }, [fromDateValue, toDateValue, locale, router]);
+ useEffect(() => {
+  const newSearchParam = new URLSearchParams(location.search);
+  newSearchParam.set(fromDateQueryName, fromDateValue?.toISOString() || '');
+  newSearchParam.set(toDateQueryName, toDateValue?.toISOString() || '');
+  router.replace(`/${locale}/hotel/find-hotel/1?${newSearchParam.toString()}`);
+ }, [fromDateValue, toDateValue, locale, router]);
  return (
   <hotelConfigContext.Provider value={ctx}>
    <FormProvider {...datePickerFilters}>{children}</FormProvider>

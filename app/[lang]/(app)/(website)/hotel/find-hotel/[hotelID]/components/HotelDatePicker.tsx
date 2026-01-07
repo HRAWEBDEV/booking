@@ -25,11 +25,14 @@ export default function HotelDatePicker({
  hotelInfo: HotelInfo;
 }) {
  const { locale } = useBaseConfig();
- const { watch, setValue, control } = useFormContext<HotelDatePickerSchema>();
+ const filtersUserForm = useFormContext<HotelDatePickerSchema>();
  const dateFns = useDateFns();
  const [openDatePickerCalendar, setOpenDatePickerCalendar] = useState(false);
 
- const [fromDateValue, toDateValue] = watch(['fromDate', 'toDate']);
+ const [fromDateValue, toDateValue] = filtersUserForm.watch([
+  'fromDate',
+  'toDate',
+ ]);
 
  return (
   <form className='shadow-lg border border-input p-4 rounded-md mb-2'>
@@ -84,7 +87,7 @@ export default function HotelDatePicker({
       </PopoverTrigger>
       <PopoverContent className='w-auto overflow-hidden p-0' align='end'>
        <Controller
-        control={control}
+        control={filtersUserForm.control}
         name='toDate'
         render={({ field: { value, onChange, ...other } }) => (
          <Calendar
@@ -99,10 +102,10 @@ export default function HotelDatePicker({
           onSelect={(selected) => {
            if (!selected) {
             onChange(null);
-            setValue('fromDate', null);
+            filtersUserForm.setValue('fromDate', null);
            } else {
             onChange(selected.to || null);
-            setValue('fromDate', selected.from || null);
+            filtersUserForm.setValue('fromDate', selected.from || null);
            }
           }}
           showOutsideDays={false}
