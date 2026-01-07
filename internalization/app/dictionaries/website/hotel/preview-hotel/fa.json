@@ -2,7 +2,8 @@
  "title": "",
  "hotelInfo": {
   "star": "ستاره",
-  "share": "اشتراک گذاری"
+  "share": "اشتراک گذاری",
+  "unknownAddress": "موقعیت نامعلوم"
  },
  "hotelMenuBar": {
   "hotelFacilities": "امکانات",

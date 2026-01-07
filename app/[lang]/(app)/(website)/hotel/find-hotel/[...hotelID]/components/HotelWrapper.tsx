@@ -19,7 +19,7 @@ export default function HotelWrapper({
 }) {
  return (
   <HotelConfigProvider hotelInfo={hotelInfo} dic={dic}>
-   <HotelInfo dic={dic} />
+   <HotelInfo dic={dic} hotelInfo={hotelInfo} />
    <div className='grid md:grid-cols-[1fr_18rem] gap-4 mb-4'>
     <div className='grid grid-cols-1'>
      <HotelGallery dic={dic} />
@@ -29,7 +29,7 @@ export default function HotelWrapper({
      </div>
      <HotelFacilities dic={dic} />
      <HotelRooms dic={dic} />
-     <HotelDescription dic={dic} />
+     <HotelDescription dic={dic} hotelInfo={hotelInfo} />
      <HotelCancelPolicies dic={dic} />
     </div>
     <div>
