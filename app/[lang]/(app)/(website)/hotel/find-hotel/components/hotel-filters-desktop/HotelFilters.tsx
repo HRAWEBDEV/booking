@@ -9,6 +9,7 @@ import {
  DrawerHeader,
  DrawerTitle,
  DrawerTrigger,
+ DrawerFooter,
 } from '@/components/ui/drawer';
 import FilterContent from '../filter-container/FilterContent';
 import { Button } from '@/components/ui/button';
@@ -53,6 +54,12 @@ export default function HotelFilters({ dic }: { dic: FindHotelDictionary }) {
         setCurrentPriceRange={setCurrentPriceRange}
        />
       </div>
+      <DrawerFooter className='flex flex-row w-full gap-2 justify-center'>
+       <Button className='flex-1'>اعمال</Button>
+       <Button variant='destructive' className='flex-1'>
+        حذف فیلتر
+       </Button>
+      </DrawerFooter>
      </DrawerContent>
     </Drawer>
    </div>
