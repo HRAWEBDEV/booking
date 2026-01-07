@@ -37,7 +37,7 @@ export default function SortDisplay({ dic }: { dic: FindHotelDictionary }) {
        onClick={() => setSelectedSort(option.key)}
        className={`hover:bg-transparent p-0 text-xs cursor-pointer transition-colors ${
         selectedSort === option.key
-         ? 'text-primary font-semibold'
+         ? 'text-active-red/80 font-semibold'
          : 'text-gray-400 hover:text-active-red/80 dark:text-gray-600 dark:hover:text-active-red/80'
        }`}
       >
