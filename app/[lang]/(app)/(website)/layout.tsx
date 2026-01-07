@@ -5,6 +5,7 @@ import ShareDictionaryProvider from './services/share-dictionary/ShareDictionary
 import { getShareDictionary } from '@/internalization/app/dictionaries/website/share/dictionary';
 import { getMetaDictionary } from '@/internalization/app/dictionaries/meta/dictionary';
 import { Locale } from '@/internalization/app/localization';
+import AxiosCredentialsInterceptor from './services/axios-credentials/AxiosCredentialsInterceptor';
 
 export default async function WebsiteLayout({
  children,
@@ -19,6 +20,7 @@ export default async function WebsiteLayout({
  });
  return (
   <ShareDictionaryProvider metaDictionary={metaDic} shareDictionary={shareDic}>
+   <AxiosCredentialsInterceptor />
    <div>
     <Header />
     {children}
