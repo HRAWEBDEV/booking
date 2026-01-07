@@ -1,15 +1,17 @@
 'use client';
-import { Fragment } from 'react';
+import { Fragment, use } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import HotelRoom from './HotelRoom';
-import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
+import { RoomInventory } from '../../services/hotelApiActions';
 
-export default function HotelRooms({ dic }: { dic: PreviewHotelDictionary }) {
- const {
-  roomInventories: { data },
- } = useHotelConfig();
- console.log(data);
-
+export default function HotelRooms({
+ dic,
+ roomInventoriesPromise,
+}: {
+ dic: PreviewHotelDictionary;
+ roomInventoriesPromise: Promise<RoomInventory[] | null>;
+}) {
+ const data = use(roomInventoriesPromise);
  return (
   <section id='rooms' className='scroll-mt-16 mb-4 grid gap-4'>
    {data?.map((roomType) => (

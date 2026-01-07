@@ -27,7 +27,6 @@ export default function HotelConfigProvider({
  fromDate,
  toDate,
  hotelID,
- roomInventories,
 }: {
  children: ReactNode;
  hotelInfo: HotelInfo;
@@ -35,7 +34,6 @@ export default function HotelConfigProvider({
  fromDate: string;
  toDate: string;
  hotelID: string;
- roomInventories: RoomInventory[] | null;
 }) {
  const { arzID, channelID, providerID } = getSetupProviderCredentials();
  const { locale } = useBaseConfig();
@@ -49,63 +47,11 @@ export default function HotelConfigProvider({
   },
  });
 
- const [fromDateValue, toDateValue] = datePickerFilters.watch([
-  'fromDate',
-  'toDate',
- ]);
-
- //
- const {
-  data: roomInventoriesData,
-  isLoading: roomInventoriesIsLoading,
-  isFetching: roomInventoriesIsFetching,
-  isError: roomInventoriesError,
-  refetch: roomInventoriesRefetch,
- } = useQuery({
-  queryKey: [
-   getRoomInventoriesApi,
-   hotelID,
-   providerID,
-   arzID,
-   channelID,
-   fromDateValue?.toISOString(),
-   toDateValue?.toISOString(),
-  ],
-  enabled: Boolean(fromDateValue?.toISOString() && toDateValue?.toISOString()),
-  async queryFn({ signal }) {
-   const res = await getRoomInventory({
-    signal,
-    arzID,
-    channelID,
-    providerID,
-    hotelID,
-    ratePlanID: null,
-    checkinDate: fromDateValue!.toISOString(),
-    checkoutDate: toDateValue!.toISOString(),
-   });
-   return res.data;
-  },
-  initialData: roomInventories,
- });
-
  const ctx: HotelConfig = {
   hotelInfo,
   hotelID,
-  roomInventories: {
-   data: roomInventories,
-   isLoading: roomInventoriesIsLoading,
-   isFetching: roomInventoriesIsFetching,
-   isError: roomInventoriesError,
-   refetch: roomInventoriesRefetch,
-  },
  };
 
- useEffect(() => {
-  const newSearchParam = new URLSearchParams(location.search);
-  newSearchParam.set(fromDateQueryName, fromDateValue?.toISOString() || '');
-  newSearchParam.set(toDateQueryName, toDateValue?.toISOString() || '');
-  router.replace(`/${locale}/hotel/find-hotel/1?${newSearchParam.toString()}`);
- }, [fromDateValue, toDateValue, locale, router]);
  return (
   <hotelConfigContext.Provider value={ctx}>
    <FormProvider {...datePickerFilters}>{children}</FormProvider>

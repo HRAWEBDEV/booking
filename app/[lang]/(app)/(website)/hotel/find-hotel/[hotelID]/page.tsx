@@ -82,7 +82,7 @@ export default async function HotelPage(
   checkoutDate: toDateQuery as string,
   ratePlanID: null,
  });
- const [hotelImages, hotelInventories] = await Promise.all([
+ const [hotelImages] = await Promise.all([
   fetch(
    `${appendApiUri(getHotelImagesApi)}?${hotelInfoSearchParams.toString()}`,
    {
@@ -101,22 +101,27 @@ export default async function HotelPage(
     console.log('hotel image err', err);
     return null;
    }),
-  fetch(`${appendApiUri(getRoomInventoriesApi)}?${roomInventorySearch}`, {
+ ]);
+
+ // hotel inventory
+ const hotelInventoriesPromise = fetch(
+  `${appendApiUri(getRoomInventoriesApi)}?${roomInventorySearch}`,
+  {
    method: 'GET',
    headers: requestCredentialHeader,
+  },
+ )
+  .then(async (res) => {
+   if (res.ok) {
+    return (await res.json()) as Promise<RoomInventory[]>;
+   }
+   console.log('hotel inventory err', res.status);
+   return null;
   })
-   .then(async (res) => {
-    if (res.ok) {
-     return (await res.json()) as Promise<RoomInventory[]>;
-    }
-    console.log('hotel inventory err', res.status);
-    return null;
-   })
-   .catch((err) => {
-    console.log('hotel inventory  err', err);
-    return null;
-   }),
- ]);
+  .catch((err) => {
+   console.log('hotel inventory  err', err);
+   return null;
+  });
  // hotel facility
  const hotelFacilityPromise = fetch(
   `${appendApiUri(getHotelFacilitiesApi)}?${hotelInfoSearchParams.toString()}`,
@@ -135,7 +140,7 @@ export default async function HotelPage(
 
  return (
   <HotelWrapper
-   roomInventories={hotelInventories}
+   roomInventoriesPromise={hotelInventoriesPromise}
    hotelInfo={hotelInfoPromise}
    hotelFacilityPromise={hotelFacilityPromise}
    hotelImages={hotelImages}

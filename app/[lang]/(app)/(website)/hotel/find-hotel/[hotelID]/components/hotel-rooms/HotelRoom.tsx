@@ -94,7 +94,7 @@ export default function HotelRoom({
        / ۱ {dic.hotelRooms.nights}
       </span>
      </div>
-     {discountPercentage && (
+     {!!discountPercentage && (
       <div className='flex gap-1 items-end'>
        <Badge variant='secondary' className='size-7'>
         {discountPercentage}٪
