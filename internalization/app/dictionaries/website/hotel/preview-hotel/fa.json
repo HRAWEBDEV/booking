@@ -17,6 +17,9 @@
   "departureTime": "ساعت خروج",
   "search": "جستجو"
  },
+ "hotelFacilities": {
+  "title": "امکانات"
+ },
  "hotelRooms": {
   "nights": "شب",
   "person": "نفر",
