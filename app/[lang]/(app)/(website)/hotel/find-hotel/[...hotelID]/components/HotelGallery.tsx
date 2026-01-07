@@ -57,7 +57,7 @@ export default function HotelGallery({
      {hotelImages.map((image, i) => (
       <div
        className='keen-slider__slide rounded-lg h-92 overflow-hidden'
-       key={image.hotelID}
+       key={i}
       >
        <img
         src={image.imageURL}
@@ -68,7 +68,7 @@ export default function HotelGallery({
       </div>
      ))}
      <div className='flex justify-center gap-2 py-3 absolute bottom-0 left-0 right-0'>
-      {Array.from({ length: bannerSliderCount }, (_, i) => i).map((idx) => (
+      {hotelImages.map((image, idx) => (
        <button
         key={idx}
         onClick={() => {
@@ -94,7 +94,7 @@ export default function HotelGallery({
       {hotelImages.map((image, i) => (
        <button
         className='keen-slider__slide rounded-lg size-20 cursor-pointer'
-        key={image.hotelID}
+        key={i}
         onClick={() => {
          bannerSliderInstance.current?.moveToIdx(i);
         }}
