@@ -42,7 +42,7 @@ export default function HotelWrapper({
      </Suspense>
      <HotelRooms dic={dic} />
      <HotelDescription dic={dic} hotelInfo={hotelInfo} />
-     <HotelCancelPolicies dic={dic} />
+     <HotelCancelPolicies dic={dic} hotelInfo={hotelInfo} />
     </div>
     <div>
      <div className='sticky top-1 hidden md:block'>
