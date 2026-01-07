@@ -79,6 +79,16 @@ interface RoomInventory {
  accommodationImages: AccomodationImage[];
 }
 
+type GetRoomInventoryProps = {
+ channelID: string;
+ providerID: string;
+ checkinDate: string;
+ checkoutDate: string;
+ arzID: string;
+ hotelID: string;
+ ratePlanID?: null | string;
+};
+
 interface RoomDailyPrice {
  date: string;
  roomOnlineShowRate: number;
@@ -97,5 +107,42 @@ const getHotelFacilitiesApi = '/CRS/OnlineReservation/GetHotelFacilities';
 const getRoomFacilitiesApi =
  '/CRS/OnlineReservation/GetHotelRoomTypeFacilities';
 
-export type { HotelInfo, HotelFacility, HotelImage };
-export { getHotelInfoApi, getHotelFacilitiesApi, getHotelImagesApi };
+function getRoomInventorySearch(query: GetRoomInventoryProps) {
+ const searchParams = new URLSearchParams([
+  ['noBreakfast', 'false'],
+  ['fullBoard', 'false'],
+  ['refundable', 'false'],
+  ['person', '0'],
+ ]);
+ Object.entries(query).forEach(([key, val]) => {
+  if (val) searchParams.set(key, String(val));
+ });
+ return searchParams.toString();
+}
+
+function getRoomInventory({
+ signal,
+ ...queries
+}: { signal: AbortSignal } & GetRoomInventoryProps) {
+ return axios.get<RoomInventory[]>(
+  `${getRoomInventoriesApi}?${getRoomInventorySearch(queries).toString()}`,
+  { signal },
+ );
+}
+
+export type {
+ HotelInfo,
+ HotelFacility,
+ HotelImage,
+ RoomInventory,
+ GetRoomInventoryProps,
+ RoomAccomodationType,
+};
+export {
+ getHotelInfoApi,
+ getHotelFacilitiesApi,
+ getHotelImagesApi,
+ getRoomInventoriesApi,
+ getRoomInventorySearch,
+ getRoomInventory,
+};

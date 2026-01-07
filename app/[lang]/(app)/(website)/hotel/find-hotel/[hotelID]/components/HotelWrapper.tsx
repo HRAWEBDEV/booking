@@ -12,6 +12,7 @@ import {
  type HotelInfo as HotelInfoData,
  type HotelFacility,
  type HotelImage,
+ type RoomInventory,
 } from '../services/hotelApiActions';
 import HotelConfigProvider from '../services/hotel-config/HotelConfigProvider';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -24,17 +25,20 @@ export default function HotelWrapper({
  fromDate,
  toDate,
  hotelID,
+ roomInventories,
 }: {
  dic: PreviewHotelDictionary;
  hotelInfo: HotelInfoData;
  hotelImages: HotelImage[] | null;
  hotelFacilityPromise: Promise<HotelFacility[] | null>;
+ roomInventories: RoomInventory[] | null;
  fromDate: string;
  toDate: string;
  hotelID: string;
 }) {
  return (
   <HotelConfigProvider
+   roomInventories={roomInventories}
    hotelInfo={hotelInfo}
    dic={dic}
    fromDate={fromDate}

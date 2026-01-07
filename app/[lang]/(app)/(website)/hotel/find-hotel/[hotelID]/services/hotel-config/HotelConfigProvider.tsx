@@ -1,11 +1,15 @@
 'use client';
 import { ReactNode, useEffect } from 'react';
-import { type HotelInfo } from '../hotelApiActions';
-import { hotelConfigContext } from './hotelConfigContext';
+import {
+ type HotelInfo,
+ type RoomInventory,
+ getRoomInventoriesApi,
+ getRoomInventory,
+} from '../hotelApiActions';
+import { type HotelConfig, hotelConfigContext } from './hotelConfigContext';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { useForm, FormProvider } from 'react-hook-form';
 import {
- type HotelDatePickerSchema,
  defaultValues,
  createHotelDatePickerSchema,
 } from '../../schemas/hotelDatePickerSchema';
@@ -13,6 +17,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { fromDateQueryName, toDateQueryName } from '../../utils/hotelQueries';
 import { useRouter } from 'next/navigation';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
+import { useQuery } from '@tanstack/react-query';
+import { getSetupProviderCredentials } from '@/app/[lang]/(app)/(website)/utils/getSetupProviderCredentials';
 
 export default function HotelConfigProvider({
  children,
@@ -21,6 +27,7 @@ export default function HotelConfigProvider({
  fromDate,
  toDate,
  hotelID,
+ roomInventories,
 }: {
  children: ReactNode;
  hotelInfo: HotelInfo;
@@ -28,7 +35,9 @@ export default function HotelConfigProvider({
  fromDate: string;
  toDate: string;
  hotelID: string;
+ roomInventories: RoomInventory[] | null;
 }) {
+ const { arzID, channelID, providerID } = getSetupProviderCredentials();
  const { locale } = useBaseConfig();
  const router = useRouter();
  const datePickerFilters = useForm({
@@ -45,9 +54,50 @@ export default function HotelConfigProvider({
   'toDate',
  ]);
 
- const ctx = {
+ //
+ const {
+  data: roomInventoriesData,
+  isLoading: roomInventoriesIsLoading,
+  isFetching: roomInventoriesIsFetching,
+  isError: roomInventoriesError,
+  refetch: roomInventoriesRefetch,
+ } = useQuery({
+  queryKey: [
+   getRoomInventoriesApi,
+   hotelID,
+   providerID,
+   arzID,
+   channelID,
+   fromDateValue?.toISOString(),
+   toDateValue?.toISOString(),
+  ],
+  enabled: Boolean(fromDateValue?.toISOString() && toDateValue?.toISOString()),
+  async queryFn({ signal }) {
+   const res = await getRoomInventory({
+    signal,
+    arzID,
+    channelID,
+    providerID,
+    hotelID,
+    ratePlanID: null,
+    checkinDate: fromDateValue!.toISOString(),
+    checkoutDate: toDateValue!.toISOString(),
+   });
+   return res.data;
+  },
+  initialData: roomInventories,
+ });
+
+ const ctx: HotelConfig = {
   hotelInfo,
   hotelID,
+  roomInventories: {
+   data: roomInventories,
+   isLoading: roomInventoriesIsLoading,
+   isFetching: roomInventoriesIsFetching,
+   isError: roomInventoriesError,
+   refetch: roomInventoriesRefetch,
+  },
  };
 
  useEffect(() => {

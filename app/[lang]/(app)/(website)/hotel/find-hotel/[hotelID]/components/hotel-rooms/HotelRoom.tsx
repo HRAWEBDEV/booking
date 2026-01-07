@@ -6,8 +6,22 @@ import { useKeenSlider } from 'keen-slider/react';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { Badge } from '@/components/ui/badge';
 import { FiMinus, FiPlus } from 'react-icons/fi';
+import {
+ type RoomAccomodationType,
+ type RoomInventory,
+} from '../../services/hotelApiActions';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
-export default function HotelRoom({ dic }: { dic: PreviewHotelDictionary }) {
+export default function HotelRoom({
+ accType,
+ dic,
+ roomType,
+}: {
+ dic: PreviewHotelDictionary;
+ accType: RoomAccomodationType;
+ roomType: RoomInventory;
+}) {
+ const formatNumber = useCurrencyFormatter();
  const [sliderCount, setSliderCount] = useState(0);
  const [activeSliderIndex, setActiveSliderIndex] = useState(0);
  const { localeInfo } = useBaseConfig();
@@ -20,6 +34,14 @@ export default function HotelRoom({ dic }: { dic: PreviewHotelDictionary }) {
    setActiveSliderIndex(slider.track.details.rel);
   },
  });
+ const discountPercentage = accType.roomOnlineShowRate
+  ? Number(
+     (
+      ((accType.roomOnlineShowRate - accType.netRoomRate) * 100) /
+      accType.roomOnlineShowRate
+     ).toFixed(0),
+    )
+  : 0;
  return (
   <article className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input'>
    <div
@@ -56,29 +78,35 @@ export default function HotelRoom({ dic }: { dic: PreviewHotelDictionary }) {
     </div>
    </div>
    <main className='grow mb-2'>
-    <h3 className='text-lg font-medium'>اتاق دو تخته دابل</h3>
+    <h3 className='text-lg font-medium mb-2'>{roomType.fName}</h3>
     <p className='font-medium text-neutral-600 dark:text-neutral-400'>
-     1 {dic.hotelRooms.person}
+     {accType.beds} {dic.hotelRooms.person}
     </p>
    </main>
    <footer className='flex flex-col lg:justify-end lg:basis-52'>
     <div className='mb-4 flex gap-4 items-end flex-wrap lg:gap-1 lg:justify-center'>
      <div className='lg:order-2'>
-      <span className='font-medium text-lg'>25,000,000</span>
+      <span className='font-medium text-lg'>
+       {formatNumber.format(accType.netRoomRate)}
+      </span>
       <span className='ms-1 text-sm'>ریال</span>
       <span className='ms-1 text-sm text-neutral-600 dark:text-neutral-400'>
        / ۱ {dic.hotelRooms.nights}
       </span>
      </div>
-     <div className='flex gap-1 items-end'>
-      <Badge variant='secondary' className='size-7'>
-       ۲۵٪
-      </Badge>
-      <div className='text-sm text-red-700 dark:text-red-400'>
-       <span className='font-medium line-through'>25,000,000</span>
-       <span className='ms-1 text-sm'>ریال</span>
+     {discountPercentage && (
+      <div className='flex gap-1 items-end'>
+       <Badge variant='secondary' className='size-7'>
+        {discountPercentage}٪
+       </Badge>
+       <div className='text-sm text-red-700 dark:text-red-400'>
+        <span className='font-medium line-through'>
+         {formatNumber.format(accType.roomOnlineShowRate)}
+        </span>
+        <span className='ms-1 text-sm'>ریال</span>
+       </div>
       </div>
-     </div>
+     )}
     </div>
     <div className='flex flex-col gap-2'>
      <div className='flex gap-4 items-center w-[min(100%,9rem)] mx-auto'>
