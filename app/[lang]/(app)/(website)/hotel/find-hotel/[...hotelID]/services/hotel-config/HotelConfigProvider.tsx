@@ -6,15 +6,15 @@ import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/
 
 export default function HotelConfigProvider({
  children,
- hotelInfoPromise,
+ hotelInfo,
  dic,
 }: {
  children: ReactNode;
- hotelInfoPromise: Promise<HotelInfo>;
+ hotelInfo: HotelInfo;
  dic: PreviewHotelDictionary;
 }) {
  const ctx = {
-  hotelInfoPromise,
+  hotelInfo,
  };
 
  return (

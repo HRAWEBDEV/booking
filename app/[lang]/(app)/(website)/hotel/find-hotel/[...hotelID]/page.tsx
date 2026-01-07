@@ -44,19 +44,15 @@ export default async function HotelPage(
   ['hotelID', hotelID.toString()],
  ]);
 
- const hotelInfoPromise = fetch(
+ const hotelInfoPromise = await fetch(
   `${appendApiUri(getHotelInfoApi)}?${hotelInfoSearchParams.toString()}`,
   {
    method: 'GET',
    headers: requestCredentialHeader,
   },
- ).then((res) => {
-  return res.json() as Promise<HotelInfo>;
+ ).then(async (res) => {
+  return (await res.json()) as Promise<HotelInfo>;
  });
 
- return (
-  <Suspense fallback={<div>test</div>}>
-   <HotelWrapper hotelInfoPromise={hotelInfoPromise} dic={dic} />
-  </Suspense>
- );
+ return <HotelWrapper hotelInfo={hotelInfoPromise} dic={dic} />;
 }

@@ -3,7 +3,7 @@ import { use, createContext } from 'react';
 import { type HotelInfo } from '../hotelApiActions';
 
 interface HotelConfig {
- hotelInfoPromise: Promise<HotelInfo>;
+ hotelInfo: HotelInfo;
 }
 
 const hotelConfigContext = createContext<HotelConfig | null>(null);

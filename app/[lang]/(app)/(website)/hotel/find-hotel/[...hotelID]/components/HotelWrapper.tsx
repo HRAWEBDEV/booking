@@ -12,13 +12,13 @@ import HotelConfigProvider from '../services/hotel-config/HotelConfigProvider';
 
 export default function HotelWrapper({
  dic,
- hotelInfoPromise,
+ hotelInfo,
 }: {
  dic: PreviewHotelDictionary;
- hotelInfoPromise: Promise<HotelInfoData>;
+ hotelInfo: HotelInfoData;
 }) {
  return (
-  <HotelConfigProvider hotelInfoPromise={hotelInfoPromise} dic={dic}>
+  <HotelConfigProvider hotelInfo={hotelInfo} dic={dic}>
    <HotelInfo dic={dic} />
    <div className='grid md:grid-cols-[1fr_18rem] gap-4 mb-4'>
     <div className='grid grid-cols-1'>
