@@ -92,7 +92,7 @@ function Calendar({
       });
      },
      formatCaption: (date) =>
-      date.toLocaleString(activeLocale, { month: 'short' }),
+      date.toLocaleString(activeLocale, { year: 'numeric', month: 'short' }),
      formatMonthDropdown: (date) =>
       date.toLocaleString(activeLocale, { month: 'short' }),
      ...formatters,

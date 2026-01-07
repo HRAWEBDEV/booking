@@ -19,15 +19,14 @@ export default function HotelDatePicker({
  dic: PreviewHotelDictionary;
 }) {
  const dateFns = useDateFns();
- const [openFromDate, setOpenFromDate] = useState(false);
- const [openToDate, setOpenToDate] = useState(false);
+ const [openDatePickerCalendar, setOpenDatePickerCalendar] = useState(false);
 
  const datePickerCalendar = (
   <Calendar
    mode='range'
-   captionLayout='dropdown-years'
    numberOfMonths={2}
    startMonth={dateFns.startOfMonth(new Date())}
+   showOutsideDays={false}
    disabled={(date) => {
     return date.getTime() <= new Date().getTime();
    }}
@@ -51,29 +50,28 @@ export default function HotelDatePicker({
      <Label htmlFor='fromDate' className='px-1'>
       {dic.hotelDatePicker.fromDate}
      </Label>
-     <Popover open={openFromDate} onOpenChange={setOpenFromDate}>
-      <PopoverTrigger asChild>
-       <Button
-        variant='outline'
-        id='fromDate'
-        className='w-32 justify-between font-normal'
-       >
-        {'Select date'}
-        <ChevronDownIcon />
-       </Button>
-      </PopoverTrigger>
-      <PopoverContent className='w-auto overflow-hidden p-0' align='end'>
-       {datePickerCalendar}
-      </PopoverContent>
-     </Popover>
+     <Button
+      type='button'
+      variant='outline'
+      id='fromDate'
+      className='w-32 justify-between font-normal'
+      onClick={() => setOpenDatePickerCalendar((pre) => !pre)}
+     >
+      {'Select date'}
+      <ChevronDownIcon />
+     </Button>
     </Field>
     <Field className='gap-2'>
      <Label htmlFor='toDate' className='px-1'>
       {dic.hotelDatePicker.fromDate}
      </Label>
-     <Popover open={openToDate} onOpenChange={setOpenToDate}>
+     <Popover
+      open={openDatePickerCalendar}
+      onOpenChange={setOpenDatePickerCalendar}
+     >
       <PopoverTrigger asChild>
        <Button
+        type='button'
         variant='outline'
         id='toDate'
         className='w-32 justify-between font-normal'
