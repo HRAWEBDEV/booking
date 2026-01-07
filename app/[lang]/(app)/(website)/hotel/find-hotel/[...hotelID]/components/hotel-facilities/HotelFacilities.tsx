@@ -1,11 +1,15 @@
+import { use } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
-import { FaCar } from 'react-icons/fa';
+import { type HotelFacility } from '../../services/hotelApiActions';
 
 export default function HotelFacilities({
  dic,
+ hotelFacilityPromise,
 }: {
  dic: PreviewHotelDictionary;
+ hotelFacilityPromise: Promise<HotelFacility[] | null>;
 }) {
+ const data = use(hotelFacilityPromise);
  return (
   <section
    id='hotelFacilities'
@@ -15,15 +19,20 @@ export default function HotelFacilities({
     {dic.hotelFacilities.title}
    </h3>
    <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
-    {Array.from({ length: 12 }, (_, i) => i).map((i) => (
-     <div
-      key={i}
-      className='flex gap-2 items-center text-neutral-600 dark:text-neutral-400'
-     >
-      <FaCar className='size-5' />
-      <span className='text-sm'>پارکینگ</span>
-     </div>
-    ))}
+    {data && !!data.length ? (
+     data.map((item) => (
+      <div
+       key={item.key}
+       className='flex gap-2 items-center text-neutral-600 dark:text-neutral-400'
+      >
+       <span className='text-sm'>{item.value}</span>
+      </div>
+     ))
+    ) : (
+     <p className='text-center col-span-full font-medium'>
+      {dic.hotelFacilities.noItemFound}
+     </p>
+    )}
    </div>
   </section>
  );

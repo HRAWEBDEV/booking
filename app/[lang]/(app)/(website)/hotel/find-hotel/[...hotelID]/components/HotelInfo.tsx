@@ -22,7 +22,9 @@ export default function HotelTitle({
       className='size-4 text-neutral-200 dark:text-neutral-800 data-[active="true"]:text-orange-400 data-[active="true"]:dark:text-orange-800'
      />
     ))}
-    <span className='text-xs text-neutral-500'>(4) {dic.hotelInfo.star}</span>
+    <span className='text-xs text-neutral-500'>
+     ({hotelInfo.hotelGradeID}) {dic.hotelInfo.star}
+    </span>
    </div>
    <h1 className='text-2xl lg:text-3xl font-medium mb-2'>
     <Button

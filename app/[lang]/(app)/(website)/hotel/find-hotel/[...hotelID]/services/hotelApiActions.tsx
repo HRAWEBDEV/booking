@@ -28,7 +28,7 @@ interface HotelImage {
  imageURL: string;
 }
 
-interface Facilities {
+interface HotelFacility {
  key: string;
  value: string;
 }
@@ -97,5 +97,5 @@ const getHotelFacilitiesApi = '/CRS/OnlineReservation/GetHotelFacilities';
 const getRoomFacilitiesApi =
  '/CRS/OnlineReservation/GetHotelRoomTypeFacilities';
 
-export type { HotelInfo };
-export { getHotelInfoApi };
+export type { HotelInfo, HotelFacility };
+export { getHotelInfoApi, getHotelFacilitiesApi };

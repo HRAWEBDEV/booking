@@ -5,7 +5,12 @@ import { getPreviewHotelDictionary } from '@/internalization/app/dictionaries/we
 import { redirect } from 'next/navigation';
 import { fromDateQueryName, toDateQueryName } from './utils/hotelQueries';
 import { supportedDateFns } from '@/internalization/app/localization';
-import { type HotelInfo, getHotelInfoApi } from './services/hotelApiActions';
+import {
+ type HotelInfo,
+ type HotelFacility,
+ getHotelInfoApi,
+ getHotelFacilitiesApi,
+} from './services/hotelApiActions';
 import { getSetupProviderCredentials } from '../../../utils/getSetupProviderCredentials';
 import { appendApiUri } from '../../../utils/appendApiUri';
 
@@ -44,15 +49,43 @@ export default async function HotelPage(
   ['hotelID', hotelID.toString()],
  ]);
 
+ // hotel info
  const hotelInfoPromise = await fetch(
   `${appendApiUri(getHotelInfoApi)}?${hotelInfoSearchParams.toString()}`,
   {
    method: 'GET',
    headers: requestCredentialHeader,
   },
- ).then(async (res) => {
-  return (await res.json()) as Promise<HotelInfo>;
- });
+ )
+  .then(async (res) => {
+   return (await res.json()) as Promise<HotelInfo>;
+  })
+  .catch((err) => {
+   console.log('hotel info err', err);
+   throw new Error('err', err);
+  });
 
- return <HotelWrapper hotelInfo={hotelInfoPromise} dic={dic} />;
+ // hotel facility
+ const hotelFacilityPromise = fetch(
+  `${appendApiUri(getHotelFacilitiesApi)}?${hotelInfoSearchParams.toString()}`,
+  {
+   method: 'GET',
+   headers: requestCredentialHeader,
+  },
+ )
+  .then((res) => {
+   return res.json() as Promise<HotelFacility[]>;
+  })
+  .catch((err) => {
+   console.log('hotel facilities err', err);
+   return null;
+  });
+
+ return (
+  <HotelWrapper
+   hotelInfo={hotelInfoPromise}
+   hotelFacilityPromise={hotelFacilityPromise}
+   dic={dic}
+  />
+ );
 }

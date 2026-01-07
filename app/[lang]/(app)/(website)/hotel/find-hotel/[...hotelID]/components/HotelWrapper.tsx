@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import HotelInfo from './HotelInfo';
 import HotelGallery from './HotelGallery';
@@ -7,15 +8,21 @@ import HotelDescription from './hotel-description/HotelDescription';
 import HotelFacilities from './hotel-facilities/HotelFacilities';
 import HotelRooms from './hotel-rooms/HotelRooms';
 import HotelCancelPolicies from './hotel-cancel-policies/HotelCancelPolicies';
-import { type HotelInfo as HotelInfoData } from '../services/hotelApiActions';
+import {
+ type HotelInfo as HotelInfoData,
+ type HotelFacility,
+} from '../services/hotelApiActions';
 import HotelConfigProvider from '../services/hotel-config/HotelConfigProvider';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function HotelWrapper({
  dic,
  hotelInfo,
+ hotelFacilityPromise,
 }: {
  dic: PreviewHotelDictionary;
  hotelInfo: HotelInfoData;
+ hotelFacilityPromise: Promise<HotelFacility[] | null>;
 }) {
  return (
   <HotelConfigProvider hotelInfo={hotelInfo} dic={dic}>
@@ -25,16 +32,18 @@ export default function HotelWrapper({
      <HotelGallery dic={dic} />
      <HotelMenuBar dic={dic} />
      <div className='block md:hidden'>
-      <HotelDatePicker dic={dic} />
+      <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
      </div>
-     <HotelFacilities dic={dic} />
+     <Suspense fallback={<Skeleton className='h-36 mb-4' />}>
+      <HotelFacilities dic={dic} hotelFacilityPromise={hotelFacilityPromise} />
+     </Suspense>
      <HotelRooms dic={dic} />
      <HotelDescription dic={dic} hotelInfo={hotelInfo} />
      <HotelCancelPolicies dic={dic} />
     </div>
     <div>
      <div className='sticky top-1 hidden md:block'>
-      <HotelDatePicker dic={dic} />
+      <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
      </div>
     </div>
    </div>

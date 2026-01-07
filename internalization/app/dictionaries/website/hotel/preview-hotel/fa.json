@@ -19,7 +19,8 @@
   "search": "جستجو"
  },
  "hotelFacilities": {
-  "title": "امکانات"
+  "title": "امکانات",
+  "noItemFound": "امکاناتی یافت نشد"
  },
  "hotelRooms": {
   "nights": "شب",

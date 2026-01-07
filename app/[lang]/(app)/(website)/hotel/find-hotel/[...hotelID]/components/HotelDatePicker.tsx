@@ -12,11 +12,14 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { ChevronDownIcon } from 'lucide-react';
 import { useDateFns } from '@/hooks/useDateFns';
+import { type HotelInfo } from '../services/hotelApiActions';
 
 export default function HotelDatePicker({
  dic,
+ hotelInfo,
 }: {
  dic: PreviewHotelDictionary;
+ hotelInfo: HotelInfo;
 }) {
  const dateFns = useDateFns();
  const [openDatePickerCalendar, setOpenDatePickerCalendar] = useState(false);
@@ -38,11 +41,11 @@ export default function HotelDatePicker({
    <div className='mb-3 grid grid-cols-2 gap-4 text-xs font-medium text-neutral-600 pb-2 border-b border-input'>
     <div className='flex flex-col gap-1 items-center p-1 rounded-md bg-neutral-100 dark:bg-neutral-900'>
      <span>{dic.hotelDatePicker.arrivalTime}</span>
-     <span>12:00</span>
+     <span>{hotelInfo.checkin || '---'}</span>
     </div>
     <div className='flex flex-col gap-1 items-center p-1 rounded-md bg-neutral-100 dark:bg-neutral-900'>
      <span>{dic.hotelDatePicker.departureTime}</span>
-     <span>12:00</span>
+     <span>{hotelInfo.checkout || '---'}</span>
     </div>
    </div>
    <FieldGroup className='gap-5'>
