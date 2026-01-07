@@ -31,40 +31,40 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
  });
 
  return (
-  <Link href={'#'}>
-   <Card className='w-full! shadow-none py-4 pt-0 gap-4'>
-    <CardHeader className='px-0! gap-0 relative'>
-     <div
-      ref={sliderRef}
-      className='keen-slider relative overflow-hidden rounded-xl rounded-b-none'
-     >
-      {Array.from({ length: 2 }, (_, i) => i).map((i) => (
-       <div
-        key={i}
-        className='keen-slider__slide cursor-pointer overflow-hidden w-full'
-       >
-        <div className='h-60 border border-input rounded-xl rounded-b-none bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
-         <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
-        </div>
+  <Card className='w-full! shadow-none py-4 pt-0 gap-4'>
+   <CardHeader className='px-0! gap-0 relative'>
+    <div
+     ref={sliderRef}
+     className='keen-slider relative overflow-hidden rounded-xl rounded-b-none'
+    >
+     {Array.from({ length: 2 }, (_, i) => i).map((i) => (
+      <div
+       key={i}
+       className='keen-slider__slide cursor-grab active:cursor-grabbing overflow-hidden w-full'
+      >
+       <div className='h-60 border border-input rounded-xl rounded-b-none bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
+        <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
        </div>
-      ))}
-      {slidesCount > 0 && (
-       <div className='flex justify-center gap-2 py-3 absolute bottom-0 left-0 right-0'>
-        {[...Array(slidesCount).keys()].map((idx) => (
-         <button
-          key={idx}
-          onClick={() => instanceRef.current?.moveToIdx(idx)}
-          className={`h-2 border cursor-pointer border-gray-300 rounded-full transition-all ${
-           currentSlide === idx
-            ? 'bg-white w-6'
-            : 'bg-gray-200/80 hover:bg-white w-2'
-          }`}
-         />
-        ))}
-       </div>
-      )}
-     </div>
-    </CardHeader>
+      </div>
+     ))}
+     {slidesCount > 0 && (
+      <div className='flex justify-center gap-2 py-3 absolute bottom-0 left-0 right-0'>
+       {[...Array(slidesCount).keys()].map((idx) => (
+        <button
+         key={idx}
+         onClick={() => instanceRef.current?.moveToIdx(idx)}
+         className={`h-2 border cursor-pointer border-gray-300 rounded-full transition-all ${
+          currentSlide === idx
+           ? 'bg-white w-6'
+           : 'bg-gray-200/80 hover:bg-white w-2'
+         }`}
+        />
+       ))}
+      </div>
+     )}
+    </div>
+   </CardHeader>
+   <Link href={'#'}>
     <CardContent className='px-4 flex flex-col gap-4'>
      <div className='flex flex-col gap-2'>
       <div className='flex items-center justify-between'>
@@ -118,7 +118,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
       {dic.hotelCard.discountBadge}
      </Badge>
     </CardFooter>
-   </Card>
-  </Link>
+   </Link>
+  </Card>
  );
 }
