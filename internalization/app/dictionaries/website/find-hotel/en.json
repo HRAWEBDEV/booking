@@ -101,5 +101,8 @@
    "freeCancellation": "Free Cancellation",
    "restaurantDiscount": "Restaurant Discount"
   }
+ },
+ "filterButton": {
+  "title": "Filter"
  }
 }

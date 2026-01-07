@@ -2,7 +2,7 @@ import React from 'react';
 import DisplayFilters from '../display-filter/DisplayFilters';
 import { HotelsList } from '../hotels-list/HotelsList';
 import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
-import HotelFilters from '../hotel-filters/HotelFilters';
+import HotelFilters from '../hotel-filters-desktop/HotelFilters';
 
 export default function FindHotelWrapper({
  dic,

@@ -101,5 +101,8 @@
    "freeCancellation": "کنسلی رایگان",
    "restaurantDiscount": "تخفیف رستوران"
   }
+ },
+ "filterButton": {
+  "title": "فیلترها"
  }
 }
