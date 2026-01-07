@@ -1,3 +1,4 @@
+'use client';
 import { ReactNode } from 'react';
 import { type HotelInfo } from '../hotelApiActions';
 import { hotelConfigContext } from './hotelConfigContext';
