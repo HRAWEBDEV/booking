@@ -91,6 +91,8 @@ function Calendar({
        weekday: 'narrow',
       });
      },
+     formatCaption: (date) =>
+      date.toLocaleString(activeLocale, { month: 'short' }),
      formatMonthDropdown: (date) =>
       date.toLocaleString(activeLocale, { month: 'short' }),
      ...formatters,
