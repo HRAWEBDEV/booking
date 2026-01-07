@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { type Locale } from '@/internalization/app/localization';
 import HotelWrapper from './components/HotelWrapper';
 import { getPreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
@@ -8,6 +7,8 @@ import { supportedDateFns } from '@/internalization/app/localization';
 import {
  type HotelInfo,
  type HotelFacility,
+ type HotelImage,
+ getHotelImagesApi,
  getHotelInfoApi,
  getHotelFacilitiesApi,
 } from './services/hotelApiActions';
@@ -58,13 +59,35 @@ export default async function HotelPage(
   },
  )
   .then(async (res) => {
-   return (await res.json()) as Promise<HotelInfo>;
+   if (res.ok) {
+    return (await res.json()) as Promise<HotelInfo>;
+   }
+   console.log('hotel info err', res.status);
+   throw new Error('hotel info error');
   })
   .catch((err) => {
    console.log('hotel info err', err);
-   throw new Error('err', err);
+   throw new Error('hotel info err', err);
   });
-
+ // hotel image
+ const hotelImages = await fetch(
+  `${appendApiUri(getHotelImagesApi)}?${hotelInfoSearchParams.toString()}`,
+  {
+   method: 'GET',
+   headers: requestCredentialHeader,
+  },
+ )
+  .then(async (res) => {
+   if (res.ok) {
+    return (await res.json()) as Promise<HotelImage[]>;
+   }
+   console.log('hotel image err', res.status);
+   return null;
+  })
+  .catch((err) => {
+   console.log('hotel image err', err);
+   return null;
+  });
  // hotel facility
  const hotelFacilityPromise = fetch(
   `${appendApiUri(getHotelFacilitiesApi)}?${hotelInfoSearchParams.toString()}`,
@@ -85,6 +108,7 @@ export default async function HotelPage(
   <HotelWrapper
    hotelInfo={hotelInfoPromise}
    hotelFacilityPromise={hotelFacilityPromise}
+   hotelImages={hotelImages}
    dic={dic}
   />
  );

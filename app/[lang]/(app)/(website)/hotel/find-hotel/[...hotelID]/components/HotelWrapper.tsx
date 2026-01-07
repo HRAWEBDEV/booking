@@ -11,6 +11,7 @@ import HotelCancelPolicies from './hotel-cancel-policies/HotelCancelPolicies';
 import {
  type HotelInfo as HotelInfoData,
  type HotelFacility,
+ type HotelImage,
 } from '../services/hotelApiActions';
 import HotelConfigProvider from '../services/hotel-config/HotelConfigProvider';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -19,9 +20,11 @@ export default function HotelWrapper({
  dic,
  hotelInfo,
  hotelFacilityPromise,
+ hotelImages,
 }: {
  dic: PreviewHotelDictionary;
  hotelInfo: HotelInfoData;
+ hotelImages: HotelImage[] | null;
  hotelFacilityPromise: Promise<HotelFacility[] | null>;
 }) {
  return (
@@ -29,7 +32,7 @@ export default function HotelWrapper({
    <HotelInfo dic={dic} hotelInfo={hotelInfo} />
    <div className='grid md:grid-cols-[1fr_18rem] gap-4 mb-4'>
     <div className='grid grid-cols-1'>
-     <HotelGallery dic={dic} />
+     <HotelGallery dic={dic} hotelImages={hotelImages} />
      <HotelMenuBar dic={dic} />
      <div className='block md:hidden'>
       <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />

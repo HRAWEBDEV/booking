@@ -97,5 +97,5 @@ const getHotelFacilitiesApi = '/CRS/OnlineReservation/GetHotelFacilities';
 const getRoomFacilitiesApi =
  '/CRS/OnlineReservation/GetHotelRoomTypeFacilities';
 
-export type { HotelInfo, HotelFacility };
-export { getHotelInfoApi, getHotelFacilitiesApi };
+export type { HotelInfo, HotelFacility, HotelImage };
+export { getHotelInfoApi, getHotelFacilitiesApi, getHotelImagesApi };
