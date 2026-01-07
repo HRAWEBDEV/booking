@@ -11,7 +11,7 @@ import {
 } from '../../schemas/hotelDatePickerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { fromDateQueryName, toDateQueryName } from '../../utils/hotelQueries';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 
 export default function HotelConfigProvider({
@@ -31,7 +31,6 @@ export default function HotelConfigProvider({
 }) {
  const { locale } = useBaseConfig();
  const router = useRouter();
- const searchParams = useSearchParams();
  const datePickerFilters = useForm({
   resolver: zodResolver(createHotelDatePickerSchema()),
   defaultValues: {
@@ -41,22 +40,17 @@ export default function HotelConfigProvider({
   },
  });
 
- const [fromDateValue, toDateValue] = datePickerFilters.watch([
-  'fromDate',
-  'toDate',
- ]);
-
  const ctx = {
   hotelInfo,
   hotelID,
  };
 
- useEffect(() => {
-  const newSearchParam = new URLSearchParams(searchParams.toString());
-  newSearchParam.set(fromDateQueryName, fromDateValue?.toISOString() || '');
-  newSearchParam.set(toDateQueryName, toDateValue?.toISOString() || '');
-  router.replace(`/${locale}/hotel/find-hotel/1${newSearchParam.toString()}`);
- }, [fromDateValue, toDateValue, searchParams, locale, router]);
+ // useEffect(() => {
+ //  const newSearchParam = new URLSearchParams(location.search);
+ //  newSearchParam.set(fromDateQueryName, fromDateValue?.toISOString() || '');
+ //  newSearchParam.set(toDateQueryName, toDateValue?.toISOString() || '');
+ //  router.replace(`/${locale}/hotel/find-hotel/1?${newSearchParam.toString()}`);
+ // }, [fromDateValue, toDateValue, locale, router]);
  return (
   <hotelConfigContext.Provider value={ctx}>
    <FormProvider {...datePickerFilters}>{children}</FormProvider>

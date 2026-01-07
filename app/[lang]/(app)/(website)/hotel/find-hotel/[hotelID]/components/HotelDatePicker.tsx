@@ -13,7 +13,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { ChevronDownIcon } from 'lucide-react';
 import { useDateFns } from '@/hooks/useDateFns';
 import { type HotelInfo } from '../services/hotelApiActions';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { type HotelDatePickerSchema } from '../schemas/hotelDatePickerSchema';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 
@@ -25,27 +25,11 @@ export default function HotelDatePicker({
  hotelInfo: HotelInfo;
 }) {
  const { locale } = useBaseConfig();
- const { control, watch, setValue } = useFormContext<HotelDatePickerSchema>();
+ const { watch, setValue, control } = useFormContext<HotelDatePickerSchema>();
  const dateFns = useDateFns();
  const [openDatePickerCalendar, setOpenDatePickerCalendar] = useState(false);
 
  const [fromDateValue, toDateValue] = watch(['fromDate', 'toDate']);
-
- const datePickerCalendar = (
-  <Calendar
-   mode='range'
-   numberOfMonths={2}
-   startMonth={dateFns.startOfMonth(new Date())}
-   selected={{
-    from: fromDateValue || undefined,
-    to: toDateValue || undefined,
-   }}
-   showOutsideDays={false}
-   disabled={(date) => {
-    return date.getTime() < dateFns.startOfDay(new Date()).getTime();
-   }}
-  />
- );
 
  return (
   <form className='shadow-lg border border-input p-4 rounded-md mb-2'>
@@ -99,7 +83,35 @@ export default function HotelDatePicker({
        </Button>
       </PopoverTrigger>
       <PopoverContent className='w-auto overflow-hidden p-0' align='end'>
-       {datePickerCalendar}
+       <Controller
+        control={control}
+        name='toDate'
+        render={({ field: { value, onChange, ...other } }) => (
+         <Calendar
+          mode='range'
+          {...other}
+          numberOfMonths={2}
+          startMonth={dateFns.startOfMonth(new Date())}
+          selected={{
+           to: fromDateValue || undefined,
+           from: value || undefined,
+          }}
+          onSelect={(selected) => {
+           if (!selected) {
+            onChange(null);
+            setValue('fromDate', null);
+           } else {
+            onChange(selected.to || null);
+            setValue('fromDate', selected.from || null);
+           }
+          }}
+          showOutsideDays={false}
+          disabled={(date) => {
+           return date.getTime() < dateFns.startOfDay(new Date()).getTime();
+          }}
+         />
+        )}
+       />
       </PopoverContent>
      </Popover>
     </Field>
