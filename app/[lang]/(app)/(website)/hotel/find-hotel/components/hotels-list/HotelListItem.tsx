@@ -101,7 +101,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
       )}
      </div>
     </CardContent>
-    <CardFooter className='gap-2 flex items-center justify-between! px-4'>
+    <CardFooter className='gap-2 flex items-center justify-between! px-4 pt-2'>
      <div className='flex gap-1 items-center w-full'>
       <span>{dic.hotelCard.fromText}</span>
       <div className='text-lg font-semibold'>
