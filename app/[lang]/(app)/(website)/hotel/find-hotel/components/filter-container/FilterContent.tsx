@@ -19,7 +19,7 @@ export default function FilterContent({
 }) {
  return (
   <>
-   <div className='p-5'>
+   <div className='sm:p-5 p-2'>
     <Input
      type='search'
      placeholder={dic.searchInputFilter.placeholder}
@@ -27,7 +27,7 @@ export default function FilterContent({
     />
    </div>
    <Separator className='bg-border' />
-   <div className='p-5'>
+   <div className='sm:p-5 p-2'>
     <PriceRangeFilter
      dic={dic}
      currentPriceRange={currentPriceRange}
@@ -35,19 +35,19 @@ export default function FilterContent({
     />
    </div>
    <Separator className='bg-border' />
-   <div className='p-5'>
+   <div className='sm:p-5 p-2'>
     <StarFilters dic={dic} />
    </div>
    <Separator className='bg-border' />
-   <div className='p-5'>
+   <div className='sm:p-5 p-2'>
     <BedFilters dic={dic} />
    </div>
    <Separator className='bg-border' />
-   <div className='p-5'>
+   <div className='sm:p-5 p-2'>
     <AmenitiesFilter dic={dic} />
    </div>
    <Separator className='bg-border' />
-   <div className='p-5'>
+   <div className='sm:p-5 p-2'>
     <OffersFilter dic={dic} />
    </div>
   </>

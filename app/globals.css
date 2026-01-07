@@ -193,7 +193,13 @@
  --color-star: var(--star);
  --color-active-red: var(--active-red);
 }
-
+.hide-scrollbar {
+ -ms-overflow-style: none; /* IE and Edge */
+ scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+ display: none; /* Chrome, Safari, Opera */
+}
 @layer base {
  * {
   @apply border-border outline-ring/50;

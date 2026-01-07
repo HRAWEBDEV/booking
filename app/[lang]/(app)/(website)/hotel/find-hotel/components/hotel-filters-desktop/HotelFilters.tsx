@@ -37,7 +37,7 @@ export default function HotelFilters({ dic }: { dic: FindHotelDictionary }) {
      <DrawerTrigger asChild>
       <Button
        variant='outline'
-       className='rounded-xl! shadow-lg opacity-50 hover:opacity-100 transition-[3s] cursor-pointer bg-gray-400 hover:bg-gray-400 dark:bggr border-none'
+       className='rounded-lg! shadow-lg opacity-50 hover:opacity-100 transition-[3s] cursor-pointer bg-gray-400/80 backdrop-blur-2xl hover:bg-gray-200 px-4! dark:bggr border-none'
       >
        <SlidersHorizontal className='h-5 w-5 mr-2' />
        {dic.filterButton.title}
@@ -47,7 +47,7 @@ export default function HotelFilters({ dic }: { dic: FindHotelDictionary }) {
       <DrawerHeader className='text-center'>
        <DrawerTitle>{dic.filterButton.title}</DrawerTitle>
       </DrawerHeader>
-      <div className='flex-1 overflow-y-auto w-full px-4 pb-8'>
+      <div className='flex-1 overflow-y-auto hide-scrollbar w-full px-2 pb-8'>
        <FilterContent
         dic={dic}
         currentPriceRange={currentPriceRange}
