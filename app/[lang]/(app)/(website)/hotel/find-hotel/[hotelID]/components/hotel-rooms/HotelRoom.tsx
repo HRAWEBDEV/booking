@@ -14,21 +14,32 @@ import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { LuImageOff } from 'react-icons/lu';
 import { ratePlanTypes } from '../../utils/ratePlanTypes';
 import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
-import { type Room, findRoom } from '../../utils/hotelRoomsPickerReducer';
+import {
+ type Room,
+ findRoom,
+ isTargetRoom,
+} from '../../utils/hotelRoomsPickerReducer';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Spinner } from '@/components/ui/spinner';
 
 const imageContainerClass =
- 'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative';
+ 'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative shrink-0';
 const imageWrapperClass = 'h-56 lg:h-44 rounded-md overflow-hidden';
 
 export default function HotelRoom({
  accType,
  dic,
  roomType,
+ selectedRoom,
+ roomDailyPriceIsLoading,
+ setSelectedRoom,
 }: {
  dic: PreviewHotelDictionary;
  accType: RoomAccomodationType;
  roomType: RoomInventory;
+ selectedRoom: Room | null;
+ roomDailyPriceIsLoading: boolean;
+ setSelectedRoom: (newRoom: Room) => unknown;
 }) {
  const {
   rooms: { selectedRoomsDispatch, selectedRooms, roomTypeCapacity },
@@ -69,6 +80,10 @@ export default function HotelRoom({
  };
  const selectedRoomInfo = findRoom(selectedRooms, roomInfo);
  const targetRoomTypeCapacity = roomTypeCapacity[roomType.roomTypeID];
+
+ const targetRoomDailyPricingIsLoading = selectedRoom
+  ? isTargetRoom(selectedRoom, roomInfo) && roomDailyPriceIsLoading
+  : false;
 
  return (
   <article className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input'>
@@ -215,7 +230,14 @@ export default function HotelRoom({
        {dic.hotelRooms.addRoom}
       </Button>
      )}
-     <Button variant='outline' size='lg' className='w-full'>
+     <Button
+      variant='outline'
+      size='lg'
+      disabled={targetRoomDailyPricingIsLoading}
+      className='w-full'
+      onClick={() => setSelectedRoom(roomInfo)}
+     >
+      {targetRoomDailyPricingIsLoading && <Spinner />}
       {dic.hotelRooms.viewPricingCalendar}
      </Button>
     </div>

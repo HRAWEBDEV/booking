@@ -37,7 +37,8 @@
   "addRoom": "افزودن اتاق",
   "viewPricingCalendar": "مشاهده تقویم قیمتی",
   "discount": "تخفیف",
-  "capacityIsFull": "اتاق ظرفیت ندارد"
+  "capacityIsFull": "اتاق ظرفیت ندارد",
+  "dailyPrice": "قیمت‌های روزانه"
  },
  "hotelDescription": {
   "floors": "طبقات",

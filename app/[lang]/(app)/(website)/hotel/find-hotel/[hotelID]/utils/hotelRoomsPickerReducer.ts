@@ -25,7 +25,7 @@ type RoomsPickerActions =
     type: 'reset';
    };
 
-function isTargetRoom(item: SelectedRoom, room: Room) {
+function isTargetRoom(item: Room, room: Room) {
  return (
   item.roomTypeID === room.roomTypeID &&
   item.ratePlanID === room.ratePlanID &&

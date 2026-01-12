@@ -131,6 +131,33 @@ function getRoomInventory({
  );
 }
 
+function getRoomPriceDaily({
+ signal,
+ ...queries
+}: {
+ signal: AbortSignal;
+ channelID: string;
+ hotelID: string;
+ providerID: string;
+ startDate: string;
+ endDate: string;
+ roomTypeID: number;
+ ratePlanID: number;
+ arzID: string;
+ beds: number;
+}) {
+ const searchParams = new URLSearchParams();
+ Object.entries(queries).forEach(([key, val]) => {
+  searchParams.set(key, String(val));
+ });
+ return axios.get<RoomDailyPrice[]>(
+  `${getRoomDailyPriceApi}?${searchParams.toString()}`,
+  {
+   signal,
+  },
+ );
+}
+
 export type {
  HotelInfo,
  HotelFacility,
@@ -144,6 +171,8 @@ export {
  getHotelFacilitiesApi,
  getHotelImagesApi,
  getRoomInventoriesApi,
+ getRoomDailyPriceApi,
  getRoomInventorySearch,
  getRoomInventory,
+ getRoomPriceDaily,
 };
