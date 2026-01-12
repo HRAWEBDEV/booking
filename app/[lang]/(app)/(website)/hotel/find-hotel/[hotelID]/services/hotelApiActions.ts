@@ -36,6 +36,7 @@ interface HotelFacility {
 interface RatePlanType {
  fName: string;
  ratePlanID: number;
+ ratePlanTypeID: number;
  ratePlanTypeName: string;
  noBreakfast: boolean;
  nonRefundable: boolean;

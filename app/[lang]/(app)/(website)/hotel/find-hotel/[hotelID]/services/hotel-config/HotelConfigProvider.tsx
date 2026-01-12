@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode } from 'react';
+import { ReactNode, useReducer } from 'react';
 import { type HotelInfo } from '../hotelApiActions';
 import { type HotelConfig, hotelConfigContext } from './hotelConfigContext';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 // import { fromDateQueryName, toDateQueryName } from '../../utils/hotelQueries';
 import { useRouter } from 'next/navigation';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
+import { hotelRoomsPickerReducer } from '../../utils/hotelRoomsPickerReducer';
 
 export default function HotelConfigProvider({
  children,
@@ -29,6 +30,12 @@ export default function HotelConfigProvider({
 }) {
  const { locale } = useBaseConfig();
  const router = useRouter();
+
+ const [selectedRooms, selectedRoomsDispatch] = useReducer(
+  hotelRoomsPickerReducer,
+  [],
+ );
+
  const datePickerFilters = useForm({
   resolver: zodResolver(createHotelDatePickerSchema()),
   defaultValues: {
