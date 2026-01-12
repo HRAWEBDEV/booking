@@ -15,7 +15,7 @@ import { LuImageOff } from 'react-icons/lu';
 import { ratePlanTypes } from '../../utils/ratePlanTypes';
 import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
 import { type Room, findRoom } from '../../utils/hotelRoomsPickerReducer';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative';
@@ -186,9 +186,9 @@ export default function HotelRoom({
        </div>
        <Button
         size='icon-lg'
-        disabled={targetRoomTypeCapacity?.isFull}
+        disabled={targetRoomTypeCapacity?.isFull || !roomType.roomCount}
         onClick={() => {
-         if (targetRoomTypeCapacity?.isFull) return;
+         if (targetRoomTypeCapacity?.isFull || !roomType.roomCount) return;
          selectedRoomsDispatch({
           type: 'increase',
           payload: roomInfo,
@@ -202,9 +202,9 @@ export default function HotelRoom({
       <Button
        size='lg'
        className='w-full'
-       disabled={targetRoomTypeCapacity?.isFull}
+       disabled={targetRoomTypeCapacity?.isFull || !roomType.roomCount}
        onClick={() => {
-        if (targetRoomTypeCapacity?.isFull) return;
+        if (targetRoomTypeCapacity?.isFull || !roomType.roomCount) return;
         selectedRoomsDispatch({
          type: 'increase',
          payload: roomInfo,

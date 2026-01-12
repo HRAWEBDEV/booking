@@ -21,6 +21,7 @@ interface HotelConfig {
   reserveRoomNights: number;
   fromDateValue: Date | null;
   toDateValue: Date | null;
+  onChangeReserveDate: (toDate: Date, fromDate: Date) => unknown;
  };
 }
 

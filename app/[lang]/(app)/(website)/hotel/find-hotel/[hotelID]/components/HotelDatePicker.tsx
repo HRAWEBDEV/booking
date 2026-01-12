@@ -27,6 +27,7 @@ export default function HotelDatePicker({
 }) {
  const {
   rooms: { selectedRooms },
+  reserve: { onChangeReserveDate },
  } = useHotelConfig();
  const { locale } = useBaseConfig();
  const filtersUserForm = useFormContext<HotelDatePickerSchema>();
@@ -68,7 +69,10 @@ export default function HotelDatePicker({
       <ChevronDownIcon />
      </Button>
     </Field>
-    <Field className='gap-2'>
+    <Field
+     className='gap-2'
+     data-invalid={!!filtersUserForm.formState.errors.toDate}
+    >
      <Label htmlFor='toDate' className='px-1'>
       {dic.hotelDatePicker.fromDate}
      </Label>
@@ -78,6 +82,7 @@ export default function HotelDatePicker({
      >
       <PopoverTrigger asChild>
        <Button
+        data-invalid={!!filtersUserForm.formState.errors.toDate}
         type='button'
         variant='outline'
         id='toDate'
@@ -139,6 +144,10 @@ export default function HotelDatePicker({
      size='lg'
      onClick={(e) => {
       e.preventDefault();
+      filtersUserForm.handleSubmit((data) => {
+       if (!data.fromDate || !data.toDate) return;
+       onChangeReserveDate(data.toDate, data.fromDate);
+      })();
      }}
     >
      {dic.hotelDatePicker.search}

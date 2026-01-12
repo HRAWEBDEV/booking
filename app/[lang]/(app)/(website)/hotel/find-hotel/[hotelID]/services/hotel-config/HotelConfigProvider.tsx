@@ -19,8 +19,6 @@ import { roomTypeCapacityWatcher } from '../../utils/roomTypeCapacityWatcher';
 export default function HotelConfigProvider({
  children,
  hotelInfo,
- fromDate,
- toDate,
  hotelID,
 }: {
  children: ReactNode;
@@ -72,6 +70,15 @@ export default function HotelConfigProvider({
   setRooms(roomInventory);
  }
 
+ function handleChangeReserveDate(toDate: Date, fromDate: Date) {
+  const searchParams = new URLSearchParams(location.search);
+  searchParams.set(fromDateQueryName, fromDate.toISOString());
+  searchParams.set(toDateQueryName, toDate.toISOString());
+  router.push(
+   `/${locale}/hotel/find-hotel/${hotelID}?${searchParams.toString()}#rooms`,
+  );
+ }
+
  const ctx: HotelConfig = {
   hotelInfo,
   hotelID,
@@ -86,6 +93,7 @@ export default function HotelConfigProvider({
    reserveRoomNights,
    fromDateValue: fromDateQuery,
    toDateValue: toDateQuery,
+   onChangeReserveDate: handleChangeReserveDate,
   },
  };
 
