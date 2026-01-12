@@ -129,6 +129,10 @@ export default function HotelDatePicker({
            filtersUserForm.setValue('fromDate', selected.from || null);
            filtersUserForm.setValue('toDate', selected.to || null);
           }}
+          defaultMonth={fromDateValue || new Date()}
+          onMonthChange={(month) => {
+           console.log(month);
+          }}
           showOutsideDays={false}
           disabled={(date) => {
            return date.getTime() < dateFns.startOfDay(new Date()).getTime();

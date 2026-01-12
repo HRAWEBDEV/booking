@@ -74,6 +74,9 @@ export default function HotelConfigProvider({
   const searchParams = new URLSearchParams(location.search);
   searchParams.set(fromDateQueryName, fromDate.toISOString());
   searchParams.set(toDateQueryName, toDate.toISOString());
+  selectedRoomsDispatch({
+   type: 'reset',
+  });
   router.push(
    `/${locale}/hotel/find-hotel/${hotelID}?${searchParams.toString()}#rooms`,
   );

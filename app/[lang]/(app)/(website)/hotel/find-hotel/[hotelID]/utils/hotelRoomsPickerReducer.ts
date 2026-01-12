@@ -20,6 +20,9 @@ type RoomsPickerActions =
  | {
     type: 'remove';
     payload: Room;
+   }
+ | {
+    type: 'reset';
    };
 
 function isTargetRoom(item: SelectedRoom, room: Room) {
@@ -67,6 +70,9 @@ function hotelRoomsPickerReducer(
  }
  if (action.type === 'remove') {
   return filterRoom(state, action.payload);
+ }
+ if (action.type === 'reset') {
+  return [];
  }
  return state;
 }
