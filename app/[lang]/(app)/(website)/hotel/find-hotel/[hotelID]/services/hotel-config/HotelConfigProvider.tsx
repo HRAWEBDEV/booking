@@ -1,11 +1,6 @@
 'use client';
-import { ReactNode, useEffect } from 'react';
-import {
- type HotelInfo,
- type RoomInventory,
- getRoomInventoriesApi,
- getRoomInventory,
-} from '../hotelApiActions';
+import { ReactNode } from 'react';
+import { type HotelInfo } from '../hotelApiActions';
 import { type HotelConfig, hotelConfigContext } from './hotelConfigContext';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -14,16 +9,13 @@ import {
  createHotelDatePickerSchema,
 } from '../../schemas/hotelDatePickerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { fromDateQueryName, toDateQueryName } from '../../utils/hotelQueries';
+// import { fromDateQueryName, toDateQueryName } from '../../utils/hotelQueries';
 import { useRouter } from 'next/navigation';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
-import { useQuery } from '@tanstack/react-query';
-import { getSetupProviderCredentials } from '@/app/[lang]/(app)/(website)/utils/getSetupProviderCredentials';
 
 export default function HotelConfigProvider({
  children,
  hotelInfo,
- dic,
  fromDate,
  toDate,
  hotelID,
@@ -35,7 +27,6 @@ export default function HotelConfigProvider({
  toDate: string;
  hotelID: string;
 }) {
- const { arzID, channelID, providerID } = getSetupProviderCredentials();
  const { locale } = useBaseConfig();
  const router = useRouter();
  const datePickerFilters = useForm({

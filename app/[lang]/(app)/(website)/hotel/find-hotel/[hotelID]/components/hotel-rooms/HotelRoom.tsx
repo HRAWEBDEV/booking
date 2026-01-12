@@ -12,6 +12,7 @@ import {
 } from '../../services/hotelApiActions';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { LuImageOff } from 'react-icons/lu';
+import { ratePlanTypes } from '../../utils/ratePlanTypes';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative';
@@ -47,6 +48,11 @@ export default function HotelRoom({
      ).toFixed(0),
     )
   : 0;
+
+ const activeRatePlanTypes = ratePlanTypes.filter(
+  (item) => accType.accommodationRatePlanModel.ratePlanModel[item.type],
+ );
+
  return (
   <article className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input'>
    <div className={`keen-slider ${imageContainerClass}`} ref={bannerSlideRef}>
@@ -86,11 +92,22 @@ export default function HotelRoom({
      </div>
     )}
    </div>
-   <main className='grow mb-2'>
+   <main className='grow mb-2 lg:mb-0 flex flex-col'>
     <h3 className='text-lg font-medium mb-2'>{roomType.fName}</h3>
-    <p className='font-medium text-neutral-600 dark:text-neutral-400'>
+    <p className='font-medium text-neutral-600 dark:text-neutral-400 mb-4'>
      {accType.beds} {dic.hotelRooms.person}
     </p>
+    {!!activeRatePlanTypes.length && (
+     <div className='mb-2 lg:mb-0 flex-wrap flex gap-2'>
+      {activeRatePlanTypes.map((item) => {
+       return (
+        <Badge key={item.type} variant='outline' className='rounded-md p-2'>
+         {dic.hotelRooms.ratePlanTypes[item.type]}
+        </Badge>
+       );
+      })}
+     </div>
+    )}
    </main>
    <footer className='flex flex-col lg:justify-end lg:basis-52'>
     <div className='mb-4 flex gap-4 items-end flex-wrap lg:gap-1 lg:justify-center'>
