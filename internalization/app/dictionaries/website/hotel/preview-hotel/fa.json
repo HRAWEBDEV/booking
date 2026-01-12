@@ -16,7 +16,8 @@
   "toDate": "تا تاریخ",
   "arrivalTime": "ساعت ورود",
   "departureTime": "ساعت خروج",
-  "search": "جستجو"
+  "search": "جستجو",
+  "confirmReserve": "ثبت رزرو"
  },
  "hotelFacilities": {
   "title": "امکانات",

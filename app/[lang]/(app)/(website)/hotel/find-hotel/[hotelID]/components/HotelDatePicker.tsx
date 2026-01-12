@@ -16,6 +16,7 @@ import { type HotelInfo } from '../services/hotelApiActions';
 import { Controller, useFormContext } from 'react-hook-form';
 import { type HotelDatePickerSchema } from '../schemas/hotelDatePickerSchema';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
+import { useHotelConfig } from '../services/hotel-config/hotelConfigContext';
 
 export default function HotelDatePicker({
  dic,
@@ -24,6 +25,9 @@ export default function HotelDatePicker({
  dic: PreviewHotelDictionary;
  hotelInfo: HotelInfo;
 }) {
+ const {
+  rooms: { selectedRooms },
+ } = useHotelConfig();
  const { locale } = useBaseConfig();
  const filtersUserForm = useFormContext<HotelDatePickerSchema>();
  const dateFns = useDateFns();
@@ -133,6 +137,18 @@ export default function HotelDatePicker({
     <Button type='submit' size='lg'>
      {dic.hotelDatePicker.search}
     </Button>
+    {!!selectedRooms.length && (
+     <div className='pt-2 border-t border-input'>
+      <Button
+       variant='secondary'
+       type='submit'
+       size='lg'
+       className='font-medium text-base w-full'
+      >
+       {dic.hotelDatePicker.confirmReserve}
+      </Button>
+     </div>
+    )}
    </FieldGroup>
   </form>
  );
