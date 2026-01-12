@@ -11,6 +11,11 @@ import {
  type RoomInventory,
 } from '../../services/hotelApiActions';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { LuImageOff } from 'react-icons/lu';
+
+const imageContainerClass =
+ 'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative';
+const imageWrapperClass = 'h-56 lg:h-44 rounded-md overflow-hidden';
 
 export default function HotelRoom({
  accType,
@@ -44,38 +49,42 @@ export default function HotelRoom({
   : 0;
  return (
   <article className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input'>
-   <div
-    className='mb-4 keen-slider rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative'
-    ref={bannerSlideRef}
-   >
-    {Array.from({ length: 3 }, (_, i) => i).map((i) => (
+   <div className={`keen-slider ${imageContainerClass}`} ref={bannerSlideRef}>
+    {roomType.accommodationImages.length ? (
+     roomType.accommodationImages.map(({ imageURL }) => (
+      <div className={`keen-slider__slide ${imageWrapperClass}`} key={imageURL}>
+       <img
+        src={imageURL}
+        alt='hotel image'
+        className='h-full w-full object-cover object-center'
+        loading='lazy'
+       />
+      </div>
+     ))
+    ) : (
      <div
-      className='keen-slider__slide h-56 lg:h-44 rounded-md overflow-hidden'
-      key={i}
+      className={`bg-neutral-100 ${imageWrapperClass} w-full grid place-content-center`}
      >
-      <img
-       src='/images/hotelGallery.jpg'
-       alt='hotel image'
-       className='h-full w-full object-cover object-center'
-       loading='lazy'
-      />
+      <LuImageOff className='size-16 text-neutral-400 dark:text-neutral-600' />
      </div>
-    ))}
-    <div className='flex justify-center gap-2 py-3 absolute bottom-0 left-0 right-0'>
-     {Array.from({ length: sliderCount }, (_, i) => i).map((idx) => (
-      <button
-       key={idx}
-       onClick={() => {
-        instanceRef.current?.moveToIdx(idx);
-       }}
-       className={`h-2 border cursor-pointer border-gray-300 rounded-full transition-all ${
-        activeSliderIndex === idx
-         ? 'bg-white w-6'
-         : 'bg-gray-200/80 hover:bg-white w-2'
-       }`}
-      />
-     ))}
-    </div>
+    )}
+    {roomType.accommodationImages.length > 1 && (
+     <div className='flex justify-center gap-2 py-3 absolute bottom-0 left-0 right-0'>
+      {roomType.accommodationImages.map((_, idx) => (
+       <button
+        key={idx}
+        onClick={() => {
+         instanceRef.current?.moveToIdx(idx);
+        }}
+        className={`h-2 border cursor-pointer border-gray-300 rounded-full transition-all ${
+         activeSliderIndex === idx
+          ? 'bg-white w-6'
+          : 'bg-gray-200/80 hover:bg-white w-2'
+        }`}
+       />
+      ))}
+     </div>
+    )}
    </div>
    <main className='grow mb-2'>
     <h3 className='text-lg font-medium mb-2'>{roomType.fName}</h3>
