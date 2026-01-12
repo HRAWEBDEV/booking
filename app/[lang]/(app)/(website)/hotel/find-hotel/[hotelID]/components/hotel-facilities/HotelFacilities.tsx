@@ -29,9 +29,7 @@ export default function HotelFacilities({
       </div>
      ))
     ) : (
-     <p className='text-center col-span-full font-medium'>
-      {dic.hotelFacilities.noItemFound}
-     </p>
+     <p className='col-span-full font-medium'>---</p>
     )}
    </div>
   </section>

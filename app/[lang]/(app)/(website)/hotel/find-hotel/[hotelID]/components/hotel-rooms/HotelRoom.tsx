@@ -15,6 +15,7 @@ import { LuImageOff } from 'react-icons/lu';
 import { ratePlanTypes } from '../../utils/ratePlanTypes';
 import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
 import { type Room, findRoom } from '../../utils/hotelRoomsPickerReducer';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative';
@@ -30,7 +31,7 @@ export default function HotelRoom({
  roomType: RoomInventory;
 }) {
  const {
-  rooms: { selectedRoomsDispatch, selectedRooms },
+  rooms: { selectedRoomsDispatch, selectedRooms, roomTypeCapacity },
   reserve: { reserveRoomNights },
  } = useHotelConfig();
  const formatNumber = useCurrencyFormatter();
@@ -67,6 +68,7 @@ export default function HotelRoom({
    accType.accommodationRatePlanModel.ratePlanModel.ratePlanTypeID,
  };
  const selectedRoomInfo = findRoom(selectedRooms, roomInfo);
+ const targetRoomTypeCapacity = roomTypeCapacity[roomType.roomTypeID];
 
  return (
   <article className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input'>
@@ -107,7 +109,7 @@ export default function HotelRoom({
      </div>
     )}
    </div>
-   <main className='grow mb-2 lg:mb-0 flex flex-col'>
+   <main className='grow mb-2 lg:mb-0 flex flex-col lg:pe-4'>
     <h3 className='text-lg font-medium mb-2'>{roomType.fName}</h3>
     <p className='font-medium text-neutral-600 dark:text-neutral-400 mb-4'>
      {accType.beds} {dic.hotelRooms.person}
@@ -122,6 +124,21 @@ export default function HotelRoom({
        );
       })}
      </div>
+    )}
+    {!roomType.roomCount && (
+     <>
+      <div className='grow'></div>
+      <div className='mb-2 lg:mb-0 mt-2'>
+       <Alert
+        variant={'destructive'}
+        className='bg-rose-50 dark:bg-rose-950 border-rose-50 dark:border-rose-950'
+       >
+        <AlertDescription className='font-medium text-base'>
+         {dic.hotelRooms.capacityIsFull}
+        </AlertDescription>
+       </Alert>
+      </div>
+     </>
     )}
    </main>
    <footer className='flex flex-col lg:justify-end lg:basis-52'>
@@ -169,12 +186,14 @@ export default function HotelRoom({
        </div>
        <Button
         size='icon-lg'
-        onClick={() =>
+        disabled={targetRoomTypeCapacity?.isFull}
+        onClick={() => {
+         if (targetRoomTypeCapacity?.isFull) return;
          selectedRoomsDispatch({
           type: 'increase',
           payload: roomInfo,
-         })
-        }
+         });
+        }}
        >
         <FiPlus className='size-4' />
        </Button>
@@ -183,12 +202,14 @@ export default function HotelRoom({
       <Button
        size='lg'
        className='w-full'
-       onClick={() =>
+       disabled={targetRoomTypeCapacity?.isFull}
+       onClick={() => {
+        if (targetRoomTypeCapacity?.isFull) return;
         selectedRoomsDispatch({
          type: 'increase',
          payload: roomInfo,
-        })
-       }
+        });
+       }}
       >
        <FiPlus className='size-4' />
        {dic.hotelRooms.addRoom}

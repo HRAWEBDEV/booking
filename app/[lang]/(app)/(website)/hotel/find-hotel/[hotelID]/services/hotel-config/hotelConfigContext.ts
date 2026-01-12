@@ -5,14 +5,16 @@ import {
  type SelectedRoom,
  type RoomsPickerActions,
 } from '../../utils/hotelRoomsPickerReducer';
+import { type RoomTypeCapacityWatcher } from '../../utils/roomTypeCapacityWatcher';
 
 interface HotelConfig {
  hotelInfo: HotelInfo;
  hotelID: string;
  rooms: {
   data: RoomInventory[];
-  onUpdateRoomInventory: (RoomInventory: RoomInventory[]) => unknown;
   selectedRooms: SelectedRoom[];
+  roomTypeCapacity: RoomTypeCapacityWatcher;
+  onUpdateRoomInventory: (RoomInventory: RoomInventory[]) => unknown;
   selectedRoomsDispatch: ActionDispatch<[RoomsPickerActions]>;
  };
  reserve: {

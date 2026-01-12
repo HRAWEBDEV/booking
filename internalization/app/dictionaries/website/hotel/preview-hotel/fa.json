@@ -36,7 +36,8 @@
   "person": "نفر",
   "addRoom": "افزودن اتاق",
   "viewPricingCalendar": "مشاهده تقویم قیمتی",
-  "discount": "تخفیف"
+  "discount": "تخفیف",
+  "capacityIsFull": "اتاق ظرفیت ندارد"
  },
  "hotelDescription": {
   "floors": "طبقات",

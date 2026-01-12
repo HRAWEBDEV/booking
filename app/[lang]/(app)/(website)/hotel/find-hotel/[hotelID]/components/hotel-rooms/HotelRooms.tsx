@@ -20,6 +20,7 @@ export default function HotelRooms({
  useEffect(() => {
   onUpdateRoomInventory(data || []);
  }, [data, onUpdateRoomInventory]);
+
  return (
   <section id='rooms' className='scroll-mt-16 mb-4 grid gap-4'>
    {data?.map((roomType) => (

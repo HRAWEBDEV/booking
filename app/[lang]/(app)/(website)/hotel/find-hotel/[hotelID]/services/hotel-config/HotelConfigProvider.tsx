@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { hotelRoomsPickerReducer } from '../../utils/hotelRoomsPickerReducer';
 import { useDateFns } from '@/hooks/useDateFns';
+import { roomTypeCapacityWatcher } from '../../utils/roomTypeCapacityWatcher';
 
 export default function HotelConfigProvider({
  children,
@@ -46,6 +47,11 @@ export default function HotelConfigProvider({
   [],
  );
 
+ const roomTypeCapacity = roomTypeCapacityWatcher({
+  rooms,
+  selectedRooms,
+ });
+
  const datePickerFilters = useForm({
   resolver: zodResolver(createHotelDatePickerSchema()),
   defaultValues: {
@@ -71,8 +77,9 @@ export default function HotelConfigProvider({
   hotelID,
   rooms: {
    data: rooms,
-   onUpdateRoomInventory: handleUpdateRoomInventory,
+   roomTypeCapacity,
    selectedRooms,
+   onUpdateRoomInventory: handleUpdateRoomInventory,
    selectedRoomsDispatch,
   },
   reserve: {

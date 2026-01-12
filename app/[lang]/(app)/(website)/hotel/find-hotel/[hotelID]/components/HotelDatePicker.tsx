@@ -134,14 +134,20 @@ export default function HotelDatePicker({
       </PopoverContent>
      </Popover>
     </Field>
-    <Button type='submit' size='lg'>
+    <Button
+     type='submit'
+     size='lg'
+     onClick={(e) => {
+      e.preventDefault();
+     }}
+    >
      {dic.hotelDatePicker.search}
     </Button>
     {!!selectedRooms.length && (
      <div className='pt-2 border-t border-input'>
       <Button
        variant='secondary'
-       type='submit'
+       type='button'
        size='lg'
        className='font-medium text-base w-full'
       >
