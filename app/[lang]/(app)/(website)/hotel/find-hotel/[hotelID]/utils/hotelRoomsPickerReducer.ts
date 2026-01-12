@@ -35,7 +35,7 @@ function findRoom(state: SelectedRoom[], room: Room) {
  return existedRoom;
 }
 function filterRoom(state: SelectedRoom[], room: Room) {
- return state.filter((item) => isTargetRoom(item, room));
+ return state.filter((item) => !isTargetRoom(item, room));
 }
 
 function hotelRoomsPickerReducer(
@@ -57,7 +57,7 @@ function hotelRoomsPickerReducer(
  if (action.type === 'decrease') {
   const existedRoom = findRoom(state, action.payload);
   if (!existedRoom) return state;
-  if (existedRoom.count === 0) return filterRoom(state, action.payload);
+  if (existedRoom.count === 1) return filterRoom(state, action.payload);
   return state.map((item) => {
    if (isTargetRoom(item, action.payload)) {
     return { ...item, count: item.count - 1 };
@@ -71,5 +71,5 @@ function hotelRoomsPickerReducer(
  return state;
 }
 
-export type { SelectedRoom, RoomsPickerActions };
-export { hotelRoomsPickerReducer };
+export type { SelectedRoom, RoomsPickerActions, Room };
+export { isTargetRoom, findRoom, hotelRoomsPickerReducer };

@@ -13,6 +13,8 @@ import {
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { LuImageOff } from 'react-icons/lu';
 import { ratePlanTypes } from '../../utils/ratePlanTypes';
+import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
+import { type Room, findRoom } from '../../utils/hotelRoomsPickerReducer';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative';
@@ -27,6 +29,9 @@ export default function HotelRoom({
  accType: RoomAccomodationType;
  roomType: RoomInventory;
 }) {
+ const {
+  rooms: { selectedRoomsDispatch, selectedRooms },
+ } = useHotelConfig();
  const formatNumber = useCurrencyFormatter();
  const [sliderCount, setSliderCount] = useState(0);
  const [activeSliderIndex, setActiveSliderIndex] = useState(0);
@@ -52,6 +57,15 @@ export default function HotelRoom({
  const activeRatePlanTypes = ratePlanTypes.filter(
   (item) => accType.accommodationRatePlanModel.ratePlanModel[item.type],
  );
+
+ const roomInfo: Room = {
+  beds: accType.beds,
+  ratePlanID: accType.accommodationRatePlanModel.ratePlanID,
+  roomTypeID: roomType.roomTypeID,
+  ratePlanTypeID:
+   accType.accommodationRatePlanModel.ratePlanModel.ratePlanTypeID,
+ };
+ const selectedRoomInfo = findRoom(selectedRooms, roomInfo);
 
  return (
   <article className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input'>
@@ -135,20 +149,46 @@ export default function HotelRoom({
      )}
     </div>
     <div className='flex flex-col gap-2'>
-     {false ? (
+     {selectedRoomInfo ? (
       <div className='flex gap-4 items-center w-[min(100%,9rem)] mx-auto'>
-       <Button variant='outline' size='icon-lg'>
+       <Button
+        variant='outline'
+        size='icon-lg'
+        onClick={() =>
+         selectedRoomsDispatch({
+          type: 'decrease',
+          payload: roomInfo,
+         })
+        }
+       >
         <FiMinus className='size-4' />
        </Button>
        <div className='grow text-center text-primary text-lg font-medium'>
-        5
+        {selectedRoomInfo?.count || 0}
        </div>
-       <Button size='icon-lg'>
+       <Button
+        size='icon-lg'
+        onClick={() =>
+         selectedRoomsDispatch({
+          type: 'increase',
+          payload: roomInfo,
+         })
+        }
+       >
         <FiPlus className='size-4' />
        </Button>
       </div>
      ) : (
-      <Button size='lg' className='w-full'>
+      <Button
+       size='lg'
+       className='w-full'
+       onClick={() =>
+        selectedRoomsDispatch({
+         type: 'increase',
+         payload: roomInfo,
+        })
+       }
+      >
        <FiPlus className='size-4' />
        {dic.hotelRooms.addRoom}
       </Button>
