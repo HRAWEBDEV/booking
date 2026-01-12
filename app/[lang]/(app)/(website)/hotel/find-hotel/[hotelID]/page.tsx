@@ -54,6 +54,7 @@ export default async function HotelPage(
  ]);
 
  // hotel info
+ // TODO cache this later
  const hotelInfoPromise = await fetch(
   `${appendApiUri(getHotelInfoApi)}?${hotelInfoSearchParams.toString()}`,
   {
@@ -73,6 +74,7 @@ export default async function HotelPage(
    throw new Error('hotel info err', err);
   });
  // hotel image
+ // TODO cache this later
  const roomInventorySearch = getRoomInventorySearch({
   arzID,
   hotelID,
@@ -123,6 +125,7 @@ export default async function HotelPage(
    return null;
   });
  // hotel facility
+ // TODO cache this later
  const hotelFacilityPromise = fetch(
   `${appendApiUri(getHotelFacilitiesApi)}?${hotelInfoSearchParams.toString()}`,
   {
