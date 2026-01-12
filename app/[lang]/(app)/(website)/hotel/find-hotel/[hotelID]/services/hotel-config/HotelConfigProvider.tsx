@@ -1,6 +1,6 @@
 'use client';
-import { ReactNode, useReducer } from 'react';
-import { type HotelInfo } from '../hotelApiActions';
+import { ReactNode, useReducer, useState } from 'react';
+import { type HotelInfo, RoomInventory } from '../hotelApiActions';
 import { type HotelConfig, hotelConfigContext } from './hotelConfigContext';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -31,6 +31,7 @@ export default function HotelConfigProvider({
  const { locale } = useBaseConfig();
  const router = useRouter();
 
+ const [rooms, setRooms] = useState<RoomInventory[]>([]);
  const [selectedRooms, selectedRoomsDispatch] = useReducer(
   hotelRoomsPickerReducer,
   [],
@@ -45,9 +46,19 @@ export default function HotelConfigProvider({
   },
  });
 
+ function handleUpdateRoomInventory(roomInventory: RoomInventory[]) {
+  setRooms(roomInventory);
+ }
+
  const ctx: HotelConfig = {
   hotelInfo,
   hotelID,
+  rooms: {
+   data: rooms,
+   onUpdateRoomInventory: handleUpdateRoomInventory,
+   selectedRooms,
+   selectedRoomsDispatch,
+  },
  };
 
  return (

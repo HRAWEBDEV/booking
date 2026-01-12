@@ -135,19 +135,24 @@ export default function HotelRoom({
      )}
     </div>
     <div className='flex flex-col gap-2'>
-     <div className='flex gap-4 items-center w-[min(100%,9rem)] mx-auto'>
-      <Button variant='outline' size='icon-lg'>
-       <FiMinus className='size-4' />
-      </Button>
-      <div className='grow text-center text-primary text-lg font-medium'>5</div>
-      <Button size='icon-lg'>
+     {false ? (
+      <div className='flex gap-4 items-center w-[min(100%,9rem)] mx-auto'>
+       <Button variant='outline' size='icon-lg'>
+        <FiMinus className='size-4' />
+       </Button>
+       <div className='grow text-center text-primary text-lg font-medium'>
+        5
+       </div>
+       <Button size='icon-lg'>
+        <FiPlus className='size-4' />
+       </Button>
+      </div>
+     ) : (
+      <Button size='lg' className='w-full'>
        <FiPlus className='size-4' />
+       {dic.hotelRooms.addRoom}
       </Button>
-     </div>
-     {/* <Button size='lg' className='w-full'> */}
-     {/*  <FiPlus className='size-4' /> */}
-     {/*  {dic.hotelRooms.addRoom} */}
-     {/* </Button> */}
+     )}
      <Button variant='outline' size='lg' className='w-full'>
       {dic.hotelRooms.viewPricingCalendar}
      </Button>
