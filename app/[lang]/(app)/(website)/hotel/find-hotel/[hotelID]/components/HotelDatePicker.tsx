@@ -79,9 +79,11 @@ export default function HotelDatePicker({
         id='toDate'
         className='w-32 justify-between font-normal text-base'
        >
-        {toDateValue?.toLocaleDateString(locale, {
-         dateStyle: 'full',
-        })}
+        {!toDateValue || toDateValue.getTime() === fromDateValue?.getTime()
+         ? '---'
+         : toDateValue?.toLocaleDateString(locale, {
+            dateStyle: 'full',
+           })}
         <ChevronDownIcon />
        </Button>
       </PopoverTrigger>
@@ -89,7 +91,7 @@ export default function HotelDatePicker({
        <Controller
         control={filtersUserForm.control}
         name='toDate'
-        render={({ field: { value, onChange, ...other } }) => (
+        render={({ field: { ...other } }) => (
          <Calendar
           mode='range'
           {...other}
@@ -97,16 +99,26 @@ export default function HotelDatePicker({
           startMonth={dateFns.startOfMonth(new Date())}
           selected={{
            to: fromDateValue || undefined,
-           from: value || undefined,
+           from: toDateValue || undefined,
           }}
           onSelect={(selected) => {
            if (!selected) {
-            onChange(null);
             filtersUserForm.setValue('fromDate', null);
-           } else {
-            onChange(selected.to || null);
-            filtersUserForm.setValue('fromDate', selected.from || null);
+            filtersUserForm.setValue('toDate', null);
+            return;
            }
+           if (!selected.to || !selected.from) {
+            filtersUserForm.setValue('fromDate', selected.from || null);
+            filtersUserForm.setValue('toDate', selected.to || null);
+            return;
+           }
+           if (selected.from.getTime() > selected.to.getTime()) {
+            filtersUserForm.setValue('fromDate', selected.to || null);
+            filtersUserForm.setValue('toDate', selected.from || null);
+            return;
+           }
+           filtersUserForm.setValue('fromDate', selected.from || null);
+           filtersUserForm.setValue('toDate', selected.to || null);
           }}
           showOutsideDays={false}
           disabled={(date) => {

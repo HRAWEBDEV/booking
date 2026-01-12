@@ -15,6 +15,11 @@ interface HotelConfig {
   selectedRooms: SelectedRoom[];
   selectedRoomsDispatch: ActionDispatch<[RoomsPickerActions]>;
  };
+ reserve: {
+  reserveRoomNights: number;
+  fromDateValue: Date | null;
+  toDateValue: Date | null;
+ };
 }
 
 const hotelConfigContext = createContext<HotelConfig | null>(null);

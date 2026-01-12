@@ -9,10 +9,11 @@ import {
  createHotelDatePickerSchema,
 } from '../../schemas/hotelDatePickerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-// import { fromDateQueryName, toDateQueryName } from '../../utils/hotelQueries';
-import { useRouter } from 'next/navigation';
+import { fromDateQueryName, toDateQueryName } from '../../utils/hotelQueries';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { hotelRoomsPickerReducer } from '../../utils/hotelRoomsPickerReducer';
+import { useDateFns } from '@/hooks/useDateFns';
 
 export default function HotelConfigProvider({
  children,
@@ -28,8 +29,16 @@ export default function HotelConfigProvider({
  toDate: string;
  hotelID: string;
 }) {
+ const dateFns = useDateFns();
  const { locale } = useBaseConfig();
  const router = useRouter();
+ const searchParams = useSearchParams();
+ const fromDateQuery = searchParams.get(fromDateQueryName)
+  ? new Date(searchParams.get(fromDateQueryName) as string)
+  : null;
+ const toDateQuery = searchParams.get(toDateQueryName)
+  ? new Date(searchParams.get(toDateQueryName) as string)
+  : null;
 
  const [rooms, setRooms] = useState<RoomInventory[]>([]);
  const [selectedRooms, selectedRoomsDispatch] = useReducer(
@@ -41,10 +50,17 @@ export default function HotelConfigProvider({
   resolver: zodResolver(createHotelDatePickerSchema()),
   defaultValues: {
    ...defaultValues,
-   fromDate: new Date(fromDate),
-   toDate: new Date(toDate),
+   fromDate: fromDateQuery,
+   toDate: toDateQuery,
   },
  });
+
+ const [] = datePickerFilters.watch([]);
+
+ const reserveRoomNights =
+  fromDateQuery && toDateQuery
+   ? dateFns.differenceInDays(toDateQuery, fromDateQuery)
+   : 0;
 
  function handleUpdateRoomInventory(roomInventory: RoomInventory[]) {
   setRooms(roomInventory);
@@ -58,6 +74,11 @@ export default function HotelConfigProvider({
    onUpdateRoomInventory: handleUpdateRoomInventory,
    selectedRooms,
    selectedRoomsDispatch,
+  },
+  reserve: {
+   reserveRoomNights,
+   fromDateValue: fromDateQuery,
+   toDateValue: toDateQuery,
   },
  };
 

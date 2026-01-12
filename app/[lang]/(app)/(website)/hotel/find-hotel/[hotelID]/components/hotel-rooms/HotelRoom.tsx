@@ -31,6 +31,7 @@ export default function HotelRoom({
 }) {
  const {
   rooms: { selectedRoomsDispatch, selectedRooms },
+  reserve: { reserveRoomNights },
  } = useHotelConfig();
  const formatNumber = useCurrencyFormatter();
  const [sliderCount, setSliderCount] = useState(0);
@@ -131,7 +132,7 @@ export default function HotelRoom({
       </span>
       <span className='ms-1 text-sm'>ریال</span>
       <span className='ms-1 text-sm text-neutral-600 dark:text-neutral-400'>
-       / ۱ {dic.hotelRooms.nights}
+       / {reserveRoomNights} {dic.hotelRooms.nights}
       </span>
      </div>
      {!!discountPercentage && (
@@ -163,7 +164,7 @@ export default function HotelRoom({
        >
         <FiMinus className='size-4' />
        </Button>
-       <div className='grow text-center text-primary text-lg font-medium'>
+       <div className='grow text-center text-primary text-xl font-medium'>
         {selectedRoomInfo?.count || 0}
        </div>
        <Button
