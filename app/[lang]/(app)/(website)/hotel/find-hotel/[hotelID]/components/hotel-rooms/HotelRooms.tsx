@@ -61,7 +61,11 @@ export default function HotelRooms({
    queryKey: [
     getRoomDailyPriceApi,
     hotelID.toString(),
+    arzID.toString(),
     selectedRoom?.roomTypeID.toString(),
+    selectedRoom?.ratePlanID.toString(),
+    selectedRoom?.ratePlanTypeID.toString(),
+    selectedRoom?.beds.toString(),
     dailyPriceDate.toISOString(),
    ],
    async queryFn({ signal }) {
@@ -129,6 +133,7 @@ export default function HotelRooms({
        mode='single'
        selected={dailyPriceDate}
        defaultMonth={dailyPriceDate}
+       startMonth={dateFns.startOfMonth(new Date())}
        onMonthChange={(selected) =>
         setDailyPriceDate(dateFns.startOfMonth(selected!))
        }
@@ -141,17 +146,34 @@ export default function HotelRooms({
          const dayPrice = roomDailyPrice?.find((item) => {
           return new Date(item.date).getTime() === dayDate.getTime();
          });
+
+         let roomDailyState: (typeof roomStates)[number] | 'normal' = 'normal';
+         if (dayPrice) {
+          for (const state of roomStates) {
+           if (dayPrice[state]) {
+            roomDailyState = state;
+            break;
+           }
+          }
+         }
+
          return (
           <div
            className={`${props.className} size-(--cell-size) relative flex flex-col`}
           >
-           <div className='basis-5'></div>
+           <div className='basis-5 flex'>
+            {roomDailyState !== 'normal' && (
+             <div
+              className={`size-2 bg-purple-400 rounded-full ${roomStatesStyles.get(roomDailyState)?.backgroundColor}`}
+             ></div>
+            )}
+           </div>
            <div className='grow text-center grid place-content-center text-neutral-600 dark:text-neutral-400'>
             {dayNumber}
            </div>
            <div className='text-[0.7rem] basis-5 font-medium'>
             {dayPrice && !roomDailyPriceIsLoading ? (
-             numberFormatter.format(dayPrice?.roomOnlineShowRate / 1000)
+             numberFormatter.format(dayPrice?.netRoomRate / 1000)
             ) : roomDailyPriceIsLoading ? (
              <div className='px-2'>
               <Skeleton className='h-3' />

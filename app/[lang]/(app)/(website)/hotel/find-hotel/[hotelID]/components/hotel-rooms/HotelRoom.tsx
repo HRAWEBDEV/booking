@@ -150,7 +150,7 @@ export default function HotelRoom({
       <div className='mb-2 lg:mb-0 mt-2'>
        <Alert
         variant={'destructive'}
-        className='bg-rose-50 dark:bg-rose-950 border-rose-50 dark:border-rose-950 p-2'
+        className='bg-rose-50 dark:bg-rose-950 border-rose-500 p-2'
        >
         <AlertDescription className='font-medium'>
          {dic.hotelDatePicker.from}{' '}
