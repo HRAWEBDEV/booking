@@ -11,21 +11,21 @@ const roomStatesStyles = new Map<
   'stopSell',
   {
    title: 'stopSell',
-   backgroundColor: 'bg-red-500',
+   backgroundColor: 'bg-red-300 dark:bg-red-700',
   },
  ],
  [
   'cta',
   {
    title: 'cta',
-   backgroundColor: 'bg-purple-500',
+   backgroundColor: 'bg-purple-300 dark:bg-purple-700',
   },
  ],
  [
   'ctd',
   {
    title: 'ctd',
-   backgroundColor: 'bg-orange-500',
+   backgroundColor: 'bg-orange-300 dark:bg-orange-700',
   },
  ],
 ]);

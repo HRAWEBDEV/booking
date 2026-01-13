@@ -10,18 +10,19 @@ import {
 import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
 import {
  Dialog,
- DialogTrigger,
  DialogTitle,
  DialogContent,
  DialogHeader,
 } from '@/components/ui/dialog';
 import { Calendar } from '@/components/ui/calendar';
 import { type Room } from '../../utils/hotelRoomsPickerReducer';
-import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { getSetupProviderCredentials } from '@/app/[lang]/(app)/(website)/utils/getSetupProviderCredentials';
 import { useDateFns } from '@/hooks/useDateFns';
 import { roomStates, roomStatesStyles } from '../../utils/roomStates';
+import { useBaseConfig } from '@/services/base-config/baseConfigContext';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function HotelRooms({
  dic,
@@ -30,6 +31,8 @@ export default function HotelRooms({
  dic: PreviewHotelDictionary;
  roomInventoriesPromise: Promise<RoomInventory[] | null>;
 }) {
+ const { locale } = useBaseConfig();
+ const numberFormatter = useCurrencyFormatter();
  const dateFns = useDateFns();
  const { arzID, channelID, providerID } = getSetupProviderCredentials();
  const [showDailyPrice, setShowDailyPrice] = useState(false);
@@ -38,39 +41,47 @@ export default function HotelRooms({
  const {
   hotelID,
   rooms: { onUpdateRoomInventory },
+  reserve: { fromDateValue },
  } = useHotelConfig();
+
+ const [dailyPriceDate, setDailyPriceDate] = useState(
+  fromDateValue
+   ? dateFns.startOfMonth(fromDateValue)
+   : dateFns.startOfMonth(new Date()),
+ );
 
  function handleShowDailyPrice(newRoom: Room) {
   setSelectedRoom(newRoom);
   setShowDailyPrice(true);
  }
 
- const { data: roomDailyPrice, isLoading: roomDailyPriceIsLoading } = useQuery({
-  enabled: !!selectedRoom,
-  queryKey: [
-   getRoomDailyPriceApi,
-   hotelID.toString(),
-   selectedRoom?.roomTypeID.toString(),
-  ],
-  async queryFn({ signal }) {
-   const { ratePlanID, roomTypeID, beds } = selectedRoom!;
-   const res = await getRoomPriceDaily({
-    signal,
-    ratePlanID,
-    roomTypeID,
-    beds,
-    hotelID,
-    arzID,
-    channelID,
-    providerID,
-    endDate: dateFns
-     .addMonths(dateFns.startOfMonth(new Date()), 1)
-     .toISOString(),
-    startDate: dateFns.startOfMonth(new Date()).toISOString(),
-   });
-   return res.data;
+ const { data: roomDailyPrice, isFetching: roomDailyPriceIsLoading } = useQuery(
+  {
+   enabled: !!selectedRoom,
+   queryKey: [
+    getRoomDailyPriceApi,
+    hotelID.toString(),
+    selectedRoom?.roomTypeID.toString(),
+    dailyPriceDate.toISOString(),
+   ],
+   async queryFn({ signal }) {
+    const { ratePlanID, roomTypeID, beds } = selectedRoom!;
+    const res = await getRoomPriceDaily({
+     signal,
+     ratePlanID,
+     roomTypeID,
+     beds,
+     hotelID,
+     arzID,
+     channelID,
+     providerID,
+     endDate: dateFns.endOfMonth(dailyPriceDate).toISOString(),
+     startDate: dailyPriceDate.toISOString(),
+    });
+    return res.data;
+   },
   },
- });
+ );
 
  useEffect(() => {
   onUpdateRoomInventory(data || []);
@@ -99,12 +110,52 @@ export default function HotelRooms({
    <Dialog open={showDailyPrice} onOpenChange={setShowDailyPrice}>
     <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden max-h-[90svh]'>
      <DialogHeader className='p-4 shrink-0'>
-      <DialogTitle className='text-lg font-medium'>
+      <DialogTitle className='text-base font-medium'>
        {dic.hotelRooms.dailyPrice}
       </DialogTitle>
      </DialogHeader>
      <div className='grow overflow-auto flex flex-col *:[--cell-size:2.5rem] md:*:[--cell-size:3rem] lg:*:[--cell-size:3.3rem]'>
-      <Calendar mode='single' className='m-auto' />
+      <Calendar
+       showOutsideDays={false}
+       mode='single'
+       selected={dailyPriceDate}
+       onMonthChange={(selected) =>
+        setDailyPriceDate(dateFns.startOfMonth(selected!))
+       }
+       components={{
+        DayButton(props) {
+         const dayDate = props.day.date;
+         const dayNumber = dayDate.toLocaleDateString(locale, {
+          day: 'numeric',
+         });
+         const dayPrice = roomDailyPrice?.find((item) => {
+          return new Date(item.date).getTime() === dayDate.getTime();
+         });
+         return (
+          <div
+           className={`${props.className} size-(--cell-size) relative flex flex-col`}
+          >
+           <div className='basis-5'></div>
+           <div className='grow text-center grid place-content-center'>
+            {dayNumber}
+           </div>
+           <div className='text-[0.7rem] basis-5'>
+            {dayPrice && !roomDailyPriceIsLoading ? (
+             numberFormatter.format(dayPrice?.roomOnlineShowRate / 1000)
+            ) : roomDailyPriceIsLoading ? (
+             <div className='px-2'>
+              <Skeleton className='h-3' />
+             </div>
+            ) : (
+             ''
+            )}
+           </div>
+          </div>
+         );
+        },
+       }}
+       className='m-auto'
+      />
       <div className='px-4 py-2'>
        <div className='flex flex-wrap gap-4 justify-center bg-neutral-200 dark:bg-neutral-800 border border-input rounded-md p-2'>
         {roomStates.map((state) => (
@@ -112,7 +163,9 @@ export default function HotelRooms({
           <div
            className={`size-4 rounded-full ${roomStatesStyles.get(state)?.backgroundColor}`}
           ></div>
-          <p className='text-xs'>{dic.hotelDatePicker[state]}</p>
+          <p className='text-xs text-neutral-700 dark:text-neutral-400'>
+           {dic.hotelDatePicker[state]}
+          </p>
          </div>
         ))}
        </div>
