@@ -169,6 +169,7 @@ export type {
 export {
  getHotelInfoApi,
  getHotelFacilitiesApi,
+ getRoomFacilitiesApi,
  getHotelImagesApi,
  getRoomInventoriesApi,
  getRoomDailyPriceApi,

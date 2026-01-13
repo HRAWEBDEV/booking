@@ -21,6 +21,7 @@ export default function HotelWrapper({
  dic,
  hotelInfo,
  hotelFacilityPromise,
+ roomFacilityPromise,
  hotelImages,
  fromDate,
  toDate,
@@ -31,6 +32,7 @@ export default function HotelWrapper({
  hotelInfo: HotelInfoData;
  hotelImages: HotelImage[] | null;
  hotelFacilityPromise: Promise<HotelFacility[] | null>;
+ roomFacilityPromise: Promise<HotelFacility[] | null>;
  roomInventoriesPromise: Promise<RoomInventory[] | null>;
  fromDate: string;
  toDate: string;
@@ -53,7 +55,11 @@ export default function HotelWrapper({
       <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
      </div>
      <Suspense fallback={<Skeleton className='h-36 mb-4' />}>
-      <HotelFacilities dic={dic} hotelFacilityPromise={hotelFacilityPromise} />
+      <HotelFacilities
+       dic={dic}
+       hotelFacilityPromise={hotelFacilityPromise}
+       roomFacilityPromise={roomFacilityPromise}
+      />
      </Suspense>
      <Suspense fallback={<Skeleton className='h-36 mb-4' />}>
       <HotelRooms dic={dic} roomInventoriesPromise={roomInventoriesPromise} />

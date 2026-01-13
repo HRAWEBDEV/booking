@@ -14,6 +14,7 @@ import {
  getHotelInfoApi,
  getHotelFacilitiesApi,
  getRoomInventoriesApi,
+ getRoomFacilitiesApi,
 } from './services/hotelApiActions';
 import { getSetupProviderCredentials } from '../../../utils/getSetupProviderCredentials';
 import { appendApiUri } from '../../../utils/appendApiUri';
@@ -141,11 +142,27 @@ export default async function HotelPage(
    return null;
   });
 
+ const roomFacilityPromise = fetch(
+  `${appendApiUri(getRoomFacilitiesApi)}?${hotelInfoSearchParams.toString()}`,
+  {
+   method: 'GET',
+   headers: requestCredentialHeader,
+  },
+ )
+  .then((res) => {
+   return res.json() as Promise<HotelFacility[]>;
+  })
+  .catch((err) => {
+   console.log('hotel facilities err', err);
+   return null;
+  });
+
  return (
   <HotelWrapper
    roomInventoriesPromise={hotelInventoriesPromise}
    hotelInfo={hotelInfoPromise}
    hotelFacilityPromise={hotelFacilityPromise}
+   roomFacilityPromise={roomFacilityPromise}
    hotelImages={hotelImages}
    fromDate={fromDateQuery as string}
    toDate={toDateQuery as string}
