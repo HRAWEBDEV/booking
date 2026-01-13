@@ -21,6 +21,7 @@ import {
 } from '../../utils/hotelRoomsPickerReducer';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '@/components/ui/spinner';
+// import { BiError } from 'react-icons/bi';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative shrink-0';
@@ -86,7 +87,10 @@ export default function HotelRoom({
   : false;
 
  return (
-  <article className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input'>
+  <article
+   data-sold-out={roomType.roomCount === 0}
+   className='shadow-lg rounded-md p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input data-[sold-out="true"]:bg-neutral-100 dark:data-[sold-out="true"]:bg-neutral-900'
+  >
    <div className={`keen-slider ${imageContainerClass}`} ref={bannerSlideRef}>
     {roomType.accommodationImages.length ? (
      roomType.accommodationImages.map(({ imageURL }) => (
@@ -94,8 +98,8 @@ export default function HotelRoom({
        <img
         src={imageURL}
         alt='hotel image'
-        className='h-full w-full object-cover object-center'
         loading='lazy'
+        className='h-full w-full object-cover object-center'
        />
       </div>
      ))
