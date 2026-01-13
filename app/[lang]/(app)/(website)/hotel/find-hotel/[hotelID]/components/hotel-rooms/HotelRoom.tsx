@@ -32,23 +32,23 @@ export default function HotelRoom({
  roomType,
  selectedRoom,
  roomDailyPriceIsLoading,
- setSelectedRoom,
+ onShowDailyPrice,
 }: {
  dic: PreviewHotelDictionary;
  accType: RoomAccomodationType;
  roomType: RoomInventory;
  selectedRoom: Room | null;
  roomDailyPriceIsLoading: boolean;
- setSelectedRoom: (newRoom: Room) => unknown;
+ onShowDailyPrice: (newRoom: Room) => unknown;
 }) {
  const {
   rooms: { selectedRoomsDispatch, selectedRooms, roomTypeCapacity },
-  reserve: { reserveRoomNights },
+  reserve: { reserveRoomNights, toDateValue, fromDateValue },
  } = useHotelConfig();
  const formatNumber = useCurrencyFormatter();
  const [sliderCount, setSliderCount] = useState(0);
  const [activeSliderIndex, setActiveSliderIndex] = useState(0);
- const { localeInfo } = useBaseConfig();
+ const { locale, localeInfo } = useBaseConfig();
  const [bannerSlideRef, instanceRef] = useKeenSlider({
   rtl: localeInfo.contentDirection === 'rtl',
   created(slider) {
@@ -146,9 +146,18 @@ export default function HotelRoom({
       <div className='mb-2 lg:mb-0 mt-2'>
        <Alert
         variant={'destructive'}
-        className='bg-rose-50 dark:bg-rose-950 border-rose-50 dark:border-rose-950'
+        className='bg-rose-50 dark:bg-rose-950 border-rose-50 dark:border-rose-950 p-2'
        >
-        <AlertDescription className='font-medium text-base'>
+        <AlertDescription className='font-medium'>
+         {dic.hotelDatePicker.from}{' '}
+         {fromDateValue?.toLocaleDateString(locale, {
+          dateStyle: 'medium',
+         })}
+         {' , '}
+         {dic.hotelDatePicker.to}{' '}
+         {toDateValue?.toLocaleDateString(locale, {
+          dateStyle: 'medium',
+         })}{' '}
          {dic.hotelRooms.capacityIsFull}
         </AlertDescription>
        </Alert>
@@ -235,7 +244,7 @@ export default function HotelRoom({
       size='lg'
       disabled={targetRoomDailyPricingIsLoading}
       className='w-full'
-      onClick={() => setSelectedRoom(roomInfo)}
+      onClick={() => onShowDailyPrice(roomInfo)}
      >
       {targetRoomDailyPricingIsLoading && <Spinner />}
       {dic.hotelRooms.viewPricingCalendar}

@@ -11,7 +11,7 @@ import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
 import {
  Dialog,
  DialogTrigger,
- DialogClose,
+ DialogTitle,
  DialogContent,
  DialogHeader,
 } from '@/components/ui/dialog';
@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { getSetupProviderCredentials } from '@/app/[lang]/(app)/(website)/utils/getSetupProviderCredentials';
 import { useDateFns } from '@/hooks/useDateFns';
+import { roomStates, roomStatesStyles } from '../../utils/roomStates';
 
 export default function HotelRooms({
  dic,
@@ -31,12 +32,18 @@ export default function HotelRooms({
 }) {
  const dateFns = useDateFns();
  const { arzID, channelID, providerID } = getSetupProviderCredentials();
+ const [showDailyPrice, setShowDailyPrice] = useState(false);
  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
  const data = use(roomInventoriesPromise);
  const {
   hotelID,
   rooms: { onUpdateRoomInventory },
  } = useHotelConfig();
+
+ function handleShowDailyPrice(newRoom: Room) {
+  setSelectedRoom(newRoom);
+  setShowDailyPrice(true);
+ }
 
  const { data: roomDailyPrice, isLoading: roomDailyPriceIsLoading } = useQuery({
   enabled: !!selectedRoom,
@@ -68,7 +75,6 @@ export default function HotelRooms({
  useEffect(() => {
   onUpdateRoomInventory(data || []);
  }, [data, onUpdateRoomInventory]);
-
  return (
   <section id='rooms' className='scroll-mt-16 mb-4 grid gap-4'>
    {data?.map((roomType) => (
@@ -82,7 +88,7 @@ export default function HotelRooms({
         accType.accommodationRatePlanModel.ratePlanModel.ratePlanTypeID.toString()
        }
        selectedRoom={selectedRoom}
-       setSelectedRoom={setSelectedRoom}
+       onShowDailyPrice={handleShowDailyPrice}
        roomDailyPriceIsLoading={roomDailyPriceIsLoading}
        dic={dic}
        roomType={roomType}
@@ -90,13 +96,27 @@ export default function HotelRooms({
      ))}
     </Fragment>
    ))}
-   <Dialog open={false}>
-    <DialogContent className='gap-0 p-0'>
-     <DialogHeader className='font-medium p-4 text-lg'>
-      {dic.hotelRooms.dailyPrice}
+   <Dialog open={showDailyPrice} onOpenChange={setShowDailyPrice}>
+    <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden max-h-[90svh]'>
+     <DialogHeader className='p-4 shrink-0'>
+      <DialogTitle className='text-lg font-medium'>
+       {dic.hotelRooms.dailyPrice}
+      </DialogTitle>
      </DialogHeader>
-     <div className='p-4 grid place-content-center *:[--cell-size:2.5rem] md:*:[--cell-size:3rem] lg:*:[--cell-size:4rem]'>
-      <Calendar mode='single' />
+     <div className='grow overflow-auto flex flex-col *:[--cell-size:2.5rem] md:*:[--cell-size:3rem] lg:*:[--cell-size:3.3rem]'>
+      <Calendar mode='single' className='m-auto' />
+      <div className='px-4 py-2'>
+       <div className='flex flex-wrap gap-4 justify-center bg-neutral-200 dark:bg-neutral-800 border border-input rounded-md p-2'>
+        {roomStates.map((state) => (
+         <div key={state} className='flex gap-1 items-center'>
+          <div
+           className={`size-4 rounded-full ${roomStatesStyles.get(state)?.backgroundColor}`}
+          ></div>
+          <p className='text-xs'>{dic.hotelDatePicker[state]}</p>
+         </div>
+        ))}
+       </div>
+      </div>
      </div>
     </DialogContent>
    </Dialog>
