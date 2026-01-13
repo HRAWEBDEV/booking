@@ -2,8 +2,7 @@ import { type HotelInfo } from '../services/hotelApiActions';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaStar } from 'react-icons/fa6';
-import { FaShareAlt } from 'react-icons/fa';
-import { Button } from '@/components/ui/button';
+import ShareHotelButton from './ShareHotelButton';
 
 export default function HotelTitle({
  dic,
@@ -27,14 +26,7 @@ export default function HotelTitle({
     </span>
    </div>
    <h1 className='text-2xl lg:text-3xl font-medium mb-2'>
-    <Button
-     title={dic.hotelInfo.share}
-     variant='ghost'
-     size='icon'
-     className='text-neutral-500'
-    >
-     <FaShareAlt />
-    </Button>
+    <ShareHotelButton dic={dic} />
     <span>{hotelInfo.fName}</span>
    </h1>
    <div className='text-sm lg:text-[0.9rem] text-neutral-600 dark:text-neutral-400'>
