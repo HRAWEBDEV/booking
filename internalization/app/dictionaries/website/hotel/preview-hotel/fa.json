@@ -40,10 +40,10 @@
   "nights": "شب",
   "person": "نفر",
   "addRoom": "افزودن اتاق",
-  "viewPricingCalendar": "مشاهده تقویم قیمتی",
+  "viewPricingCalendar": "مشاهده نرخ روزانه اتاق",
   "discount": "تخفیف",
   "capacityIsFull": "اتاق ظرفیت ندارد",
-  "dailyPrice": "قیمت‌های روزانه"
+  "dailyPrice": "نرخ روزانه اتاق"
  },
  "hotelDescription": {
   "floors": "طبقات",

@@ -75,7 +75,9 @@ export default function HotelRooms({
      arzID,
      channelID,
      providerID,
-     endDate: dateFns.endOfMonth(dailyPriceDate).toISOString(),
+     endDate: dateFns
+      .addDays(dateFns.endOfMonth(dailyPriceDate), 1)
+      .toISOString(),
      startDate: dailyPriceDate.toISOString(),
     });
     return res.data;
@@ -86,6 +88,12 @@ export default function HotelRooms({
  useEffect(() => {
   onUpdateRoomInventory(data || []);
  }, [data, onUpdateRoomInventory]);
+
+ useEffect(() => {
+  if (!fromDateValue) return;
+  setDailyPriceDate(dateFns.startOfMonth(fromDateValue));
+ }, [fromDateValue, dateFns]);
+
  return (
   <section id='rooms' className='scroll-mt-16 mb-4 grid gap-4'>
    {data?.map((roomType) => (
@@ -111,7 +119,8 @@ export default function HotelRooms({
     <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden max-h-[90svh]'>
      <DialogHeader className='p-4 shrink-0'>
       <DialogTitle className='text-base font-medium'>
-       {dic.hotelRooms.dailyPrice}
+       {dic.hotelRooms.dailyPrice}{' '}
+       <span className='text-sm text-neutral-500'>(x ۱۰۰۰) (ریال)</span>
       </DialogTitle>
      </DialogHeader>
      <div className='grow overflow-auto flex flex-col *:[--cell-size:2.5rem] md:*:[--cell-size:3rem] lg:*:[--cell-size:3.3rem]'>
@@ -119,6 +128,7 @@ export default function HotelRooms({
        showOutsideDays={false}
        mode='single'
        selected={dailyPriceDate}
+       defaultMonth={dailyPriceDate}
        onMonthChange={(selected) =>
         setDailyPriceDate(dateFns.startOfMonth(selected!))
        }
@@ -136,10 +146,10 @@ export default function HotelRooms({
            className={`${props.className} size-(--cell-size) relative flex flex-col`}
           >
            <div className='basis-5'></div>
-           <div className='grow text-center grid place-content-center'>
+           <div className='grow text-center grid place-content-center text-neutral-600 dark:text-neutral-400'>
             {dayNumber}
            </div>
-           <div className='text-[0.7rem] basis-5'>
+           <div className='text-[0.7rem] basis-5 font-medium'>
             {dayPrice && !roomDailyPriceIsLoading ? (
              numberFormatter.format(dayPrice?.roomOnlineShowRate / 1000)
             ) : roomDailyPriceIsLoading ? (
@@ -157,7 +167,7 @@ export default function HotelRooms({
        className='m-auto'
       />
       <div className='px-4 py-2'>
-       <div className='flex flex-wrap gap-4 justify-center bg-neutral-200 dark:bg-neutral-800 border border-input rounded-md p-2'>
+       <div className='flex flex-wrap gap-4 justify-center bg-neutral-100 dark:bg-neutral-900 border border-input rounded-md p-2'>
         {roomStates.map((state) => (
          <div key={state} className='flex gap-1 items-center'>
           <div
