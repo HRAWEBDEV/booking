@@ -17,6 +17,8 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { type HotelDatePickerSchema } from '../schemas/hotelDatePickerSchema';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { useHotelConfig } from '../services/hotel-config/hotelConfigContext';
+import { getReserveInfo } from '../utils/reserveInfo';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 
 export default function HotelDatePicker({
  dic,
@@ -25,6 +27,7 @@ export default function HotelDatePicker({
  dic: PreviewHotelDictionary;
  hotelInfo: HotelInfo;
 }) {
+ const numberFormatter = useCurrencyFormatter();
  const {
   rooms: { selectedRooms },
   reserve: { onChangeReserveDate },
@@ -38,6 +41,8 @@ export default function HotelDatePicker({
   'fromDate',
   'toDate',
  ]);
+
+ const reserveInfo = getReserveInfo(selectedRooms);
 
  return (
   <form className='shadow-lg border border-input p-4 rounded-md mb-2'>
@@ -157,15 +162,41 @@ export default function HotelDatePicker({
      {dic.hotelDatePicker.search}
     </Button>
     {!!selectedRooms.length && (
-     <div className='pt-2 border-t border-input'>
-      <Button
-       variant='secondary'
-       type='button'
-       size='lg'
-       className='font-medium text-base w-full'
-      >
-       {dic.hotelDatePicker.confirmReserve}
-      </Button>
+     <div className='pt-2 border-t border-input flex flex-col'>
+      <ul className='max-h-24 overflow-auto'>
+       {selectedRooms.map((room) => (
+        <li
+         key={
+          room.ratePlanTypeID.toString() +
+          room.roomTypeID.toString() +
+          room.ratePlanID.toString() +
+          room.beds.toString()
+         }
+         className='flex flex-wrap gap-2 text-xs text-neutral-600 dark:text-neutral-400'
+        >
+         <span>{room.roomTypeName}: </span>
+         <div style={{ direction: 'ltr' }}>
+          <span>{room.count} </span>x
+          <span> {numberFormatter.format(room.discountPrice)}</span>
+         </div>
+        </li>
+       ))}
+      </ul>
+      <div className='mb-2 font-medium'>
+       <span className='text-xs'>{dic.reserveInfo.totalDiscountPrice}: </span>
+       <span>{numberFormatter.format(reserveInfo.totalDiscountPrice)}</span>
+       <span className='text-xs'> ریال</span>
+      </div>
+      <div>
+       <Button
+        variant='secondary'
+        type='button'
+        size='lg'
+        className='font-medium text-base w-full'
+       >
+        {dic.hotelDatePicker.confirmReserve}
+       </Button>
+      </div>
      </div>
     )}
    </FieldGroup>

@@ -1,7 +1,11 @@
 interface SelectedRoom {
+ roomTypeName: string;
  roomTypeID: number;
  ratePlanID: number;
  ratePlanTypeID: number;
+ discountPercent: number;
+ price: number;
+ discountPrice: number;
  beds: number;
  count: number;
 }

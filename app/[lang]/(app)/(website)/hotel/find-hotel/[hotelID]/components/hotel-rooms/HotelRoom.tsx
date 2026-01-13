@@ -74,10 +74,14 @@ export default function HotelRoom({
 
  const roomInfo: Room = {
   beds: accType.beds,
+  roomTypeName: roomType.fName,
   ratePlanID: accType.accommodationRatePlanModel.ratePlanID,
   roomTypeID: roomType.roomTypeID,
   ratePlanTypeID:
    accType.accommodationRatePlanModel.ratePlanModel.ratePlanTypeID,
+  discountPercent: discountPercentage,
+  price: accType.roomOnlineShowRate,
+  discountPrice: accType.netRoomRate,
  };
  const selectedRoomInfo = findRoom(selectedRooms, roomInfo);
  const targetRoomTypeCapacity = roomTypeCapacity[roomType.roomTypeID];
