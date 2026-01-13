@@ -1,11 +1,12 @@
 import z from 'zod';
+import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 
 const defaultValues: Partial<HotelDatePickerSchema> = {
  fromDate: null,
  toDate: null,
 };
 
-function createHotelDatePickerSchema() {
+function createHotelDatePickerSchema(dic: PreviewHotelDictionary) {
  return z
   .object({
    fromDate: z.date().nullable(),
@@ -17,6 +18,7 @@ function createHotelDatePickerSchema() {
    },
    {
     path: ['toDate'],
+    message: dic.hotelDatePicker.selectReserveDate,
    },
   )
   .refine(
@@ -25,6 +27,7 @@ function createHotelDatePickerSchema() {
    },
    {
     path: ['toDate'],
+    message: dic.hotelDatePicker.selectReserveDate,
    },
   );
 }

@@ -22,7 +22,9 @@
   "cta": "محدودیت ورود",
   "ctd": "محدودیت خروج",
   "search": "جستجو",
-  "confirmReserve": "ثبت رزرو"
+  "confirmReserve": "ثبت رزرو",
+  "changeDate": "تغییر تاریخ رزرو",
+  "selectReserveDate": "تاریخ رزرو را انتخاب کنید"
  },
  "hotelFacilities": {
   "title": "امکانات",

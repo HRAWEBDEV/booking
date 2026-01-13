@@ -20,6 +20,7 @@ export default function HotelConfigProvider({
  children,
  hotelInfo,
  hotelID,
+ dic,
 }: {
  children: ReactNode;
  hotelInfo: HotelInfo;
@@ -51,7 +52,7 @@ export default function HotelConfigProvider({
  });
 
  const datePickerFilters = useForm({
-  resolver: zodResolver(createHotelDatePickerSchema()),
+  resolver: zodResolver(createHotelDatePickerSchema(dic)),
   defaultValues: {
    ...defaultValues,
    fromDate: fromDateQuery,
