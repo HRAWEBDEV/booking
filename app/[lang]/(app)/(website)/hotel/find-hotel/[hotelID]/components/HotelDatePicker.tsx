@@ -227,7 +227,7 @@ export default function HotelDatePicker({
           </DialogTitle>
          </DialogHeader>
          <div className='grow overflow-auto flex flex-col '>
-          <div className='p-4 grid grid-cols-1 gap-4'>
+          <div className='p-4 grid grid-cols-2 gap-1'>
            <Field className='gap-2'>
             <Label htmlFor='toDate' className='px-1'>
              {dic.hotelDatePicker.fromDate}
@@ -242,7 +242,7 @@ export default function HotelDatePicker({
            </Field>
           </div>
           <div className='mx-auto *:[--cell-size:2.5rem]'>{renderCalendar}</div>
-          <div className='sticky bottom-0 bg-background pt-2 border-t border-input'>
+          <div className='sticky bottom-0 bg-background p-2 border-t border-input'>
            {renderSearchButton}
           </div>
          </div>
