@@ -17,6 +17,7 @@ export default function ReserveInfoSummary({
   hotelInfo,
   reserveInfo,
   bookingInvoiceInfo,
+  onSubmitBookingFormInfo,
   rooms: { data, isLoading },
  } = useReserveConfig();
 
@@ -29,7 +30,7 @@ export default function ReserveInfoSummary({
     <div className='sticky top-1'>
      <section className='p-4 rounded-md border border-input mb-2'>
       <div className='mb-3 pb-3 border-b border-input'>
-       <h1 className='text-xl font-medium'>{hotelInfo.data?.fName}</h1>
+       <h1 className='text-lg font-medium'>{hotelInfo.data?.fName}</h1>
        <p className='text-sm text-neutral-600 dark:text-neutral-400'>
         {hotelInfo.data?.address}
        </p>
@@ -39,7 +40,7 @@ export default function ReserveInfoSummary({
         <p className='text-primary text-sm font-medium'>
          {dic.reserveInfo.reserveSummary.arrivalDate}
         </p>
-        <p className='font-medium'>
+        <p className='font-medium text-sm'>
          {new Date(reserveInfo.fromDate).toLocaleDateString(locale, {
           dateStyle: 'full',
          })}
@@ -55,7 +56,7 @@ export default function ReserveInfoSummary({
         <p className='text-primary text-sm font-medium'>
          {dic.reserveInfo.reserveSummary.departureDate}
         </p>
-        <p className='font-medium'>
+        <p className='font-medium text-sm'>
          {new Date(reserveInfo.toDate).toLocaleDateString(locale, {
           dateStyle: 'full',
          })}
@@ -110,6 +111,7 @@ export default function ReserveInfoSummary({
        className='text-base'
        variant='outline'
        size='lg'
+       type='button'
        disabled={isLoading || hotelInfo.isLoading}
       >
        {(isLoading || hotelInfo.isLoading) && <Spinner />}
@@ -120,6 +122,7 @@ export default function ReserveInfoSummary({
        variant='secondary'
        size='lg'
        disabled={isLoading || hotelInfo.isLoading}
+       onClick={onSubmitBookingFormInfo}
       >
        {(isLoading || hotelInfo.isLoading) && <Spinner />}
        {dic.reserveInfo.reserveForm.confirm}

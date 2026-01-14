@@ -7,7 +7,6 @@ import { getMetaDictionary } from '@/internalization/app/dictionaries/meta/dicti
 import { Locale } from '@/internalization/app/localization';
 import AxiosCredentialsInterceptor from './services/axios-credentials/AxiosCredentialsInterceptor';
 import { Toaster } from 'sonner';
-import { locales } from '@/internalization/app/localization';
 
 export default async function WebsiteLayout({
  children,
@@ -20,7 +19,6 @@ export default async function WebsiteLayout({
  const shareDic = await getShareDictionary({
   locale: lang as Locale,
  });
- const { contentDirection } = locales[lang as Locale];
  return (
   <ShareDictionaryProvider metaDictionary={metaDic} shareDictionary={shareDic}>
    <AxiosCredentialsInterceptor />
@@ -32,7 +30,7 @@ export default async function WebsiteLayout({
    </div>
    <Toaster
     className='font-[inherit]!'
-    position={contentDirection === 'rtl' ? 'top-left' : 'top-right'}
+    position='top-center'
     richColors
     closeButton
    />

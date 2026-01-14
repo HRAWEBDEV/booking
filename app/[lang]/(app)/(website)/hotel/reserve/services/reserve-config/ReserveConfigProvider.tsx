@@ -25,6 +25,7 @@ import {
  defaultValues,
 } from '../../schemas/bookingInfoSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
 
 export default function ReserveConfigProvider({
  children,
@@ -40,6 +41,7 @@ export default function ReserveConfigProvider({
    ...defaultValues,
   },
  });
+ const [] = bookingInfoForm.watch([]);
  //
  const { arzID, channelID, providerID } = getSetupProviderCredentials();
  const [localeReserveInfo] = useState<LocalReserveInfo | null>(() => {
@@ -117,6 +119,13 @@ export default function ReserveConfigProvider({
     endDate: localeReserveInfo!.toDate,
     startDate: localeReserveInfo!.fromDate,
    });
+   res.data.forEach((room, i) => {
+    bookingInfoForm.setValue(`guestInfo.${i}.saveAsReserveInfo`, false);
+    bookingInfoForm.setValue(`guestInfo.${i}.hasEarlyCheckin`, false);
+    bookingInfoForm.setValue(`guestInfo.${i}.hasLateCheckout`, false);
+    bookingInfoForm.setValue(`guestInfo.${i}.type`, 'inner');
+    bookingInfoForm.setValue(`guestInfo.${i}.gender`, 'male');
+   });
    return res.data;
   },
  });
@@ -124,6 +133,17 @@ export default function ReserveConfigProvider({
  const bookingInvoiceInfo = getBookingInvoiceInfo({
   rooms: rooms || [],
  });
+
+ function handleSubmitBookingFormInfo() {
+  bookingInfoForm.handleSubmit(
+   (data) => {
+    console.log(data);
+   },
+   () => {
+    toast.error(dic.reserveInfo.reserveForm.fillRequiredInfo);
+   },
+  )();
+ }
 
  const ctx: ReserveConfig = {
   reserveInfo: localeReserveInfo!,
@@ -140,6 +160,7 @@ export default function ReserveConfigProvider({
    isSuccess: roomsIsSuccess,
    isError: roomsIsError,
   },
+  onSubmitBookingFormInfo: handleSubmitBookingFormInfo,
  };
  // handle error here
  if (!localeReserveInfo) return <div>error</div>;

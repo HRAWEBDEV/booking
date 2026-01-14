@@ -22,6 +22,7 @@ interface ReserveConfig {
   isSuccess: boolean;
   isError: boolean;
  };
+ onSubmitBookingFormInfo: () => unknown;
 }
 
 const reserveConfigContext = createContext<ReserveConfig | null>(null);

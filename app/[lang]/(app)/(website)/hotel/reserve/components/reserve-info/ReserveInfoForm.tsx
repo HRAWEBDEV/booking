@@ -3,14 +3,12 @@ import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/
 import { FieldLabel, Field } from '@/components/ui/field';
 import { InputGroup, InputGroupInput } from '@/components/ui/input-group';
 import { useReserveConfig } from '../../services/reserve-config/reserveConfigContext';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { FaTrashAlt } from 'react-icons/fa';
+import { useFormContext } from 'react-hook-form';
+import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
+import ReserveInfoRoomForm from './ReserveInfoRoomForm';
 
 export default function ReserveInfoForm({
  dic,
@@ -18,10 +16,16 @@ export default function ReserveInfoForm({
  dic: ReserveHotelDictionary;
 }) {
  const {
+  register,
+  formState: { errors },
+ } = useFormContext<BookingInfoSchema>();
+
+ const {
+  reserveInfo,
   hotelInfo: { isLoading: hotelInfoIsLoading },
   rooms: { data, isLoading },
+  onSubmitBookingFormInfo,
  } = useReserveConfig();
- const { localeInfo } = useBaseConfig();
  return (
   <div>
    <form>
@@ -32,45 +36,45 @@ export default function ReserveInfoForm({
       </h3>
       <div className='grid gap-4 grid-cols-1 md:grid-cols-2 gap-y-5'>
        <div className='grid gap-4 grid-cols-2'>
-        <Field className='gap-2'>
+        <Field className='gap-2' data-invalid={!!errors.firstName}>
          <FieldLabel htmlFor='firstName'>
           {dic.reserveInfo.reserveForm.firstName} *
          </FieldLabel>
-         <InputGroup>
-          <InputGroupInput id='firstName' />
+         <InputGroup data-invalid={!!errors.firstName}>
+          <InputGroupInput id='firstName' {...register('firstName')} />
          </InputGroup>
         </Field>
-        <Field className='gap-2'>
+        <Field className='gap-2' data-invalid={!!errors.lastName}>
          <FieldLabel htmlFor='lastName'>
           {dic.reserveInfo.reserveForm.lastName} *
          </FieldLabel>
-         <InputGroup>
-          <InputGroupInput id='lastName' />
+         <InputGroup data-invalid={!!errors.lastName}>
+          <InputGroupInput id='lastName' {...register('lastName')} />
          </InputGroup>
         </Field>
        </div>
-       <Field className='gap-2'>
+       <Field className='gap-2' data-invalid={!!errors.nationalCode}>
         <FieldLabel htmlFor='nationalCode'>
          {dic.reserveInfo.reserveForm.nationalCode} *
         </FieldLabel>
-        <InputGroup>
-         <InputGroupInput id='nationalCode' />
+        <InputGroup data-invalid={!!errors.nationalCode}>
+         <InputGroupInput id='nationalCode' {...register('nationalCode')} />
         </InputGroup>
        </Field>
-       <Field className='gap-2'>
+       <Field className='gap-2' data-invalid={!!errors.email}>
         <FieldLabel htmlFor='email'>
          {dic.reserveInfo.reserveForm.email}
         </FieldLabel>
-        <InputGroup>
-         <InputGroupInput id='email' />
+        <InputGroup data-invalid={!!errors.email}>
+         <InputGroupInput id='email' {...register('email')} />
         </InputGroup>
        </Field>
-       <Field className='gap-2'>
+       <Field className='gap-2' data-invalid={!!errors.phoneNumber}>
         <FieldLabel htmlFor='phoneNumber'>
          {dic.reserveInfo.reserveForm.phoneNumber} *
         </FieldLabel>
-        <InputGroup>
-         <InputGroupInput id='phoneNumber' />
+        <InputGroup data-invalid={!!errors.phoneNumber}>
+         <InputGroupInput id='phoneNumber' {...register('phoneNumber')} />
         </InputGroup>
        </Field>
       </div>
@@ -82,111 +86,15 @@ export default function ReserveInfoForm({
      </h3>
      {isLoading || hotelInfoIsLoading ? (
       <>
-       {Array.from({ length: 2 }, (_, i) => i).map((i) => (
-        <Skeleton key={i} className='h-60 mb-4' />
-       ))}
+       {Array.from({ length: reserveInfo.rooms.length }, (_, i) => i).map(
+        (i) => (
+         <Skeleton key={i} className='h-60 mb-4' />
+        ),
+       )}
       </>
      ) : (
       data?.map((room, i) => {
-       return (
-        <section
-         key={i}
-         className='p-4 border border-input rounded-md mb-4 relative'
-        >
-         <div className='absolute end-4 top-4'>
-          <Button
-           type='button'
-           size='icon'
-           variant='ghost'
-           className='text-rose-700 dark:text-rose-400'
-          >
-           <FaTrashAlt className='size-5' />
-          </Button>
-         </div>
-         <div className='mb-3'>
-          <h4 className='font-medium mb-2'>
-           {i + 1}) {room.fName}
-          </h4>
-          <p className='font-medium text-neutral-600 dark:text-neutral-400'>
-           {room.accommodationTypePrice.beds}{' '}
-           {dic.reserveInfo.reserveForm.person}
-          </p>
-         </div>
-         <div className='flex flex-wrap gap-5 mb-5'>
-          <Tabs dir={localeInfo.contentDirection} value='male'>
-           <TabsList>
-            <TabsTrigger value='male' className='w-20'>
-             {dic.reserveInfo.reserveForm.male}
-            </TabsTrigger>
-            <TabsTrigger value='female' className='w-20'>
-             {dic.reserveInfo.reserveForm.female}
-            </TabsTrigger>
-           </TabsList>
-          </Tabs>
-          <Tabs dir={localeInfo.contentDirection} value='innerGuest'>
-           <TabsList>
-            <TabsTrigger value='innerGuest'>
-             {dic.reserveInfo.reserveForm.innerGuest}
-            </TabsTrigger>
-            <TabsTrigger value='foreignGuest'>
-             {dic.reserveInfo.reserveForm.foreignGuest}
-            </TabsTrigger>
-           </TabsList>
-          </Tabs>
-         </div>
-         <div className='flex gap-5 flex-wrap mb-8'>
-          <div className='flex gap-3'>
-           <Checkbox
-            id={`saveAsReservePersonInfo${i + 1}`}
-            className='scale-125'
-           />
-           <Label htmlFor={`saveAsReservePersonInfo${i + 1}`}>
-            {dic.reserveInfo.reserveForm.saveAsReservePersonInfo}
-           </Label>
-          </div>
-          <div className='flex gap-3 flex-wrap'>
-           <Checkbox id={`earlyCheckinCharge${i + 1}`} className='scale-125' />
-           <Label htmlFor={`earlyCheckinCharge${i + 1}`}>
-            {dic.reserveInfo.reserveForm.earlyCheckinCharge}
-           </Label>
-          </div>
-          <div className='flex gap-3 flex-wrap'>
-           <Checkbox id={`lateCheckoutCharge${i + 1}`} className='scale-125' />
-           <Label htmlFor={`lateCheckoutCharge${i + 1}`}>
-            {dic.reserveInfo.reserveForm.lateCheckoutCharge}
-           </Label>
-          </div>
-         </div>
-         <div className='grid gap-4 grid-cols-1 md:grid-cols-2 gap-y-5'>
-          <div className='grid gap-4 grid-cols-2'>
-           <Field className='gap-2'>
-            <FieldLabel htmlFor={`firstName${i + 1}`}>
-             {dic.reserveInfo.reserveForm.firstName} *
-            </FieldLabel>
-            <InputGroup>
-             <InputGroupInput id={`firstName${i + 1}`} />
-            </InputGroup>
-           </Field>
-           <Field className='gap-2'>
-            <FieldLabel htmlFor={`lastName${i + 1}`}>
-             {dic.reserveInfo.reserveForm.lastName} *
-            </FieldLabel>
-            <InputGroup>
-             <InputGroupInput id={`lastName${i + 1}`} />
-            </InputGroup>
-           </Field>
-          </div>
-          <Field className='gap-2'>
-           <FieldLabel htmlFor={`nationalCode${i + 1}`}>
-            {dic.reserveInfo.reserveForm.nationalCode} *
-           </FieldLabel>
-           <InputGroup>
-            <InputGroupInput id={`nationalCode${i + 1}`} />
-           </InputGroup>
-          </Field>
-         </div>
-        </section>
-       );
+       return <ReserveInfoRoomForm i={i} room={room} key={i} dic={dic} />;
       })
      )}
     </div>
@@ -207,6 +115,10 @@ export default function ReserveInfoForm({
       size='lg'
       type='submit'
       disabled={isLoading || hotelInfoIsLoading}
+      onClick={(e) => {
+       e.preventDefault();
+       onSubmitBookingFormInfo();
+      }}
      >
       {(isLoading || hotelInfoIsLoading) && <Spinner />}
       {dic.reserveInfo.reserveForm.confirm}
