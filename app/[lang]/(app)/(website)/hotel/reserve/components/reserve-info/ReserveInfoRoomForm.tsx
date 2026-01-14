@@ -62,14 +62,14 @@ export default function ReserveInfoRoomForm({
        <TabsList>
         <TabsTrigger
          value='male'
-         className='w-20'
+         className='w-20 data-[state="active"]:border-primary'
          onClick={() => onChange('male')}
         >
          {dic.reserveInfo.reserveForm.male}
         </TabsTrigger>
         <TabsTrigger
          value='female'
-         className='w-20'
+         className='w-20 data-[state="active"]:border-primary'
          onClick={() => onChange('female')}
         >
          {dic.reserveInfo.reserveForm.female}
@@ -84,10 +84,18 @@ export default function ReserveInfoRoomForm({
      render={({ field: { value, onChange, ...other } }) => (
       <Tabs dir={localeInfo.contentDirection} value={value} {...other}>
        <TabsList>
-        <TabsTrigger value='inner' onClick={() => onChange('inner')}>
+        <TabsTrigger
+         className='data-[state="active"]:border-primary'
+         value='inner'
+         onClick={() => onChange('inner')}
+        >
          {dic.reserveInfo.reserveForm.innerGuest}
         </TabsTrigger>
-        <TabsTrigger value='foreign' onClick={() => onChange('foreign')}>
+        <TabsTrigger
+         className='data-[state="active"]:border-primary'
+         value='foreign'
+         onClick={() => onChange('foreign')}
+        >
          {dic.reserveInfo.reserveForm.foreignGuest}
         </TabsTrigger>
        </TabsList>
