@@ -5,7 +5,28 @@
    "arrivalDate": "تاریخ ورود",
    "departureDate": "تاریخ خروج",
    "night": "شب",
-   "totalPrice": "جمع کل"
+   "TotalPrice": "جمع",
+   "totalDiscount": "تخفیف کل",
+   "discountTotalPrice": "جمع کل"
+  },
+  "reserveForm": {
+   "reservePersonInfo": "مشخصات رزرو کننده",
+   "roomsPersonInfo": "مشخصات سرپرست اتاق",
+   "saveAsReservePersonInfo": "نام رزرو کننده و سرپرست اتاق یکی می‌باشد",
+   "firstName": "نام",
+   "lastName": "نام خانوادگی",
+   "nationalCode": "کدملی",
+   "email": "ایمیل",
+   "person": "نفر",
+   "earlyCheckinCharge": "نیم شارژ ورود",
+   "lateCheckoutCharge": "نیم شارژ خروج",
+   "male": "مرد",
+   "female": "زن",
+   "foreignGuest": "مهمان خارجی",
+   "innerGuest": "مهمان داخلی",
+   "phoneNumber": "شماره همراه",
+   "payment": "پرداخت",
+   "cancel": "انصراف"
   }
  }
 }
