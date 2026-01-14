@@ -1,6 +1,6 @@
 import { use } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
-import { type HotelFacility } from '../../services/hotelApiActions';
+import { type HotelFacility } from '../../../../services/hotelApiActions';
 
 export default function HotelFacilities({
  dic,

@@ -12,7 +12,7 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { ChevronDownIcon } from 'lucide-react';
 import { useDateFns } from '@/hooks/useDateFns';
-import { type HotelInfo } from '../services/hotelApiActions';
+import { type HotelInfo } from '../../../services/hotelApiActions';
 import { Controller, useFormContext } from 'react-hook-form';
 import { type HotelDatePickerSchema } from '../schemas/hotelDatePickerSchema';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
@@ -38,7 +38,7 @@ export default function HotelDatePicker({
  const numberFormatter = useCurrencyFormatter();
  const {
   rooms: { selectedRooms },
-  reserve: { onChangeReserveDate },
+  reserve: { onChangeReserveDate, onSubmitReserveInfo },
  } = useHotelConfig();
  const { locale } = useBaseConfig();
  const filtersUserForm = useFormContext<HotelDatePickerSchema>();
@@ -134,8 +134,10 @@ export default function HotelDatePicker({
   <Button
    variant='secondary'
    type='button'
-   size='lg'
-   className='font-medium text-base w-full'
+   className='w-full'
+   onClick={() => {
+    onSubmitReserveInfo();
+   }}
   >
    {dic.hotelDatePicker.confirmReserve}
   </Button>
@@ -222,7 +224,7 @@ export default function HotelDatePicker({
         <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden w-svw max-w-svw h-svh rounded-none'>
          <DialogHeader className='p-4 shrink-0'>
           <DialogTitle className='text-base font-medium'>
-           {dic.hotelRooms.dailyPrice}{' '}
+           {dic.hotelDatePicker.changeDate}{' '}
            <span className='text-sm text-neutral-500'></span>
           </DialogTitle>
          </DialogHeader>
@@ -295,16 +297,7 @@ export default function HotelDatePicker({
       {dic.hotelDatePicker.changeDate}
      </Button>
     </div>
-    <div>
-     <Button
-      disabled={!selectedRooms.length}
-      variant='secondary'
-      type='button'
-      className='w-full'
-     >
-      {dic.hotelDatePicker.confirmReserve}
-     </Button>
-    </div>
+    <div>{renderConfirmReserveButton}</div>
    </div>
   </>
  );

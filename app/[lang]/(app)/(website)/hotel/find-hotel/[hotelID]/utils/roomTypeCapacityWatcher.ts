@@ -1,5 +1,5 @@
 import { type SelectedRoom } from './hotelRoomsPickerReducer';
-import { type RoomInventory } from '../services/hotelApiActions';
+import { type RoomInventory } from '../../../services/hotelApiActions';
 
 type RoomTypeCapacityWatcher = Record<
  string,

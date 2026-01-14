@@ -1,6 +1,9 @@
 'use client';
 import { ReactNode, useReducer, useState } from 'react';
-import { type HotelInfo, RoomInventory } from '../hotelApiActions';
+import {
+ type HotelInfo,
+ RoomInventory,
+} from '../../../../services/hotelApiActions';
 import { type HotelConfig, hotelConfigContext } from './hotelConfigContext';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -15,6 +18,7 @@ import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { hotelRoomsPickerReducer } from '../../utils/hotelRoomsPickerReducer';
 import { useDateFns } from '@/hooks/useDateFns';
 import { roomTypeCapacityWatcher } from '../../utils/roomTypeCapacityWatcher';
+import { setLocalReserveInfo } from '../../utils/localReserveInfoManager';
 
 export default function HotelConfigProvider({
  children,
@@ -83,6 +87,17 @@ export default function HotelConfigProvider({
   );
  }
 
+ function handleSubmitReserveInfo() {
+  if (!fromDateQuery || !toDateQuery || !selectedRooms.length) return false;
+  setLocalReserveInfo({
+   hotelID,
+   fromDate: fromDateQuery.toISOString(),
+   toDate: toDateQuery.toISOString(),
+   rooms: selectedRooms,
+  });
+  router.push(`/${locale}/hotel/reserve`);
+ }
+
  const ctx: HotelConfig = {
   hotelInfo,
   hotelID,
@@ -98,6 +113,7 @@ export default function HotelConfigProvider({
    fromDateValue: fromDateQuery,
    toDateValue: toDateQuery,
    onChangeReserveDate: handleChangeReserveDate,
+   onSubmitReserveInfo: handleSubmitReserveInfo,
   },
  };
 

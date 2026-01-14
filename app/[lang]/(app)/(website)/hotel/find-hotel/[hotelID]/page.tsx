@@ -15,7 +15,7 @@ import {
  getHotelFacilitiesApi,
  getRoomInventoriesApi,
  getRoomFacilitiesApi,
-} from './services/hotelApiActions';
+} from '../../services/hotelApiActions';
 import { getSetupProviderCredentials } from '../../../utils/getSetupProviderCredentials';
 import { appendApiUri } from '../../../utils/appendApiUri';
 

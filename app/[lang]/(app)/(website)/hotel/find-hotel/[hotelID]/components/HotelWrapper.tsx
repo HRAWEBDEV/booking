@@ -13,7 +13,7 @@ import {
  type HotelFacility,
  type HotelImage,
  type RoomInventory,
-} from '../services/hotelApiActions';
+} from '../../../services/hotelApiActions';
 import HotelConfigProvider from '../services/hotel-config/HotelConfigProvider';
 import { Skeleton } from '@/components/ui/skeleton';
 

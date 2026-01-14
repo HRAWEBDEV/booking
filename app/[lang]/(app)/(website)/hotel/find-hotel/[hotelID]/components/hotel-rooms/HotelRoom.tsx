@@ -9,7 +9,7 @@ import { FiMinus, FiPlus } from 'react-icons/fi';
 import {
  type RoomAccomodationType,
  type RoomInventory,
-} from '../../services/hotelApiActions';
+} from '../../../../services/hotelApiActions';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { LuImageOff } from 'react-icons/lu';
 import { ratePlanTypes } from '../../utils/ratePlanTypes';

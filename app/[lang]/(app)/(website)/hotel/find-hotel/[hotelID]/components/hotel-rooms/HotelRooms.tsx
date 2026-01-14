@@ -6,7 +6,7 @@ import {
  type RoomInventory,
  getRoomDailyPriceApi,
  getRoomPriceDaily,
-} from '../../services/hotelApiActions';
+} from '../../../../services/hotelApiActions';
 import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
 import {
  Dialog,

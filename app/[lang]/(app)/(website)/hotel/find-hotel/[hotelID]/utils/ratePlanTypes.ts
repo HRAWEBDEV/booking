@@ -1,4 +1,4 @@
-import { RoomAccomodationType } from '../services/hotelApiActions';
+import { RoomAccomodationType } from '../../../services/hotelApiActions';
 
 export const ratePlanTypes: {
  type: keyof Pick<

@@ -1,6 +1,9 @@
 import { OutOfContext } from '@/utils/OutOfContext';
 import { use, createContext, ActionDispatch } from 'react';
-import { type HotelInfo, type RoomInventory } from '../hotelApiActions';
+import {
+ type HotelInfo,
+ type RoomInventory,
+} from '../../../../services/hotelApiActions';
 import {
  type SelectedRoom,
  type RoomsPickerActions,
@@ -22,6 +25,7 @@ interface HotelConfig {
   fromDateValue: Date | null;
   toDateValue: Date | null;
   onChangeReserveDate: (toDate: Date, fromDate: Date) => unknown;
+  onSubmitReserveInfo: () => unknown;
  };
 }
 

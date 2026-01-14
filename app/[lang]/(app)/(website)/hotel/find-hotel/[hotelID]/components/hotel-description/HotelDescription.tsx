@@ -1,4 +1,4 @@
-import { type HotelInfo } from '../../services/hotelApiActions';
+import { type HotelInfo } from '../../../../services/hotelApiActions';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { FaLocationDot } from 'react-icons/fa6';
 
