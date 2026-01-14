@@ -29,7 +29,7 @@ export default function ReserveInfoForm({
  return (
   <div>
    <form>
-    <section className='p-4 border border-input rounded-md mb-4'>
+    <section className='p-4 border border-input rounded-md mb-6'>
      <div>
       <h3 className='font-medium mb-4 text-neutral-600 dark:text-neutral-400'>
        {dic.reserveInfo.reserveForm.reservePersonInfo}
@@ -81,7 +81,7 @@ export default function ReserveInfoForm({
      </div>
     </section>
     <div>
-     <h3 className='font-medium mb-4 text-neutral-600 dark:text-neutral-400'>
+     <h3 className='font-medium mb-2 text-neutral-600 dark:text-neutral-400'>
       {dic.reserveInfo.reserveForm.roomsPersonInfo}
      </h3>
      {isLoading || hotelInfoIsLoading ? (

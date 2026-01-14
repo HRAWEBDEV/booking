@@ -95,7 +95,9 @@ export default function HotelConfigProvider({
    toDate: toDateQuery.toISOString(),
    rooms: selectedRooms,
   });
-  router.push(`/${locale}/hotel/reserve`);
+  router.push(`/${locale}/hotel/reserve`, {
+   scroll: false,
+  });
  }
 
  const ctx: HotelConfig = {
