@@ -3,5 +3,5 @@ import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/
 export default function ReserveInfoSummary({}: {
  dic: ReserveHotelDictionary;
 }) {
- return <div className='bg-red-100'>summary</div>;
+ return <div className='p-4 rounded-md border border-input'></div>;
 }

@@ -107,6 +107,8 @@ const getHotelImagesApi = '/CRS/OnlineReservation/GetHotelImages';
 const getHotelFacilitiesApi = '/CRS/OnlineReservation/GetHotelFacilities';
 const getRoomFacilitiesApi =
  '/CRS/OnlineReservation/GetHotelRoomTypeFacilities';
+const getSelectedRoomApi = '/CRS/OnlineReservation/AccommodationTypeInfo';
+const getSelectedRoomsApi = '/CRS/OnlineReservation/GetAccommodationTypes';
 
 function getRoomInventorySearch(query: GetRoomInventoryProps) {
  const searchParams = new URLSearchParams([
@@ -158,6 +160,65 @@ function getRoomPriceDaily({
  );
 }
 
+function getSelectedRoom({
+ signal,
+ ...queries
+}: {
+ signal: AbortSignal;
+ channelID: number;
+ hotelID: number;
+ providerID: number;
+ arzID: number;
+ startDate: string;
+ endDate: string;
+ ratePlanID: number;
+ bedCount: number;
+ roomTypeID: number;
+}) {
+ const searchParams = new URLSearchParams();
+ Object.entries(queries).forEach(([key, val]) => {
+  searchParams.set(key, String(val));
+ });
+ return axios.get<RoomInventory>(
+  `${getSelectedRoomApi}?${searchParams.toString()}`,
+  {
+   signal,
+  },
+ );
+}
+
+function getSelectedRooms({
+ roomInfo,
+ signal,
+ ...queries
+}: {
+ signal: AbortSignal;
+ roomInfo: {
+  roomTypeID: number;
+  bedCount: number;
+  count: number;
+ }[];
+ channelID: number;
+ hotelID: number;
+ providerID: number;
+ arzID: number;
+ startDate: string;
+ endDate: string;
+ ratePlanID: number;
+}) {
+ const searchParams = new URLSearchParams();
+ Object.entries(queries).forEach(([key, val]) => {
+  searchParams.set(key, String(val));
+ });
+ return axios.post<RoomInventory[]>(
+  `${getSelectedRoomsApi}?${searchParams.toString()}`,
+  roomInfo,
+  {
+   signal,
+  },
+ );
+}
+
 export type {
  HotelInfo,
  HotelFacility,
@@ -173,7 +234,11 @@ export {
  getHotelImagesApi,
  getRoomInventoriesApi,
  getRoomDailyPriceApi,
+ getSelectedRoomApi,
+ getSelectedRoomsApi,
+ getSelectedRoom,
  getRoomInventorySearch,
  getRoomInventory,
  getRoomPriceDaily,
+ getSelectedRooms,
 };
