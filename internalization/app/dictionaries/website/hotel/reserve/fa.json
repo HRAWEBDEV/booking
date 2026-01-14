@@ -1,3 +1,11 @@
 {
- "title": ""
+ "title": "",
+ "reserveInfo": {
+  "reserveSummary": {
+   "arrivalDate": "تاریخ ورود",
+   "departureDate": "تاریخ خروج",
+   "night": "شب",
+   "totalPrice": "جمع کل"
+  }
+ }
 }

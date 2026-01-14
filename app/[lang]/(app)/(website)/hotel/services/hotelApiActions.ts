@@ -1,4 +1,5 @@
 import { axios } from '@/app/[lang]/(app)/utils/defaultAxios';
+import { ReserveInfo } from '../find-hotel/[hotelID]/utils/reserveInfo';
 
 interface HotelInfo {
  id: number;
@@ -99,6 +100,13 @@ interface RoomDailyPrice {
  ctd: boolean;
 }
 
+type ApiCredentialProps = {
+ channelID?: string;
+ hotelID: string;
+ providerID?: string;
+ arzID?: string;
+};
+
 const getHotelInfoApi = '/CRS/OnlineReservation/GetHotelInfo';
 const getRoomInventoriesApi = '/CRS/OnlineReservation/GetRoomInventories';
 const getRoomDailyPriceApi = '/CRS/OnlineReservation/GetMonthyInventory';
@@ -118,9 +126,29 @@ function getRoomInventorySearch(query: GetRoomInventoryProps) {
   ['person', '0'],
  ]);
  Object.entries(query).forEach(([key, val]) => {
-  if (val) searchParams.set(key, String(val));
+  if (val !== undefined) {
+   searchParams.set(key, String(val));
+  }
  });
  return searchParams.toString();
+}
+
+function getHotelInfo({
+ signal,
+ ...queries
+}: { signal: AbortSignal } & Pick<
+ ApiCredentialProps,
+ 'hotelID' | 'channelID'
+>) {
+ const searchParams = new URLSearchParams();
+ Object.entries(queries).forEach(([key, val]) => {
+  if (val !== undefined) {
+   searchParams.set(key, String(val));
+  }
+ });
+ return axios.get<HotelInfo>(`${getHotelInfoApi}?${searchParams.toString()}`, {
+  signal,
+ });
 }
 
 function getRoomInventory({
@@ -150,7 +178,9 @@ function getRoomPriceDaily({
 }) {
  const searchParams = new URLSearchParams();
  Object.entries(queries).forEach(([key, val]) => {
-  searchParams.set(key, String(val));
+  if (val !== undefined) {
+   searchParams.set(key, String(val));
+  }
  });
  return axios.get<RoomDailyPrice[]>(
   `${getRoomDailyPriceApi}?${searchParams.toString()}`,
@@ -165,19 +195,17 @@ function getSelectedRoom({
  ...queries
 }: {
  signal: AbortSignal;
- channelID: number;
- hotelID: number;
- providerID: number;
- arzID: number;
  startDate: string;
  endDate: string;
  ratePlanID: number;
  bedCount: number;
  roomTypeID: number;
-}) {
+} & ApiCredentialProps) {
  const searchParams = new URLSearchParams();
  Object.entries(queries).forEach(([key, val]) => {
-  searchParams.set(key, String(val));
+  if (val !== undefined) {
+   searchParams.set(key, String(val));
+  }
  });
  return axios.get<RoomInventory>(
   `${getSelectedRoomApi}?${searchParams.toString()}`,
@@ -196,19 +224,16 @@ function getSelectedRooms({
  roomInfo: {
   roomTypeID: number;
   bedCount: number;
-  count: number;
  }[];
- channelID: number;
- hotelID: number;
- providerID: number;
- arzID: number;
  startDate: string;
  endDate: string;
  ratePlanID: number;
-}) {
+} & ApiCredentialProps) {
  const searchParams = new URLSearchParams();
  Object.entries(queries).forEach(([key, val]) => {
-  searchParams.set(key, String(val));
+  if (val !== undefined) {
+   searchParams.set(key, String(val));
+  }
  });
  return axios.post<RoomInventory[]>(
   `${getSelectedRoomsApi}?${searchParams.toString()}`,
@@ -236,6 +261,7 @@ export {
  getRoomDailyPriceApi,
  getSelectedRoomApi,
  getSelectedRoomsApi,
+ getHotelInfo,
  getSelectedRoom,
  getRoomInventorySearch,
  getRoomInventory,

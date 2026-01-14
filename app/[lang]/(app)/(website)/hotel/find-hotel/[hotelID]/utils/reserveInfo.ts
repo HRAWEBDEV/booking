@@ -21,4 +21,5 @@ function getReserveInfo(rooms: SelectedRoom[]) {
  );
 }
 
+export type { ReserveInfo };
 export { getReserveInfo };

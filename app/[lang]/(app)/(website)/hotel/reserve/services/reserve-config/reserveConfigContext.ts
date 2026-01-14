@@ -1,8 +1,25 @@
 import { use, createContext } from 'react';
 import { OutOfContext } from '@/utils/OutOfContext';
+import {
+ type HotelInfo,
+ type RoomInventory,
+} from '../../../services/hotelApiActions';
+import { type LocalReserveInfo } from '../../../find-hotel/[hotelID]/utils/localReserveInfoManager';
 
 interface ReserveConfig {
- test: string;
+ reserveInfo: LocalReserveInfo;
+ rooms: {
+  data?: RoomInventory[];
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+ };
+ hotelInfo: {
+  data?: HotelInfo;
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+ };
 }
 
 const reserveConfigContext = createContext<ReserveConfig | null>(null);
