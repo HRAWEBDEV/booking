@@ -18,13 +18,29 @@ import {
  getHotelInfo,
 } from '../../../services/hotelApiActions';
 import { getBookingInvoiceInfo } from '../../utils/bookingInvoiceInfo';
+import { useForm, FormProvider } from 'react-hook-form';
+import {
+ type BookingInfoSchema,
+ createBookingInfoSchema,
+ defaultValues,
+} from '../../schemas/bookingInfoSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function ReserveConfigProvider({
  children,
+ dic,
 }: {
  dic: ReserveHotelDictionary;
  children: ReactNode;
 }) {
+ // booking info
+ const bookingInfoForm = useForm<BookingInfoSchema>({
+  resolver: zodResolver(createBookingInfoSchema({ dic })),
+  defaultValues: {
+   ...defaultValues,
+  },
+ });
+ //
  const { arzID, channelID, providerID } = getSetupProviderCredentials();
  const [localeReserveInfo] = useState<LocalReserveInfo | null>(() => {
   try {
@@ -129,7 +145,7 @@ export default function ReserveConfigProvider({
  if (!localeReserveInfo) return <div>error</div>;
  return (
   <reserveConfigContext.Provider value={ctx}>
-   {children}
+   <FormProvider {...bookingInfoForm}>{children}</FormProvider>
   </reserveConfigContext.Provider>
  );
 }

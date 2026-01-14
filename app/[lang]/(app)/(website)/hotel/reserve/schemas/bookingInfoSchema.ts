@@ -1,31 +1,31 @@
 import { z } from 'zod';
+import { ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 
 const defaultValues: Partial<BookingInfoSchema> = {
- reserveFirstName: '',
- reserveLastName: '',
- reserveEmail: '',
- reserveNationalCode: '',
- reservePhoneNumber: '',
+ firstName: '',
+ lastName: '',
+ email: '',
+ nationalCode: '',
+ phoneNumber: '',
  guestInfo: [],
 };
 
-function createBookingInfoSchema() {
+function createBookingInfoSchema({ dic }: { dic: ReserveHotelDictionary }) {
  return z.object({
-  reserveFirstName: z.string().min(1),
-  reserveLastName: z.string().min(1),
-  reserveNationalCode: z.string().min(1),
-  reservePhoneNumber: z.string().min(1),
-  reserveEmail: z.literal('').or(z.email()),
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+  nationalCode: z.string().min(1),
+  phoneNumber: z.string().min(1),
+  email: z.literal('').or(z.email()),
   guestInfo: z.array(
    z.object({
-    sameAsReserveInfo: z.boolean().default(false),
-    hasHalfCheckin: z.boolean().default(false),
-    hasHalfCheckout: z.boolean().default(false),
-    guestFirstName: z.string(),
-    guestLastName: z.string(),
-    guestNationalCode: z.string(),
-    guestType: z.enum(['normal', 'foreign']).default('normal'),
-    gender: z.enum(['male', 'female']).default('male'),
+    firstName: z.string(),
+    lastName: z.string(),
+    nationalCode: z.string(),
+    hasEarlyCheckin: z.boolean(),
+    hasLateCheckout: z.boolean(),
+    type: z.enum(['inner', 'foreign']),
+    gender: z.enum(['male', 'female']),
    }),
   ),
  });

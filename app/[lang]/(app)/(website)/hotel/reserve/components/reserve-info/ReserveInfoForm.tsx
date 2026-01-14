@@ -95,6 +95,7 @@ export default function ReserveInfoForm({
         >
          <div className='absolute end-4 top-4'>
           <Button
+           type='button'
            size='icon'
            variant='ghost'
            className='text-rose-700 dark:text-rose-400'

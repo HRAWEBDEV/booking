@@ -27,7 +27,8 @@
    "phoneNumber": "شماره همراه",
    "payment": "پرداخت",
    "cancel": "انصراف",
-   "confirm": "تایید"
+   "confirm": "تایید",
+   "fillRequiredInfo": "اطلاعات الزامی را وارد کنید"
   }
  }
 }
