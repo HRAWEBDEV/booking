@@ -1,5 +1,5 @@
 'use client';
-import { useState, ReactNode } from 'react';
+import { useState, useCallback, ReactNode } from 'react';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import {
  type ReserveConfig,
@@ -42,6 +42,20 @@ export default function ReserveConfigProvider({
   },
  });
  const [] = bookingInfoForm.watch([]);
+
+ const setGuestInfoFormDefaults = useCallback(
+  (i: number) => {
+   bookingInfoForm.setValue(`guestInfo.${i}.saveAsReserveInfo`, false);
+   bookingInfoForm.setValue(`guestInfo.${i}.hasEarlyCheckin`, false);
+   bookingInfoForm.setValue(`guestInfo.${i}.hasLateCheckout`, false);
+   bookingInfoForm.setValue(`guestInfo.${i}.type`, 'inner');
+   bookingInfoForm.setValue(`guestInfo.${i}.gender`, 'male');
+   bookingInfoForm.setValue(`guestInfo.${i}.firstName`, '');
+   bookingInfoForm.setValue(`guestInfo.${i}.lastName`, '');
+   bookingInfoForm.setValue(`guestInfo.${i}.nationalCode`, '');
+  },
+  [bookingInfoForm],
+ );
  //
  const { arzID, channelID, providerID } = getSetupProviderCredentials();
  const [localeReserveInfo] = useState<LocalReserveInfo | null>(() => {
@@ -120,11 +134,7 @@ export default function ReserveConfigProvider({
     startDate: localeReserveInfo!.fromDate,
    });
    res.data.forEach((room, i) => {
-    bookingInfoForm.setValue(`guestInfo.${i}.saveAsReserveInfo`, false);
-    bookingInfoForm.setValue(`guestInfo.${i}.hasEarlyCheckin`, false);
-    bookingInfoForm.setValue(`guestInfo.${i}.hasLateCheckout`, false);
-    bookingInfoForm.setValue(`guestInfo.${i}.type`, 'inner');
-    bookingInfoForm.setValue(`guestInfo.${i}.gender`, 'male');
+    setGuestInfoFormDefaults(i);
    });
    return res.data;
   },
