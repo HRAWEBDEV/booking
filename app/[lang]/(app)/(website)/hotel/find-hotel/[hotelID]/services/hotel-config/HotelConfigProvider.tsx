@@ -96,7 +96,7 @@ export default function HotelConfigProvider({
    rooms: selectedRooms,
   });
   router.push(`/${locale}/hotel/reserve`, {
-   scroll: false,
+   scroll: true,
   });
  }
 
