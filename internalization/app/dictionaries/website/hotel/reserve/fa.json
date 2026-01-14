@@ -26,7 +26,8 @@
    "innerGuest": "مهمان داخلی",
    "phoneNumber": "شماره همراه",
    "payment": "پرداخت",
-   "cancel": "انصراف"
+   "cancel": "انصراف",
+   "confirm": "تایید"
   }
  }
 }

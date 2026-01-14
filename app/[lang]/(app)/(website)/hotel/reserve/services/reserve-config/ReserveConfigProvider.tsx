@@ -17,6 +17,7 @@ import {
  getHotelInfoApi,
  getHotelInfo,
 } from '../../../services/hotelApiActions';
+import { getBookingInvoiceInfo } from '../../utils/bookingInvoiceInfo';
 
 export default function ReserveConfigProvider({
  children,
@@ -104,8 +105,13 @@ export default function ReserveConfigProvider({
   },
  });
 
+ const bookingInvoiceInfo = getBookingInvoiceInfo({
+  rooms: rooms || [],
+ });
+
  const ctx: ReserveConfig = {
   reserveInfo: localeReserveInfo!,
+  bookingInvoiceInfo,
   hotelInfo: {
    data: hotelInfo,
    isLoading: hotelInfoIsLoading,

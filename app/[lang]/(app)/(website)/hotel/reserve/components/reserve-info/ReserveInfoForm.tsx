@@ -8,6 +8,9 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
+import { FaTrashAlt } from 'react-icons/fa';
 
 export default function ReserveInfoForm({
  dic,
@@ -86,7 +89,19 @@ export default function ReserveInfoForm({
      ) : (
       data?.map((room, i) => {
        return (
-        <section key={i} className='p-4 border border-input rounded-md mb-4'>
+        <section
+         key={i}
+         className='p-4 border border-input rounded-md mb-4 relative'
+        >
+         <div className='absolute end-4 top-4'>
+          <Button
+           size='icon'
+           variant='ghost'
+           className='text-rose-700 dark:text-rose-400'
+          >
+           <FaTrashAlt className='size-5' />
+          </Button>
+         </div>
          <div className='mb-3'>
           <h4 className='font-medium mb-2'>
            {i + 1}) {room.fName}
@@ -173,6 +188,28 @@ export default function ReserveInfoForm({
        );
       })
      )}
+    </div>
+    <div className='flex justify-end gap-4 lg:opacity-0 mb-4 lg:h-0 lg:mb-0'>
+     <Button
+      className='text-base w-40'
+      variant='outline'
+      size='lg'
+      type='button'
+      disabled={isLoading || hotelInfoIsLoading}
+     >
+      {(isLoading || hotelInfoIsLoading) && <Spinner />}
+      {dic.reserveInfo.reserveForm.cancel}
+     </Button>
+     <Button
+      className='text-base w-40'
+      variant='secondary'
+      size='lg'
+      type='submit'
+      disabled={isLoading || hotelInfoIsLoading}
+     >
+      {(isLoading || hotelInfoIsLoading) && <Spinner />}
+      {dic.reserveInfo.reserveForm.confirm}
+     </Button>
     </div>
    </form>
   </div>

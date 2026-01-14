@@ -5,9 +5,11 @@ import {
  type RoomInventory,
 } from '../../../services/hotelApiActions';
 import { type LocalReserveInfo } from '../../../find-hotel/[hotelID]/utils/localReserveInfoManager';
+import { type BookingInvoiceInfo } from '../../utils/bookingInvoiceInfo';
 
 interface ReserveConfig {
  reserveInfo: LocalReserveInfo;
+ bookingInvoiceInfo: BookingInvoiceInfo;
  rooms: {
   data?: RoomInventory[];
   isLoading: boolean;

@@ -16,6 +16,7 @@ export default function ReserveInfoSummary({
  const {
   hotelInfo,
   reserveInfo,
+  bookingInvoiceInfo,
   rooms: { data, isLoading },
  } = useReserveConfig();
 
@@ -84,18 +85,22 @@ export default function ReserveInfoSummary({
        <div className='text-rose-700 dark:text-rose-400 mb-1'>
         <span>+ {dic.reserveInfo.reserveSummary.TotalPrice}: </span>
         <span className='text-sm line-through'>
-         {numberFormatter.format(121231231)}
+         {numberFormatter.format(bookingInvoiceInfo.price)}
         </span>
         <span className='text-xs'> ریال</span>
        </div>
        <div className='text-secondary mb-3 pb-2 border-b border-input'>
         <span>- {dic.reserveInfo.reserveSummary.totalDiscount}: </span>
-        <span className='text-base'>{numberFormatter.format(121231231)}</span>
+        <span className='text-base'>
+         {numberFormatter.format(bookingInvoiceInfo.totalDiscount)}
+        </span>
         <span className='text-xs'> ریال</span>
        </div>
        <div className='font-medium text-primary'>
         <span>{dic.reserveInfo.reserveSummary.discountTotalPrice}: </span>
-        <span className='text-lg'>{numberFormatter.format(121231231)}</span>
+        <span className='text-lg'>
+         {numberFormatter.format(bookingInvoiceInfo.totalDiscountPrice)}
+        </span>
         <span className='text-xs'> ریال</span>
        </div>
       </div>
@@ -117,7 +122,7 @@ export default function ReserveInfoSummary({
        disabled={isLoading || hotelInfo.isLoading}
       >
        {(isLoading || hotelInfo.isLoading) && <Spinner />}
-       {dic.reserveInfo.reserveForm.payment}
+       {dic.reserveInfo.reserveForm.confirm}
       </Button>
      </div>
     </div>
