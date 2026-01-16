@@ -2,7 +2,11 @@ import { type Locale } from '@/internalization/app/localization';
 import HotelWrapper from './components/HotelWrapper';
 import { getPreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { redirect } from 'next/navigation';
-import { fromDateQueryName, toDateQueryName } from './utils/hotelQueries';
+import {
+ fromDateQueryName,
+ toDateQueryName,
+ ratePlanTypeQueryName,
+} from './utils/hotelQueries';
 import { supportedDateFns } from '@/internalization/app/localization';
 import {
  type HotelInfo,
@@ -32,6 +36,7 @@ export default async function HotelPage(
  const searchParmas = await props.searchParams;
  const fromDateQuery = searchParmas[fromDateQueryName];
  const toDateQuery = searchParmas[toDateQueryName];
+ const ratePlanQuery = searchParmas[ratePlanTypeQueryName];
 
  if (!fromDateQuery || !toDateQuery) {
   const startDate = dateFns.startOfDay(new Date());
@@ -83,7 +88,7 @@ export default async function HotelPage(
   channelID,
   checkinDate: fromDateQuery as string,
   checkoutDate: toDateQuery as string,
-  ratePlanID: null,
+  ratePlanID: ratePlanQuery as string | undefined,
  });
  const [hotelImages] = await Promise.all([
   fetch(

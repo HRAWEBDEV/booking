@@ -4,11 +4,13 @@ import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/
 const defaultValues: Partial<HotelDatePickerSchema> = {
  fromDate: null,
  toDate: null,
+ ratePlan: '',
 };
 
 function createHotelDatePickerSchema(dic: PreviewHotelDictionary) {
  return z
   .object({
+   ratePlan: z.string(),
    fromDate: z.date().nullable(),
    toDate: z.date().nullable(),
   })

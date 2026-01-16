@@ -27,20 +27,28 @@ import {
  DialogTrigger,
 } from '@/components/ui/dialog';
 import { toast } from 'sonner';
+import {
+ Select,
+ SelectItem,
+ SelectTrigger,
+ SelectContent,
+ SelectGroup,
+ SelectValue,
+} from '@/components/ui/select';
 
 export default function HotelDatePicker({
  dic,
- hotelInfo,
 }: {
  dic: PreviewHotelDictionary;
  hotelInfo: HotelInfo;
 }) {
  const numberFormatter = useCurrencyFormatter();
  const {
+  ratePlanTypes,
   rooms: { selectedRooms },
   reserve: { onChangeReserveDate, onSubmitReserveInfo },
  } = useHotelConfig();
- const { locale } = useBaseConfig();
+ const { locale, localeInfo } = useBaseConfig();
  const filtersUserForm = useFormContext<HotelDatePickerSchema>();
  const dateFns = useDateFns();
  const [openDatePickerCalendar, setOpenDatePickerCalendar] = useState(false);
@@ -130,6 +138,41 @@ export default function HotelDatePicker({
   </Button>
  );
 
+ const renderRatePlanSelect = (
+  <Controller
+   control={filtersUserForm.control}
+   name='ratePlan'
+   render={({ field: { value, onChange, ...other } }) => (
+    <Select
+     value={value || 'all'}
+     dir={localeInfo.contentDirection}
+     onValueChange={(newValue) => {
+      onChange(newValue);
+     }}
+     {...other}
+    >
+     <SelectTrigger>
+      <SelectValue />
+     </SelectTrigger>
+     <SelectContent>
+      <SelectGroup>
+       {[
+        { ratePlanID: 'all', fName: dic.hotelDatePicker.all },
+        ...(ratePlanTypes.data || []),
+       ].map((item) => {
+        return (
+         <SelectItem key={item.ratePlanID} value={item.ratePlanID.toString()}>
+          {item.fName}
+         </SelectItem>
+        );
+       })}
+      </SelectGroup>
+     </SelectContent>
+    </Select>
+   )}
+  />
+ );
+
  const renderConfirmReserveButton = (
   <Button
    variant='secondary'
@@ -147,7 +190,6 @@ export default function HotelDatePicker({
  const renderSearchButton = (
   <Button
    type='submit'
-   size='lg'
    className='w-full'
    onClick={(e) => {
     e.preventDefault();
@@ -155,7 +197,7 @@ export default function HotelDatePicker({
      (data) => {
       if (!data.fromDate || !data.toDate) return;
       setShowChangeReserveDate(false);
-      onChangeReserveDate(data.toDate, data.fromDate);
+      onChangeReserveDate(data);
      },
      (err) => {
       Object.values(err).forEach((errItem) => {
@@ -172,17 +214,7 @@ export default function HotelDatePicker({
  return (
   <>
    <form className='shadow-lg border border-input p-4 rounded-md mb-2'>
-    <div className='mb-3 grid grid-cols-2 gap-4 text-xs font-medium text-neutral-600 pb-2 border-b border-input'>
-     <div className='flex flex-col gap-1 items-center p-1 rounded-md bg-neutral-100 dark:bg-neutral-900'>
-      <span>{dic.hotelDatePicker.arrivalTime}</span>
-      <span>{hotelInfo.checkin || '---'}</span>
-     </div>
-     <div className='flex flex-col gap-1 items-center p-1 rounded-md bg-neutral-100 dark:bg-neutral-900'>
-      <span>{dic.hotelDatePicker.departureTime}</span>
-      <span>{hotelInfo.checkout || '---'}</span>
-     </div>
-    </div>
-    <FieldGroup className='gap-5'>
+    <FieldGroup className='gap-4'>
      <Popover
       open={openDatePickerCalendar}
       onOpenChange={setOpenDatePickerCalendar}
@@ -198,7 +230,6 @@ export default function HotelDatePicker({
         <Label htmlFor='fromDate' className='px-1'>
          {dic.hotelDatePicker.fromDate}
         </Label>
-
         <DialogTrigger asChild>
          <div className='md:hidden'>{renderFromDateInput}</div>
         </DialogTrigger>
@@ -225,12 +256,12 @@ export default function HotelDatePicker({
         <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden w-svw max-w-svw h-svh rounded-none'>
          <DialogHeader className='p-4 shrink-0'>
           <DialogTitle className='text-base font-medium'>
-           {dic.hotelDatePicker.changeDate}{' '}
+           {dic.hotelDatePicker.changeFilters}{' '}
            <span className='text-sm text-neutral-500'></span>
           </DialogTitle>
          </DialogHeader>
          <div className='grow overflow-auto flex flex-col '>
-          <div className='p-4 grid grid-cols-2 gap-1'>
+          <div className='p-4 grid grid-cols-2 gap-1 gap-y-4'>
            <Field className='gap-2'>
             <Label htmlFor='toDate' className='px-1'>
              {dic.hotelDatePicker.fromDate}
@@ -243,6 +274,12 @@ export default function HotelDatePicker({
             </Label>
             {renderToDateInput}
            </Field>
+           <Field className='gap-2 col-span-full'>
+            <Label htmlFor='toDate' className='px-1'>
+             {dic.hotelDatePicker.ratePlan}
+            </Label>
+            {renderRatePlanSelect}
+           </Field>
           </div>
           <div className='mx-auto *:[--cell-size:2.5rem]'>{renderCalendar}</div>
           <div className='sticky bottom-0 bg-background p-2 border-t border-input'>
@@ -250,6 +287,12 @@ export default function HotelDatePicker({
           </div>
          </div>
         </DialogContent>
+       </Field>
+       <Field className='gap-2'>
+        <Label htmlFor='toDate' className='px-1'>
+         {dic.hotelDatePicker.ratePlan}
+        </Label>
+        {renderRatePlanSelect}
        </Field>
        {renderSearchButton}
        {!!selectedRooms.length && (
@@ -295,7 +338,7 @@ export default function HotelDatePicker({
       className='w-full text-primary border border-primary'
       onClick={() => setShowChangeReserveDate(true)}
      >
-      {dic.hotelDatePicker.changeDate}
+      {dic.hotelDatePicker.changeFilters}
      </Button>
     </div>
     <div>{renderConfirmReserveButton}</div>

@@ -244,6 +244,24 @@ function getSelectedRooms({
  );
 }
 
+function getRatePlanTypes({
+ signal,
+ ...queries
+}: {
+ signal: AbortSignal;
+} & Omit<ApiCredentialProps, 'arzID'>) {
+ const searchParams = new URLSearchParams();
+ Object.entries(queries).forEach(([key, val]) => {
+  searchParams.set(key, String(val));
+ });
+ return axios.get<Pick<RatePlanType, 'ratePlanID' | 'fName'>[]>(
+  `${getRatePlanTypesApi}?${searchParams.toString()}`,
+  {
+   signal,
+  },
+ );
+}
+
 export type {
  HotelInfo,
  HotelFacility,
@@ -251,6 +269,7 @@ export type {
  RoomInventory,
  GetRoomInventoryProps,
  RoomAccomodationType,
+ RatePlanType,
 };
 export {
  getHotelInfoApi,
@@ -261,10 +280,12 @@ export {
  getRoomDailyPriceApi,
  getSelectedRoomApi,
  getSelectedRoomsApi,
+ getRatePlanTypesApi,
  getHotelInfo,
  getSelectedRoom,
  getRoomInventorySearch,
  getRoomInventory,
  getRoomPriceDaily,
  getSelectedRooms,
+ getRatePlanTypes,
 };

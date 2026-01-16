@@ -3,16 +3,22 @@ import { use, createContext, ActionDispatch } from 'react';
 import {
  type HotelInfo,
  type RoomInventory,
+ type RatePlanType,
 } from '../../../../services/hotelApiActions';
 import {
  type SelectedRoom,
  type RoomsPickerActions,
 } from '../../utils/hotelRoomsPickerReducer';
 import { type RoomTypeCapacityWatcher } from '../../utils/roomTypeCapacityWatcher';
+import { type HotelDatePickerSchema } from '../../schemas/hotelDatePickerSchema';
 
 interface HotelConfig {
  hotelInfo: HotelInfo;
  hotelID: string;
+ ratePlanTypes: {
+  data?: Pick<RatePlanType, 'ratePlanID' | 'fName'>[];
+  isLoading: boolean;
+ };
  rooms: {
   data: RoomInventory[];
   selectedRooms: SelectedRoom[];
@@ -24,7 +30,7 @@ interface HotelConfig {
   reserveRoomNights: number;
   fromDateValue: Date | null;
   toDateValue: Date | null;
-  onChangeReserveDate: (toDate: Date, fromDate: Date) => unknown;
+  onChangeReserveDate: (params: HotelDatePickerSchema) => unknown;
   onSubmitReserveInfo: () => unknown;
  };
 }
