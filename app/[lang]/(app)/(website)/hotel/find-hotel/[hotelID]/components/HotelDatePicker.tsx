@@ -135,6 +135,7 @@ export default function HotelDatePicker({
    variant='secondary'
    type='button'
    className='w-full'
+   disabled={!selectedRooms.length}
    onClick={() => {
     onSubmitReserveInfo();
    }}

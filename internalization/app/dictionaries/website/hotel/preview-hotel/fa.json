@@ -31,6 +31,7 @@
   "noItemFound": "امکاناتی یافت نشد"
  },
  "hotelRooms": {
+  "forEachPurchaseOnlyReserveRoomsWithSameRatePlan": "در هر خرید تنها امکان رزرو اتاق‌‌ها با طرح فروش یکسان وجود دارد",
   "ratePlanTypes": {
    "noBreakfast": "بدون صبحانه",
    "nonRefundable": "غیرقابل استرداد",

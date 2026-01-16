@@ -108,7 +108,7 @@ export default async function HotelPage(
 
  // hotel inventory
  const hotelInventoriesPromise = fetch(
-  `${appendApiUri(getRoomInventoriesApi)}?${roomInventorySearch}&ratePlanID=2`,
+  `${appendApiUri(getRoomInventoriesApi)}?${roomInventorySearch}`,
   {
    method: 'GET',
    headers: requestCredentialHeader,
