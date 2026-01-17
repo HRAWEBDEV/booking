@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -19,8 +19,9 @@ import {
  DialogHeader,
  DialogFooter,
 } from '@/components/ui/dialog';
-import { Spinner } from '@/components/ui/spinner';
 import { BiError } from 'react-icons/bi';
+import { ratePlanTypes } from '../../../find-hotel/[hotelID]/utils/ratePlanTypes';
+import { Badge } from '@/components/ui/badge';
 
 export default function ReserveInfoRoomForm({
  room,
@@ -39,6 +40,7 @@ export default function ReserveInfoRoomForm({
   register,
   control,
   getValues,
+  setValue,
   formState: { errors },
  } = useFormContext<BookingInfoSchema>();
  const [saveAsReserveInfo, setSaveAsReserveInfo] = useState(
@@ -46,6 +48,13 @@ export default function ReserveInfoRoomForm({
  );
 
  const { localeInfo } = useBaseConfig();
+
+ const activeRatePlanTypes = ratePlanTypes.filter(
+  (item) =>
+   room.accommodationTypePrice.accommodationRatePlanModel.ratePlanModel[
+    item.type
+   ],
+ );
 
  return (
   <section key={i} className='p-4 border border-input rounded-md mb-4 relative'>
@@ -70,6 +79,17 @@ export default function ReserveInfoRoomForm({
     <p className='font-medium text-neutral-600 dark:text-neutral-400'>
      {room.accommodationTypePrice.beds} {dic.reserveInfo.reserveForm.person}
     </p>
+    {!!activeRatePlanTypes.length && (
+     <div className='mt-2 lg:mb-0 flex-wrap flex gap-2'>
+      {activeRatePlanTypes.map((item) => {
+       return (
+        <Badge key={item.type} variant='outline' className='rounded-md p-2'>
+         {dic.reserveInfo.reserveForm.ratePlanTypes[item.type]}
+        </Badge>
+       );
+      })}
+     </div>
+    )}
    </div>
    <div className='flex flex-wrap gap-5 mb-5'>
     <Controller
@@ -133,6 +153,11 @@ export default function ReserveInfoRoomForm({
         {...other}
         checked={value}
         onCheckedChange={(value) => {
+         if (value) {
+          data?.forEach((_, i) => {
+           setValue(`guestInfo.${i}.saveAsReserveInfo`, false);
+          });
+         }
          setSaveAsReserveInfo(value as boolean);
          onChange(value);
         }}
@@ -252,6 +277,7 @@ export default function ReserveInfoRoomForm({
         className='sm:w-24 h-11'
         variant='destructive'
         onClick={() => {
+         setValue(`guestInfo.${i}.removed`, true);
          storeRoomsDispatcher({
           type: 'remove',
           payload: i,

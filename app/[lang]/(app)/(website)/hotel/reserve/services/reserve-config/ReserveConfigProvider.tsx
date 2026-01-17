@@ -40,9 +40,15 @@ import {
  DialogHeader,
  DialogFooter,
 } from '@/components/ui/dialog';
-import { Spinner } from '@/components/ui/spinner';
 import { BiError } from 'react-icons/bi';
 import { Button } from '@/components/ui/button';
+import {
+ type LockReserveProps,
+ type LockRoomInfo,
+ type LockGuestInfo,
+ lockReserve,
+} from '../../../services/reserveApiActions';
+import { useMutation } from '@tanstack/react-query';
 
 export default function ReserveConfigProvider({
  children,
@@ -81,6 +87,7 @@ export default function ReserveConfigProvider({
    bookingInfoForm.setValue(`guestInfo.${i}.firstName`, '');
    bookingInfoForm.setValue(`guestInfo.${i}.lastName`, '');
    bookingInfoForm.setValue(`guestInfo.${i}.nationalCode`, '');
+   bookingInfoForm.setValue(`guestInfo.${i}.removed`, false);
   },
   [bookingInfoForm],
  );
@@ -176,10 +183,75 @@ export default function ReserveConfigProvider({
   rooms: rooms || [],
  });
 
+ const { mutate: confirmReserveMutate } = useMutation({
+  mutationFn({
+   guestInfo,
+   email,
+   firstName,
+   lastName,
+   nationalCode,
+   phoneNumber,
+  }: BookingInfoSchema) {
+   const lockRoomInfo: LockRoomInfo[] = storeRooms!.map((room, i) => {
+    const {
+     firstName: guestFirstName,
+     lastName: guestLastName,
+     nationalCode: guestNationalCode,
+     type,
+     gender,
+     hasEarlyCheckin,
+     hasLateCheckout,
+     saveAsReserveInfo,
+    } = guestInfo[i];
+    const confirmGuestFirstName = saveAsReserveInfo
+     ? firstName
+     : guestFirstName;
+    const confirmGuestLastName = saveAsReserveInfo ? lastName : guestLastName;
+    const confirmGuestNationalCode = saveAsReserveInfo
+     ? nationalCode
+     : guestNationalCode;
+    const isForeigner = type === 'foreign';
+    return {
+     roomTypeID: room.roomTypeID,
+     adult: room.accommodationTypePrice.beds,
+     isForeigner,
+     earlyCheckin: hasEarlyCheckin,
+     lateCheckout: hasLateCheckout,
+     guestLockModel: {
+      firstName: confirmGuestFirstName,
+      lastName: confirmGuestLastName,
+      genderID: gender === 'male' ? 1 : 2,
+      nationalCode: !isForeigner ? confirmGuestNationalCode : null,
+      passport: isForeigner ? confirmGuestNationalCode : null,
+     },
+    };
+   });
+   const lockReserveProps: LockReserveProps = {
+    hotelID: hotelInfo!.hotelID.toString(),
+    providerID,
+    channelID,
+    arzID,
+    email: email || null,
+    firstName,
+    lastName,
+    nationalCode,
+    contactNo: phoneNumber,
+    ratePlanID:
+     rooms![0].accommodationTypePrice.accommodationRatePlanModel.ratePlanID,
+    rateTypeID:
+     rooms![0].accommodationTypePrice.accommodationRatePlanModel.rateTypeID,
+    arrivelDate: localeReserveInfo!.fromDate,
+    depatureDate: localeReserveInfo!.toDate,
+    lockInfo: lockRoomInfo,
+   };
+   return lockReserve(lockReserveProps);
+  },
+ });
+
  function handleSubmitBookingFormInfo() {
   bookingInfoForm.handleSubmit(
    (data) => {
-    console.log(data);
+    confirmReserveMutate(data);
    },
    () => {
     toast.error(dic.reserveInfo.reserveForm.fillRequiredInfo);

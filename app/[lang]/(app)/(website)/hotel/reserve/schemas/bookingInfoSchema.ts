@@ -28,30 +28,28 @@ function createBookingInfoSchema({ dic }: { dic: ReserveHotelDictionary }) {
      hasLateCheckout: z.boolean(),
      type: z.enum(['inner', 'foreign']),
      gender: z.enum(['male', 'female']),
+     removed: z.boolean(),
     }),
    ),
   })
   .superRefine(({ guestInfo }, ctx) => {
    guestInfo.forEach((guest, i) => {
-    if (guest.saveAsReserveInfo) return;
+    if (guest.saveAsReserveInfo || guest.removed) return;
     if (!guest.firstName) {
      ctx.addIssue({
       code: 'custom',
-      message: 'این فیلد الزامی است',
       path: [`guestInfo[${i}].firstName`],
      });
     }
     if (!guest.lastName) {
      ctx.addIssue({
       code: 'custom',
-      message: 'این فیلد الزامی است',
       path: [`guestInfo[${i}].lastName`],
      });
     }
     if (!guest.nationalCode) {
      ctx.addIssue({
       code: 'custom',
-      message: 'این فیلد الزامی است',
       path: [`guestInfo[${i}].nationalCode`],
      });
     }

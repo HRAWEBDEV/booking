@@ -1,5 +1,4 @@
 import { axios } from '@/app/[lang]/(app)/utils/defaultAxios';
-import { ReserveInfo } from '../find-hotel/[hotelID]/utils/reserveInfo';
 
 interface HotelInfo {
  id: number;
@@ -270,6 +269,7 @@ export type {
  GetRoomInventoryProps,
  RoomAccomodationType,
  RatePlanType,
+ ApiCredentialProps,
 };
 export {
  getHotelInfoApi,

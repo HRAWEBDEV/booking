@@ -10,6 +10,14 @@
    "discountTotalPrice": "جمع کل"
   },
   "reserveForm": {
+   "ratePlanTypes": {
+    "noBreakfast": "بدون صبحانه",
+    "nonRefundable": "غیرقابل استرداد",
+    "withDinner": "همراه با شام",
+    "withLunch": "همراه با نهار",
+    "limitedMenu": "منوی محدود",
+    "freeChargeMinibar": "مینی بار مجانی"
+   },
    "reservePersonInfo": "مشخصات رزرو کننده",
    "roomsPersonInfo": "مشخصات سرپرست اتاق‌ها",
    "saveAsReservePersonInfo": "نام رزرو کننده و سرپرست اتاق یکی می‌باشد",
