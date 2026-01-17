@@ -173,7 +173,6 @@ export default function ReserveConfigProvider({
   onSubmitBookingFormInfo: handleSubmitBookingFormInfo,
  };
  // handle error here
- if (!localeReserveInfo) return <div>error</div>;
  return (
   <reserveConfigContext.Provider value={ctx}>
    <FormProvider {...bookingInfoForm}>{children}</FormProvider>

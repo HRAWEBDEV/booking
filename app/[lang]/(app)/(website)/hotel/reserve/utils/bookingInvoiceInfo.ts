@@ -15,7 +15,7 @@ function getBookingInvoiceInfo({
   (acc, cur) => {
    const newPrice = acc.price + cur.accommodationTypePrice.roomOnlineShowRate;
    const newTotalDiscountPrice =
-    acc.price + cur.accommodationTypePrice.netRoomRate;
+    acc.totalDiscountPrice + cur.accommodationTypePrice.netRoomRate;
    const newTotalDiscount = newPrice - newTotalDiscountPrice;
 
    return {
