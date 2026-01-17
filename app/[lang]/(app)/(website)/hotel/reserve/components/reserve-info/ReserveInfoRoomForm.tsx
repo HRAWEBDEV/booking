@@ -12,6 +12,15 @@ import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { useReserveConfig } from '../../services/reserve-config/reserveConfigContext';
+import {
+ Dialog,
+ DialogClose,
+ DialogContent,
+ DialogHeader,
+ DialogFooter,
+} from '@/components/ui/dialog';
+import { Spinner } from '@/components/ui/spinner';
+import { BiError } from 'react-icons/bi';
 
 export default function ReserveInfoRoomForm({
  room,
@@ -22,6 +31,7 @@ export default function ReserveInfoRoomForm({
  i: number;
  dic: ReserveHotelDictionary;
 }) {
+ const [showRemoveRoom, setShowRemoveRoom] = useState(false);
  const {
   rooms: { data, storeRoomsDispatcher },
  } = useReserveConfig();
@@ -47,10 +57,7 @@ export default function ReserveInfoRoomForm({
      className='text-rose-700 dark:text-rose-400'
      disabled={Boolean(data && data.length <= 1)}
      onClick={() => {
-      storeRoomsDispatcher({
-       type: 'remove',
-       payload: i,
-      });
+      setShowRemoveRoom(true);
      }}
     >
      <FaTrashAlt className='size-5' />
@@ -218,6 +225,45 @@ export default function ReserveInfoRoomForm({
      </Field>
     </div>
    )}
+   <Dialog
+    open={showRemoveRoom}
+    onOpenChange={(newValue) => setShowRemoveRoom(newValue)}
+   >
+    <DialogContent className='p-0 gap-0'>
+     <DialogHeader className='p-4'></DialogHeader>
+     <div className='p-4'>
+      <div className='flex gap-1 items-center text-red-700 dark:text-red-400 font-medium'>
+       <BiError className='size-12' />
+       <p>{dic.reserveInfo.removeReserveRoom.title}</p>
+      </div>
+     </div>
+     <DialogFooter className='p-4'>
+      <DialogClose asChild>
+       <Button
+        className='sm:w-24 h-11'
+        variant='outline'
+        onClick={() => setShowRemoveRoom(false)}
+       >
+        {dic.reserveInfo.removeReserveRoom.cancel}
+       </Button>
+      </DialogClose>
+      <DialogClose asChild>
+       <Button
+        className='sm:w-24 h-11'
+        variant='destructive'
+        onClick={() => {
+         storeRoomsDispatcher({
+          type: 'remove',
+          payload: i,
+         });
+        }}
+       >
+        {dic.reserveInfo.removeReserveRoom.confirm}
+       </Button>
+      </DialogClose>
+     </DialogFooter>
+    </DialogContent>
+   </Dialog>
   </section>
  );
 }

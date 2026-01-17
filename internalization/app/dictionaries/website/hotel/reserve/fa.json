@@ -29,6 +29,11 @@
    "cancel": "انصراف",
    "confirm": "تایید",
    "fillRequiredInfo": "اطلاعات الزامی را وارد کنید"
+  },
+  "removeReserveRoom": {
+   "title": "آیا از حذف این اتاق اطمینان دارید؟",
+   "cancel": "انصراف",
+   "confirm": "تایید"
   }
  },
  "cancelReserve": {
