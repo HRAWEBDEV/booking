@@ -1,4 +1,4 @@
-import { use, createContext } from 'react';
+import { use, createContext, ActionDispatch } from 'react';
 import { OutOfContext } from '@/utils/OutOfContext';
 import {
  type HotelInfo,
@@ -6,12 +6,14 @@ import {
 } from '../../../services/hotelApiActions';
 import { type LocalReserveInfo } from '../../../find-hotel/[hotelID]/utils/localReserveInfoManager';
 import { type BookingInvoiceInfo } from '../../utils/bookingInvoiceInfo';
+import { type RoomsPickerActions } from '../../utils/ReserveRoomsPickerReducer';
 
 interface ReserveConfig {
  reserveInfo: LocalReserveInfo;
  bookingInvoiceInfo: BookingInvoiceInfo;
  rooms: {
   data?: RoomInventory[];
+  storeRoomsDispatcher: ActionDispatch<[action: RoomsPickerActions]>;
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
@@ -22,6 +24,7 @@ interface ReserveConfig {
   isSuccess: boolean;
   isError: boolean;
  };
+ onCancelReserve: () => unknown;
  onSubmitBookingFormInfo: () => unknown;
 }
 

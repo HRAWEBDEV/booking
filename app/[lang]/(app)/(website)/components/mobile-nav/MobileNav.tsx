@@ -13,7 +13,7 @@ export default function MobileNav() {
   },
  } = useShareDictionary();
  return (
-  <nav className='grid fixed bg-background bottom-0 start-0 end-0 border-t border-input shadow-[0_-4px_8px] shadow-black/10 dark:shadow-white/10 z-(--website-mobile-nav-zindex) h-(--website-mobile-nav-height) lg:hidden grid-cols-4 text-neutral-500'>
+  <nav className='grid fixed bg-background bottom-0 start-0 end-0 border-t border-input shadow-[0_-4px_8px] shadow-black/10 dark:shadow-white/10 z-(--website-mobile-nav-zindex) h-(--website-mobile-nav-height) lg:hidden grid-cols-3 text-neutral-500'>
    <Button
     data-active='true'
     variant='ghost'
@@ -22,10 +22,6 @@ export default function MobileNav() {
    >
     <IoHome className='size-6' />
     <span className='font-medium'>{mobileNavDic.home}</span>
-   </Button>
-   <Button variant='ghost' size={'icon'} className='flex-col h-auto w-auto'>
-    <LuCirclePlus className='size-6' />
-    <span className='font-medium'>{mobileNavDic.newReserve}</span>
    </Button>
    <Button variant='ghost' size={'icon'} className='flex-col h-auto w-auto'>
     <FaTicket className='size-6' />

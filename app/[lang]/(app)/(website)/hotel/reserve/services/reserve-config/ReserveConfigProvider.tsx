@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback, ReactNode } from 'react';
+import { useState, useCallback, ReactNode, useReducer } from 'react';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import {
  type ReserveConfig,
@@ -26,6 +26,23 @@ import {
 } from '../../schemas/bookingInfoSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
+import { reserveRoomsPickerReducer } from '../../utils/ReserveRoomsPickerReducer';
+import { useRouter } from 'next/navigation';
+import { useBaseConfig } from '@/services/base-config/baseConfigContext';
+import {
+ fromDateQueryName,
+ toDateQueryName,
+} from '../../../find-hotel/[hotelID]/utils/hotelQueries';
+import {
+ Dialog,
+ DialogClose,
+ DialogContent,
+ DialogHeader,
+ DialogFooter,
+} from '@/components/ui/dialog';
+import { Spinner } from '@/components/ui/spinner';
+import { BiError } from 'react-icons/bi';
+import { Button } from '@/components/ui/button';
 
 export default function ReserveConfigProvider({
  children,
@@ -34,6 +51,17 @@ export default function ReserveConfigProvider({
  dic: ReserveHotelDictionary;
  children: ReactNode;
 }) {
+ //
+ const router = useRouter();
+ const { locale } = useBaseConfig();
+ //
+ const [showConfirmCancelReserve, setShowConfirmCancelReserve] =
+  useState(false);
+ //
+ const [storeRooms, storeRoomsDispatch] = useReducer(
+  reserveRoomsPickerReducer,
+  [],
+ );
  // booking info
  const bookingInfoForm = useForm<BookingInfoSchema>({
   resolver: zodResolver(createBookingInfoSchema({ dic })),
@@ -136,6 +164,10 @@ export default function ReserveConfigProvider({
    res.data.forEach((room, i) => {
     setGuestInfoFormDefaults(i);
    });
+   storeRoomsDispatch({
+    type: 'insertRooms',
+    payload: res.data || [],
+   });
    return res.data;
   },
  });
@@ -155,6 +187,21 @@ export default function ReserveConfigProvider({
   )();
  }
 
+ // cancel reserve
+ function confirmCancelReserve() {
+  const searchParams = new URLSearchParams();
+  if (localeReserveInfo) {
+   searchParams.set(fromDateQueryName, localeReserveInfo.fromDate);
+   searchParams.set(toDateQueryName, localeReserveInfo.toDate);
+  }
+  router.replace(
+   `/${locale}/hotel/find-hotel/${hotelInfo?.hotelID}?${searchParams.toString()}`,
+  );
+ }
+ function handleCancelReserve() {
+  setShowConfirmCancelReserve(true);
+ }
+
  const ctx: ReserveConfig = {
   reserveInfo: localeReserveInfo!,
   bookingInvoiceInfo,
@@ -165,17 +212,55 @@ export default function ReserveConfigProvider({
    isError: hotelInfoIsError,
   },
   rooms: {
-   data: rooms,
+   data: storeRooms,
+   storeRoomsDispatcher: storeRoomsDispatch,
    isLoading: roomsIsLoading,
    isSuccess: roomsIsSuccess,
    isError: roomsIsError,
   },
+  onCancelReserve: handleCancelReserve,
   onSubmitBookingFormInfo: handleSubmitBookingFormInfo,
  };
  // handle error here
  return (
   <reserveConfigContext.Provider value={ctx}>
    <FormProvider {...bookingInfoForm}>{children}</FormProvider>
+   <Dialog
+    open={showConfirmCancelReserve}
+    onOpenChange={(newValue) => setShowConfirmCancelReserve(newValue)}
+   >
+    <DialogContent className='p-0 gap-0'>
+     <DialogHeader className='p-4'></DialogHeader>
+     <div className='p-4'>
+      <div className='flex gap-1 items-center text-red-700 dark:text-red-400 font-medium'>
+       <BiError className='size-12' />
+       <p>{dic.cancelReserve.title}</p>
+      </div>
+     </div>
+     <DialogFooter className='p-4'>
+      <DialogClose asChild>
+       <Button
+        className='sm:w-24 h-11'
+        variant='outline'
+        onClick={() => setShowConfirmCancelReserve(false)}
+       >
+        {dic.cancelReserve.cancel}
+       </Button>
+      </DialogClose>
+      <DialogClose asChild>
+       <Button
+        className='sm:w-24 h-11'
+        variant='destructive'
+        onClick={() => {
+         confirmCancelReserve();
+        }}
+       >
+        {dic.cancelReserve.confirm}
+       </Button>
+      </DialogClose>
+     </DialogFooter>
+    </DialogContent>
+   </Dialog>
   </reserveConfigContext.Provider>
  );
 }

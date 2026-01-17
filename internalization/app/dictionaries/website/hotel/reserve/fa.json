@@ -11,7 +11,7 @@
   },
   "reserveForm": {
    "reservePersonInfo": "مشخصات رزرو کننده",
-   "roomsPersonInfo": "مشخصات سرپرست اتاق",
+   "roomsPersonInfo": "مشخصات سرپرست اتاق‌ها",
    "saveAsReservePersonInfo": "نام رزرو کننده و سرپرست اتاق یکی می‌باشد",
    "firstName": "نام",
    "lastName": "نام خانوادگی",
@@ -30,5 +30,10 @@
    "confirm": "تایید",
    "fillRequiredInfo": "اطلاعات الزامی را وارد کنید"
   }
+ },
+ "cancelReserve": {
+  "title": "آیا از لغو فرآیند رزرو اطمینان دارید؟",
+  "cancel": "انصراف",
+  "confirm": "تایید"
  }
 }

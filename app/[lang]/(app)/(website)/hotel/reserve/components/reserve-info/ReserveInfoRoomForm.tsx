@@ -11,6 +11,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
+import { useReserveConfig } from '../../services/reserve-config/reserveConfigContext';
 
 export default function ReserveInfoRoomForm({
  room,
@@ -21,6 +22,9 @@ export default function ReserveInfoRoomForm({
  i: number;
  dic: ReserveHotelDictionary;
 }) {
+ const {
+  rooms: { data, storeRoomsDispatcher },
+ } = useReserveConfig();
  const {
   register,
   control,
@@ -41,6 +45,13 @@ export default function ReserveInfoRoomForm({
      size='icon'
      variant='ghost'
      className='text-rose-700 dark:text-rose-400'
+     disabled={Boolean(data && data.length <= 1)}
+     onClick={() => {
+      storeRoomsDispatcher({
+       type: 'remove',
+       payload: i,
+      });
+     }}
     >
      <FaTrashAlt className='size-5' />
     </Button>

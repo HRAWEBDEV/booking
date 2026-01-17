@@ -10,7 +10,7 @@ interface HotelInfo {
  faxNo: string | null;
  floors: number | null;
  hotelGradeID: number | null;
- hoteID: number;
+ hotelID: number;
  latitude: number | null;
  longitude: number | null;
  logo: string | null;

@@ -18,6 +18,7 @@ export default function ReserveInfoSummary({
   reserveInfo,
   bookingInvoiceInfo,
   onSubmitBookingFormInfo,
+  onCancelReserve,
   rooms: { data, isLoading },
  } = useReserveConfig();
 
@@ -106,13 +107,14 @@ export default function ReserveInfoSummary({
        </div>
       </div>
      </section>
-     <div className='grid gap-4 grid-cols-2'>
+     <div className='gap-4 grid-cols-2 hidden lg:grid'>
       <Button
        className='text-base'
        variant='outline'
        size='lg'
        type='button'
        disabled={isLoading || hotelInfo.isLoading}
+       onClick={onCancelReserve}
       >
        {(isLoading || hotelInfo.isLoading) && <Spinner />}
        {dic.reserveInfo.reserveForm.cancel}
