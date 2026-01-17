@@ -4,6 +4,7 @@ import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/
 import { FieldGroup, Field } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 import {
  Popover,
  PopoverContent,
@@ -45,7 +46,7 @@ export default function HotelDatePicker({
  const numberFormatter = useCurrencyFormatter();
  const {
   ratePlanTypes,
-  rooms: { selectedRooms },
+  rooms: { data, selectedRooms },
   reserve: { onChangeReserveDate, onSubmitReserveInfo },
  } = useHotelConfig();
  const { locale, localeInfo } = useBaseConfig();
@@ -60,6 +61,17 @@ export default function HotelDatePicker({
  ]);
 
  const reserveInfo = getReserveInfo(selectedRooms);
+
+ const activeFiltersCount = (() => {
+  let activeCount = 0;
+  const ignoreKeys = ['fromDate', 'toDate'];
+  Object.entries(filtersUserForm.getValues()).forEach(([key, value]) => {
+   if (ignoreKeys.includes(key)) return;
+   if (key === 'ratePlan' && value === 'all') return;
+   if (value) activeCount = activeCount + 1;
+  });
+  return activeCount;
+ })();
 
  const renderCalendar = (
   <Controller
@@ -257,11 +269,14 @@ export default function HotelDatePicker({
          <DialogHeader className='p-4 shrink-0'>
           <DialogTitle className='text-base font-medium'>
            {dic.hotelDatePicker.changeFilters}{' '}
-           <span className='text-sm text-neutral-500'></span>
+           <div className='text-sm text-neutral-500 inline-block'>
+            (<span>{dic.hotelDatePicker.results}: </span>
+            <span>{data.length || 0}</span>)
+           </div>
           </DialogTitle>
          </DialogHeader>
-         <div className='grow overflow-auto flex flex-col '>
-          <div className='p-4 grid grid-cols-2 gap-1 gap-y-4'>
+         <div className='grow overflow-auto flex flex-col'>
+          <div className='p-4 grid grid-cols-2 gap-1 gap-y-3'>
            <Field className='gap-2'>
             <Label htmlFor='toDate' className='px-1'>
              {dic.hotelDatePicker.fromDate}
@@ -269,15 +284,11 @@ export default function HotelDatePicker({
             {renderFromDateInput}
            </Field>
            <Field className='gap-2'>
-            <Label htmlFor='toDate' className='px-1'>
-             {dic.hotelDatePicker.toDate}
-            </Label>
+            <Label htmlFor='toDate'>{dic.hotelDatePicker.toDate}</Label>
             {renderToDateInput}
            </Field>
            <Field className='gap-2 col-span-full'>
-            <Label htmlFor='toDate' className='px-1'>
-             {dic.hotelDatePicker.ratePlan}
-            </Label>
+            <Label htmlFor='toDate'>{dic.hotelDatePicker.ratePlan}</Label>
             {renderRatePlanSelect}
            </Field>
           </div>
@@ -289,12 +300,16 @@ export default function HotelDatePicker({
         </DialogContent>
        </Field>
        <Field className='gap-2'>
-        <Label htmlFor='toDate' className='px-1'>
-         {dic.hotelDatePicker.ratePlan}
-        </Label>
+        <Label htmlFor='ratePlan'>{dic.hotelDatePicker.ratePlan}</Label>
         {renderRatePlanSelect}
        </Field>
-       {renderSearchButton}
+       <div>
+        <div>{renderSearchButton}</div>
+        <p className='text-xs mt-1 text-neutral-600 dark:text-neutral-400'>
+         <span>{dic.hotelDatePicker.results}: </span>
+         <span>{data.length || 0}</span>
+        </p>
+       </div>
        {!!selectedRooms.length && (
         <div className='pt-2 border-t border-input flex flex-col'>
          <ul className='max-h-24 overflow-auto'>
@@ -339,6 +354,7 @@ export default function HotelDatePicker({
       onClick={() => setShowChangeReserveDate(true)}
      >
       {dic.hotelDatePicker.changeFilters}
+      {!!activeFiltersCount && <Badge>{activeFiltersCount}</Badge>}
      </Button>
     </div>
     <div>{renderConfirmReserveButton}</div>
