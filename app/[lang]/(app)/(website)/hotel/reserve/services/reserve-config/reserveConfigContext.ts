@@ -7,11 +7,13 @@ import {
 import { type LocalReserveInfo } from '../../../find-hotel/[hotelID]/utils/localReserveInfoManager';
 import { type BookingInvoiceInfo } from '../../utils/bookingInvoiceInfo';
 import { type RoomsPickerActions } from '../../utils/ReserveRoomsPickerReducer';
+import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
 
 interface ReserveConfig {
  reserveInfo: LocalReserveInfo;
  bookingInvoiceInfo: BookingInvoiceInfo;
  rooms: {
+  guestInfo: BookingInfoSchema['guestInfo'];
   data?: RoomInventory[];
   storeRoomsDispatcher: ActionDispatch<[action: RoomsPickerActions]>;
   isLoading: boolean;

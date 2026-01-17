@@ -34,18 +34,15 @@ export default function ReserveInfoRoomForm({
 }) {
  const [showRemoveRoom, setShowRemoveRoom] = useState(false);
  const {
-  rooms: { data, storeRoomsDispatcher },
+  rooms: { data, guestInfo, storeRoomsDispatcher },
  } = useReserveConfig();
  const {
   register,
   control,
-  getValues,
   setValue,
   formState: { errors },
  } = useFormContext<BookingInfoSchema>();
- const [saveAsReserveInfo, setSaveAsReserveInfo] = useState(
-  getValues(`guestInfo.${i}.saveAsReserveInfo`),
- );
+ const saveAsReserveInfo = guestInfo[i].saveAsReserveInfo;
 
  const { localeInfo } = useBaseConfig();
 
@@ -158,7 +155,6 @@ export default function ReserveInfoRoomForm({
            setValue(`guestInfo.${i}.saveAsReserveInfo`, false);
           });
          }
-         setSaveAsReserveInfo(value as boolean);
          onChange(value);
         }}
        />

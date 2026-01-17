@@ -75,7 +75,7 @@ export default function ReserveConfigProvider({
    ...defaultValues,
   },
  });
- const [] = bookingInfoForm.watch([]);
+ const [guestInfo] = bookingInfoForm.watch(['guestInfo']);
 
  const setGuestInfoFormDefaults = useCallback(
   (i: number) => {
@@ -284,6 +284,7 @@ export default function ReserveConfigProvider({
    isError: hotelInfoIsError,
   },
   rooms: {
+   guestInfo,
    data: storeRooms,
    storeRoomsDispatcher: storeRoomsDispatch,
    isLoading: roomsIsLoading,
