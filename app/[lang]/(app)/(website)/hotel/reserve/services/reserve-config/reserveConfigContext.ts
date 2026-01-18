@@ -48,8 +48,10 @@ interface ReserveConfig {
   setSelectedGateway: (prop: GateWay | null) => unknown;
  };
  confirmReserveIsPending: boolean;
+ confirmPaymentIsPending: boolean;
  onCancelReserve: () => unknown;
  onSubmitBookingFormInfo: () => unknown;
+ onConfirmPayment: () => unknown;
 }
 
 const reserveConfigContext = createContext<ReserveConfig | null>(null);

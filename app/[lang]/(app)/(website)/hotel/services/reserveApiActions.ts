@@ -68,8 +68,14 @@ interface GateWay {
  paymentGatewayTypeName: string;
 }
 
+interface PaymentLink {
+ token: null | string;
+ gatewayUrl: string | null;
+}
+
 const getLockInfoApi = '/CRS/OnlineReservation/getLockInformation';
 const getGatewaysApi = '/CRS/OnlineReservation/getGateways';
+const getPaymentLinkApi = '/CRS/OnlineReservation/getPaymentLink';
 
 function lockReserve({ lockInfo, ...queries }: LockReserveProps) {
  const searchParams = new URLSearchParams();
@@ -113,6 +119,28 @@ function getGateways({
  });
 }
 
+function getPaymentLink({
+ hotelID,
+ paymentGatewayTypeID,
+ ...postPackage
+}: {
+ hotelID: string;
+ paymentGatewayTypeID: string;
+ callback_url: string;
+ resNum: string;
+ amount: number;
+ mobile: string;
+}) {
+ const searchParams = new URLSearchParams([
+  ['hotelID', hotelID],
+  ['paymentGatewayTypeID', paymentGatewayTypeID],
+ ]);
+ return axios.post<PaymentLink>(
+  `${getPaymentLinkApi}?${searchParams.toString()}`,
+  postPackage,
+ );
+}
+
 export {
  type LockReserveProps,
  type LockReserveResult,
@@ -121,6 +149,7 @@ export {
  type LockInfo,
  type LockInfoResult,
  type GateWay,
+ type PaymentLink,
 };
 export {
  getLockInfoApi,
@@ -128,4 +157,5 @@ export {
  lockReserve,
  getLockInfo,
  getGateways,
+ getPaymentLink,
 };

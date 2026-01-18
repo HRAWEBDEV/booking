@@ -8,7 +8,13 @@ import { GatewayTypes } from '../../../utils/gatewayTypes';
 import { FaCreditCard } from 'react-icons/fa';
 
 export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
- const { lockInfo, bookingInvoiceInfo, gateways } = useReserveConfig();
+ const {
+  lockInfo,
+  bookingInvoiceInfo,
+  gateways,
+  confirmPaymentIsPending,
+  onConfirmPayment,
+ } = useReserveConfig();
  const numberFormatter = useCurrencyFormatter();
  if (lockInfo.isLoading) return <Skeleton className='w-full h-56' />;
  return (
@@ -118,7 +124,18 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
    </section>
    <section>
     <h4 className='font-medium mb-2'>
-     {dic.payment.paymentInfo.paymentMethod}:
+     <span>{dic.payment.paymentInfo.paymentMethod}: </span>
+     {gateways.selectedGateway && (
+      <span className='text-primary'>
+       {
+        dic.payment.gateways[
+         GatewayTypes[
+          gateways.selectedGateway.paymentGatewayTypeID
+         ] as keyof typeof dic.payment.gateways
+        ]
+       }
+      </span>
+     )}
     </h4>
     <ul className='mb-6 flex flex-wrap gap-4'>
      {gateways.isLoading
@@ -160,10 +177,12 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
        gateways.isLoading ||
        !gateways.isSuccess ||
        !gateways.data?.length ||
-       !gateways.selectedGateway
+       !gateways.selectedGateway ||
+       confirmPaymentIsPending
       }
       size='lg'
       className='w-40'
+      onClick={onConfirmPayment}
      >
       {gateways.isLoading && <Spinner />}
       {dic.payment.paymentInfo.confirmPayment}

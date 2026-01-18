@@ -52,13 +52,13 @@ import {
  lockReserve,
  getLockInfo,
  getGateways,
+ getPaymentLink,
 } from '../../../services/reserveApiActions';
 import { useMutation } from '@tanstack/react-query';
 import {
  type ReserveStep,
  trackingCodeQueryName,
 } from '../../utils/reserveSteps';
-import { AxiosError } from 'axios';
 
 export default function ReserveConfigProvider({
  children,
@@ -242,6 +242,31 @@ export default function ReserveConfigProvider({
   rooms: lockInfo?.rooms ? lockInfo.rooms : storeRooms,
  });
 
+ // payment link
+ const { mutate: getPaymentLinkMutate, isPending: getPaymentLinkIsPending } =
+  useMutation({
+   mutationFn() {
+    return getPaymentLink({
+     hotelID: hotelInfo!.hotelID.toString(),
+     paymentGatewayTypeID: selectedGateway!.paymentGatewayTypeID.toString(),
+     amount: lockInfo!.lockInfo.totalPrice,
+     callback_url: '',
+     mobile: lockInfo!.lockInfo.contactNo!,
+     resNum: lockInfo!.lockInfo.id.toString(),
+    });
+   },
+   onError() {
+    toast.error(
+     dic.reserveInfo.reserveForm.somethingWrongHappendedTryAgainLater,
+    );
+   },
+  });
+
+ function handleConfirmPayment() {
+  getPaymentLinkMutate();
+ }
+
+ // confirm reserve
  const { mutate: confirmReserveMutate, isPending: confirmReserveIsPending } =
   useMutation({
    mutationFn({
@@ -386,8 +411,10 @@ export default function ReserveConfigProvider({
    storeRoomsDispatcher: storeRoomsDispatch,
   },
   confirmReserveIsPending,
+  confirmPaymentIsPending: getPaymentLinkIsPending,
   onCancelReserve: handleCancelReserve,
   onSubmitBookingFormInfo: handleSubmitBookingFormInfo,
+  onConfirmPayment: handleConfirmPayment,
  };
 
  useEffect(() => {
