@@ -8,7 +8,7 @@ export default function PaymentWrapper({
  dic: ReserveHotelDictionary;
 }) {
  return (
-  <div className='grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-4 my-4'>
+  <div className='grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-4'>
    <PaymentInfo dic={dic} />
    <PaymentSummary dic={dic} />
   </div>

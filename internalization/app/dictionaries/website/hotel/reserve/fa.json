@@ -1,5 +1,10 @@
 {
  "title": "",
+ "reserveStepper": {
+  "fillForm": "اطلاعات رزرو",
+  "payment": "پرداخت",
+  "reserveVoucher": "واچر رزرو"
+ },
  "reserveInfo": {
   "reserveSummary": {
    "arrivalDate": "تاریخ ورود",
