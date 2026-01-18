@@ -12,6 +12,7 @@
    "discount": "تخفیف"
   },
   "reserveForm": {
+   "somethingWrongHappendedTryAgainLater": "خطایی رخ داده است، لطفا دقایقی دیگر مجددا تلاش کنید",
    "ratePlanTypes": {
     "noBreakfast": "بدون صبحانه",
     "nonRefundable": "غیرقابل استرداد",
@@ -47,6 +48,10 @@
   }
  },
  "payment": {
+  "gateways": {
+   "zarinPal": "زرین پال",
+   "sepPayment": "بانک سامان"
+  },
   "paymentInfo": {
    "title": "اطلاعات پرداخت",
    "paymentMethod": "روش پرداخت",

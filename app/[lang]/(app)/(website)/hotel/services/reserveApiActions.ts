@@ -1,22 +1,22 @@
 import { axios } from '@/app/[lang]/(app)/utils/defaultAxios';
 import { type RoomInventory, type ApiCredentialProps } from './hotelApiActions';
 
-type LockGuestInfo = {
+interface LockGuestInfo {
  firstName: string;
  lastName: string;
  nationalCode: string | null;
  passport: string | null;
  genderID: number;
-};
+}
 
-type LockRoomInfo = {
+interface LockRoomInfo {
  roomTypeID: number;
  adult: number;
  earlyCheckin: boolean;
  lateCheckout: boolean;
  isForeigner: boolean;
  guestLockModel: LockGuestInfo;
-};
+}
 
 type LockReserveProps = {
  firstName: string;
@@ -31,14 +31,14 @@ type LockReserveProps = {
  lockInfo: LockRoomInfo[];
 } & ApiCredentialProps;
 
-type LockReserveResult = {
+interface LockReserveResult {
  lockBookID: number;
  trackingCode: string;
  totalPrice: number;
  arzID: number;
-};
+}
 
-type LockInfo = {
+interface LockInfo {
  id: number;
  arzID: number;
  hotelID: number;
@@ -53,16 +53,23 @@ type LockInfo = {
  totalPrice: number;
  trackingCode: string;
  nationalCode: string;
-};
+}
 
-type LockInfoResult = {
+interface LockInfoResult {
  rooms: RoomInventory[];
  guestInfo: LockGuestInfo[];
  lockInfo: LockInfo;
  isBooked: boolean;
-};
+}
+
+interface GateWay {
+ id: number;
+ paymentGatewayTypeID: number;
+ paymentGatewayTypeName: string;
+}
 
 const getLockInfoApi = '/CRS/OnlineReservation/getLockInformation';
+const getGatewaysApi = '/CRS/OnlineReservation/getGateways';
 
 function lockReserve({ lockInfo, ...queries }: LockReserveProps) {
  const searchParams = new URLSearchParams();
@@ -93,6 +100,19 @@ function getLockInfo({
  );
 }
 
+function getGateways({
+ hotelID,
+ signal,
+}: {
+ hotelID: string;
+ signal: AbortSignal;
+}) {
+ const searchParams = new URLSearchParams([['hotelID', hotelID]]);
+ return axios.get<GateWay[]>(`${getGatewaysApi}?${searchParams.toString()}`, {
+  signal,
+ });
+}
+
 export {
  type LockReserveProps,
  type LockReserveResult,
@@ -100,5 +120,12 @@ export {
  type LockGuestInfo,
  type LockInfo,
  type LockInfoResult,
+ type GateWay,
 };
-export { getLockInfoApi, lockReserve, getLockInfo };
+export {
+ getLockInfoApi,
+ getGatewaysApi,
+ lockReserve,
+ getLockInfo,
+ getGateways,
+};

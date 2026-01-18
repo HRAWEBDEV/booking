@@ -47,8 +47,10 @@ import {
  type LockReserveProps,
  type LockRoomInfo,
  getLockInfoApi,
+ getGatewaysApi,
  lockReserve,
  getLockInfo,
+ getGateways,
 } from '../../../services/reserveApiActions';
 import { useMutation } from '@tanstack/react-query';
 import {
@@ -159,6 +161,23 @@ export default function ReserveConfigProvider({
     hotelID:
      localeReserveInfo?.hotelID || lockInfo!.lockInfo.hotelID.toString(),
     channelID: channelID,
+   });
+   return res.data;
+  },
+ });
+ // gateways
+ const {
+  data: gateways,
+  isLoading: gatewaysIsLoading,
+  isSuccess: gatewaysIsSuccess,
+  isError: gatewaysIsError,
+ } = useQuery({
+  enabled: !!hotelInfo && activeReserveStep === 'payment' && !!lockInfo,
+  queryKey: [getGatewaysApi, hotelInfo?.hotelID.toString()],
+  async queryFn({ signal }) {
+   const res = await getGateways({
+    signal,
+    hotelID: hotelInfo!.hotelID.toString(),
    });
    return res.data;
   },
@@ -286,7 +305,11 @@ export default function ReserveConfigProvider({
     };
     return lockReserve(lockReserveProps);
    },
-   onError(err: AxiosError<string>) {},
+   onError() {
+    toast.error(
+     dic.reserveInfo.reserveForm.somethingWrongHappendedTryAgainLater,
+    );
+   },
    onSuccess(res) {
     if (res.data.trackingCode) {
      setActiveReserveStep('payment');
@@ -341,6 +364,12 @@ export default function ReserveConfigProvider({
    isLoading: lockInfoIsLoading,
    isSuccess: lockInfoIsSuccess,
    isError: lockInfoIsError,
+  },
+  gateways: {
+   data: gateways,
+   isLoading: gatewaysIsLoading,
+   isSuccess: gatewaysIsSuccess,
+   isError: gatewaysIsError,
   },
   rooms: {
    guestInfo,

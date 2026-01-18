@@ -1,11 +1,14 @@
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import { useReserveConfig } from '../../services/reserve-config/reserveConfigContext';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Button } from '@/components/ui/button';
+import { GatewayTypes } from '../../../utils/gatewayTypes';
+import { FaCreditCard } from 'react-icons/fa';
 
 export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
- const { lockInfo, bookingInvoiceInfo } = useReserveConfig();
+ const { lockInfo, bookingInvoiceInfo, gateways } = useReserveConfig();
  const numberFormatter = useCurrencyFormatter();
  if (lockInfo.isLoading) return <Skeleton className='w-full h-56' />;
  return (
@@ -46,7 +49,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
        room.accommodationTypePrice.roomOnlineShowRate -
        room.accommodationTypePrice.netRoomRate;
       return (
-       <li key={i} className='w-full'>
+       <li key={i} className='w-full mb-4'>
         <div className='mb-1'>
          <h3 className='font-medium mb-1'>
           {i + 1}) {room.fName}
@@ -118,12 +121,38 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
      {dic.payment.paymentInfo.paymentMethod}:
     </h4>
     <ul className='mb-6 flex flex-wrap gap-4'>
-     {Array.from({ length: 4 }, (_, i) => i).map((item) => (
-      <li key={item} className='size-24 bg-neutral-200 rounded-md'></li>
-     ))}
+     {gateways.isLoading
+      ? Array.from({ length: 4 }, (_, i) => i).map((item) => (
+         <li key={item} className='size-24 rounded-md'>
+          <Skeleton className='w-full h-full' />
+         </li>
+        ))
+      : gateways.data?.map((gateway) => (
+         <li key={gateway.id}>
+          <Button
+           size={'icon'}
+           variant={'outline'}
+           className='h-auto flex flex-col size-24'
+          >
+           <div className='grow overflow-hidden grid place-content-center'>
+            <FaCreditCard className='size-10 text-neutral-400 dark:text-neutral-600' />
+           </div>
+           <p className='text-center text-sm p-1 text-neutral-700 dark:text-neutral-400 font-medium'>
+            {
+             dic.payment.gateways[
+              GatewayTypes[
+               gateway.paymentGatewayTypeID
+              ] as keyof typeof dic.payment.gateways
+             ]
+            }
+           </p>
+          </Button>
+         </li>
+        ))}
     </ul>
     <div className='flex justify-end'>
-     <Button size='lg' className='w-40'>
+     <Button disabled={gateways.isLoading} size='lg' className='w-40'>
+      {gateways.isLoading && <Spinner />}
       {dic.payment.paymentInfo.confirmPayment}
      </Button>
     </div>
