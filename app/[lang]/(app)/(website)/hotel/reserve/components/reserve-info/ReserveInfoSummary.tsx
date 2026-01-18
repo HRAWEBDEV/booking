@@ -92,15 +92,19 @@ export default function ReserveInfoSummary({
        </ul>
        {!!bookingInvoiceInfo.totalDiscount && (
         <>
-         <div className='text-rose-700 dark:text-rose-400 mb-1'>
-          <span>+ {dic.reserveInfo.reserveSummary.TotalPrice}: </span>
+         <div className='mb-1'>
+          <span className='text-rose-700 dark:text-rose-400'>
+           {dic.reserveInfo.reserveSummary.TotalPrice}:{' '}
+          </span>
           <span className='text-sm line-through'>
            {numberFormatter.format(bookingInvoiceInfo.price)}
           </span>
           <span className='text-xs'> ریال</span>
          </div>
-         <div className='text-secondary mb-3 pb-2 border-b border-input'>
-          <span>- {dic.reserveInfo.reserveSummary.totalDiscount}: </span>
+         <div className='mb-3 pb-2 border-b border-input'>
+          <span className='text-secondary'>
+           {dic.reserveInfo.reserveSummary.totalDiscount}:{' '}
+          </span>
           <span className='text-base'>
            {numberFormatter.format(bookingInvoiceInfo.totalDiscount)}
           </span>
@@ -108,9 +112,11 @@ export default function ReserveInfoSummary({
          </div>
         </>
        )}
-       <div className='font-medium text-primary'>
-        <span>{dic.reserveInfo.reserveSummary.discountTotalPrice}: </span>
-        <span className='text-lg'>
+       <div className='font-medium'>
+        <span className='text-primary'>
+         {dic.reserveInfo.reserveSummary.discountTotalPrice}:{' '}
+        </span>
+        <span className='text-lg '>
          {numberFormatter.format(bookingInvoiceInfo.totalDiscountPrice)}
         </span>
         <span className='text-xs'> ریال</span>

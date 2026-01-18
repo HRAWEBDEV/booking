@@ -7,7 +7,7 @@ import { FaTicket } from 'react-icons/fa6';
 import { useGoHome } from '../../hooks/useGoHome';
 
 export default function MobileNav() {
- const { goHome } = useGoHome();
+ const { goHome, isHomePage } = useGoHome();
  const {
   shareDictionary: {
    component: { mobileNav: mobileNavDic },
@@ -20,7 +20,10 @@ export default function MobileNav() {
     variant='ghost'
     size={'icon'}
     className='group flex-col h-auto w-auto'
-    onClick={goHome}
+    onClick={() => {
+     if (isHomePage) return;
+     goHome();
+    }}
    >
     <IoHome className='size-6' />
     <span className='font-medium'>{mobileNavDic.home}</span>

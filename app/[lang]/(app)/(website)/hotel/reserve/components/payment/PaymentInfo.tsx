@@ -13,6 +13,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
   bookingInvoiceInfo,
   gateways,
   confirmPaymentIsPending,
+  onCancelReserve,
   onConfirmPayment,
  } = useReserveConfig();
  const numberFormatter = useCurrencyFormatter();
@@ -171,7 +172,24 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
          </li>
         ))}
     </ul>
-    <div className='flex justify-end'>
+    <div className='flex justify-end gap-4'>
+     <Button
+      className='text-base w-36'
+      variant='outline'
+      size='lg'
+      type='button'
+      disabled={
+       gateways.isLoading ||
+       !gateways.isSuccess ||
+       !gateways.data?.length ||
+       !gateways.selectedGateway ||
+       confirmPaymentIsPending
+      }
+      onClick={onCancelReserve}
+     >
+      {(gateways.isLoading || confirmPaymentIsPending) && <Spinner />}
+      {dic.reserveInfo.reserveForm.cancel}
+     </Button>
      <Button
       disabled={
        gateways.isLoading ||
@@ -181,10 +199,10 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
        confirmPaymentIsPending
       }
       size='lg'
-      className='w-40'
+      className='w-36'
       onClick={onConfirmPayment}
      >
-      {gateways.isLoading && <Spinner />}
+      {(gateways.isLoading || confirmPaymentIsPending) && <Spinner />}
       {dic.payment.paymentInfo.confirmPayment}
      </Button>
     </div>
