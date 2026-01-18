@@ -217,7 +217,7 @@ export default function ReserveConfigProvider({
  });
 
  const bookingInvoiceInfo = getBookingInvoiceInfo({
-  rooms: storeRooms || [],
+  rooms: lockInfo?.rooms ? lockInfo.rooms : storeRooms,
  });
 
  const { mutate: confirmReserveMutate, isPending: confirmReserveIsPending } =
@@ -271,7 +271,7 @@ export default function ReserveConfigProvider({
      providerID,
      channelID,
      arzID,
-     email: email || null,
+     email: email || '',
      firstName,
      lastName,
      nationalCode,

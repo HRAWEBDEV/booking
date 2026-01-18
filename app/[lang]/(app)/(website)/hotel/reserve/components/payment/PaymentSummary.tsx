@@ -5,6 +5,7 @@ import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { Button } from '@/components/ui/button';
 import { IoIosCopy } from 'react-icons/io';
 import { toast } from 'sonner';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export default function PaymentSummary({
  dic,
@@ -17,7 +18,7 @@ export default function PaymentSummary({
  return (
   <div className='row-start-1 lg:row-start-auto'>
    {lockInfo.isLoading || hotelInfo.isLoading ? (
-    <Skeleton className='w-full h-96' />
+    <Skeleton className='w-full h-56' />
    ) : (
     <div className='sticky top-1'>
      <section className='p-4 rounded-md border border-input mb-2'>
@@ -70,7 +71,7 @@ export default function PaymentSummary({
        <Button
         variant='outline'
         size='lg'
-        className='w-full text-neutral-700 dark:text-neutral-400 bg-orange-50 dark:bg-orange-950 border-orange-600 dark:border-orange-400'
+        className='w-full text-neutral-700 dark:text-neutral-400 bg-orange-50 dark:bg-orange-950 border-orange-600 dark:border-orange-400 mb-4'
         onClick={() => {
          if (!lockInfo.data) return;
          navigator.clipboard.writeText(lockInfo.data.lockInfo.trackingCode);
@@ -83,6 +84,16 @@ export default function PaymentSummary({
         </span>
         <IoIosCopy />
        </Button>
+       <Alert className='mb-2 bg-red-50 dark:bg-red-950 border-red-700 dark:border-red-400'>
+        <AlertDescription className='text-red-800 dark:text-red-200 font-medium text-xs'>
+         {dic.payment.paymentSummary.doNotUseReturnButton}
+        </AlertDescription>
+       </Alert>
+       <Alert className='mb-2 bg-red-50 dark:bg-red-950 border-red-700 dark:border-red-400'>
+        <AlertDescription className='text-red-800 dark:text-red-200 font-medium text-xs'>
+         {dic.payment.paymentSummary.doNotUseVPN}
+        </AlertDescription>
+       </Alert>
       </div>
      </section>
     </div>

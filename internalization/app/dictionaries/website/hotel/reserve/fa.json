@@ -45,9 +45,14 @@
   }
  },
  "payment": {
+  "paymentInfo": {
+   "title": "اطلاعات پرداخت"
+  },
   "paymentSummary": {
    "reserveCheckCode": "کد‌پیگیری رزرو",
-   "reserveCheckCodeCopied": "کد‌پیگیری رزرو کپی شد"
+   "reserveCheckCodeCopied": "کد‌پیگیری رزرو کپی شد",
+   "doNotUseReturnButton": "در هنگام پرداخت از کلید‌های بازگشت و بروزرسانی استفاده نکنید.",
+   "doNotUseVPN": "در هنگام پرداخت فیلترشکن خود را خاموش کنید."
   }
  },
  "cancelReserve": {
