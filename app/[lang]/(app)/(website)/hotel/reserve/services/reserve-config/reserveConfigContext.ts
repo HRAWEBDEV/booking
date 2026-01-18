@@ -8,10 +8,12 @@ import { type LocalReserveInfo } from '../../../find-hotel/[hotelID]/utils/local
 import { type BookingInvoiceInfo } from '../../utils/bookingInvoiceInfo';
 import { type RoomsPickerActions } from '../../utils/ReserveRoomsPickerReducer';
 import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
+import { type ReserveStep } from '../../utils/reserveSteps';
 
 interface ReserveConfig {
  reserveInfo: LocalReserveInfo;
  bookingInvoiceInfo: BookingInvoiceInfo;
+ activeReserveStep: ReserveStep;
  rooms: {
   guestInfo: BookingInfoSchema['guestInfo'];
   data?: RoomInventory[];

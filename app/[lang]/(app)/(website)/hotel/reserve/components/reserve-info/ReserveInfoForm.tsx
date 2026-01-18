@@ -62,20 +62,20 @@ export default function ReserveInfoForm({
          <InputGroupInput id='nationalCode' {...register('nationalCode')} />
         </InputGroup>
        </Field>
-       <Field className='gap-2' data-invalid={!!errors.email}>
-        <FieldLabel htmlFor='email'>
-         {dic.reserveInfo.reserveForm.email}
-        </FieldLabel>
-        <InputGroup data-invalid={!!errors.email}>
-         <InputGroupInput id='email' {...register('email')} />
-        </InputGroup>
-       </Field>
        <Field className='gap-2' data-invalid={!!errors.phoneNumber}>
         <FieldLabel htmlFor='phoneNumber'>
          {dic.reserveInfo.reserveForm.phoneNumber} *
         </FieldLabel>
         <InputGroup data-invalid={!!errors.phoneNumber}>
          <InputGroupInput id='phoneNumber' {...register('phoneNumber')} />
+        </InputGroup>
+       </Field>
+       <Field className='gap-2' data-invalid={!!errors.email}>
+        <FieldLabel htmlFor='email'>
+         {dic.reserveInfo.reserveForm.email}
+        </FieldLabel>
+        <InputGroup data-invalid={!!errors.email}>
+         <InputGroupInput id='email' {...register('email')} />
         </InputGroup>
        </Field>
       </div>

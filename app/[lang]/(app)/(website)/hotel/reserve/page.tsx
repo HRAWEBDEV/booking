@@ -9,5 +9,6 @@ export default async function HotelHomePage(
  const dic = await getReserveHotelDictionary({
   locale: lang as Locale,
  });
+
  return <ReserveWrapper dic={dic} />;
 }

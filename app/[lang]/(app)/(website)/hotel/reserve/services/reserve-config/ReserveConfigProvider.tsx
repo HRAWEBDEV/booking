@@ -45,10 +45,11 @@ import { Button } from '@/components/ui/button';
 import {
  type LockReserveProps,
  type LockRoomInfo,
- type LockGuestInfo,
  lockReserve,
 } from '../../../services/reserveApiActions';
 import { useMutation } from '@tanstack/react-query';
+import { type ReserveStep } from '../../utils/reserveSteps';
+import { AxiosError } from 'axios';
 
 export default function ReserveConfigProvider({
  children,
@@ -57,6 +58,11 @@ export default function ReserveConfigProvider({
  dic: ReserveHotelDictionary;
  children: ReactNode;
 }) {
+ const [activeReserveStep, setActiveReserveStep] =
+  useState<ReserveStep>('reserve');
+ const [reserveTrackingCode, setReserveTrackingCode] = useState<string | null>(
+  null,
+ );
  //
  const router = useRouter();
  const { locale } = useBaseConfig();
@@ -192,7 +198,9 @@ export default function ReserveConfigProvider({
    nationalCode,
    phoneNumber,
   }: BookingInfoSchema) {
-   const lockRoomInfo: LockRoomInfo[] = storeRooms!.map((room, i) => {
+   const lockRoomInfo: LockRoomInfo[] = [];
+   rooms!.forEach((room, i) => {
+    if (guestInfo[i].removed) return;
     const {
      firstName: guestFirstName,
      lastName: guestLastName,
@@ -211,7 +219,7 @@ export default function ReserveConfigProvider({
      ? nationalCode
      : guestNationalCode;
     const isForeigner = type === 'foreign';
-    return {
+    lockRoomInfo.push({
      roomTypeID: room.roomTypeID,
      adult: room.accommodationTypePrice.beds,
      isForeigner,
@@ -224,7 +232,7 @@ export default function ReserveConfigProvider({
       nationalCode: !isForeigner ? confirmGuestNationalCode : null,
       passport: isForeigner ? confirmGuestNationalCode : null,
      },
-    };
+    });
    });
    const lockReserveProps: LockReserveProps = {
     hotelID: hotelInfo!.hotelID.toString(),
@@ -245,6 +253,13 @@ export default function ReserveConfigProvider({
     lockInfo: lockRoomInfo,
    };
    return lockReserve(lockReserveProps);
+  },
+  onError(err: AxiosError<string>) {},
+  onSuccess(res) {
+   if (res.data.trackingCode) {
+    setActiveReserveStep('payment');
+    setReserveTrackingCode(res.data.trackingCode);
+   }
   },
  });
 
@@ -275,6 +290,7 @@ export default function ReserveConfigProvider({
  }
 
  const ctx: ReserveConfig = {
+  activeReserveStep,
   reserveInfo: localeReserveInfo!,
   bookingInvoiceInfo,
   hotelInfo: {

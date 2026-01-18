@@ -1,15 +1,22 @@
+'use client';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import ReserveInfoWrapper from './reserve-info/ReserveInfoWrapper';
-import ReserveConfigProvider from '../services/reserve-config/ReserveConfigProvider';
+import { useReserveConfig } from '../services/reserve-config/reserveConfigContext';
+import PaymentWrapper from './payment/PaymentWrapper';
 
 export default function ReserveWrapper({
  dic,
 }: {
  dic: ReserveHotelDictionary;
 }) {
- return (
-  <ReserveConfigProvider dic={dic}>
-   <ReserveInfoWrapper dic={dic} />
-  </ReserveConfigProvider>
- );
+ const { activeReserveStep } = useReserveConfig();
+
+ let activeStep = <ReserveInfoWrapper dic={dic} />;
+ switch (activeReserveStep) {
+  case 'payment':
+   activeStep = <PaymentWrapper dic={dic} />;
+   break;
+ }
+
+ return <>{activeStep}</>;
 }
