@@ -24,8 +24,8 @@ import { Spinner } from '@/components/ui/spinner';
 // import { BiError } from 'react-icons/bi';
 
 const imageContainerClass =
- 'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-44 grow-0 relative shrink-0';
-const imageWrapperClass = 'h-56 lg:h-44 rounded-md overflow-hidden';
+ 'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-40 grow-0 relative shrink-0 self-start';
+const imageWrapperClass = 'h-56 lg:h-40 rounded-md overflow-hidden';
 
 export default function HotelRoom({
  accType,
