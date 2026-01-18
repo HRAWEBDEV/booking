@@ -19,7 +19,7 @@ export default function ReserveInfoSummary({
   bookingInvoiceInfo,
   onSubmitBookingFormInfo,
   onCancelReserve,
-  rooms: { data, isLoading },
+  rooms: { storeRooms, isLoading },
  } = useReserveConfig();
 
  const { locale } = useBaseConfig();
@@ -69,7 +69,7 @@ export default function ReserveInfoSummary({
       </div>
       <div className='flex flex-col border-t border-input pt-4'>
        <ul className='h-24 overflow-auto mb-2'>
-        {data?.map((room, i) => (
+        {storeRooms.map((room, i) => (
          <li
           key={i}
           className='flex flex-wrap gap-2 text-sm text-neutral-600 dark:text-neutral-400'

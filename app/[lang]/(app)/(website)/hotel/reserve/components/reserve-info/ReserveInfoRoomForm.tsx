@@ -34,7 +34,7 @@ export default function ReserveInfoRoomForm({
 }) {
  const [showRemoveRoom, setShowRemoveRoom] = useState(false);
  const {
-  rooms: { data, guestInfo, storeRoomsDispatcher },
+  rooms: { data, storeRooms, guestInfo, storeRoomsDispatcher },
  } = useReserveConfig();
  const {
   register,
@@ -43,6 +43,7 @@ export default function ReserveInfoRoomForm({
   formState: { errors },
  } = useFormContext<BookingInfoSchema>();
  const saveAsReserveInfo = guestInfo[i].saveAsReserveInfo;
+ const isRemoved = guestInfo[i].removed;
 
  const { localeInfo } = useBaseConfig();
 
@@ -54,14 +55,18 @@ export default function ReserveInfoRoomForm({
  );
 
  return (
-  <section key={i} className='p-4 border border-input rounded-md mb-4 relative'>
+  <section
+   data-is-removed={isRemoved}
+   key={i}
+   className='p-4 border border-input rounded-md mb-4 relative data-[is-removed="true"]:hidden!'
+  >
    <div className='absolute end-4 top-4'>
     <Button
      type='button'
      size='icon'
      variant='ghost'
      className='text-rose-700 dark:text-rose-400'
-     disabled={Boolean(data && data.length <= 1)}
+     disabled={Boolean(storeRooms && storeRooms.length <= 1)}
      onClick={() => {
       setShowRemoveRoom(true);
      }}

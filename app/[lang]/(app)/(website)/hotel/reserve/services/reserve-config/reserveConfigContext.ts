@@ -15,6 +15,7 @@ interface ReserveConfig {
  rooms: {
   guestInfo: BookingInfoSchema['guestInfo'];
   data?: RoomInventory[];
+  storeRooms: RoomInventory[];
   storeRoomsDispatcher: ActionDispatch<[action: RoomsPickerActions]>;
   isLoading: boolean;
   isSuccess: boolean;

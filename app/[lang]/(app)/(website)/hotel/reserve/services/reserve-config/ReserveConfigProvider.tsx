@@ -285,7 +285,8 @@ export default function ReserveConfigProvider({
   },
   rooms: {
    guestInfo,
-   data: storeRooms,
+   data: rooms,
+   storeRooms,
    storeRoomsDispatcher: storeRoomsDispatch,
    isLoading: roomsIsLoading,
    isSuccess: roomsIsSuccess,
@@ -295,6 +296,7 @@ export default function ReserveConfigProvider({
   onSubmitBookingFormInfo: handleSubmitBookingFormInfo,
  };
  // handle error here
+ if (!localeReserveInfo) return <p>error</p>;
  return (
   <reserveConfigContext.Provider value={ctx}>
    <FormProvider {...bookingInfoForm}>{children}</FormProvider>
