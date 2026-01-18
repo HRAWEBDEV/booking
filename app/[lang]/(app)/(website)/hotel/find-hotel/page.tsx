@@ -7,7 +7,7 @@ export default async function FindHotelPage(
  const { lang } = await props.params;
  const dic = await getFindHotelDictionary({ locale: lang as Locale });
  return (
-  <div className='flex flex-col gap-4 relative '>
+  <div className='flex flex-col gap-4 relative'>
    <FindHotelWrapper dic={dic} />
   </div>
  );

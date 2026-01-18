@@ -1,6 +1,6 @@
 export default function Footer() {
  return (
-  <footer className='min-h-24 bg-neutral-200 dark:bg-neutral-800'>
+  <footer className='min-h-24 bg-neutral-200 dark:bg-neutral-800 pb-[calc(var(--website-mobile-nav-height)*2)] lg:pb-0'>
    <div className='flex justify-end'>
     <a
      className='size-28'
