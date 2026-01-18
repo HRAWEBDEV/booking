@@ -1,4 +1,6 @@
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
+import PaymentInfo from './PaymentInfo';
+import PaymentSummary from './PaymentSummary';
 
 export default function PaymentWrapper({
  dic,
@@ -7,7 +9,8 @@ export default function PaymentWrapper({
 }) {
  return (
   <div className='grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-4 my-4'>
-   payment
+   <PaymentInfo dic={dic} />
+   <PaymentSummary dic={dic} />
   </div>
  );
 }

@@ -119,6 +119,25 @@ export default function ReserveConfigProvider({
   }
  });
 
+ // lock info
+ const {
+  data: lockInfo,
+  isLoading: lockInfoIsLoading,
+  isSuccess: lockInfoIsSuccess,
+  isError: lockInfoIsError,
+ } = useQuery({
+  staleTime: 'static',
+  gcTime: 0,
+  enabled: !!reserveTrackingCode,
+  queryKey: [getLockInfoApi, reserveTrackingCode],
+  async queryFn({ signal }) {
+   const res = await getLockInfo({
+    signal,
+    trackingCode: reserveTrackingCode!,
+   });
+   return res.data;
+  },
+ });
  // hotel info
  const {
   data: hotelInfo,
@@ -127,16 +146,18 @@ export default function ReserveConfigProvider({
   isSuccess: hotelInfoIsSuccess,
  } = useQuery({
   staleTime: 'static',
-  enabled: !!localeReserveInfo && !!localeReserveInfo.hotelID,
+  enabled: (!!localeReserveInfo && !!localeReserveInfo.hotelID) || !!lockInfo,
   queryKey: [
    getHotelInfoApi,
-   localeReserveInfo?.hotelID.toString(),
+   localeReserveInfo?.hotelID.toString() ||
+    lockInfo?.lockInfo.hotelID.toString(),
    channelID.toString(),
   ],
   async queryFn({ signal }) {
    const res = await getHotelInfo({
     signal,
-    hotelID: localeReserveInfo!.hotelID,
+    hotelID:
+     localeReserveInfo?.hotelID || lockInfo!.lockInfo.hotelID.toString(),
     channelID: channelID,
    });
    return res.data;
@@ -190,25 +211,6 @@ export default function ReserveConfigProvider({
    storeRoomsDispatch({
     type: 'insertRooms',
     payload: res.data || [],
-   });
-   return res.data;
-  },
- });
- // lock info
- const {
-  data: lockInfo,
-  isLoading: lockInfoIsLoading,
-  isSuccess: lockInfoIsSuccess,
-  isError: lockInfoIsError,
- } = useQuery({
-  staleTime: 'static',
-  gcTime: 0,
-  enabled: !!reserveTrackingCode,
-  queryKey: [getLockInfoApi, reserveTrackingCode],
-  async queryFn({ signal }) {
-   const res = await getLockInfo({
-    signal,
-    trackingCode: reserveTrackingCode!,
    });
    return res.data;
   },

@@ -44,6 +44,12 @@
    "confirm": "تایید"
   }
  },
+ "payment": {
+  "paymentSummary": {
+   "reserveCheckCode": "کد‌پیگیری رزرو",
+   "reserveCheckCodeCopied": "کد‌پیگیری رزرو کپی شد"
+  }
+ },
  "cancelReserve": {
   "title": "آیا از لغو فرآیند رزرو اطمینان دارید؟",
   "cancel": "انصراف",
