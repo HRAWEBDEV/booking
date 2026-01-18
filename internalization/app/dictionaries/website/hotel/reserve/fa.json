@@ -7,7 +7,9 @@
    "night": "شب",
    "TotalPrice": "جمع",
    "totalDiscount": "تخفیف کل",
-   "discountTotalPrice": "جمع کل"
+   "discountTotalPrice": "جمع کل (پرداختی)",
+   "price": "قیمت",
+   "discount": "تخفیف"
   },
   "reserveForm": {
    "ratePlanTypes": {
@@ -25,7 +27,7 @@
    "lastName": "نام خانوادگی",
    "nationalCode": "کدملی",
    "email": "ایمیل",
-   "person": "نفر",
+   "person": "نفره",
    "earlyCheckinCharge": "نیم شارژ ورود",
    "lateCheckoutCharge": "نیم شارژ خروج",
    "male": "مرد",
@@ -46,7 +48,9 @@
  },
  "payment": {
   "paymentInfo": {
-   "title": "اطلاعات پرداخت"
+   "title": "اطلاعات پرداخت",
+   "paymentMethod": "روش پرداخت",
+   "confirmPayment": "پرداخت"
   },
   "paymentSummary": {
    "reserveCheckCode": "کد‌پیگیری رزرو",
