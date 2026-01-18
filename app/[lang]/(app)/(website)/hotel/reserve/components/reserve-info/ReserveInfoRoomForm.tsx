@@ -132,6 +132,7 @@ export default function ReserveInfoRoomForm({
          {dic.reserveInfo.reserveForm.innerGuest}
         </TabsTrigger>
         <TabsTrigger
+         disabled
          className='data-[state="active"]:border-primary'
          value='foreign'
          onClick={() => onChange('foreign')}
