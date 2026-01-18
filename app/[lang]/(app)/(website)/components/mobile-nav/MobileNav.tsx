@@ -4,9 +4,10 @@ import { Button } from '@/components/ui/button';
 import { FaUser } from 'react-icons/fa';
 import { IoHome } from 'react-icons/io5';
 import { FaTicket } from 'react-icons/fa6';
-import { LuCirclePlus } from 'react-icons/lu';
+import { useGoHome } from '../../hooks/useGoHome';
 
 export default function MobileNav() {
+ const { goHome } = useGoHome();
  const {
   shareDictionary: {
    component: { mobileNav: mobileNavDic },
@@ -19,6 +20,7 @@ export default function MobileNav() {
     variant='ghost'
     size={'icon'}
     className='group flex-col h-auto w-auto'
+    onClick={goHome}
    >
     <IoHome className='size-6' />
     <span className='font-medium'>{mobileNavDic.home}</span>
