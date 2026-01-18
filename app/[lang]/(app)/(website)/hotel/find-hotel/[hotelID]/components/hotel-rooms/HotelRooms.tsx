@@ -24,6 +24,7 @@ import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { IoSearch } from 'react-icons/io5';
 
 export default function HotelRooms({
  dic,
@@ -41,7 +42,7 @@ export default function HotelRooms({
  const {
   hotelID,
   rooms: { selectedRooms, onUpdateRoomInventory },
-  reserve: { fromDateValue },
+  reserve: { fromDateValue, toDateValue },
  } = useHotelConfig();
 
  const data = use(roomInventoriesPromise);
@@ -112,34 +113,56 @@ export default function HotelRooms({
     </div>
    )}
    <div className='grid gap-4'>
-    {data?.map((roomType) => {
-     const filteredRooms = selectedRooms.length
-      ? roomType.accommodationTypePrices.filter(
-         (item) =>
-          item.accommodationRatePlanModel.ratePlanID ===
-          selectedRooms[0].ratePlanID,
-        )
-      : roomType.accommodationTypePrices;
-     return (
-      <Fragment key={roomType.roomTypeID}>
-       {filteredRooms.map((accType) => (
-        <HotelRoom
-         accType={accType}
-         key={
-          accType.beds.toString() +
-          accType.accommodationRatePlanModel.ratePlanID.toString() +
-          accType.accommodationRatePlanModel.ratePlanModel.ratePlanTypeID.toString()
-         }
-         selectedRoom={selectedRoom}
-         onShowDailyPrice={handleShowDailyPrice}
-         roomDailyPriceIsLoading={roomDailyPriceIsLoading}
-         dic={dic}
-         roomType={roomType}
-        />
-       ))}
-      </Fragment>
-     );
-    })}
+    {data && !data.length ? (
+     <div className='min-h-56 p-4 border rounded-md border-primary bg-primary/10 flex flex-col gap-6 items-center justify-center text-center'>
+      <IoSearch className='size-16 text-primary/50' />
+      <div>
+       <p className='font-medium text-primary mb-2'>
+        {dic.hotelDatePicker.from}{' '}
+        {fromDateValue?.toLocaleDateString(locale, {
+         dateStyle: 'long',
+        })}{' '}
+        {dic.hotelDatePicker.to}{' '}
+        {toDateValue?.toLocaleDateString(locale, {
+         dateStyle: 'long',
+        })}{' '}
+        {dic.hotelRooms.noRoomsFound}
+       </p>
+       <p className='text-sm font-medium text-primary'>
+        {dic.hotelRooms.changeReserveDateOrRatePlan}
+       </p>
+      </div>
+     </div>
+    ) : (
+     data?.map((roomType) => {
+      const filteredRooms = selectedRooms.length
+       ? roomType.accommodationTypePrices.filter(
+          (item) =>
+           item.accommodationRatePlanModel.ratePlanID ===
+           selectedRooms[0].ratePlanID,
+         )
+       : roomType.accommodationTypePrices;
+      return (
+       <Fragment key={roomType.roomTypeID}>
+        {filteredRooms.map((accType) => (
+         <HotelRoom
+          accType={accType}
+          key={
+           accType.beds.toString() +
+           accType.accommodationRatePlanModel.ratePlanID.toString() +
+           accType.accommodationRatePlanModel.ratePlanModel.ratePlanTypeID.toString()
+          }
+          selectedRoom={selectedRoom}
+          onShowDailyPrice={handleShowDailyPrice}
+          roomDailyPriceIsLoading={roomDailyPriceIsLoading}
+          dic={dic}
+          roomType={roomType}
+         />
+        ))}
+       </Fragment>
+      );
+     })
+    )}
     <Dialog open={showDailyPrice} onOpenChange={setShowDailyPrice}>
      <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden max-h-[90svh]'>
       <DialogHeader className='p-4 shrink-0'>

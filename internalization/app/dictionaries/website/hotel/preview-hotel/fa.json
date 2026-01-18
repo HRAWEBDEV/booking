@@ -36,6 +36,8 @@
  },
  "hotelRooms": {
   "forEachPurchaseOnlyReserveRoomsWithSameRatePlan": "در هر خرید تنها امکان رزرو اتاق‌‌های با طرح فروش یکسان وجود دارد",
+  "noRoomsFound": "اتاقی یافت نشد.",
+  "changeReserveDateOrRatePlan": "تاریخ رزرو یا طرح فروش را تغییر دهید.",
   "ratePlanTypes": {
    "noBreakfast": "بدون صبحانه",
    "nonRefundable": "غیرقابل استرداد",
