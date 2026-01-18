@@ -260,6 +260,9 @@ export default function ReserveConfigProvider({
      dic.reserveInfo.reserveForm.somethingWrongHappendedTryAgainLater,
     );
    },
+   onSuccess(res) {
+    // handle success payment
+   },
   });
 
  function handleConfirmPayment() {

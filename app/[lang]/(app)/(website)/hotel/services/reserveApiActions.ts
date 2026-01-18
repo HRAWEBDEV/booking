@@ -73,9 +73,18 @@ interface PaymentLink {
  gatewayUrl: string | null;
 }
 
+type BookReserveInfo = {
+ success: boolean;
+ bookInfo: {
+  reserveID: number;
+  reserveNo: number;
+ } & Pick<LockInfoResult, 'lockInfo'>;
+};
+
 const getLockInfoApi = '/CRS/OnlineReservation/getLockInformation';
 const getGatewaysApi = '/CRS/OnlineReservation/getGateways';
 const getPaymentLinkApi = '/CRS/OnlineReservation/getPaymentLink';
+const bookReserveApi = '/CRS/OnlineReservation/book';
 
 function lockReserve({ lockInfo, ...queries }: LockReserveProps) {
  const searchParams = new URLSearchParams();
@@ -141,6 +150,33 @@ function getPaymentLink({
  );
 }
 
+function bookReserve({
+ refNum,
+ amount,
+ paymentGatewayTypeID,
+ ...queries
+}: ApiCredentialProps & {
+ lockBookID: number;
+ refNum: string;
+ amount: number;
+ paymentGatewayTypeID: number;
+}) {
+ const searchParams = new URLSearchParams();
+ Object.entries(queries).forEach(([key, val]) => {
+  if (val !== undefined) {
+   searchParams.set(key, String(val));
+  }
+ });
+ return axios.post<BookReserveInfo>(
+  `${bookReserveApi}?${searchParams.toString()}`,
+  {
+   refNum,
+   amount,
+   paymentGatewayTypeID,
+  },
+ );
+}
+
 export {
  type LockReserveProps,
  type LockReserveResult,
@@ -158,4 +194,5 @@ export {
  getLockInfo,
  getGateways,
  getPaymentLink,
+ bookReserve,
 };
