@@ -74,7 +74,7 @@ export default function ReserveInfoSummary({
        </div>
       </div>
       <div className='flex flex-col border-t border-input pt-4'>
-       <ul className='h-24 overflow-auto mb-2'>
+       <ul className='max-h-24 overflow-auto mb-2'>
         {storeRooms.map((room, i) => (
          <li
           key={i}
@@ -90,20 +90,24 @@ export default function ReserveInfoSummary({
          </li>
         ))}
        </ul>
-       <div className='text-rose-700 dark:text-rose-400 mb-1'>
-        <span>+ {dic.reserveInfo.reserveSummary.TotalPrice}: </span>
-        <span className='text-sm line-through'>
-         {numberFormatter.format(bookingInvoiceInfo.price)}
-        </span>
-        <span className='text-xs'> ریال</span>
-       </div>
-       <div className='text-secondary mb-3 pb-2 border-b border-input'>
-        <span>- {dic.reserveInfo.reserveSummary.totalDiscount}: </span>
-        <span className='text-base'>
-         {numberFormatter.format(bookingInvoiceInfo.totalDiscount)}
-        </span>
-        <span className='text-xs'> ریال</span>
-       </div>
+       {!!bookingInvoiceInfo.totalDiscount && (
+        <>
+         <div className='text-rose-700 dark:text-rose-400 mb-1'>
+          <span>+ {dic.reserveInfo.reserveSummary.TotalPrice}: </span>
+          <span className='text-sm line-through'>
+           {numberFormatter.format(bookingInvoiceInfo.price)}
+          </span>
+          <span className='text-xs'> ریال</span>
+         </div>
+         <div className='text-secondary mb-3 pb-2 border-b border-input'>
+          <span>- {dic.reserveInfo.reserveSummary.totalDiscount}: </span>
+          <span className='text-base'>
+           {numberFormatter.format(bookingInvoiceInfo.totalDiscount)}
+          </span>
+          <span className='text-xs'> ریال</span>
+         </div>
+        </>
+       )}
        <div className='font-medium text-primary'>
         <span>{dic.reserveInfo.reserveSummary.discountTotalPrice}: </span>
         <span className='text-lg'>
