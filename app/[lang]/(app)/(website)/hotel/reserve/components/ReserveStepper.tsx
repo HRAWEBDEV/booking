@@ -24,7 +24,10 @@ export default function ReserveStepper({
       {dic.reserveStepper.fillForm}
      </span>
     </div>
-    <div className='basis-24 h-px bg-neutral-400 dark:bg-neutral-600'></div>
+    <div
+     data-completed-step={activeReserveStep === 'payment'}
+     className='basis-24 h-px bg-neutral-400 dark:bg-neutral-600 data-[completed-step="true"]:bg-secondary'
+    ></div>
     <div
      data-active-step={activeReserveStep === 'payment'}
      data-completed-step={activeReserveStep === 'book'}
@@ -37,7 +40,10 @@ export default function ReserveStepper({
       {dic.reserveStepper.payment}
      </span>
     </div>
-    <div className='basis-24 h-px bg-neutral-400 dark:bg-neutral-600'></div>
+    <div
+     data-completed-step={activeReserveStep === 'book'}
+     className='basis-24 h-px bg-neutral-400 dark:bg-neutral-600 data-[completed-step="true"]:bg-secondary'
+    ></div>
     <div
      data-active-step={activeReserveStep === 'book'}
      className='group flex flex-col gap-1 items-center text-center shrink-0'
