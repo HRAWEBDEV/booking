@@ -156,7 +156,12 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
     </ul>
     <div className='flex justify-end'>
      <Button
-      disabled={gateways.isLoading || !gateways.isSuccess}
+      disabled={
+       gateways.isLoading ||
+       !gateways.isSuccess ||
+       !gateways.data?.length ||
+       !gateways.selectedGateway
+      }
       size='lg'
       className='w-40'
      >

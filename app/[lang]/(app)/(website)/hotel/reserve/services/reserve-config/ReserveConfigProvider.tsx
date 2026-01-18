@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback, ReactNode, useReducer } from 'react';
+import { useState, useCallback, ReactNode, useReducer, useEffect } from 'react';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import {
  type ReserveConfig,
@@ -389,6 +389,12 @@ export default function ReserveConfigProvider({
   onCancelReserve: handleCancelReserve,
   onSubmitBookingFormInfo: handleSubmitBookingFormInfo,
  };
+
+ useEffect(() => {
+  if (!gateways || !gateways.length) return;
+  setSelectedGateway(gateways[0]);
+ }, [gateways]);
+
  // handle error here
  return (
   <reserveConfigContext.Provider value={ctx}>
