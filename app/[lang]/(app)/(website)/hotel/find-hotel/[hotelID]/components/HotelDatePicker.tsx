@@ -81,6 +81,7 @@ export default function HotelDatePicker({
     <Calendar
      mode='range'
      {...other}
+     required
      numberOfMonths={2}
      startMonth={dateFns.startOfMonth(new Date())}
      selected={{
@@ -88,23 +89,17 @@ export default function HotelDatePicker({
       from: toDateValue || undefined,
      }}
      onSelect={(selected) => {
-      if (!selected) {
-       filtersUserForm.setValue('fromDate', null);
-       filtersUserForm.setValue('toDate', null);
-       return;
+      let newFromDate = selected.from;
+      let newUntilDate = selected.to;
+      if (fromDateValue!.getTime() !== toDateValue!.getTime()) {
+       if (newFromDate!.getTime() < fromDateValue!.getTime()) {
+        newUntilDate = newFromDate;
+       } else {
+        newFromDate = newUntilDate;
+       }
       }
-      if (!selected.to || !selected.from) {
-       filtersUserForm.setValue('fromDate', selected.from || null);
-       filtersUserForm.setValue('toDate', selected.to || null);
-       return;
-      }
-      if (selected.from.getTime() > selected.to.getTime()) {
-       filtersUserForm.setValue('fromDate', selected.to || null);
-       filtersUserForm.setValue('toDate', selected.from || null);
-       return;
-      }
-      filtersUserForm.setValue('fromDate', selected.from || null);
-      filtersUserForm.setValue('toDate', selected.to || null);
+      filtersUserForm.setValue('fromDate', newFromDate!);
+      filtersUserForm.setValue('toDate', newUntilDate!);
      }}
      defaultMonth={fromDateValue || new Date()}
      showOutsideDays={false}
