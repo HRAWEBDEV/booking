@@ -2,6 +2,7 @@ import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/
 import { useReserveConfig } from '../../services/reserve-config/reserveConfigContext';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { Button } from '@/components/ui/button';
 
 export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
  const { lockInfo, bookingInvoiceInfo } = useReserveConfig();
@@ -87,7 +88,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
      })}
     </ul>
    </section>
-   <section className='grid grid-cols-1 md:grid-cols-2'>
+   <section className='grid grid-cols-1 md:grid-cols-2 mb-4'>
     <div className='text-neutral-800 dark:text-neutral-400 font-medium'>
      <span className='text-primary'>
       {dic.reserveInfo.reserveSummary.discountTotalPrice}:{' '}
@@ -110,6 +111,21 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
       {numberFormatter.format(bookingInvoiceInfo.totalDiscount)}
      </span>
      <span className='text-xs'> ریال</span>
+    </div>
+   </section>
+   <section>
+    <h4 className='font-medium mb-4'>
+     {dic.payment.paymentInfo.paymentMethod}:
+    </h4>
+    <ul className='mb-6 flex flex-wrap gap-4'>
+     {Array.from({ length: 4 }, (_, i) => i).map((item) => (
+      <li key={item} className='size-24 bg-neutral-200 rounded-md'></li>
+     ))}
+    </ul>
+    <div className='flex justify-end'>
+     <Button size='lg' className='w-40'>
+      {dic.payment.paymentInfo.confirmPayment}
+     </Button>
     </div>
    </section>
   </section>
