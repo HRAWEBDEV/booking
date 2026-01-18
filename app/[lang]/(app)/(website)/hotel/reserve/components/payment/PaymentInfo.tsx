@@ -117,7 +117,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
     </div>
    </section>
    <section>
-    <h4 className='font-medium mb-4'>
+    <h4 className='font-medium mb-2'>
      {dic.payment.paymentInfo.paymentMethod}:
     </h4>
     <ul className='mb-6 flex flex-wrap gap-4'>
@@ -130,14 +130,18 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
       : gateways.data?.map((gateway) => (
          <li key={gateway.id}>
           <Button
+           data-is-selected={gateway.id === gateways.selectedGateway?.id}
            size={'icon'}
            variant={'outline'}
-           className='h-auto flex flex-col size-24'
+           className='group h-auto flex flex-col size-24 text-neutral-600 dark:text-neutral-400 data-[is-selected="true"]:border-primary data-[is-selected="true"]:text-primary'
+           onClick={() => {
+            gateways.setSelectedGateway(gateway);
+           }}
           >
            <div className='grow overflow-hidden grid place-content-center'>
-            <FaCreditCard className='size-10 text-neutral-400 dark:text-neutral-600' />
+            <FaCreditCard className='size-10' />
            </div>
-           <p className='text-center text-sm p-1 text-neutral-700 dark:text-neutral-400 font-medium'>
+           <p className='text-center text-sm p-1'>
             {
              dic.payment.gateways[
               GatewayTypes[
@@ -151,7 +155,11 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
         ))}
     </ul>
     <div className='flex justify-end'>
-     <Button disabled={gateways.isLoading} size='lg' className='w-40'>
+     <Button
+      disabled={gateways.isLoading || !gateways.isSuccess}
+      size='lg'
+      className='w-40'
+     >
       {gateways.isLoading && <Spinner />}
       {dic.payment.paymentInfo.confirmPayment}
      </Button>

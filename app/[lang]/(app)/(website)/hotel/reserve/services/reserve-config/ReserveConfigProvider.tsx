@@ -46,6 +46,7 @@ import { Button } from '@/components/ui/button';
 import {
  type LockReserveProps,
  type LockRoomInfo,
+ type GateWay,
  getLockInfoApi,
  getGatewaysApi,
  lockReserve,
@@ -74,6 +75,7 @@ export default function ReserveConfigProvider({
  const [reserveTrackingCode, setReserveTrackingCode] = useState<string | null>(
   trackingCodeQuery || null,
  );
+ const [selectedGateway, setSelectedGateway] = useState<GateWay | null>(null);
  //
  const router = useRouter();
  const { locale } = useBaseConfig();
@@ -172,6 +174,7 @@ export default function ReserveConfigProvider({
   isSuccess: gatewaysIsSuccess,
   isError: gatewaysIsError,
  } = useQuery({
+  staleTime: 'static',
   enabled: !!hotelInfo && activeReserveStep === 'payment' && !!lockInfo,
   queryKey: [getGatewaysApi, hotelInfo?.hotelID.toString()],
   async queryFn({ signal }) {
@@ -370,6 +373,8 @@ export default function ReserveConfigProvider({
    isLoading: gatewaysIsLoading,
    isSuccess: gatewaysIsSuccess,
    isError: gatewaysIsError,
+   selectedGateway,
+   setSelectedGateway,
   },
   rooms: {
    guestInfo,

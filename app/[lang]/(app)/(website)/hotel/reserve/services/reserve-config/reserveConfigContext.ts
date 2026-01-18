@@ -44,6 +44,8 @@ interface ReserveConfig {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
+  selectedGateway: GateWay | null;
+  setSelectedGateway: (prop: GateWay | null) => unknown;
  };
  confirmReserveIsPending: boolean;
  onCancelReserve: () => unknown;
