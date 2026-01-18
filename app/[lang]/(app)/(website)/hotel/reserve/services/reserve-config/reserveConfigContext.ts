@@ -4,7 +4,7 @@ import {
  type HotelInfo,
  type RoomInventory,
 } from '../../../services/hotelApiActions';
-import { type LocalReserveInfo } from '../../../find-hotel/[hotelID]/utils/localReserveInfoManager';
+import { type LockInfoResult } from '../../../services/reserveApiActions';
 import { type BookingInvoiceInfo } from '../../utils/bookingInvoiceInfo';
 import { type RoomsPickerActions } from '../../utils/ReserveRoomsPickerReducer';
 import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
@@ -26,6 +26,12 @@ interface ReserveConfig {
  };
  hotelInfo: {
   data?: HotelInfo;
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+ };
+ lockInfo: {
+  data?: LockInfoResult;
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;

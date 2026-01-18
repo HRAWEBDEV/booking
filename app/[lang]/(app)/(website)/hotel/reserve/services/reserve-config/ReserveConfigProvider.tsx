@@ -8,6 +8,7 @@ import {
 import {
  type LocalReserveInfo,
  getLocalReserveInfo,
+ clearLocalReserveInfo,
 } from '../../../find-hotel/[hotelID]/utils/localReserveInfoManager';
 import { getSetupProviderCredentials } from '../../../../utils/getSetupProviderCredentials';
 import { useQuery } from '@tanstack/react-query';
@@ -194,7 +195,12 @@ export default function ReserveConfigProvider({
   },
  });
  // lock info
- const { data: lockInfo } = useQuery({
+ const {
+  data: lockInfo,
+  isLoading: lockInfoIsLoading,
+  isSuccess: lockInfoIsSuccess,
+  isError: lockInfoIsError,
+ } = useQuery({
   staleTime: 'static',
   gcTime: 0,
   enabled: !!reserveTrackingCode,
@@ -283,6 +289,7 @@ export default function ReserveConfigProvider({
     if (res.data.trackingCode) {
      setActiveReserveStep('payment');
      setReserveTrackingCode(res.data.trackingCode);
+     clearLocalReserveInfo();
      router.replace(
       `/${locale}/hotel/reserve?${trackingCodeQueryName}=${res.data.trackingCode}`,
      );
@@ -326,6 +333,12 @@ export default function ReserveConfigProvider({
    isLoading: hotelInfoIsLoading,
    isSuccess: hotelInfoIsSuccess,
    isError: hotelInfoIsError,
+  },
+  lockInfo: {
+   data: lockInfo,
+   isLoading: lockInfoIsLoading,
+   isSuccess: lockInfoIsSuccess,
+   isError: lockInfoIsError,
   },
   rooms: {
    guestInfo,
