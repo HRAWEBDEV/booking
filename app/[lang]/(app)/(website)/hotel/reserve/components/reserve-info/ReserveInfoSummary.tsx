@@ -15,10 +15,12 @@ export default function ReserveInfoSummary({
  const numberFormatter = useCurrencyFormatter();
  const {
   hotelInfo,
-  reserveInfo,
+  fromDate,
+  toDate,
   bookingInvoiceInfo,
   onSubmitBookingFormInfo,
   onCancelReserve,
+  confirmReserveIsPending,
   rooms: { storeRooms, isLoading },
  } = useReserveConfig();
 
@@ -42,9 +44,11 @@ export default function ReserveInfoSummary({
          {dic.reserveInfo.reserveSummary.arrivalDate}
         </p>
         <p className='font-medium text-sm'>
-         {new Date(reserveInfo.fromDate).toLocaleDateString(locale, {
-          dateStyle: 'full',
-         })}
+         {fromDate
+          ? new Date(fromDate).toLocaleDateString(locale, {
+             dateStyle: 'full',
+            })
+          : ''}
         </p>
         <p className='text-neutral-600 dark:text-neutral-400'>
          {hotelInfo.data?.checkin}
@@ -58,9 +62,11 @@ export default function ReserveInfoSummary({
          {dic.reserveInfo.reserveSummary.departureDate}
         </p>
         <p className='font-medium text-sm'>
-         {new Date(reserveInfo.toDate).toLocaleDateString(locale, {
-          dateStyle: 'full',
-         })}
+         {toDate
+          ? new Date(toDate).toLocaleDateString(locale, {
+             dateStyle: 'full',
+            })
+          : ''}
         </p>
         <p className='text-neutral-600 dark:text-neutral-400'>
          {hotelInfo.data?.checkout}
@@ -113,20 +119,24 @@ export default function ReserveInfoSummary({
        variant='outline'
        size='lg'
        type='button'
-       disabled={isLoading || hotelInfo.isLoading}
+       disabled={isLoading || hotelInfo.isLoading || confirmReserveIsPending}
        onClick={onCancelReserve}
       >
-       {(isLoading || hotelInfo.isLoading) && <Spinner />}
+       {(isLoading || hotelInfo.isLoading || confirmReserveIsPending) && (
+        <Spinner />
+       )}
        {dic.reserveInfo.reserveForm.cancel}
       </Button>
       <Button
        className='text-base'
        variant='secondary'
        size='lg'
-       disabled={isLoading || hotelInfo.isLoading}
+       disabled={isLoading || hotelInfo.isLoading || confirmReserveIsPending}
        onClick={onSubmitBookingFormInfo}
       >
-       {(isLoading || hotelInfo.isLoading) && <Spinner />}
+       {(isLoading || hotelInfo.isLoading || confirmReserveIsPending) && (
+        <Spinner />
+       )}
        {dic.reserveInfo.reserveForm.confirm}
       </Button>
      </div>

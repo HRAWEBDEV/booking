@@ -11,7 +11,8 @@ import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
 import { type ReserveStep } from '../../utils/reserveSteps';
 
 interface ReserveConfig {
- reserveInfo: LocalReserveInfo;
+ fromDate?: string;
+ toDate?: string;
  bookingInvoiceInfo: BookingInvoiceInfo;
  activeReserveStep: ReserveStep;
  rooms: {
@@ -29,6 +30,7 @@ interface ReserveConfig {
   isSuccess: boolean;
   isError: boolean;
  };
+ confirmReserveIsPending: boolean;
  onCancelReserve: () => unknown;
  onSubmitBookingFormInfo: () => unknown;
 }

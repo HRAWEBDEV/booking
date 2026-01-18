@@ -27,7 +27,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { reserveRoomsPickerReducer } from '../../utils/ReserveRoomsPickerReducer';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import {
  fromDateQueryName,
@@ -45,10 +45,15 @@ import { Button } from '@/components/ui/button';
 import {
  type LockReserveProps,
  type LockRoomInfo,
+ getLockInfoApi,
  lockReserve,
+ getLockInfo,
 } from '../../../services/reserveApiActions';
 import { useMutation } from '@tanstack/react-query';
-import { type ReserveStep } from '../../utils/reserveSteps';
+import {
+ type ReserveStep,
+ trackingCodeQueryName,
+} from '../../utils/reserveSteps';
 import { AxiosError } from 'axios';
 
 export default function ReserveConfigProvider({
@@ -58,10 +63,13 @@ export default function ReserveConfigProvider({
  dic: ReserveHotelDictionary;
  children: ReactNode;
 }) {
- const [activeReserveStep, setActiveReserveStep] =
-  useState<ReserveStep>('reserve');
+ const searchParams = useSearchParams();
+ const trackingCodeQuery = searchParams.get(trackingCodeQueryName);
+ const [activeReserveStep, setActiveReserveStep] = useState<ReserveStep>(
+  trackingCodeQuery ? 'payment' : 'reserve',
+ );
  const [reserveTrackingCode, setReserveTrackingCode] = useState<string | null>(
-  null,
+  trackingCodeQuery || null,
  );
  //
  const router = useRouter();
@@ -143,7 +151,8 @@ export default function ReserveConfigProvider({
   enabled:
    !!localeReserveInfo &&
    !!localeReserveInfo.rooms.length &&
-   !!localeReserveInfo.hotelID,
+   !!localeReserveInfo.hotelID &&
+   !reserveTrackingCode,
   gcTime: 0,
   staleTime: 'static',
   queryKey: [
@@ -184,84 +193,102 @@ export default function ReserveConfigProvider({
    return res.data;
   },
  });
-
- const bookingInvoiceInfo = getBookingInvoiceInfo({
-  rooms: rooms || [],
+ // lock info
+ const { data: lockInfo } = useQuery({
+  staleTime: 'static',
+  gcTime: 0,
+  enabled: !!reserveTrackingCode,
+  queryKey: [getLockInfoApi, reserveTrackingCode],
+  async queryFn({ signal }) {
+   const res = await getLockInfo({
+    signal,
+    trackingCode: reserveTrackingCode!,
+   });
+   return res.data;
+  },
  });
 
- const { mutate: confirmReserveMutate } = useMutation({
-  mutationFn({
-   guestInfo,
-   email,
-   firstName,
-   lastName,
-   nationalCode,
-   phoneNumber,
-  }: BookingInfoSchema) {
-   const lockRoomInfo: LockRoomInfo[] = [];
-   rooms!.forEach((room, i) => {
-    if (guestInfo[i].removed) return;
-    const {
-     firstName: guestFirstName,
-     lastName: guestLastName,
-     nationalCode: guestNationalCode,
-     type,
-     gender,
-     hasEarlyCheckin,
-     hasLateCheckout,
-     saveAsReserveInfo,
-    } = guestInfo[i];
-    const confirmGuestFirstName = saveAsReserveInfo
-     ? firstName
-     : guestFirstName;
-    const confirmGuestLastName = saveAsReserveInfo ? lastName : guestLastName;
-    const confirmGuestNationalCode = saveAsReserveInfo
-     ? nationalCode
-     : guestNationalCode;
-    const isForeigner = type === 'foreign';
-    lockRoomInfo.push({
-     roomTypeID: room.roomTypeID,
-     adult: room.accommodationTypePrice.beds,
-     isForeigner,
-     earlyCheckin: hasEarlyCheckin,
-     lateCheckout: hasLateCheckout,
-     guestLockModel: {
-      firstName: confirmGuestFirstName,
-      lastName: confirmGuestLastName,
-      genderID: gender === 'male' ? 1 : 2,
-      nationalCode: !isForeigner ? confirmGuestNationalCode : null,
-      passport: isForeigner ? confirmGuestNationalCode : null,
-     },
-    });
-   });
-   const lockReserveProps: LockReserveProps = {
-    hotelID: hotelInfo!.hotelID.toString(),
-    providerID,
-    channelID,
-    arzID,
-    email: email || null,
+ const bookingInvoiceInfo = getBookingInvoiceInfo({
+  rooms: storeRooms || [],
+ });
+
+ const { mutate: confirmReserveMutate, isPending: confirmReserveIsPending } =
+  useMutation({
+   mutationFn({
+    guestInfo,
+    email,
     firstName,
     lastName,
     nationalCode,
-    contactNo: phoneNumber,
-    ratePlanID:
-     rooms![0].accommodationTypePrice.accommodationRatePlanModel.ratePlanID,
-    rateTypeID:
-     rooms![0].accommodationTypePrice.accommodationRatePlanModel.rateTypeID,
-    arrivelDate: localeReserveInfo!.fromDate,
-    depatureDate: localeReserveInfo!.toDate,
-    lockInfo: lockRoomInfo,
-   };
-   return lockReserve(lockReserveProps);
-  },
-  onError(err: AxiosError<string>) {},
-  onSuccess(res) {
-   if (res.data.trackingCode) {
-    setActiveReserveStep('payment');
-    setReserveTrackingCode(res.data.trackingCode);
-   }
-  },
- });
+    phoneNumber,
+   }: BookingInfoSchema) {
+    const lockRoomInfo: LockRoomInfo[] = [];
+    rooms!.forEach((room, i) => {
+     if (guestInfo[i].removed) return;
+     const {
+      firstName: guestFirstName,
+      lastName: guestLastName,
+      nationalCode: guestNationalCode,
+      type,
+      gender,
+      hasEarlyCheckin,
+      hasLateCheckout,
+      saveAsReserveInfo,
+     } = guestInfo[i];
+     const confirmGuestFirstName = saveAsReserveInfo
+      ? firstName
+      : guestFirstName;
+     const confirmGuestLastName = saveAsReserveInfo ? lastName : guestLastName;
+     const confirmGuestNationalCode = saveAsReserveInfo
+      ? nationalCode
+      : guestNationalCode;
+     const isForeigner = type === 'foreign';
+     lockRoomInfo.push({
+      roomTypeID: room.roomTypeID,
+      adult: room.accommodationTypePrice.beds,
+      isForeigner,
+      earlyCheckin: hasEarlyCheckin,
+      lateCheckout: hasLateCheckout,
+      guestLockModel: {
+       firstName: confirmGuestFirstName,
+       lastName: confirmGuestLastName,
+       genderID: gender === 'male' ? 1 : 2,
+       nationalCode: !isForeigner ? confirmGuestNationalCode : null,
+       passport: isForeigner ? confirmGuestNationalCode : null,
+      },
+     });
+    });
+    const lockReserveProps: LockReserveProps = {
+     hotelID: hotelInfo!.hotelID.toString(),
+     providerID,
+     channelID,
+     arzID,
+     email: email || null,
+     firstName,
+     lastName,
+     nationalCode,
+     contactNo: phoneNumber,
+     ratePlanID:
+      rooms![0].accommodationTypePrice.accommodationRatePlanModel.ratePlanID,
+     rateTypeID:
+      rooms![0].accommodationTypePrice.accommodationRatePlanModel.rateTypeID,
+     arrivelDate: localeReserveInfo!.fromDate,
+     depatureDate: localeReserveInfo!.toDate,
+     lockInfo: lockRoomInfo,
+    };
+    return lockReserve(lockReserveProps);
+   },
+   onError(err: AxiosError<string>) {},
+   onSuccess(res) {
+    if (res.data.trackingCode) {
+     setActiveReserveStep('payment');
+     setReserveTrackingCode(res.data.trackingCode);
+     router.replace(
+      `/${locale}/hotel/reserve?${trackingCodeQueryName}=${res.data.trackingCode}`,
+     );
+    }
+   },
+  });
 
  function handleSubmitBookingFormInfo() {
   bookingInfoForm.handleSubmit(
@@ -291,7 +318,8 @@ export default function ReserveConfigProvider({
 
  const ctx: ReserveConfig = {
   activeReserveStep,
-  reserveInfo: localeReserveInfo!,
+  fromDate: localeReserveInfo?.fromDate,
+  toDate: localeReserveInfo?.toDate,
   bookingInvoiceInfo,
   hotelInfo: {
    data: hotelInfo,
@@ -303,16 +331,16 @@ export default function ReserveConfigProvider({
    guestInfo,
    data: rooms,
    storeRooms,
-   storeRoomsDispatcher: storeRoomsDispatch,
    isLoading: roomsIsLoading,
    isSuccess: roomsIsSuccess,
    isError: roomsIsError,
+   storeRoomsDispatcher: storeRoomsDispatch,
   },
+  confirmReserveIsPending,
   onCancelReserve: handleCancelReserve,
   onSubmitBookingFormInfo: handleSubmitBookingFormInfo,
  };
  // handle error here
- if (!localeReserveInfo) return <p>error</p>;
  return (
   <reserveConfigContext.Provider value={ctx}>
    <FormProvider {...bookingInfoForm}>{children}</FormProvider>

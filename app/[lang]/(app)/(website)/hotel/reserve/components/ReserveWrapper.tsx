@@ -3,6 +3,7 @@ import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/
 import ReserveInfoWrapper from './reserve-info/ReserveInfoWrapper';
 import { useReserveConfig } from '../services/reserve-config/reserveConfigContext';
 import PaymentWrapper from './payment/PaymentWrapper';
+import VoucherWrapper from './voucher/VoucherWrapper';
 
 export default function ReserveWrapper({
  dic,
@@ -15,6 +16,9 @@ export default function ReserveWrapper({
  switch (activeReserveStep) {
   case 'payment':
    activeStep = <PaymentWrapper dic={dic} />;
+   break;
+  case 'book':
+   activeStep = <VoucherWrapper dic={dic} />;
    break;
  }
 

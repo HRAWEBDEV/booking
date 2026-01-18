@@ -21,7 +21,6 @@ export default function ReserveInfoForm({
  } = useFormContext<BookingInfoSchema>();
 
  const {
-  reserveInfo,
   hotelInfo: { isLoading: hotelInfoIsLoading },
   rooms: { data, isLoading },
   onSubmitBookingFormInfo,
@@ -87,11 +86,9 @@ export default function ReserveInfoForm({
      </h3>
      {isLoading || hotelInfoIsLoading ? (
       <>
-       {Array.from({ length: reserveInfo.rooms.length }, (_, i) => i).map(
-        (i) => (
-         <Skeleton key={i} className='h-60 mb-4' />
-        ),
-       )}
+       {Array.from({ length: 2 }, (_, i) => i).map((i) => (
+        <Skeleton key={i} className='h-60 mb-4' />
+       ))}
       </>
      ) : (
       data?.map((room, i) => {
