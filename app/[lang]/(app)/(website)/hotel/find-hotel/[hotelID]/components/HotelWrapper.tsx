@@ -53,6 +53,9 @@ export default function HotelWrapper({
     <div className='grid grid-cols-1'>
      <HotelGallery dic={dic} hotelImages={hotelImages} />
      <HotelMenuBar dic={dic} />
+     <div className='mb-4 block md:hidden'>
+      <HotelLocation dic={dic} />
+     </div>
      <div className='block md:hidden'>
       <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
      </div>
