@@ -163,16 +163,18 @@ export default async function HotelPage(
   });
 
  return (
-  <HotelWrapper
-   roomInventoriesPromise={hotelInventoriesPromise}
-   hotelInfo={hotelInfoPromise}
-   hotelFacilityPromise={hotelFacilityPromise}
-   roomFacilityPromise={roomFacilityPromise}
-   hotelImages={hotelImages}
-   fromDate={fromDateQuery as string}
-   toDate={toDateQuery as string}
-   dic={dic}
-   hotelID={hotelID as string}
-  />
+  <>
+   <HotelWrapper
+    roomInventoriesPromise={hotelInventoriesPromise}
+    hotelInfo={hotelInfoPromise}
+    hotelFacilityPromise={hotelFacilityPromise}
+    roomFacilityPromise={roomFacilityPromise}
+    hotelImages={hotelImages}
+    fromDate={fromDateQuery as string}
+    toDate={toDateQuery as string}
+    dic={dic}
+    hotelID={hotelID as string}
+   />
+  </>
  );
 }

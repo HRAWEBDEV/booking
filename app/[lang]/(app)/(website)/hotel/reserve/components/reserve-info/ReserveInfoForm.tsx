@@ -96,7 +96,7 @@ export default function ReserveInfoForm({
       })
      )}
     </div>
-    <div className='flex justify-end gap-4 lg:opacity-0 mb-4 lg:h-0 lg:mb-0'>
+    <div className='flex justify-end gap-4 lg:opacity-0 mb-4 lg:h-0 lg:mb-0 overflow-hidden'>
      <Button
       className='text-base w-40'
       variant='outline'
