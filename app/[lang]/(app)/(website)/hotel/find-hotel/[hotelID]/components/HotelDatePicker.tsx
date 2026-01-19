@@ -36,6 +36,7 @@ import {
  SelectGroup,
  SelectValue,
 } from '@/components/ui/select';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function HotelDatePicker({
  dic,
@@ -46,7 +47,7 @@ export default function HotelDatePicker({
  const numberFormatter = useCurrencyFormatter();
  const {
   ratePlanTypes,
-  rooms: { data, selectedRooms },
+  rooms: { data, selectedRooms, isLoading },
   reserve: { onChangeReserveDate, onSubmitReserveInfo },
  } = useHotelConfig();
  const { locale, localeInfo } = useBaseConfig();
@@ -198,6 +199,7 @@ export default function HotelDatePicker({
   <Button
    type='submit'
    className='w-full'
+   disabled={isLoading}
    onClick={(e) => {
     e.preventDefault();
     filtersUserForm.handleSubmit(
@@ -214,6 +216,7 @@ export default function HotelDatePicker({
     )();
    }}
   >
+   {isLoading && <Spinner />}
    {dic.hotelDatePicker.search}
   </Button>
  );

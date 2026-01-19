@@ -2,6 +2,7 @@
 import { Fragment, use, useEffect, useState } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import HotelRoom from './HotelRoom';
+import HotelRoomsLoading from './HotelRoomsLoading';
 import {
  type RoomInventory,
  getRoomDailyPriceApi,
@@ -41,7 +42,7 @@ export default function HotelRooms({
  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
  const {
   hotelID,
-  rooms: { selectedRooms, onUpdateRoomInventory },
+  rooms: { selectedRooms, isLoading, onUpdateRoomInventory, setIsLoading },
   reserve: { fromDateValue, toDateValue },
  } = useHotelConfig();
 
@@ -101,6 +102,12 @@ export default function HotelRooms({
   setDailyPriceDate(dateFns.startOfMonth(fromDateValue));
  }, [fromDateValue, dateFns]);
 
+ useEffect(() => {
+  roomInventoriesPromise.then(() => {
+   setIsLoading(false);
+  });
+ }, [roomInventoriesPromise, setIsLoading]);
+
  return (
   <section id='rooms' className='scroll-mt-16 mb-4'>
    {!!selectedRooms.length && (
@@ -113,7 +120,9 @@ export default function HotelRooms({
     </div>
    )}
    <div className='grid gap-4'>
-    {data && !data.length ? (
+    {isLoading ? (
+     <HotelRoomsLoading />
+    ) : data && !data.length ? (
      <div className='min-h-56 p-4 border rounded-md border-primary bg-primary/10 flex flex-col gap-6 items-center justify-center text-center'>
       <IoSearch className='size-16 text-primary/50' />
       <div>

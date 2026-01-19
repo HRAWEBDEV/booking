@@ -7,6 +7,7 @@ import HotelMenuBar from './HotelMenuBar';
 import HotelDescription from './hotel-description/HotelDescription';
 import HotelFacilities from './hotel-facilities/HotelFacilities';
 import HotelRooms from './hotel-rooms/HotelRooms';
+import HotelRoomsLoading from './hotel-rooms/HotelRoomsLoading';
 import HotelCancelPolicies from './hotel-cancel-policies/HotelCancelPolicies';
 import {
  type HotelInfo as HotelInfoData,
@@ -61,7 +62,7 @@ export default function HotelWrapper({
        roomFacilityPromise={roomFacilityPromise}
       />
      </Suspense>
-     <Suspense fallback={<Skeleton className='h-36 mb-4' />}>
+     <Suspense fallback={<HotelRoomsLoading />}>
       <HotelRooms dic={dic} roomInventoriesPromise={roomInventoriesPromise} />
      </Suspense>
      <HotelDescription dic={dic} hotelInfo={hotelInfo} />

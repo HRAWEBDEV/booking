@@ -58,6 +58,7 @@ export default function HotelConfigProvider({
   ? (searchParams.get(ratePlanTypeQueryName) as string)
   : '';
 
+ const [isLoadingRooms, setIsLoadingRooms] = useState(false);
  const [rooms, setRooms] = useState<RoomInventory[]>([]);
  const [selectedRooms, selectedRoomsDispatch] = useReducer(
   hotelRoomsPickerReducer,
@@ -122,6 +123,7 @@ export default function HotelConfigProvider({
   selectedRoomsDispatch({
    type: 'reset',
   });
+  setIsLoadingRooms(true);
   router.push(
    `/${locale}/hotel/find-hotel/${hotelID}?${searchParams.toString()}#rooms`,
   );
@@ -151,6 +153,8 @@ export default function HotelConfigProvider({
    data: rooms,
    roomTypeCapacity,
    selectedRooms,
+   isLoading: isLoadingRooms,
+   setIsLoading: setIsLoadingRooms,
    onUpdateRoomInventory: handleUpdateRoomInventory,
    selectedRoomsDispatch,
   },

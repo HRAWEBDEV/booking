@@ -23,6 +23,8 @@ interface HotelConfig {
   data: RoomInventory[];
   selectedRooms: SelectedRoom[];
   roomTypeCapacity: RoomTypeCapacityWatcher;
+  isLoading: boolean;
+  setIsLoading: (newState: boolean) => unknown;
   onUpdateRoomInventory: (RoomInventory: RoomInventory[]) => unknown;
   selectedRoomsDispatch: ActionDispatch<[RoomsPickerActions]>;
  };
