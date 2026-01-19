@@ -30,6 +30,9 @@
   "results": "نتایج",
   "all": "همه"
  },
+ "hotelLocaltionMap": {
+  "unkownLocation": "موقعیت نامعلوم"
+ },
  "hotelFacilities": {
   "title": "امکانات",
   "noItemFound": "امکاناتی یافت نشد"

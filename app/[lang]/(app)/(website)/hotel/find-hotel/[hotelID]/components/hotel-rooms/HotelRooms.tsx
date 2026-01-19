@@ -124,7 +124,7 @@ export default function HotelRooms({
      <HotelRoomsLoading />
     ) : data && !data.length ? (
      <div className='min-h-56 p-4 border rounded-md border-primary bg-primary/10 flex flex-col gap-6 items-center justify-center text-center'>
-      <IoSearch className='size-16 text-primary/50' />
+      <IoSearch className='size-16 text-primary/60' />
       <div>
        <p className='font-medium text-primary mb-2'>
         {dic.hotelDatePicker.from}{' '}
@@ -137,7 +137,7 @@ export default function HotelRooms({
         })}{' '}
         {dic.hotelRooms.noRoomsFound}
        </p>
-       <p className='text-sm font-medium text-primary'>
+       <p className='font-medium text-primary'>
         {dic.hotelRooms.changeReserveDateOrRatePlan}
        </p>
       </div>
