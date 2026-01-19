@@ -117,6 +117,7 @@ export default async function HotelPage(
   {
    method: 'GET',
    headers: requestCredentialHeader,
+   cache: 'no-cache',
   },
  )
   .then(async (res) => {

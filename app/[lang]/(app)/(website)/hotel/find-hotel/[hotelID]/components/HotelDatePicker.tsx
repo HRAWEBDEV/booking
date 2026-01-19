@@ -237,28 +237,24 @@ export default function HotelDatePicker({
         className='gap-2'
         data-invalid={!!filtersUserForm.formState.errors.fromDate}
        >
-        <Label htmlFor='fromDate' className='px-1'>
-         {dic.hotelDatePicker.fromDate}
-        </Label>
-        <DialogTrigger asChild>
-         <div className='md:hidden'>{renderFromDateInput}</div>
+        <Label className='px-1'>{dic.hotelDatePicker.fromDate}</Label>
+        <DialogTrigger asChild className='md:hidden'>
+         <div>{renderFromDateInput}</div>
         </DialogTrigger>
-        <PopoverTrigger asChild>
-         <div className='hidden md:block'>{renderFromDateInput}</div>
+        <PopoverTrigger asChild className='hidden md:block'>
+         <div>{renderFromDateInput}</div>
         </PopoverTrigger>
        </Field>
        <Field
         className='gap-2'
         data-invalid={!!filtersUserForm.formState.errors.toDate}
        >
-        <Label htmlFor='toDate' className='px-1'>
-         {dic.hotelDatePicker.toDate}
-        </Label>
-        <DialogTrigger asChild>
-         <div className='md:hidden'>{renderToDateInput}</div>
+        <Label className='px-1'>{dic.hotelDatePicker.toDate}</Label>
+        <DialogTrigger asChild className='md:hidden'>
+         <div>{renderToDateInput}</div>
         </DialogTrigger>
-        <PopoverTrigger asChild>
-         <div className='hidden md:block'>{renderToDateInput}</div>
+        <PopoverTrigger asChild className='hidden md:block'>
+         <div>{renderToDateInput}</div>
         </PopoverTrigger>
         <PopoverContent className='w-auto overflow-hidden p-0' align='end'>
          {renderCalendar}
