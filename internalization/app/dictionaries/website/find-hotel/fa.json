@@ -48,7 +48,17 @@
    "لابی",
    "ترانسفر برگشت با هزینه"
   ],
-  "discountBadge": "۱۰٪ تخفیف"
+  "discountBadge": "۱۰٪ تخفیف",
+  "catPrices": "مشاهده قیمت‌ها",
+  "fastReserve": "رزرو سریع",
+  "resserve": "رزرو",
+  "FastReserveRoomsMocData": [
+   {
+    "title": "دو تخته دوبل",
+    "roomPrice": "21,000,000 تومان",
+    "residentUnit": "شبانه"
+   }
+  ]
  },
  "breadCrumb": {
   "home": "صفحه اصلی",

@@ -48,7 +48,17 @@
    "Lobby",
    "Transfer with cost"
   ],
-  "discountBadge": "10% Discount"
+  "discountBadge": "10% Discount",
+  "catPrices": "See All Prices",
+  "fastReserve": "Fast Booking",
+  "resserve": "Book",
+  "FastReserveRoomsMocData": [
+   {
+    "title": "Double Bed Suite",
+    "roomPrice": "21,000,000 Toman",
+    "residentUnit": "Night"
+   }
+  ]
  },
  "searchInputFilter": {
   "placeholder": "Hotel Name Search"
