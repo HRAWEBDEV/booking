@@ -37,12 +37,7 @@ function createBookingInfoSchema({ dic }: { dic: ReserveHotelDictionary }) {
      saveAsReserveInfo: z.boolean(),
      firstName: z.string(),
      lastName: z.string(),
-     nationalCode: z
-      .string()
-      .refine(
-       isValidIranNationalCode,
-       dic.reserveInfo.reserveForm.invalidNationalCode,
-      ),
+     nationalCode: z.string(),
      hasEarlyCheckin: z.boolean(),
      hasLateCheckout: z.boolean(),
      type: z.enum(['inner', 'foreign']),

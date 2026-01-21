@@ -249,9 +249,9 @@ export default function ReserveInfoRoomForm({
         {...register(`guestInfo.${i}.nationalCode`)}
        />
       </InputGroup>
-      {!!errors.nationalCode && (
+      {!!errors.guestInfo?.[i]?.nationalCode && (
        <FieldError>
-        <p>{errors.nationalCode.message}</p>
+        <p>{errors.guestInfo?.[i]?.nationalCode.message}</p>
        </FieldError>
       )}
      </Field>

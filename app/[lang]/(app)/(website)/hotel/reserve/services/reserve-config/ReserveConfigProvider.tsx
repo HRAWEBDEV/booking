@@ -60,6 +60,7 @@ import {
  type ReserveStep,
  trackingCodeQueryName,
 } from '../../utils/reserveSteps';
+import NotFound from '../../../../components/NotFound';
 
 export default function ReserveConfigProvider({
  children,
@@ -459,7 +460,13 @@ export default function ReserveConfigProvider({
   };
  }, []);
 
- // handle error here
+ if (!hotelInfo)
+  return (
+   <div className='min-h-[calc(60svh-var(--website-header-height))] flex flex-col justify-center py-8'>
+    <NotFound />
+   </div>
+  );
+
  return (
   <reserveConfigContext.Provider value={ctx}>
    <FormProvider {...bookingInfoForm}>{children}</FormProvider>
