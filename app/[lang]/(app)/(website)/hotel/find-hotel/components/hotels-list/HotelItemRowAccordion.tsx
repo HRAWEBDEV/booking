@@ -21,7 +21,7 @@ export default function HotelItemRowAccordion({
   initial: 0,
 
   rtl: localeInfo.contentDirection === 'rtl',
-  slides: { perView: 'auto', spacing: 16 },
+  slides: { perView: 'auto', spacing: 8 },
  });
  const { isRowView } = useFindHotel();
  useEffect(() => {
@@ -36,19 +36,19 @@ export default function HotelItemRowAccordion({
    className='w-full min-w-0 data-[view="grid"]:hidden overflow-x-hidden'
   >
    <AccordionItem value='item-1' className='w-full min-w-0 '>
-    <AccordionTrigger className='cursor-pointer bg-primary/20 text-primary rounded-t-none px-4 flex items-center justify-center data-[state=open]:rounded-b-none transition-all [&>svg]:text-primary hover:no-underline'>
+    <AccordionTrigger className='cursor-pointer bg-neutral-100 text-neutral-700 rounded-t-none px-4 py-3 flex items-center justify-center data-[state=open]:rounded-b-none transition-all [&>svg]:text-neutral-700 hover:no-underline border border-input border-t-0'>
      {dic.hotelCard.fastReserve}
     </AccordionTrigger>
 
-    <AccordionContent className='w-full min-w-0 bg-primary/10 data-[state=open]:rounded-t-none rounded-b-xl'>
-     <div className='w-full min-w-0 overflow-x-auto pt-4 px-4 active:cursor-grabbing'>
+    <AccordionContent className='w-full min-w-0 bg-neutral-100 data-[state=open]:rounded-t-none rounded-b-xl border border-input border-t-0 py-2'>
+     <div className='w-full min-w-0 overflow-x-auto  px-4 active:cursor-grabbing'>
       <div className='keen-slider inline-flex w-max' ref={sliderRef}>
        {Array.from({ length: 12 }).map((_, i) => (
         <div
          key={i}
-         className='keen-slider__slide cursor-grab active:cursor-grabbing shrink-0 max-w-[260px] h-[140px] rounded-xl bg-muted p-4 flex flex-col gap-4 justify-center items-start'
+         className='keen-slider__slide cursor-grab active:cursor-grabbing shrink-0 max-w-[200px] rounded-lg border bg-background  p-2 flex flex-col gap-2 justify-around items-start'
         >
-         <h6 className='font-medium text-lg'>
+         <h6 className='font-medium text-base'>
           {dic.hotelCard.FastReserveRoomsMocData[0].title}
          </h6>
          <div className='text-md font-medium'>
@@ -57,7 +57,11 @@ export default function HotelItemRowAccordion({
            / {dic.hotelCard.FastReserveRoomsMocData[0].residentUnit}
           </span>
          </div>
-         <Button className='w-full cursor-pointer bg-secondary/20 text-secondary border-secondary hover:bg-secondary/60 hover:text-secondary'>
+         <Button
+          variant={'outline'}
+          size={'sm'}
+          className='w-full cursor-pointer rounded-sm border-primary text-primary'
+         >
           {dic.hotelCard.resserve}
          </Button>
         </div>

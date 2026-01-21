@@ -24,7 +24,7 @@ export default function HotelFilters({ dic }: { dic: FindHotelDictionary }) {
   <>
    <div
     ref={containerRef}
-    className='lg:flex flex-col hidden max-w-[280px] w-full self-start top-4 rounded-xl bg-card flex-1 border border-gray-300 dark:border-gray-600'
+    className='lg:flex flex-col hidden max-w-[280px] w-full self-start top-4 rounded-lg bg-card flex-1 border border-gray-300 dark:border-gray-600'
    >
     <FilterContent
      dic={dic}

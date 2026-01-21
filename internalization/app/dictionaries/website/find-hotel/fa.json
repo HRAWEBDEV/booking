@@ -37,6 +37,7 @@
  "hotelCard": {
   "mockTitle": "هتل داریوش کیش",
   "mockBasePrice": "21,000,000 تومان",
+  "mockBaseDiscountPrice": "18,900,00 تومان",
   "residentUnit": "شبانه",
   "mockRating": "5",
   "fromText": "از",

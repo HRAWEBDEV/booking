@@ -40,19 +40,19 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
   <div className='flex flex-col w-full max-w-full min-w-0'>
    <Card
     data-view={isRowView ? 'row' : 'grid'}
-    className={`group w-full shadow-none py-4 data-[view='grid']:py-0 data-[view='row']:py-0 gap-4 flex! data-[view='row']:flex-row data-[view='grid']:flex-col data-[view='row']:items-center data-[view="row"]:rounded-b-none`}
+    className={`group w-full shadow-none py-4 data-[view='grid']:py-0 data-[view='row']:py-0 gap-4 flex! data-[view='row']:flex-row data-[view='grid']:flex-col data-[view='row']:items-center data-[view="row"]:rounded-b-none rounded-lg `}
    >
     <CardHeader className='px-0! gap-0 relative shrink-0 group-data-[view="row"]:basis-64'>
      <div
       ref={sliderRef}
-      className='keen-slider relative overflow-hidden rounded-xl group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none group-data-[view="row"]:rounded-tl-none group-data-[view="row"]:rounded-r-xl'
+      className='keen-slider relative overflow-hidden rounded-lg group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none group-data-[view="row"]:rounded-tl-none group-data-[view="row"]:rounded-r-lg'
      >
       {Array.from({ length: 2 }, (_, i) => i).map((i) => (
        <div
         key={i}
         className='keen-slider__slide cursor-grab active:cursor-grabbing overflow-hidden'
        >
-        <div className='h-56 mx-auto border border-input rounded-xl group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none group-data-[view="row"]:rounded-tl-none group-data-[view="row"]:rounded-r-xl bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
+        <div className='h-52 mx-auto border border-input rounded-lg group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none group-data-[view="row"]:rounded-tl-none group-data-[view="row"]:rounded-r-lg bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
          <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
         </div>
        </div>
@@ -76,7 +76,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
     </CardHeader>
     <Link
      href={'#'}
-     className='flex group-data-[view="grid"]:flex-col grow h-full min-h-56 group-data-[view="row"]:py-4 group-data-[view="grid"]:pb-4'
+     className='flex group-data-[view="grid"]:flex-col grow h-full min-h-52 group-data-[view="row"]:py-4 group-data-[view="grid"]:pb-4'
     >
      <CardContent className='px-4 flex flex-col gap-4 group-data-[view="row"]:justify-between group-data-[view="row"]:items-start flex-1'>
       <div className='flex flex-col gap-2 justify-between group-data-[view="row"]:h-full'>
@@ -116,23 +116,35 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
        </div>
       </div>
      </CardContent>
-     <CardFooter className='gap-2 flex group-data-[view="row"]:flex-col items-center justify-between px-4 group-data-[view="grid"]:pt-2 group-data-[view="row"]:max-w-60 w-full'>
-      <div className='flex group-data-[view="grid"]:justify-between group-data-[view="row"]:flex-col-reverse group-data-[view="row"]:items-center gap-4 items-center w-full'>
-       <div className='flex gap-1 items-center w-full pr-4'>
-        <span>{dic.hotelCard.fromText}</span>
-        <div className='text-lg font-semibold'>
-         {dic.hotelCard.mockBasePrice}
+     <CardFooter className='flex group-data-[view="row"]:flex-col items-center justify-between px-4 group-data-[view="grid"]:pt-2 group-data-[view="row"]:max-w-60 w-full group-data-[view="row"]:justify-between'>
+      <div className='flex items-center justify-start w-full'>
+       <Badge
+        variant='secondary'
+        className='cursor-pointer text-gray-100 px-1.5 py-1 dark:text-gray-300 text-xs '
+       >
+        {dic.hotelCard.discountBadge}
+       </Badge>
+      </div>
+      <div className='flex group-data-[view="grid"]:justify-between group-data-[view="row"]:flex-col group-data-[view="row"]:items-start group-data-[view="row"]:gap-2 items-center  w-full'>
+       <div className='flex flex-col-reverse items-center w-full gap-2 '>
+        <div className={`text-lg font-semibold `}>
+         {dic.hotelCard.mockBaseDiscountPrice}
          <span className='text-sm text-muted-foreground'>
           / {dic.hotelCard.residentUnit}
          </span>
         </div>
+        <div className='flex relative items-center gap-2'>
+         <div className='flex gap-1 items-center w-full'>
+          <div
+           className={`text-md font-semibold ${
+            dic.hotelCard.mockBasePrice && 'line-through text-destructive'
+           } `}
+          >
+           {dic.hotelCard.mockBasePrice}
+          </div>
+         </div>
+        </div>
        </div>
-       <Badge
-        variant='secondary'
-        className='cursor-pointer text-gray-100 px-2 py-1 dark:text-gray-300 text-xs '
-       >
-        {dic.hotelCard.discountBadge}
-       </Badge>
       </div>
       <Button className='cursor-pointer w-full group-data-[view="grid"]:hidden'>
        {dic.hotelCard.catPrices}
