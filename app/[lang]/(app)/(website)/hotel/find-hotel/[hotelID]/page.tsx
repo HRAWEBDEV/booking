@@ -25,6 +25,8 @@ import { appendApiUri } from '../../../utils/appendApiUri';
 
 const dateFns = supportedDateFns['en'];
 
+const cacheTime = 60 * 10;
+
 export default async function HotelPage(
  props: PageProps<'/[lang]/hotel/find-hotel/[hotelID]'>,
 ) {
@@ -60,12 +62,14 @@ export default async function HotelPage(
  ]);
 
  // hotel info
- // TODO cache this later
  const hotelInfoPromise = await fetch(
   `${appendApiUri(getHotelInfoApi)}?${hotelInfoSearchParams.toString()}`,
   {
    method: 'GET',
    headers: requestCredentialHeader,
+   next: {
+    revalidate: cacheTime,
+   },
   },
  )
   .then(async (res) => {
@@ -80,7 +84,6 @@ export default async function HotelPage(
    throw new Error('hotel info err', err);
   });
  // hotel image
- // TODO cache this later
  const roomInventorySearch = getRoomInventorySearch({
   arzID,
   hotelID,
@@ -96,6 +99,9 @@ export default async function HotelPage(
    {
     method: 'GET',
     headers: requestCredentialHeader,
+    next: {
+     revalidate: cacheTime,
+    },
    },
   )
    .then(async (res) => {
@@ -117,7 +123,6 @@ export default async function HotelPage(
   {
    method: 'GET',
    headers: requestCredentialHeader,
-   cache: 'no-cache',
   },
  )
   .then(async (res) => {
@@ -132,12 +137,14 @@ export default async function HotelPage(
    return null;
   });
  // hotel facility
- // TODO cache this later
  const hotelFacilityPromise = fetch(
   `${appendApiUri(getHotelFacilitiesApi)}?${hotelInfoSearchParams.toString()}`,
   {
    method: 'GET',
    headers: requestCredentialHeader,
+   next: {
+    revalidate: cacheTime,
+   },
   },
  )
   .then((res) => {
@@ -153,6 +160,9 @@ export default async function HotelPage(
   {
    method: 'GET',
    headers: requestCredentialHeader,
+   next: {
+    revalidate: cacheTime,
+   },
   },
  )
   .then((res) => {

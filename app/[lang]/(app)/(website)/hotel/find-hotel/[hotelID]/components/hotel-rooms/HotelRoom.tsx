@@ -21,7 +21,7 @@ import {
 } from '../../utils/hotelRoomsPickerReducer';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '@/components/ui/spinner';
-// import { BiError } from 'react-icons/bi';
+import { FaUserAlt, FaBed } from 'react-icons/fa';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-40 grow-0 relative shrink-0 self-start';
@@ -138,9 +138,14 @@ export default function HotelRoom({
     </div>
     <main className='grow mb-2 lg:mb-0 flex flex-col lg:pe-4'>
      <h3 className='text-lg font-medium mb-2'>{roomType.fName}</h3>
-     <p className='font-medium text-neutral-600 dark:text-neutral-400 mb-4'>
-      {accType.beds} {dic.hotelRooms.person}
-     </p>
+     <div className='flex gap-4 items-center'>
+      <div className='flex gap-2 items-center mb-4 text-neutral-600 dark:text-neutral-400'>
+       <FaUserAlt />
+       <p className='font-medium'>
+        {accType.beds} {dic.hotelRooms.person}
+       </p>
+      </div>
+     </div>
      {!!activeRatePlanTypes.length && (
       <div className='mb-2 lg:mb-0 flex-wrap flex gap-2'>
        {activeRatePlanTypes.map((item) => {

@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode, useReducer, useState } from 'react';
+import { ReactNode, useReducer, useState, useTransition } from 'react';
 import {
  type HotelInfo,
  type RoomInventory,
@@ -42,6 +42,7 @@ export default function HotelConfigProvider({
  toDate: string;
  hotelID: string;
 }) {
+ const [isPending, startTransition] = useTransition();
  const { channelID, providerID } = getSetupProviderCredentials();
  const dateFns = useDateFns();
  const { locale } = useBaseConfig();
@@ -58,7 +59,6 @@ export default function HotelConfigProvider({
   ? (searchParams.get(ratePlanTypeQueryName) as string)
   : '';
 
- const [isLoadingRooms, setIsLoadingRooms] = useState(false);
  const [rooms, setRooms] = useState<RoomInventory[]>([]);
  const [selectedRooms, selectedRoomsDispatch] = useReducer(
   hotelRoomsPickerReducer,
@@ -117,16 +117,17 @@ export default function HotelConfigProvider({
   ratePlan,
  }: HotelDatePickerSchema) {
   const searchParams = new URLSearchParams(location.search);
-  searchParams.set(fromDateQueryName, fromDate!.toISOString());
-  searchParams.set(toDateQueryName, toDate!.toISOString());
-  searchParams.set(ratePlanTypeQueryName, ratePlan === 'all' ? '' : ratePlan);
   selectedRoomsDispatch({
    type: 'reset',
   });
-  setIsLoadingRooms(true);
-  router.push(
-   `/${locale}/hotel/find-hotel/${hotelID}?${searchParams.toString()}#rooms`,
-  );
+  startTransition(() => {
+   searchParams.set(fromDateQueryName, fromDate!.toISOString());
+   searchParams.set(toDateQueryName, toDate!.toISOString());
+   searchParams.set(ratePlanTypeQueryName, ratePlan === 'all' ? '' : ratePlan);
+   router.push(
+    `/${locale}/hotel/find-hotel/${hotelID}?${searchParams.toString()}#rooms`,
+   );
+  });
  }
 
  function handleSubmitReserveInfo() {
@@ -153,8 +154,7 @@ export default function HotelConfigProvider({
    data: rooms,
    roomTypeCapacity,
    selectedRooms,
-   isLoading: isLoadingRooms,
-   setIsLoading: setIsLoadingRooms,
+   isLoading: isPending,
    onUpdateRoomInventory: handleUpdateRoomInventory,
    selectedRoomsDispatch,
   },
