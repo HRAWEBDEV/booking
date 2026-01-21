@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { Button } from '@/components/ui/button';
 import { useKeenSlider } from 'keen-slider/react';
@@ -42,6 +42,7 @@ export default function HotelRoom({
  roomDailyPriceIsLoading: boolean;
  onShowDailyPrice: (newRoom: Room) => unknown;
 }) {
+ const facilitiesRef = useRef<HTMLDivElement>(null);
  const [showFacilities, setShowFacilities] = useState(false);
  const {
   rooms: { selectedRoomsDispatch, selectedRooms, roomTypeCapacity },
@@ -272,6 +273,7 @@ export default function HotelRoom({
    </article>
    {false && (
     <div
+     ref={facilitiesRef}
      data-expand={showFacilities}
      className='h-10 data-[expand="true"]:h-auto bg-neutral-100 dark:bg-neutral-900 p-1 flex gap-4 items-start overflow-hidden'
     >

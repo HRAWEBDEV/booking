@@ -125,7 +125,7 @@ function getRoomInventorySearch(query: GetRoomInventoryProps) {
   ['person', '0'],
  ]);
  Object.entries(query).forEach(([key, val]) => {
-  if (val !== undefined) {
+  if (val !== undefined && val !== '') {
    searchParams.set(key, String(val));
   }
  });
