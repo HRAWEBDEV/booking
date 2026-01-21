@@ -21,7 +21,7 @@ import {
 } from '../../utils/hotelRoomsPickerReducer';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '@/components/ui/spinner';
-import { FaUserAlt, FaBed } from 'react-icons/fa';
+import { FaUserAlt, FaCaretDown, FaCaretUp } from 'react-icons/fa';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-40 grow-0 relative shrink-0 self-start';
@@ -42,6 +42,7 @@ export default function HotelRoom({
  roomDailyPriceIsLoading: boolean;
  onShowDailyPrice: (newRoom: Room) => unknown;
 }) {
+ const [showFacilities, setShowFacilities] = useState(false);
  const {
   rooms: { selectedRoomsDispatch, selectedRooms, roomTypeCapacity },
   reserve: { reserveRoomNights, toDateValue, fromDateValue },
@@ -269,6 +270,39 @@ export default function HotelRoom({
      </div>
     </footer>
    </article>
+   {false && (
+    <div
+     data-expand={showFacilities}
+     className='h-10 data-[expand="true"]:h-auto bg-neutral-100 dark:bg-neutral-900 p-1 flex gap-4 items-start overflow-hidden'
+    >
+     <div className='flex gap-2 flex-wrap grow'>
+      {Array.from({ length: 10 }, (_, i) => i).map((item) => (
+       <Badge
+        variant='outline'
+        className='rounded p-1 min-w-24 font-medium text-sm'
+        key={item}
+       >
+        آسانسور
+       </Badge>
+      ))}
+     </div>
+     <div className='shrink-0'>
+      <Button
+       variant='ghost'
+       onClick={() => {
+        setShowFacilities((pre) => !pre);
+       }}
+      >
+       {showFacilities ? <FaCaretUp /> : <FaCaretDown />}
+       {showFacilities ? (
+        <span>{dic.hotelRooms.less}</span>
+       ) : (
+        <span>{dic.hotelRooms.more}</span>
+       )}
+      </Button>
+     </div>
+    </div>
+   )}
   </div>
  );
 }

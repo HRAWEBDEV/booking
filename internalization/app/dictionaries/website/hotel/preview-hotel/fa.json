@@ -55,7 +55,9 @@
   "viewPricingCalendar": "مشاهده نرخ روزانه اتاق",
   "discount": "تخفیف",
   "capacityIsFull": "اتاق ظرفیت ندارد",
-  "dailyPrice": "نرخ روزانه اتاق"
+  "dailyPrice": "نرخ روزانه اتاق",
+  "more": "بیشتر",
+  "less": "کمتر"
  },
  "hotelDescription": {
   "floors": "طبقات",
