@@ -20,6 +20,7 @@ export default function ReserveInfoSummary({
   bookingInvoiceInfo,
   onSubmitBookingFormInfo,
   onCancelReserve,
+  cancelReserveIsLoading,
   confirmReserveIsPending,
   rooms: { storeRooms, isLoading },
  } = useReserveConfig();
@@ -129,24 +130,36 @@ export default function ReserveInfoSummary({
        variant='outline'
        size='lg'
        type='button'
-       disabled={isLoading || hotelInfo.isLoading || confirmReserveIsPending}
+       disabled={
+        isLoading ||
+        hotelInfo.isLoading ||
+        confirmReserveIsPending ||
+        cancelReserveIsLoading
+       }
        onClick={onCancelReserve}
       >
-       {(isLoading || hotelInfo.isLoading || confirmReserveIsPending) && (
-        <Spinner />
-       )}
+       {(isLoading ||
+        hotelInfo.isLoading ||
+        confirmReserveIsPending ||
+        cancelReserveIsLoading) && <Spinner />}
        {dic.reserveInfo.reserveForm.cancel}
       </Button>
       <Button
        className='text-base'
        variant='secondary'
        size='lg'
-       disabled={isLoading || hotelInfo.isLoading || confirmReserveIsPending}
+       disabled={
+        isLoading ||
+        hotelInfo.isLoading ||
+        confirmReserveIsPending ||
+        cancelReserveIsLoading
+       }
        onClick={onSubmitBookingFormInfo}
       >
-       {(isLoading || hotelInfo.isLoading || confirmReserveIsPending) && (
-        <Spinner />
-       )}
+       {(isLoading ||
+        hotelInfo.isLoading ||
+        confirmReserveIsPending ||
+        cancelReserveIsLoading) && <Spinner />}
        {dic.reserveInfo.reserveForm.confirm}
       </Button>
      </div>

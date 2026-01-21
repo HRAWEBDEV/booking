@@ -25,6 +25,7 @@ export default function ReserveInfoForm({
   rooms: { data, isLoading },
   onSubmitBookingFormInfo,
   onCancelReserve,
+  cancelReserveIsLoading,
  } = useReserveConfig();
  return (
   <div>
@@ -102,10 +103,12 @@ export default function ReserveInfoForm({
       variant='outline'
       size='lg'
       type='button'
-      disabled={isLoading || hotelInfoIsLoading}
+      disabled={isLoading || hotelInfoIsLoading || cancelReserveIsLoading}
       onClick={onCancelReserve}
      >
-      {(isLoading || hotelInfoIsLoading) && <Spinner />}
+      {(isLoading || hotelInfoIsLoading || cancelReserveIsLoading) && (
+       <Spinner />
+      )}
       {dic.reserveInfo.reserveForm.cancel}
      </Button>
      <Button
@@ -113,13 +116,15 @@ export default function ReserveInfoForm({
       variant='secondary'
       size='lg'
       type='submit'
-      disabled={isLoading || hotelInfoIsLoading}
+      disabled={isLoading || hotelInfoIsLoading || cancelReserveIsLoading}
       onClick={(e) => {
        e.preventDefault();
        onSubmitBookingFormInfo();
       }}
      >
-      {(isLoading || hotelInfoIsLoading) && <Spinner />}
+      {(isLoading || hotelInfoIsLoading || cancelReserveIsLoading) && (
+       <Spinner />
+      )}
       {dic.reserveInfo.reserveForm.confirm}
      </Button>
     </div>

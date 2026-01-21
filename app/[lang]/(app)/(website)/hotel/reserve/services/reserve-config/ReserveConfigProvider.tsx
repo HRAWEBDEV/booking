@@ -53,6 +53,7 @@ import {
  getLockInfo,
  getGateways,
  getPaymentLink,
+ cancelReserveLock,
 } from '../../../services/reserveApiActions';
 import { useMutation } from '@tanstack/react-query';
 import {
@@ -365,7 +366,24 @@ export default function ReserveConfigProvider({
  }
 
  // cancel reserve
+ const {
+  mutate: confirmCancelReserveLock,
+  isPending: confirmCancelReserveLockIsPending,
+ } = useMutation({
+  mutationFn() {
+   return cancelReserveLock({
+    hotelID: hotelInfo!.hotelID.toString(),
+    lockBookID: lockInfo!.lockInfo.id,
+    channelID,
+    providerID,
+   });
+  },
+ });
+
  function confirmCancelReserve() {
+  if (hotelInfo && lockInfo) {
+   confirmCancelReserveLock();
+  }
   const searchParams = new URLSearchParams();
   if (localeReserveInfo) {
    searchParams.set(fromDateQueryName, localeReserveInfo.fromDate);
@@ -375,6 +393,7 @@ export default function ReserveConfigProvider({
    `/${locale}/hotel/find-hotel/${hotelInfo?.hotelID}?${searchParams.toString()}`,
   );
  }
+
  function handleCancelReserve() {
   setShowConfirmCancelReserve(true);
  }
@@ -415,6 +434,7 @@ export default function ReserveConfigProvider({
   },
   confirmReserveIsPending,
   confirmPaymentIsPending: getPaymentLinkIsPending,
+  cancelReserveIsLoading: confirmCancelReserveLockIsPending,
   onCancelReserve: handleCancelReserve,
   onSubmitBookingFormInfo: handleSubmitBookingFormInfo,
   onConfirmPayment: handleConfirmPayment,

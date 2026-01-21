@@ -13,6 +13,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
   bookingInvoiceInfo,
   gateways,
   confirmPaymentIsPending,
+  cancelReserveIsLoading,
   onCancelReserve,
   onConfirmPayment,
  } = useReserveConfig();
@@ -183,11 +184,14 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
        !gateways.isSuccess ||
        !gateways.data?.length ||
        !gateways.selectedGateway ||
-       confirmPaymentIsPending
+       confirmPaymentIsPending ||
+       cancelReserveIsLoading
       }
       onClick={onCancelReserve}
      >
-      {(gateways.isLoading || confirmPaymentIsPending) && <Spinner />}
+      {(gateways.isLoading ||
+       confirmPaymentIsPending ||
+       cancelReserveIsLoading) && <Spinner />}
       {dic.reserveInfo.reserveForm.cancel}
      </Button>
      <Button
@@ -196,13 +200,16 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
        !gateways.isSuccess ||
        !gateways.data?.length ||
        !gateways.selectedGateway ||
-       confirmPaymentIsPending
+       confirmPaymentIsPending ||
+       cancelReserveIsLoading
       }
       size='lg'
       className='w-36'
       onClick={onConfirmPayment}
      >
-      {(gateways.isLoading || confirmPaymentIsPending) && <Spinner />}
+      {(gateways.isLoading ||
+       confirmPaymentIsPending ||
+       cancelReserveIsLoading) && <Spinner />}
       {dic.payment.paymentInfo.confirmPayment}
      </Button>
     </div>
