@@ -17,7 +17,7 @@ export default function HotelCancelPolicies({
     {dic.hotelCancelPolicies.title}
    </h3>
    <p className='text-sm text-neutral-600 dark:text-neutral-400'>
-    {hotelInfo.publicRules || '---'}
+    {hotelInfo.publicRules || ''}
    </p>
   </section>
  );

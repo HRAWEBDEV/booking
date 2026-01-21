@@ -28,7 +28,7 @@ export default function HotelFacilities({
        key={item.key}
        className='flex gap-2 items-center text-neutral-600 dark:text-neutral-400'
       >
-       <span className='text-sm'>{item.value}</span>
+       <span className='font-medium'>{item.value}</span>
       </div>
      ))
     ) : (
