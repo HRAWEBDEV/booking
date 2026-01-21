@@ -13,7 +13,7 @@ export default function FindHotelWrapper({
  return (
   <FindHotelProvider>
    <DisplayFilters dic={dic} />
-   <div className='flex items-start gap-4'>
+   <div className='flex items-start gap-4 w-full min-w-0'>
     <HotelFilters dic={dic} />
     <HotelsList dic={dic} />
    </div>

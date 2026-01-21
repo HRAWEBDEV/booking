@@ -10,9 +10,9 @@ export function HotelsList({ dic }: { dic: FindHotelDictionary }) {
   <div
    className={`${
     isRowView
-     ? 'flex flex-col items-center'
-     : 'grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 '
-   } flex-1 gap-4`}
+     ? 'flex flex-col'
+     : 'grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1'
+   } flex-1 gap-4 min-w-0 w-full`}
   >
    {Array.from({ length: 20 }, (_, i) => i).map((i) => (
     <HotelListItem key={i} dic={dic} />
