@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import { isValidIranNationalCode } from '../../../utils/iranNationalCodeValidator';
+import { isValidIranMobileNumber } from '../../../utils/mobileNumberValidator';
 
 const defaultValues: Partial<BookingInfoSchema> = {
  firstName: '',
@@ -23,7 +24,13 @@ function createBookingInfoSchema({ dic }: { dic: ReserveHotelDictionary }) {
      isValidIranNationalCode,
      dic.reserveInfo.reserveForm.invalidNationalCode,
     ),
-   phoneNumber: z.string().min(1, dic.reserveInfo.reserveForm.fillRequiredInfo),
+   phoneNumber: z
+    .string()
+    .min(1, dic.reserveInfo.reserveForm.fillRequiredInfo)
+    .refine(
+     isValidIranMobileNumber,
+     dic.reserveInfo.reserveForm.invalidMobileNumber,
+    ),
    email: z.literal('').or(z.email()),
    guestInfo: z.array(
     z.object({

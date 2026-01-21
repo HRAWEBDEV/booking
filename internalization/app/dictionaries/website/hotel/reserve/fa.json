@@ -45,7 +45,8 @@
    "cancel": "انصراف",
    "confirm": "تایید",
    "fillRequiredInfo": "اطلاعات الزامی را وارد کنید",
-   "invalidNationalCode": "کدملی اشتباه است"
+   "invalidNationalCode": "کدملی اشتباه است",
+   "invalidMobileNumber": "شماره همراه اشتباه است"
   },
   "removeReserveRoom": {
    "title": "آیا از حذف این اتاق اطمینان دارید؟",
