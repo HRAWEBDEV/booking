@@ -7,7 +7,7 @@ import {
 import { Slider } from '@/components/ui/slider';
 import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 
-function formatPrice(value: number) {
+function formatPrice(value: number): string {
  if (value >= 1_000_000) {
   return `${Math.round(value / 1_000_000)} ملیون `;
  }
