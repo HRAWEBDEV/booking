@@ -7,6 +7,15 @@ import {
 import { Slider } from '@/components/ui/slider';
 import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 
+function formatPrice(value: number) {
+ if (value >= 1_000_000) {
+  return `${Math.round(value / 1_000_000)} ملیون `;
+ }
+ if (value >= 1000) {
+  return `${Math.round(value / 1000)}هزار `;
+ }
+ return value.toLocaleString('fa-IR');
+}
 export default function PriceRangeFilter({
  dic,
  currentPriceRange,
@@ -43,7 +52,7 @@ export default function PriceRangeFilter({
          {dic.priceRangeFilter.unit}
         </span>
         <span className='font-medium text-foreground text-base'>
-         {currentPriceRange[0].toLocaleString('fa-IR')}
+         {formatPrice(currentPriceRange[0])}
         </span>
        </div>
        <div className='flex flex-col items-end gap-1'>
@@ -51,7 +60,7 @@ export default function PriceRangeFilter({
          {dic.priceRangeFilter.unit}
         </span>
         <span className='font-medium text-foreground text-base'>
-         {currentPriceRange[1].toLocaleString('fa-IR')}
+         {formatPrice(currentPriceRange[1])}
         </span>
        </div>
       </div>
