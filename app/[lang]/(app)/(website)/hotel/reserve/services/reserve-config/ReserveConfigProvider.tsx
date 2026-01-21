@@ -445,6 +445,20 @@ export default function ReserveConfigProvider({
   setSelectedGateway(gateways[0]);
  }, [gateways]);
 
+ useEffect(() => {
+  const onPopState = () => {
+   const previousScroll = window.document.documentElement.scrollTop;
+   history.pushState(null, '', window.location.href);
+   window.document.documentElement.scrollTop = previousScroll;
+   handleCancelReserve();
+  };
+  window.addEventListener('popstate', onPopState);
+  history.pushState(null, '', window.location.href);
+  return () => {
+   window.removeEventListener('popstate', onPopState);
+  };
+ }, []);
+
  // handle error here
  return (
   <reserveConfigContext.Provider value={ctx}>

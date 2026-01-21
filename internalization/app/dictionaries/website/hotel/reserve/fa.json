@@ -44,7 +44,8 @@
    "payment": "پرداخت",
    "cancel": "انصراف",
    "confirm": "تایید",
-   "fillRequiredInfo": "اطلاعات الزامی را وارد کنید"
+   "fillRequiredInfo": "اطلاعات الزامی را وارد کنید",
+   "invalidNationalCode": "کدملی اشتباه است"
   },
   "removeReserveRoom": {
    "title": "آیا از حذف این اتاق اطمینان دارید؟",
@@ -67,7 +68,7 @@
    "reserveCheckCodeCopied": "کد‌پیگیری رزرو کپی شد",
    "doNotUseReturnButton": "در هنگام پرداخت از کلید‌های بازگشت و بروزرسانی استفاده نکنید.",
    "doNotUseVPN": "در هنگام پرداخت فیلترشکن خود را خاموش کنید.",
-   "lockReserveMaxTime": "حداکثر زمان ثبت نهایی رزرو",
+   "lockReserveMaxTime": "حداکثر زمان پرداخت",
    "minutes": "دقیقه"
   }
  },

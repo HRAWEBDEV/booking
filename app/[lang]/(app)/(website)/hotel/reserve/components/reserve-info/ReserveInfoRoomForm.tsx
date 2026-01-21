@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { type RoomInventory } from '../../../services/hotelApiActions';
 import { FaTrashAlt } from 'react-icons/fa';
-import { FieldLabel, Field } from '@/components/ui/field';
+import { FieldLabel, Field, FieldError } from '@/components/ui/field';
 import { InputGroup, InputGroupInput } from '@/components/ui/input-group';
 import { useFormContext, Controller } from 'react-hook-form';
 import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
@@ -249,6 +249,11 @@ export default function ReserveInfoRoomForm({
         {...register(`guestInfo.${i}.nationalCode`)}
        />
       </InputGroup>
+      {!!errors.nationalCode && (
+       <FieldError>
+        <p>{errors.nationalCode.message}</p>
+       </FieldError>
+      )}
      </Field>
     </div>
    )}

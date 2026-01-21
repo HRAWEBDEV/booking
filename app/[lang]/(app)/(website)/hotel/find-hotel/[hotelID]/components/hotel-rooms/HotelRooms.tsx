@@ -101,7 +101,6 @@ export default function HotelRooms({
   if (!fromDateValue) return;
   setDailyPriceDate(dateFns.startOfMonth(fromDateValue));
  }, [fromDateValue, dateFns]);
- console.log(data);
 
  return (
   <section id='rooms' className='scroll-mt-16 mb-4'>

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
+import { isValidIranNationalCode } from '../../../utils/iranNationalCodeValidator';
 
 const defaultValues: Partial<BookingInfoSchema> = {
  firstName: '',
@@ -15,15 +16,26 @@ function createBookingInfoSchema({ dic }: { dic: ReserveHotelDictionary }) {
   .object({
    firstName: z.string().min(1),
    lastName: z.string().min(1),
-   nationalCode: z.string().min(1),
-   phoneNumber: z.string().min(1),
+   nationalCode: z
+    .string()
+    .min(1, dic.reserveInfo.reserveForm.fillRequiredInfo)
+    .refine(
+     isValidIranNationalCode,
+     dic.reserveInfo.reserveForm.invalidNationalCode,
+    ),
+   phoneNumber: z.string().min(1, dic.reserveInfo.reserveForm.fillRequiredInfo),
    email: z.literal('').or(z.email()),
    guestInfo: z.array(
     z.object({
      saveAsReserveInfo: z.boolean(),
      firstName: z.string(),
      lastName: z.string(),
-     nationalCode: z.string(),
+     nationalCode: z
+      .string()
+      .refine(
+       isValidIranNationalCode,
+       dic.reserveInfo.reserveForm.invalidNationalCode,
+      ),
      hasEarlyCheckin: z.boolean(),
      hasLateCheckout: z.boolean(),
      type: z.enum(['inner', 'foreign']),
@@ -39,18 +51,28 @@ function createBookingInfoSchema({ dic }: { dic: ReserveHotelDictionary }) {
      ctx.addIssue({
       code: 'custom',
       path: [`guestInfo[${i}].firstName`],
+      message: dic.reserveInfo.reserveForm.fillRequiredInfo,
      });
     }
     if (!guest.lastName) {
      ctx.addIssue({
       code: 'custom',
       path: [`guestInfo[${i}].lastName`],
+      message: dic.reserveInfo.reserveForm.fillRequiredInfo,
      });
     }
     if (!guest.nationalCode) {
      ctx.addIssue({
       code: 'custom',
       path: [`guestInfo[${i}].nationalCode`],
+      message: dic.reserveInfo.reserveForm.fillRequiredInfo,
+     });
+    }
+    if (!isValidIranNationalCode(guest.nationalCode)) {
+     ctx.addIssue({
+      code: 'custom',
+      path: [`guestInfo[${i}].nationalCode`],
+      message: dic.reserveInfo.reserveForm.invalidNationalCode,
      });
     }
    });

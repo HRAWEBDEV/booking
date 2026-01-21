@@ -1,6 +1,6 @@
 'use client';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
-import { FieldLabel, Field } from '@/components/ui/field';
+import { FieldLabel, Field, FieldError } from '@/components/ui/field';
 import { InputGroup, InputGroupInput } from '@/components/ui/input-group';
 import { useReserveConfig } from '../../services/reserve-config/reserveConfigContext';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -61,6 +61,11 @@ export default function ReserveInfoForm({
         <InputGroup data-invalid={!!errors.nationalCode}>
          <InputGroupInput id='nationalCode' {...register('nationalCode')} />
         </InputGroup>
+        {!!errors.nationalCode && (
+         <FieldError>
+          <p>{errors.nationalCode.message}</p>
+         </FieldError>
+        )}
        </Field>
        <Field className='gap-2' data-invalid={!!errors.phoneNumber}>
         <FieldLabel htmlFor='phoneNumber'>
@@ -69,6 +74,11 @@ export default function ReserveInfoForm({
         <InputGroup data-invalid={!!errors.phoneNumber}>
          <InputGroupInput id='phoneNumber' {...register('phoneNumber')} />
         </InputGroup>
+        {!!errors.phoneNumber && (
+         <FieldError>
+          <p>{errors.phoneNumber.message}</p>
+         </FieldError>
+        )}
        </Field>
        <Field className='gap-2' data-invalid={!!errors.email}>
         <FieldLabel htmlFor='email'>
