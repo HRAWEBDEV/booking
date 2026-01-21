@@ -52,7 +52,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
         key={i}
         className='keen-slider__slide cursor-grab active:cursor-grabbing overflow-hidden'
        >
-        <div className='h-50 mx-auto border border-input rounded-xl group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none group-data-[view="row"]:rounded-tl-none group-data-[view="row"]:rounded-r-xl bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
+        <div className='h-56 mx-auto border border-input rounded-xl group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none group-data-[view="row"]:rounded-tl-none group-data-[view="row"]:rounded-r-xl bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
          <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
         </div>
        </div>
@@ -76,7 +76,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
     </CardHeader>
     <Link
      href={'#'}
-     className='flex group-data-[view="grid"]:flex-col grow h-full min-h-50 group-data-[view="row"]:py-4 group-data-[view="grid"]:pb-4'
+     className='flex group-data-[view="grid"]:flex-col grow h-full min-h-56 group-data-[view="row"]:py-4 group-data-[view="grid"]:pb-4'
     >
      <CardContent className='px-4 flex flex-col gap-4 group-data-[view="row"]:justify-between group-data-[view="row"]:items-start flex-1'>
       <div className='flex flex-col gap-2 justify-between group-data-[view="row"]:h-full'>
