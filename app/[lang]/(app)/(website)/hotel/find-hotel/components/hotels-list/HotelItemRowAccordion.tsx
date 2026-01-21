@@ -21,7 +21,7 @@ export default function HotelItemRowAccordion({
   initial: 0,
 
   rtl: localeInfo.contentDirection === 'rtl',
-  slides: { perView: 4, spacing: 16 },
+  slides: { perView: 'auto', spacing: 16 },
  });
  const { isRowView } = useFindHotel();
  useEffect(() => {
@@ -36,7 +36,7 @@ export default function HotelItemRowAccordion({
    className='w-full min-w-0 data-[view="grid"]:hidden overflow-x-hidden'
   >
    <AccordionItem value='item-1' className='w-full min-w-0 '>
-    <AccordionTrigger className='cursor-pointer bg-primary/20 text-primary rounded-t-none px-4 flex items-center justify-center data-[state=open]:rounded-b-none transition-all'>
+    <AccordionTrigger className='cursor-pointer bg-primary/20 text-primary rounded-t-none px-4 flex items-center justify-center data-[state=open]:rounded-b-none transition-all [&>svg]:text-primary hover:no-underline'>
      {dic.hotelCard.fastReserve}
     </AccordionTrigger>
 
@@ -46,7 +46,7 @@ export default function HotelItemRowAccordion({
        {Array.from({ length: 12 }).map((_, i) => (
         <div
          key={i}
-         className='keen-slider__slide cursor-grab active:cursor-grabbing shrink-0 w-[240px] h-[140px] rounded-xl bg-muted p-4 flex flex-col gap-4 justify-center items-start'
+         className='keen-slider__slide cursor-grab active:cursor-grabbing shrink-0 max-w-[260px] h-[140px] rounded-xl bg-muted p-4 flex flex-col gap-4 justify-center items-start'
         >
          <h6 className='font-medium text-lg'>
           {dic.hotelCard.FastReserveRoomsMocData[0].title}
