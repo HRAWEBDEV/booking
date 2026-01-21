@@ -52,7 +52,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
         key={i}
         className='keen-slider__slide cursor-grab active:cursor-grabbing overflow-hidden'
        >
-        <div className='h-50 mx-auto border border-input rounded-xl group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none  group-data-[view="row"]:rounded-r-xl bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
+        <div className='h-50 mx-auto border border-input rounded-xl group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none group-data-[view="row"]:rounded-tl-none group-data-[view="row"]:rounded-r-xl bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
          <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
         </div>
        </div>

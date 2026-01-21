@@ -14,11 +14,12 @@ export default function FindHotelProvider({
   const onResize = () => {
    setIsRowView(window.innerWidth > 768);
   };
-  if (window.innerWidth < 768) return;
-  onResize();
-  window.addEventListener('resize', onResize);
+  if (isRowView) {
+   onResize();
+   window.addEventListener('resize', onResize);
+  }
   return () => window.removeEventListener('resize', onResize);
- }, []);
+ }, [isRowView]);
 
  return (
   <FindHotelContext.Provider value={{ isRowView, setIsRowView }}>
