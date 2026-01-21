@@ -71,7 +71,7 @@ export default function PaymentSummary({
        <Button
         variant='outline'
         size='lg'
-        className='w-full text-neutral-700 dark:text-neutral-400 bg-orange-50 dark:bg-orange-950 border-orange-600 dark:border-orange-400 mb-4'
+        className='w-full text-teal-700 dark:text-teal-400 bg-tlea-50 dark:bg-teal-950 border-teal-600 dark:border-teal-400 mb-4'
         onClick={() => {
          if (!lockInfo.data) return;
          navigator.clipboard.writeText(lockInfo.data.lockInfo.trackingCode);
@@ -84,13 +84,23 @@ export default function PaymentSummary({
         </span>
         <IoIosCopy />
        </Button>
-       <Alert className='mb-2 bg-red-50 dark:bg-red-950 border-red-700 dark:border-red-400'>
-        <AlertDescription className='text-red-800 dark:text-red-200 font-medium text-xs'>
+       <Alert className='mb-2 bg-sky-50 dark:bg-sky-950 border-sky-700 dark:border-sky-400'>
+        <AlertDescription className='text-sky-800 dark:text-sky-200 font-medium'>
+         <p>
+          {dic.payment.paymentSummary.lockReserveMaxTime}:{' '}
+          <span className='font-medium text-lg'>
+           20 {dic.payment.paymentSummary.minutes}
+          </span>
+         </p>
+        </AlertDescription>
+       </Alert>
+       <Alert className='mb-2 bg-orange-50 dark:bg-orange-950 border-orange-700 dark:border-orange-400'>
+        <AlertDescription className='text-orange-800 dark:text-orange-200 font-medium text-xs'>
          {dic.payment.paymentSummary.doNotUseReturnButton}
         </AlertDescription>
        </Alert>
-       <Alert className='mb-2 bg-red-50 dark:bg-red-950 border-red-700 dark:border-red-400'>
-        <AlertDescription className='text-red-800 dark:text-red-200 font-medium text-xs'>
+       <Alert className='mb-2 bg-orange-50 dark:bg-orange-950 border-orange-700 dark:border-orange-400'>
+        <AlertDescription className='text-orange-800 dark:text-orange-200 font-medium text-xs'>
          {dic.payment.paymentSummary.doNotUseVPN}
         </AlertDescription>
        </Alert>
