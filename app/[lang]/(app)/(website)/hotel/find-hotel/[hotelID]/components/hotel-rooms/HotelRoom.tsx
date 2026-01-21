@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { Button } from '@/components/ui/button';
 import { useKeenSlider } from 'keen-slider/react';
@@ -44,6 +44,7 @@ export default function HotelRoom({
 }) {
  const facilitiesRef = useRef<HTMLDivElement>(null);
  const [showFacilities, setShowFacilities] = useState(false);
+ const [expandableFacilities, setExpandableFacilities] = useState(false);
  const {
   rooms: { selectedRoomsDispatch, selectedRooms, roomTypeCapacity },
   reserve: { reserveRoomNights, toDateValue, fromDateValue },
@@ -92,6 +93,12 @@ export default function HotelRoom({
   ? isTargetRoom(selectedRoom, roomInfo) && roomDailyPriceIsLoading
   : false;
 
+ useEffect(() => {
+  if (!facilitiesRef.current) return;
+  if (facilitiesRef.current.scrollHeight > facilitiesRef.current.clientHeight) {
+   setExpandableFacilities(true);
+  }
+ }, []);
  return (
   <div className='overflow-hidden shadow-lg rounded-md'>
    <article
@@ -288,21 +295,23 @@ export default function HotelRoom({
        </Badge>
       ))}
      </div>
-     <div className='shrink-0'>
-      <Button
-       variant='ghost'
-       onClick={() => {
-        setShowFacilities((pre) => !pre);
-       }}
-      >
-       {showFacilities ? <FaCaretUp /> : <FaCaretDown />}
-       {showFacilities ? (
-        <span>{dic.hotelRooms.less}</span>
-       ) : (
-        <span>{dic.hotelRooms.more}</span>
-       )}
-      </Button>
-     </div>
+     {expandableFacilities && (
+      <div className='shrink-0'>
+       <Button
+        variant='ghost'
+        onClick={() => {
+         setShowFacilities((pre) => !pre);
+        }}
+       >
+        {showFacilities ? <FaCaretUp /> : <FaCaretDown />}
+        {showFacilities ? (
+         <span>{dic.hotelRooms.less}</span>
+        ) : (
+         <span>{dic.hotelRooms.more}</span>
+        )}
+       </Button>
+      </div>
+     )}
     </div>
    )}
   </div>
