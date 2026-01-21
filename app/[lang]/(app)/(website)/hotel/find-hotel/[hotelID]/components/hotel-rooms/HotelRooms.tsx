@@ -102,12 +102,6 @@ export default function HotelRooms({
   setDailyPriceDate(dateFns.startOfMonth(fromDateValue));
  }, [fromDateValue, dateFns]);
 
- useEffect(() => {
-  roomInventoriesPromise.then(() => {
-   setIsLoading(false);
-  });
- }, [roomInventoriesPromise, setIsLoading]);
-
  return (
   <section id='rooms' className='scroll-mt-16 mb-4'>
    {!!selectedRooms.length && (
