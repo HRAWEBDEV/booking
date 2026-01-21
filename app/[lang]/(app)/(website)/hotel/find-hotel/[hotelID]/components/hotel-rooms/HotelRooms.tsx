@@ -42,7 +42,7 @@ export default function HotelRooms({
  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
  const {
   hotelID,
-  rooms: { selectedRooms, isLoading, onUpdateRoomInventory, setIsLoading },
+  rooms: { selectedRooms, isLoading, onUpdateRoomInventory },
   reserve: { fromDateValue, toDateValue },
  } = useHotelConfig();
 
