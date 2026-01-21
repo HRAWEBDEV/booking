@@ -78,6 +78,7 @@ interface RoomInventory {
  accommodationTypePrices: RoomAccomodationType[];
  accommodationTypePrice: RoomAccomodationType;
  accommodationImages: AccomodationImage[];
+ accommodationFacilities: HotelFacility[];
 }
 
 type GetRoomInventoryProps = {

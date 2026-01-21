@@ -271,20 +271,20 @@ export default function HotelRoom({
      </div>
     </footer>
    </article>
-   {false && (
+   {!!roomType.accommodationFacilities.length && (
     <div
      ref={facilitiesRef}
      data-expand={showFacilities}
      className='h-10 data-[expand="true"]:h-auto bg-neutral-100 dark:bg-neutral-900 p-1 flex gap-4 items-start overflow-hidden'
     >
      <div className='flex gap-2 flex-wrap grow'>
-      {Array.from({ length: 10 }, (_, i) => i).map((item) => (
+      {roomType.accommodationFacilities.map((item) => (
        <Badge
         variant='outline'
         className='rounded p-1 min-w-24 font-medium text-sm'
-        key={item}
+        key={item.key}
        >
-        آسانسور
+        {item.value}
        </Badge>
       ))}
      </div>
