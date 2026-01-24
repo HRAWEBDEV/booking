@@ -133,8 +133,6 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
           {dic.hotelCard.mockBasePrice}
          </div>
         </div>
-
-        {/* Row view pricing section */}
         <div className='hidden group-data-[view="row"]:flex group-data-[view="row"]:flex-col group-data-[view="row"]:items-center group-data-[view="row"]:gap-2 group-data-[view="row"]:w-full'>
          <div className='flex flex-col-reverse items-center w-full gap-2'>
           <div className='sm:text-lg font-semibold text-xl'>
@@ -152,8 +150,6 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
           </div>
          </div>
         </div>
-
-        {/* Grid view: Row 2 - Discount Price */}
         <div className='flex items-center w-full group-data-[view="row"]:hidden justify-center'>
          <div className='text-lg font-semibold'>
           {dic.hotelCard.mockBaseDiscountPrice}
@@ -165,7 +161,6 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
        </>
       ) : (
        <>
-        {/* No discount - Show regular price only */}
         <div className='flex items-center justify-center w-full group-data-[view="row"]:justify-center'>
          <div className='text-lg font-semibold'>
           {dic.hotelCard.mockBasePrice}
@@ -176,8 +171,6 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
         </div>
        </>
       )}
-
-      {/* Button (Row view only) */}
       <Button className='cursor-pointer w-full group-data-[view="grid"]:hidden'>
        {dic.hotelCard.catPrices}
       </Button>
