@@ -20,7 +20,7 @@ export default function CardLayoutDisplay({
      <Grid3x2
       strokeWidth={1.6}
       className={`${
-       !isRowView ? 'text-active-red' : 'text-gray-400'
+       !isRowView ? 'text-active-red!' : 'text-gray-400'
       } group-hover:text-active-red/80 dark:text-gray-600 dark:group-hover:text-active-red/80 size-5`}
      />
     </Button>
@@ -32,7 +32,7 @@ export default function CardLayoutDisplay({
      <TableProperties
       strokeWidth={1.6}
       className={`${
-       isRowView ? 'text-active-red' : 'text-gray-400'
+       isRowView ? 'text-active-red!' : 'text-gray-400'
       } group-hover:text-active-red/80 dark:text-gray-600 dark:group-hover:text-active-red/80 rotate-180 size-5`}
      />
     </Button>

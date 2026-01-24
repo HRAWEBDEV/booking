@@ -46,7 +46,7 @@ export default function HotelItemRowAccordion({
        {Array.from({ length: 12 }).map((_, i) => (
         <div
          key={i}
-         className='keen-slider__slide cursor-grab active:cursor-grabbing shrink-0 max-w-[200px] rounded-lg border bg-background  p-2 flex flex-col gap-2 justify-around items-start'
+         className='keen-slider__slide cursor-grab active:cursor-grabbing shrink-0 max-w-[200px] rounded-lg border bg-background dark:bg-neutral-800 p-2 flex flex-col gap-2 justify-around items-start'
         >
          <h6 className='font-medium text-base'>
           {dic.hotelCard.FastReserveRoomsMocData[0].title}
