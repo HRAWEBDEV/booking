@@ -16,11 +16,13 @@ import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/
 import useFindHotel from '../../../../services/find-hotel/FindHotelContext';
 import { Button } from '@/components/ui/button';
 import HotelItemRowAccordion from './HotelItemRowAccordion';
+import PricingInfo from './PricingInfo';
 
 export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
  const { localeInfo } = useBaseConfig();
  const [currentSlide, setCurrentSlide] = useState(0);
  const [slidesCount, setSlidesCount] = useState(0);
+
  const [sliderRef, instanceRef] = useKeenSlider({
   initial: 0,
   slideChanged(slider) {
@@ -32,10 +34,13 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
   rtl: localeInfo.contentDirection === 'rtl',
   slides: { perView: 1, spacing: 16 },
  });
+
  const { isRowView } = useFindHotel();
+
  useEffect(() => {
   instanceRef.current?.update();
  }, [instanceRef, isRowView]);
+
  return (
   <div className='flex flex-col w-full max-w-full min-w-0'>
    <Card
@@ -43,6 +48,20 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
     className={`group w-full shadow-none py-4 data-[view='grid']:py-0 data-[view='row']:py-0 gap-4 flex! data-[view='row']:flex-row data-[view='grid']:flex-col data-[view='row']:items-center data-[view="row"]:rounded-b-none rounded-lg `}
    >
     <CardHeader className='px-0! gap-0 relative shrink-0 group-data-[view="row"]:basis-64'>
+     <div className='absolute top-3 left-3 z-20 flex justify-between w-[calc(100%-24px)] pointer-events-none'>
+      {dic.hotelCard.discountBadge && (
+       <Badge
+        variant='secondary'
+        className='shadow-sm group-data-[view="row"]:hidden'
+       >
+        {dic.hotelCard.discountBadge}
+       </Badge>
+      )}
+
+      <button className=' pointer-events-auto bg-white/80 dark:bg-black/50 hover:bg-white p-1.5 rounded-full transition-colors'>
+       <Star className='w-4 h-4 text-gray-700 dark:text-gray-200' />{' '}
+      </button>
+     </div>
      <div
       ref={sliderRef}
       className='keen-slider relative overflow-hidden rounded-lg group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none group-data-[view="row"]:rounded-tl-none group-data-[view="row"]:rounded-r-lg'
@@ -74,6 +93,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
       )}
      </div>
     </CardHeader>
+
     <Link
      href={'#'}
      className='flex group-data-[view="grid"]:flex-col grow h-full min-h-52 group-data-[view="row"]:py-4 group-data-[view="grid"]:pb-4'
@@ -116,62 +136,11 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
        </div>
       </div>
      </CardContent>
-     <CardFooter className='px-4 group-data-[view="grid"]:pt-2 group-data-[view="row"]:max-w-60 group-data-[view="row"]:w-full group-data-[view="grid"]:flex group-data-[view="grid"]:flex-col group-data-[view="grid"]:gap-2 group-data-[view="row"]:grid group-data-[view="row"]:grid-cols-1 group-data-[view="row"]:items-center group-data-[view="row"]:justify-between'>
-      {/* Check if there's a discount */}
-      {dic.hotelCard.mockBaseDiscountPrice ? (
-       <>
-        {/* Row 1: Badge and Base Price (strikethrough) */}
-        <div className='flex items-center justify-between w-full group-data-[view="row"]:justify-start group-data-[view="row"]:mb-0'>
-         <Badge
-          variant='secondary'
-          className='cursor-pointer text-gray-100 px-1.5 py-1 dark:text-gray-300 text-xs'
-         >
-          {dic.hotelCard.discountBadge}
-         </Badge>
 
-         <div className='text-md font-semibold line-through text-destructive group-data-[view="row"]:hidden'>
-          {dic.hotelCard.mockBasePrice}
-         </div>
-        </div>
-        <div className='hidden group-data-[view="row"]:flex group-data-[view="row"]:flex-col group-data-[view="row"]:items-center group-data-[view="row"]:gap-2 group-data-[view="row"]:w-full'>
-         <div className='flex flex-col-reverse items-center w-full gap-2'>
-          <div className='sm:text-lg font-semibold text-xl'>
-           {dic.hotelCard.mockBaseDiscountPrice}
-           <span className='text-sm text-muted-foreground'>
-            / {dic.hotelCard.residentUnit}
-           </span>
-          </div>
-         </div>
-         <div className='flex relative items-center gap-2'>
-          <div className='flex gap-1 items-center w-full'>
-           <div className='text-md font-semibold line-through text-destructive'>
-            {dic.hotelCard.mockBasePrice}
-           </div>
-          </div>
-         </div>
-        </div>
-        <div className='flex items-center w-full group-data-[view="row"]:hidden justify-center'>
-         <div className='text-lg font-semibold'>
-          {dic.hotelCard.mockBaseDiscountPrice}
-          <span className='text-sm text-muted-foreground'>
-           / {dic.hotelCard.residentUnit}
-          </span>
-         </div>
-        </div>
-       </>
-      ) : (
-       <>
-        <div className='flex items-center justify-center w-full group-data-[view="row"]:justify-center'>
-         <div className='text-lg font-semibold'>
-          {dic.hotelCard.mockBasePrice}
-          <span className='text-sm text-muted-foreground'>
-           / {dic.hotelCard.residentUnit}
-          </span>
-         </div>
-        </div>
-       </>
-      )}
-      <Button className='cursor-pointer w-full group-data-[view="grid"]:hidden'>
+     <CardFooter className='px-4 group-data-[view="grid"]:pt-6 group-data-[view="row"]:max-w-60 group-data-[view="row"]:w-full group-data-[view="grid"]:flex group-data-[view="grid"]:flex-col group-data-[view="grid"]:gap-2 group-data-[view="row"]:grid group-data-[view="row"]:grid-cols-1 group-data-[view="row"]:items-center group-data-[view="row"]:justify-between'>
+      <PricingInfo dic={dic} />
+
+      <Button className='cursor-pointer w-full mt-3 group-data-[view="row"]:mt-0 group-data-[view="row"]:w-auto group-data-[view="row"]:ml-4'>
        {dic.hotelCard.catPrices}
       </Button>
      </CardFooter>
