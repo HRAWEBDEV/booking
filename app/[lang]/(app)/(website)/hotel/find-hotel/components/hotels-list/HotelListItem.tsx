@@ -116,36 +116,68 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
        </div>
       </div>
      </CardContent>
-     <CardFooter className='flex group-data-[view="row"]:flex-col items-center justify-between px-4 group-data-[view="grid"]:pt-2 group-data-[view="row"]:max-w-60 w-full group-data-[view="row"]:justify-between'>
-      <div className='flex items-center justify-start w-full'>
-       <Badge
-        variant='secondary'
-        className='cursor-pointer text-gray-100 px-1.5 py-1 dark:text-gray-300 text-xs '
-       >
-        {dic.hotelCard.discountBadge}
-       </Badge>
-      </div>
-      <div className='flex group-data-[view="grid"]:justify-between group-data-[view="row"]:flex-col group-data-[view="row"]:items-start group-data-[view="row"]:gap-2 items-center  w-full'>
-       <div className='flex flex-col-reverse items-center w-full gap-2 '>
-        <div className={`text-lg font-semibold `}>
-         {dic.hotelCard.mockBaseDiscountPrice}
-         <span className='text-sm text-muted-foreground'>
-          / {dic.hotelCard.residentUnit}
-         </span>
+     <CardFooter className='px-4 group-data-[view="grid"]:pt-2 group-data-[view="row"]:max-w-60 group-data-[view="row"]:w-full group-data-[view="grid"]:flex group-data-[view="grid"]:flex-col group-data-[view="grid"]:gap-2 group-data-[view="row"]:grid group-data-[view="row"]:grid-cols-1 group-data-[view="row"]:items-center group-data-[view="row"]:justify-between'>
+      {/* Check if there's a discount */}
+      {dic.hotelCard.mockBaseDiscountPrice ? (
+       <>
+        {/* Row 1: Badge and Base Price (strikethrough) */}
+        <div className='flex items-center justify-between w-full group-data-[view="row"]:justify-start group-data-[view="row"]:mb-0'>
+         <Badge
+          variant='secondary'
+          className='cursor-pointer text-gray-100 px-1.5 py-1 dark:text-gray-300 text-xs'
+         >
+          {dic.hotelCard.discountBadge}
+         </Badge>
+
+         <div className='text-md font-semibold line-through text-destructive group-data-[view="row"]:hidden'>
+          {dic.hotelCard.mockBasePrice}
+         </div>
         </div>
-        <div className='flex relative items-center gap-2'>
-         <div className='flex gap-1 items-center w-full'>
-          <div
-           className={`text-md font-semibold ${
-            dic.hotelCard.mockBasePrice && 'line-through text-destructive'
-           } `}
-          >
-           {dic.hotelCard.mockBasePrice}
+
+        {/* Row view pricing section */}
+        <div className='hidden group-data-[view="row"]:flex group-data-[view="row"]:flex-col group-data-[view="row"]:items-center group-data-[view="row"]:gap-2 group-data-[view="row"]:w-full'>
+         <div className='flex flex-col-reverse items-center w-full gap-2'>
+          <div className='sm:text-lg font-semibold text-xl'>
+           {dic.hotelCard.mockBaseDiscountPrice}
+           <span className='text-sm text-muted-foreground'>
+            / {dic.hotelCard.residentUnit}
+           </span>
+          </div>
+         </div>
+         <div className='flex relative items-center gap-2'>
+          <div className='flex gap-1 items-center w-full'>
+           <div className='text-md font-semibold line-through text-destructive'>
+            {dic.hotelCard.mockBasePrice}
+           </div>
           </div>
          </div>
         </div>
-       </div>
-      </div>
+
+        {/* Grid view: Row 2 - Discount Price */}
+        <div className='flex items-center w-full group-data-[view="row"]:hidden justify-center'>
+         <div className='text-lg font-semibold'>
+          {dic.hotelCard.mockBaseDiscountPrice}
+          <span className='text-sm text-muted-foreground'>
+           / {dic.hotelCard.residentUnit}
+          </span>
+         </div>
+        </div>
+       </>
+      ) : (
+       <>
+        {/* No discount - Show regular price only */}
+        <div className='flex items-center justify-center w-full group-data-[view="row"]:justify-center'>
+         <div className='text-lg font-semibold'>
+          {dic.hotelCard.mockBasePrice}
+          <span className='text-sm text-muted-foreground'>
+           / {dic.hotelCard.residentUnit}
+          </span>
+         </div>
+        </div>
+       </>
+      )}
+
+      {/* Button (Row view only) */}
       <Button className='cursor-pointer w-full group-data-[view="grid"]:hidden'>
        {dic.hotelCard.catPrices}
       </Button>
