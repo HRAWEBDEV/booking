@@ -138,7 +138,9 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
      </CardContent>
 
      <CardFooter className='px-4 group-data-[view="grid"]:pt-6 group-data-[view="row"]:max-w-60 group-data-[view="row"]:w-full group-data-[view="grid"]:flex group-data-[view="grid"]:flex-col group-data-[view="grid"]:gap-2 group-data-[view="row"]:grid group-data-[view="row"]:grid-cols-1 group-data-[view="row"]:items-center group-data-[view="row"]:justify-between'>
-      <PricingInfo dic={dic} />
+      <div className='group-data-[view="grid"]:flex group-data-[view="grid"]:flex-row-reverse gap-4 items-center w-full justify-between'>
+       <PricingInfo dic={dic} />
+      </div>
 
       <Button className='cursor-pointer w-full mt-3 group-data-[view="row"]:mt-0 group-data-[view="row"]:w-auto group-data-[view="row"]:ml-4'>
        {dic.hotelCard.catPrices}
