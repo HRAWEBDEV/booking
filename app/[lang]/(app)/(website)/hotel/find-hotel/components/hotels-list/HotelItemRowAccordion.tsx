@@ -36,11 +36,11 @@ export default function HotelItemRowAccordion({
    className='w-full min-w-0 data-[view="grid"]:hidden overflow-x-hidden'
   >
    <AccordionItem value='item-1' className='w-full min-w-0 '>
-    <AccordionTrigger className='cursor-pointer bg-neutral-100 text-neutral-700 rounded-t-none px-4 py-3 flex items-center justify-center data-[state=open]:rounded-b-none transition-all [&>svg]:text-neutral-700 hover:no-underline border border-input border-t-0'>
+    <AccordionTrigger className='cursor-pointer bg-neutral-100 dark:bg-neutral-800 text-neutral-100 rounded-t-none px-4 py-3 flex items-center justify-center data-[state=open]:rounded-b-none transition-all [&>svg]:text-neutral-700 dark:[&>svg]:text-neutral-100 hover:no-underline border border-input border-t-0'>
      {dic.hotelCard.fastReserve}
     </AccordionTrigger>
 
-    <AccordionContent className='w-full min-w-0 bg-neutral-100 data-[state=open]:rounded-t-none rounded-b-xl border border-input border-t-0 py-2'>
+    <AccordionContent className='w-full min-w-0 bg-neutral-100 dark:bg-neutral-700 data-[state=open]:rounded-t-none rounded-b-xl border border-input border-t-0 py-2'>
      <div className='w-full min-w-0 overflow-x-auto  px-4 active:cursor-grabbing'>
       <div className='keen-slider inline-flex w-max' ref={sliderRef}>
        {Array.from({ length: 12 }).map((_, i) => (
@@ -60,7 +60,7 @@ export default function HotelItemRowAccordion({
          <Button
           variant={'outline'}
           size={'sm'}
-          className='w-full cursor-pointer rounded-sm border-primary text-primary'
+          className='w-full cursor-pointer rounded-sm border-primary text-primary dark:border-neutral-200'
          >
           {dic.hotelCard.resserve}
          </Button>
