@@ -1,5 +1,5 @@
 import React from 'react';
-import FindHotelNest from './components/find-hotel-nest/FindHotelNest';
+// import FindHotelNest from './components/find-hotel-nest/FindHotelNest';
 import { Metadata } from 'next';
 import { getFindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 import { type Locale } from '@/internalization/app/localization';
@@ -17,10 +17,5 @@ export default async function layout({
  const { lang } = await params;
  const dic = await getFindHotelDictionary({ locale: lang as Locale });
 
- return (
-  <>
-   <FindHotelNest dic={dic} />
-   {children}
-  </>
- );
+ return <>{children}</>;
 }

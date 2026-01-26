@@ -1,0 +1,81 @@
+{
+ "title": "",
+ "reserveStepper": {
+  "fillForm": "اطلاعات رزرو",
+  "payment": "پرداخت",
+  "reserveVoucher": "واچر رزرو"
+ },
+ "reserveInfo": {
+  "reserveSummary": {
+   "arrivalDate": "تاریخ ورود",
+   "departureDate": "تاریخ خروج",
+   "night": "شب",
+   "TotalPrice": "جمع",
+   "totalDiscount": "تخفیف کل",
+   "discountTotalPrice": "جمع کل (پرداختی)",
+   "price": "قیمت",
+   "discount": "تخفیف"
+  },
+  "reserveForm": {
+   "somethingWrongHappendedTryAgainLater": "خطایی رخ داده است، لطفا دقایقی دیگر مجددا تلاش کنید",
+   "ratePlanTypes": {
+    "noBreakfast": "بدون صبحانه",
+    "nonRefundable": "غیرقابل استرداد",
+    "withDinner": "همراه با شام",
+    "withLunch": "همراه با نهار",
+    "limitedMenu": "منوی محدود",
+    "freeChargeMinibar": "مینی بار مجانی"
+   },
+   "reservePersonInfo": "مشخصات رزرو کننده",
+   "roomsPersonInfo": "مشخصات سرپرست اتاق‌ها",
+   "saveAsReservePersonInfo": "نام رزرو کننده و سرپرست اتاق یکی می‌باشد",
+   "firstName": "نام",
+   "lastName": "نام خانوادگی",
+   "nationalCode": "کدملی",
+   "email": "ایمیل",
+   "person": "نفره",
+   "earlyCheckinCharge": "نیم شارژ ورود",
+   "lateCheckoutCharge": "نیم شارژ خروج",
+   "male": "مرد",
+   "female": "زن",
+   "foreignGuest": "مهمان خارجی",
+   "innerGuest": "مهمان داخلی",
+   "phoneNumber": "شماره همراه",
+   "payment": "پرداخت",
+   "cancel": "انصراف",
+   "confirm": "تایید",
+   "fillRequiredInfo": "اطلاعات الزامی را وارد کنید",
+   "invalidNationalCode": "کدملی اشتباه است",
+   "invalidMobileNumber": "شماره همراه اشتباه است"
+  },
+  "removeReserveRoom": {
+   "title": "آیا از حذف این اتاق اطمینان دارید؟",
+   "cancel": "انصراف",
+   "confirm": "تایید"
+  }
+ },
+ "payment": {
+  "gateways": {
+   "zarinPal": "زرین پال",
+   "sepPayment": "بانک سامان"
+  },
+  "paymentInfo": {
+   "title": "اطلاعات پرداخت",
+   "paymentMethod": "روش پرداخت",
+   "confirmPayment": "پرداخت"
+  },
+  "paymentSummary": {
+   "reserveCheckCode": "کد‌پیگیری رزرو",
+   "reserveCheckCodeCopied": "کد‌پیگیری رزرو کپی شد",
+   "doNotUseReturnButton": "در هنگام پرداخت از کلید‌های بازگشت و بروزرسانی استفاده نکنید.",
+   "doNotUseVPN": "در هنگام پرداخت فیلترشکن خود را خاموش کنید.",
+   "lockReserveMaxTime": "حداکثر زمان پرداخت",
+   "minutes": "دقیقه"
+  }
+ },
+ "cancelReserve": {
+  "title": "آیا از لغو فرآیند رزرو اطمینان دارید؟",
+  "cancel": "انصراف",
+  "confirm": "تایید"
+ }
+}

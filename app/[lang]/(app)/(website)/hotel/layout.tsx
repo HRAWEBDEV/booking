@@ -3,7 +3,7 @@ import { type Locale } from '@/internalization/app/localization';
 import { Metadata } from 'next';
 
 export async function generateMetadata(
- props: LayoutProps<'/[lang]/hotel'>
+ props: LayoutProps<'/[lang]/hotel'>,
 ): Promise<Metadata> {
  const { lang } = await props.params;
  const dic = await getHotelHomePageDictionary({
