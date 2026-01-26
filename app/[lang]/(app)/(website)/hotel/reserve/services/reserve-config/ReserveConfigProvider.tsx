@@ -390,6 +390,7 @@ export default function ReserveConfigProvider({
    searchParams.set(fromDateQueryName, localeReserveInfo.fromDate);
    searchParams.set(toDateQueryName, localeReserveInfo.toDate);
   }
+  clearLocalReserveInfo();
   router.replace(
    `/${locale}/hotel/find-hotel/${hotelInfo?.hotelID}?${searchParams.toString()}`,
   );
@@ -460,7 +461,7 @@ export default function ReserveConfigProvider({
   };
  }, []);
 
- if (hotelInfoIsError)
+ if (hotelInfoIsError || lockInfoIsError)
   return (
    <div className='min-h-[calc(60svh-var(--website-header-height))] flex flex-col justify-center py-8'>
     <NotFound />
