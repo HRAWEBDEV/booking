@@ -7,6 +7,7 @@ import { getMetaDictionary } from '@/internalization/app/dictionaries/meta/dicti
 import { Locale } from '@/internalization/app/localization';
 import AxiosCredentialsInterceptor from './services/axios-credentials/AxiosCredentialsInterceptor';
 import { Toaster } from 'sonner';
+import ReserveProvider from './services/reserve-hotel/ReserveProvider';
 
 export default async function WebsiteLayout({
  children,
@@ -23,9 +24,11 @@ export default async function WebsiteLayout({
   <ShareDictionaryProvider metaDictionary={metaDic} shareDictionary={shareDic}>
    <AxiosCredentialsInterceptor />
    <div>
-    <Header />
-    {children}
-    <MobileNav />
+    <ReserveProvider>
+     <Header />
+     {children}
+     <MobileNav />
+    </ReserveProvider>
     <Footer />
    </div>
    <Toaster
