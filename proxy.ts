@@ -6,6 +6,7 @@ import {
  userLocaleCookieName,
 } from './utils/userLocaleManager';
 import { cookies } from 'next/headers';
+import { getSetupProviderCredentials } from './app/[lang]/(app)/(website)/utils/getSetupProviderCredentials';
 
 function ignorePath(path: string): boolean {
  const targetPaths = ['/api', '/static'];
@@ -28,6 +29,17 @@ export async function proxy(req: NextRequest) {
  if (!isUserLocaleValid(pathSegments[1])) {
   req.nextUrl.pathname = `${await getUserLocale()}${path}`;
   return NextResponse.redirect(req.nextUrl);
+ }
+ if (
+  req.nextUrl.pathname === `/${pathSegments[1]}` &&
+  process.env.NEXT_PUBLIC_HOTELID
+ ) {
+  return NextResponse.redirect(
+   new URL(
+    `/${pathSegments[1]}/hotel/find-hotel/${process.env.NEXT_PUBLIC_HOTELID}`,
+    req.url,
+   ),
+  );
  }
 }
 

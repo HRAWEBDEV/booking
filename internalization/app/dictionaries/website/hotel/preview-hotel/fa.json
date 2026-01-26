@@ -1,0 +1,73 @@
+{
+ "title": "",
+ "hotelInfo": {
+  "star": "ستاره",
+  "share": "اشتراک گذاری",
+  "unknownAddress": "موقعیت نامعلوم"
+ },
+ "hotelMenuBar": {
+  "hotelFacilities": "امکانات",
+  "rooms": "اتاق‌ها",
+  "hotelDescription": "درباره هتل",
+  "cancelPolicies": "قوانین و مقررات هتل"
+ },
+ "hotelDatePicker": {
+  "from": "از",
+  "to": "تا",
+  "fromDate": "از تاریخ",
+  "toDate": "تا تاریخ",
+  "arrivalTime": "ساعت ورود",
+  "departureTime": "ساعت خروج",
+  "ratePlan": "طرح فروش",
+  "stopSell": "محدودیت فروش",
+  "cta": "محدودیت ورود",
+  "ctd": "محدودیت خروج",
+  "search": "جستجو",
+  "confirmReserve": "ثبت رزرو",
+  "changeDate": "تغییر تاریخ رزرو",
+  "changeFilters": "تغییر فیلترها",
+  "selectReserveDate": "تاریخ رزرو را انتخاب کنید",
+  "results": "نتایج",
+  "all": "همه"
+ },
+ "hotelLocaltionMap": {
+  "unkownLocation": "موقعیت نامعلوم"
+ },
+ "hotelFacilities": {
+  "title": "امکانات",
+  "noItemFound": "امکاناتی یافت نشد"
+ },
+ "hotelRooms": {
+  "forEachPurchaseOnlyReserveRoomsWithSameRatePlan": "در هر خرید تنها امکان رزرو اتاق‌‌های با طرح فروش یکسان وجود دارد",
+  "noRoomsFound": "اتاقی یافت نشد.",
+  "changeReserveDateOrRatePlan": "تاریخ رزرو یا طرح فروش را تغییر دهید.",
+  "ratePlanTypes": {
+   "noBreakfast": "بدون صبحانه",
+   "nonRefundable": "غیرقابل استرداد",
+   "withDinner": "همراه با شام",
+   "withLunch": "همراه با نهار",
+   "limitedMenu": "منوی محدود",
+   "freeChargeMinibar": "مینی بار مجانی"
+  },
+  "nights": "شب",
+  "person": "نفره",
+  "addRoom": "افزودن اتاق",
+  "viewPricingCalendar": "مشاهده نرخ روزانه اتاق",
+  "discount": "تخفیف",
+  "capacityIsFull": "اتاق ظرفیت ندارد",
+  "dailyPrice": "نرخ روزانه اتاق",
+  "more": "بیشتر",
+  "less": "کمتر"
+ },
+ "hotelDescription": {
+  "floors": "طبقات",
+  "rooms": "اتاق‌ها"
+ },
+ "hotelCancelPolicies": {
+  "title": "قوانین کنسلی"
+ },
+ "reserveInfo": {
+  "roomCount": "تعداد اتاق",
+  "totalDiscountPrice": "جمع کل"
+ }
+}

@@ -15,6 +15,11 @@
   }
  },
  "component": {
+  "notFound": {
+   "noItemFound": "اطلاعاتی یافت نشد.",
+   "tryAgain": "تلاش مجدد",
+   "goHome": "برو به خانه"
+  },
   "header": {
    "headerNav": {
     "support": "پشتیبانی",
