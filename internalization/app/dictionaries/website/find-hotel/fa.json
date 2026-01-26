@@ -37,6 +37,7 @@
  "hotelCard": {
   "mockTitle": "هتل داریوش کیش",
   "mockBasePrice": "21,000,000 تومان",
+  "mockBaseDiscountPrice": "18,900,00 تومان",
   "residentUnit": "شبانه",
   "mockRating": "5",
   "fromText": "از",
@@ -48,11 +49,71 @@
    "لابی",
    "ترانسفر برگشت با هزینه"
   ],
-  "discountBadge": "۱۰٪ تخفیف"
+  "discountBadge": "۱۰٪ تخفیف",
+  "catPrices": "مشاهده قیمت‌ها",
+  "fastReserve": "رزرو سریع",
+  "resserve": "رزرو",
+  "FastReserveRoomsMocData": [
+   {
+    "title": "دو تخته دوبل",
+    "roomPrice": "21,000,000 تومان",
+    "residentUnit": "شبانه"
+   }
+  ]
  },
  "breadCrumb": {
   "home": "صفحه اصلی",
   "hotel": "رزرو هتل",
   "findHotel": "جستجوی هتل"
+ },
+ "searchInputFilter": {
+  "placeholder": "جستجوی نام هتل"
+ },
+ "priceRangeFilter": {
+  "priceTitle": "قیمت",
+  "unit": "تومان"
+ },
+ "starFilter": {
+  "title": "ستاره هتل",
+  "starLabels": {
+   "1": "۱ ستاره",
+   "2": "۲ ستاره",
+   "3": "۳ ستاره",
+   "4": "۴ ستاره",
+   "5": "۵ ستاره"
+  }
+ },
+ "bedFilters": {
+  "title": "تعداد تخت",
+  "bedLabels": {
+   "1": "۱ تخت",
+   "2": "۲ تخت",
+   "3": "۳ تخت",
+   "4": "۴ تخت",
+   "5": "۵+ تخت"
+  }
+ },
+ "amenitiesFilter": {
+  "title": "امکانات هتل",
+  "searchPlaceholder": "جستجوی امکانات هتل",
+  "amenities": {
+   "lobby": "لابی",
+   "reception24h": "پذیرش ۲۴ ساعته",
+   "elevator": "آسانسور",
+   "safeBox": "صندوق امانات",
+   "electricCharging": "امکان شارژ وسایل اکتریکی"
+  }
+ },
+ "offersFilter": {
+  "title": "آفرها",
+  "offers": {
+   "freeNightPackage": "پکیج شب رایگان",
+   "freeHalfBoardEntry": "نیم شارژ ورود رایگان",
+   "freeCancellation": "کنسلی رایگان",
+   "restaurantDiscount": "تخفیف رستوران"
+  }
+ },
+ "filterButton": {
+  "title": "فیلترها"
  }
 }

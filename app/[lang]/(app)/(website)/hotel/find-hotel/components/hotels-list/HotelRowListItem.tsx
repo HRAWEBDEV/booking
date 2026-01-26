@@ -1,0 +1,164 @@
+import {
+ Card,
+ CardContent,
+ CardFooter,
+ CardHeader,
+} from '@/components/ui/card';
+import { ImageMinus, Star } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import {
+ Accordion,
+ AccordionItem,
+ AccordionTrigger,
+} from '@/components/ui/accordion';
+import { AccordionContent } from '@radix-ui/react-accordion';
+import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
+import { KeenSliderInstance } from 'keen-slider/react';
+export interface HotelItem {
+ dic: FindHotelDictionary;
+ currentSlide: number;
+ slidesCount: number;
+ sliderRef: React.RefObject<HTMLDivElement>;
+ instanceRef: React.MutableRefObject<KeenSliderInstance | null>;
+}
+export default function HotelRowListItem({
+ dic,
+ currentSlide,
+ slidesCount,
+ sliderRef,
+ instanceRef,
+}: HotelItem) {
+ return (
+  <div data-arrange='grid' className='group w-full h-full overflow-x-hidden!'>
+   <Card className='w-full! shadow-none py-0 gap-4 flex-row! justify-between items-center rounded-b-none'>
+    <CardHeader className='px-0! gap-0 relative w-full max-w-[250px] h-auto'>
+     <div
+      ref={sliderRef}
+      className='keen-slider relative overflow-hidden rounded-b-none rounded-tr-xl w-full'
+     >
+      {Array.from({ length: 2 }, (_, i) => i).map((i) => (
+       <div
+        key={i}
+        className='keen-slider__slide cursor-grab active:cursor-grabbing overflow-hidden w-full object-cover'
+       >
+        <div className='h-[220px] border border-input rounded-b-none bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
+         <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
+        </div>
+       </div>
+      ))}
+      {slidesCount > 0 && (
+       <div className='flex justify-center gap-2 py-3 absolute bottom-0 left-0 right-0'>
+        {[...Array(slidesCount).keys()].map((idx) => (
+         <button
+          key={idx}
+          onClick={() => instanceRef?.current?.moveToIdx(idx)}
+          className={`h-2 border cursor-pointer border-gray-300 rounded-full transition-all ${
+           currentSlide === idx
+            ? 'bg-white w-6'
+            : 'bg-gray-200/80 hover:bg-white w-2'
+          }`}
+         />
+        ))}
+       </div>
+      )}
+     </div>
+    </CardHeader>
+    <Link href={'#'}>
+     <CardContent className='p-4 flex flex-col justify-center gap-4 flex-1 h-[220px] w-full!'>
+      <div className='flex flex-col gap-2'>
+       <div className='flex items-center justify-between'>
+        <span className='flex items-center justify-ceter gap-1'>
+         {Array.from({ length: 5 }, (_, i) => i).map((i) => (
+          <Star key={i} size={12} fill='#ed6c02' stroke='#ed6c02' />
+         ))}
+        </span>
+       </div>
+       <h3 className='font-semibold text-lg'>{dic.hotelCard.mockTitle}</h3>
+       <div>
+        <p className='text-sm text-muted-foreground'>
+         {dic.hotelCard.mockLocation}
+        </p>
+       </div>
+      </div>
+      <div className='flex items-center gap-2 flex-wrap mt-auto'>
+       {dic?.hotelCard?.mockAmentities?.slice(0, 3).map((item, index) => (
+        <Badge
+         key={index}
+         variant='outline'
+         className='p-2 rounded-lg text-gray-600 dark:text-gray-300'
+        >
+         {item}
+        </Badge>
+       ))}
+       {(dic?.hotelCard?.mockAmentities?.length ?? 0) > 3 && (
+        <Badge
+         variant='outline'
+         className='p-2 px-4 rounded-lg text-gray-600 dark:text-gray-300'
+        >
+         +{(dic?.hotelCard?.mockAmentities?.length ?? 0) - 3}
+        </Badge>
+       )}
+      </div>
+     </CardContent>
+    </Link>
+    <CardFooter className='gap-2 border-r h-[220px] flex flex-col items-center justify-center! p-4 max-w-[200px] w-full'>
+     <div className='flex gap-1 justify-center items-center w-full'>
+      <span>{dic.hotelCard.fromText}</span>
+      <div className='text-lg font-semibold'>{dic.hotelCard.mockBasePrice}</div>
+     </div>
+     <span className='text-sm text-muted-foreground'>
+      {dic.hotelCard.residentUnit}
+     </span>
+     <Badge
+      variant='secondary'
+      className='cursor-pointer text-gray-100 px-2 py-1 dark:text-gray-300 text-xs '
+     >
+      {dic.hotelCard.discountBadge}
+     </Badge>
+
+     <Button className='mt-auto w-full cursor-pointer rounded-lg'>
+      {dic.hotelCard.catPrices}
+     </Button>
+    </CardFooter>
+   </Card>
+   <Accordion
+    type='single'
+    collapsible
+    defaultValue='fast-booking'
+    className='w-full'
+   >
+    <AccordionItem value='fast-booking' className='relative w-full'>
+     <AccordionTrigger className='cursor-pointer flex items-center justify-center hover:no-underline py-2 font-normal text-base bg-secondary/70 rounded-xl rounded-t-none px-4'>
+      {dic.hotelCard.fastReserve}
+     </AccordionTrigger>
+     <AccordionContent className='w-full max-w-full overflow-x-auto'>
+      <div className='flex w-max max-w-full px-4 items-start'>
+       {Array.from({ length: 6 }, (_, i) => i).map((i) => (
+        <div
+         key={i}
+         className='shrink-0 flex flex-col items-center  px-4 bg-secondary/70 '
+        >
+         <h6>{dic.hotelCard.FastReserveRoomsMocData[0].title}</h6>
+         <div className='flex items-center justify-start gap-2'>
+          <span className='font-semibold text-md'>
+           {dic.hotelCard.FastReserveRoomsMocData[0].roomPrice}
+          </span>
+          <span className='text-sm text-muted-foreground'>/</span>
+          <span className='text-sm text-muted-foreground'>
+           {dic.hotelCard.FastReserveRoomsMocData[0].residentUnit}
+          </span>
+         </div>
+         <Button className='bg-amber-500/30 text-amber-700 border-amber-600 rounded-md cursor-pointer w-full'>
+          {dic.hotelCard.resserve}
+         </Button>
+        </div>
+       ))}
+      </div>
+     </AccordionContent>
+    </AccordionItem>
+   </Accordion>
+  </div>
+ );
+}
