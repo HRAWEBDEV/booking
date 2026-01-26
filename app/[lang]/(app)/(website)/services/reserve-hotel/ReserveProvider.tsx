@@ -2,7 +2,7 @@
 
 import { useState, ReactNode } from 'react';
 import { ReserveHotelContext } from './ReserveHotelContext';
-import { useMediaQuery } from '@/services/base-config/hooks/useMediaQuery'; // Adjust path as needed
+import { useMediaQuery } from '@/services/base-config/hooks/useMediaQuery';
 import {
  Drawer,
  DrawerContent,
