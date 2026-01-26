@@ -7,7 +7,6 @@ import {
 import { ImageMinus, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { HotelItem } from './HotelItemTypes';
 import { Button } from '@/components/ui/button';
 import {
  Accordion,
@@ -15,7 +14,15 @@ import {
  AccordionTrigger,
 } from '@/components/ui/accordion';
 import { AccordionContent } from '@radix-ui/react-accordion';
-
+import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
+import { KeenSliderInstance } from 'keen-slider/react';
+export interface HotelItem {
+ dic: FindHotelDictionary;
+ currentSlide: number;
+ slidesCount: number;
+ sliderRef: React.RefObject<HTMLDivElement>;
+ instanceRef: React.MutableRefObject<KeenSliderInstance | null>;
+}
 export default function HotelRowListItem({
  dic,
  currentSlide,

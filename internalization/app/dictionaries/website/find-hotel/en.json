@@ -37,6 +37,7 @@
  "hotelCard": {
   "mockTitle": "Hotel Dariush Kish",
   "mockBasePrice": "21,000,000 Toman",
+  "mockBaseDiscountPrice": "18,900,000 Toman",
   "residentUnit": "Night",
   "mockRating": "5",
   "fromText": "From",
