@@ -29,17 +29,17 @@ export async function proxy(req: NextRequest) {
   req.nextUrl.pathname = `${await getUserLocale()}${path}`;
   return NextResponse.redirect(req.nextUrl);
  }
- if (
-  req.nextUrl.pathname === `/${pathSegments[1]}` &&
-  process.env.NEXT_PUBLIC_HOTELID
- ) {
-  return NextResponse.redirect(
-   new URL(
-    `/${pathSegments[1]}/hotel/find-hotel/${process.env.NEXT_PUBLIC_HOTELID}`,
-    req.url,
-   ),
-  );
- }
+ // if (
+ //  req.nextUrl.pathname === `/${pathSegments[1]}` &&
+ //  process.env.NEXT_PUBLIC_HOTELID
+ // ) {
+ //  return NextResponse.redirect(
+ //   new URL(
+ //    `/${pathSegments[1]}/hotel/find-hotel/${process.env.NEXT_PUBLIC_HOTELID}`,
+ //    req.url,
+ //   ),
+ //  );
+ // }
 }
 
 export const config = {
