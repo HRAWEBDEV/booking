@@ -127,8 +127,6 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      <span className='font-bold text-primary'>{reserveData.totalPrice}</span>
     </div>
    </div>
-
-   {/* Action Buttons */}
    <div className='flex items-center gap-3 mt-2'>
     <Button className='flex-1' variant='outline' onClick={handleContactSupport}>
      تماس با پشتیبانی
