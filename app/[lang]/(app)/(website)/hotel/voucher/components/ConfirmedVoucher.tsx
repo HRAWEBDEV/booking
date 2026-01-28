@@ -3,12 +3,14 @@ import { type ReserveVoucherDictionary } from '@/internalization/app/dictionarie
 import { Button } from '@/components/ui/button';
 import { IoIosCopy } from 'react-icons/io';
 import { FaCheckCircle } from 'react-icons/fa';
+import { useGoHome } from '../../../hooks/useGoHome';
 
 export default function ConfirmedVoucher({
  dic,
 }: {
  dic: ReserveVoucherDictionary;
 }) {
+ const { goHome } = useGoHome();
  return (
   <div className='py-4 my-10'>
    <div className='overflow-hidden relative w-[min(100%,28rem)] min-h-80 p-4 bg-teal-50 dark:bg-teal-950 border border-teal-700 dark:border-teal-300 rounded-md mx-auto flex items-center justify-center'>
@@ -27,7 +29,7 @@ export default function ConfirmedVoucher({
          <span className='text-neutral-300 dark:text-neutral-700'>
           {dic.voucherInfo.reserveCheckCode}:{' '}
          </span>
-         <span className='text-base'></span>
+         <span className='text-lg'></span>
         </p>
         <IoIosCopy />
        </Button>
@@ -38,6 +40,7 @@ export default function ConfirmedVoucher({
        size='lg'
        className='w-36 font-medium text-base border border-teal-700 dark:border-teal-300 '
        variant='outline'
+       onClick={goHome}
       >
        {dic.voucherInfo.returnBack}
       </Button>

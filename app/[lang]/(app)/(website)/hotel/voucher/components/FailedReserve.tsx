@@ -2,12 +2,14 @@
 import { type ReserveVoucherDictionary } from '@/internalization/app/dictionaries/website/hotel/voucher/dictionary';
 import { Button } from '@/components/ui/button';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
+import { useGoHome } from '../../../hooks/useGoHome';
 
 export default function FailedReserve({
  dic,
 }: {
  dic: ReserveVoucherDictionary;
 }) {
+ const { goHome } = useGoHome();
  return (
   <div className='py-4 my-10'>
    <div className='overflow-hidden relative w-[min(100%,28rem)] min-h-80 p-4 bg-red-50 dark:bg-red-950 border border-red-700 dark:border-red-300 rounded-md mx-auto flex items-center justify-center'>
@@ -27,6 +29,7 @@ export default function FailedReserve({
        size='lg'
        className='w-36 font-medium text-base border border-red-700 dark:border-red-300 '
        variant='outline'
+       onClick={goHome}
       >
        {dic.voucherInfo.returnBack}
       </Button>
