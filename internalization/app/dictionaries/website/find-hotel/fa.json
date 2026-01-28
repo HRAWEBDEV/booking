@@ -115,29 +115,5 @@
  },
  "filterButton": {
   "title": "فیلترها"
- },
- "trackReserve": {
-  "confirmBtn": "تایید",
-  "closeBtn": "بستن",
-  "contactSupport": "تماس با پشتیبانی",
-  "reserveStatus": {
-   "success": "رزرو موفق",
-   "paid": "در انتظار تایید",
-   "failed": "رزرو ناموفق"
-  },
-  "successStatusFields": {
-   "trackingCode": "کد پیگیری",
-   "hotelName": "نام هتل",
-   "checkIn": "تاریخ ورود",
-   "checkOut": "تاریخ خروج",
-   "guestName": "نام مهمان",
-   "roomType": "نوع اتاق",
-   "totalPrice": "مبلغ کل",
-   "phoneNumber": "شماره تماس"
-  },
-  "titleTrackReserve": "پیگیری رزرو",
-  "titleReserveDetails": "جزئیات رزرو",
-  "placeholderReserveCode": "کد پیگیری رزرو",
-  "placeholderContactNumber": "شماره تماس"
  }
 }
