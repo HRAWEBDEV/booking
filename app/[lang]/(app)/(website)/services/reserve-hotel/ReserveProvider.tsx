@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, ReactNode } from 'react';
+import { useState, ReactNode, useCallback } from 'react';
 import { ReserveHotelContext } from './ReserveHotelContext';
 import { useMediaQuery } from '@/services/base-config/hooks/useMediaQuery';
 import {
@@ -23,6 +23,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isValidIranMobileNumber } from '../../utils/mobileNumberValidator';
+import { useRouter } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { Route } from 'next';
 interface ReserveProviderProps {
  children: ReactNode;
 }
@@ -46,6 +49,28 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
    component: { trackReserve },
   },
  } = useShareDictionary();
+ const router = useRouter();
+ const pathname = usePathname();
+ const searchParams = useSearchParams();
+
+ const createQueryString = useCallback(
+  (name: string, value: string) => {
+   const params = new URLSearchParams(searchParams.toString());
+   params.set(name, value);
+   return params.toString();
+  },
+  [searchParams],
+ );
+
+ const removeQueryString = useCallback(
+  (name: string) => {
+   const params = new URLSearchParams(searchParams.toString());
+   params.delete(name);
+   return params.toString();
+  },
+  [searchParams],
+ );
+
  const [reserveData] = useState({
   status: 'success' as ReserveStatus,
   trackingCode: 'RES-2024-123456',
@@ -77,9 +102,26 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
    console.log('valid form data: ', data);
    setIsOpen(false);
    setIsResultOpen(true);
+   router.push(
+    (pathname +
+     '?' +
+     createQueryString('tracking_code', data.trackingCode)) as Route,
+    { scroll: false },
+   );
    reset();
   } catch (err) {
    console.error('Submission Error: ', err);
+  }
+ };
+
+ const handleResultOpenChange = (open: boolean) => {
+  setIsResultOpen(open);
+
+  if (!open) {
+   const newQueryString = removeQueryString('tracking_code');
+   const newUrl = newQueryString ? `${pathname}?${newQueryString}` : pathname;
+
+   router.push(newUrl as Route, { scroll: false });
   }
  };
 
@@ -233,7 +275,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
     <Button className='flex-1' variant='outline' onClick={handleContactSupport}>
      {trackReserve.contactSupport}
     </Button>
-    <Button className='flex-1' onClick={() => setIsResultOpen(false)}>
+    <Button className='flex-1' onClick={() => handleResultOpenChange(false)}>
      {trackReserve.closeBtn}
     </Button>
    </div>
@@ -268,7 +310,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
    )}
 
    {isDesktop ? (
-    <Dialog open={isResultOpen} onOpenChange={setIsResultOpen}>
+    <Dialog open={isResultOpen} onOpenChange={handleResultOpenChange}>
      <DialogContent className='w-full p-4 max-w-md'>
       <DialogHeader>
        <DialogTitle className='dark:text-gray-300 text-gray-700'>
@@ -279,7 +321,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      </DialogContent>
     </Dialog>
    ) : (
-    <Drawer open={isResultOpen} onOpenChange={setIsResultOpen}>
+    <Drawer open={isResultOpen} onOpenChange={handleResultOpenChange}>
      <DrawerContent
       className='p-4'
       style={{ height: 'fit-content', maxHeight: '90vh' }}
