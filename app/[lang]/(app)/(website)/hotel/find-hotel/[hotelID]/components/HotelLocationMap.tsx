@@ -30,21 +30,19 @@ export default function HotelLocationMap({
  };
 
  return (
-  <div style={{ position: 'relative', height: '100%', width: '100%' }}>
-   <MapContainer
-    center={position}
-    zoom={13}
-    scrollWheelZoom={false}
-    style={{ height: '100%', width: '100%', zIndex: 1 }}
-   >
-    <TileLayer
-     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-     url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-    />
-    <Marker position={position} icon={createCustomIcon()}>
-     <Popup>{hotelInfo.fName || 'Hotel Location'}</Popup>
-    </Marker>
-   </MapContainer>
-  </div>
+  <MapContainer
+   center={position}
+   zoom={13}
+   scrollWheelZoom={false}
+   style={{ height: '100%', width: '100%', zIndex: 1 }}
+  >
+   <TileLayer
+    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+   />
+   <Marker position={position} icon={createCustomIcon()}>
+    <Popup>{hotelInfo.fName || 'Hotel Location'}</Popup>
+   </Marker>
+  </MapContainer>
  );
 }
