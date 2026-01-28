@@ -7,11 +7,8 @@ import { getMetaDictionary } from '@/internalization/app/dictionaries/meta/dicti
 import { Locale } from '@/internalization/app/localization';
 import AxiosCredentialsInterceptor from './services/axios-credentials/AxiosCredentialsInterceptor';
 import { Toaster } from 'sonner';
-<<<<<<< HEAD
 import ReserveProvider from './services/reserve-hotel/ReserveProvider';
-=======
 import 'leaflet/dist/leaflet.css';
->>>>>>> main
 
 export default async function WebsiteLayout({
  children,
