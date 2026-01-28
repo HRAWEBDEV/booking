@@ -1,5 +1,12 @@
 'use client';
-import { useState, useCallback, ReactNode, useReducer, useEffect } from 'react';
+import {
+ useState,
+ useCallback,
+ ReactNode,
+ useReducer,
+ useEffect,
+ useRef,
+} from 'react';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import {
  type ReserveConfig,
@@ -78,6 +85,7 @@ export default function ReserveConfigProvider({
  dic: ReserveHotelDictionary;
  children: ReactNode;
 }) {
+ const unloadDocumentRefAbort = useRef(new AbortController());
  const searchParams = useSearchParams();
  const trackingCodeQuery = searchParams.get(trackingCodeQueryName);
  const { voucherCb } = useVoucherVCb();
@@ -259,7 +267,7 @@ export default function ReserveConfigProvider({
   const searchParams = new URLSearchParams([
    [hotelIDQueryName, hotelInfo!.hotelID.toString()],
    [trackIDQueryName, lockInfo!.lockInfo.id.toString()],
-   [trackingCodeQueryName, lockInfo!.lockInfo.trackingCode],
+   [voucherTrackingCodeQueryName, lockInfo!.lockInfo.trackingCode],
    [amountQueryName, lockInfo!.lockInfo.totalPrice.toString()],
    [gatewayTypeQueryName, selectedGateway!.paymentGatewayTypeID.toString()],
   ]);
@@ -291,6 +299,7 @@ export default function ReserveConfigProvider({
      );
      return;
     }
+    unloadDocumentRefAbort.current.abort();
     if (gatewayType === ZARIN_PAL) {
      location.href = res.data.gatewayUrl;
      return;
@@ -493,6 +502,21 @@ export default function ReserveConfigProvider({
   return () => {
    window.removeEventListener('popstate', onPopState);
   };
+ }, []);
+
+ useEffect(() => {
+  unloadDocumentRefAbort.current = new AbortController();
+  window.addEventListener(
+   'beforeunload',
+   (event) => {
+    event.preventDefault();
+    event.returnValue = 'are you sure?';
+   },
+   {
+    signal: unloadDocumentRefAbort.current.signal,
+   },
+  );
+  return () => unloadDocumentRefAbort.current.abort();
  }, []);
 
  if (hotelInfoIsError || lockInfoIsError)

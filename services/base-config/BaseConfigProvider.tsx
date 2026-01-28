@@ -37,21 +37,6 @@ export default function BaseConfigProvider({ children, activeLocale }: Props) {
   setLocale: onChangeLocale,
  };
 
- useEffect(() => {
-  const ctx = new AbortController();
-  window.addEventListener(
-   'beforeunload',
-   (event) => {
-    event.preventDefault();
-    event.returnValue = 'are you sure?';
-   },
-   {
-    signal: ctx.signal,
-   },
-  );
-  return () => ctx.abort();
- }, []);
-
  return (
   <baseConfigContext.Provider value={ctx}>
    <ThemeProvider storageKey='app-theme' themes={[...appModes]} enableSystem>
