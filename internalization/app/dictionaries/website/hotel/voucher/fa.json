@@ -5,8 +5,9 @@
   "confirmedReservation": "رزرو موفق",
   "confirmedReservationMessage": "رزرو شما با موفقیت انجام شد.",
   "reserveCheckCode": "کدپیگیری رزرو",
-  "downloadVoucher": "دانود واچر رزرو",
+  "downloadVoucher": "دانلود واچر رزرو",
   "returnBack": "بازگشت",
-  "contactSupport": "تماس با پشتیبان"
+  "contactSupport": "تماس با پشتیبان",
+  "reserveCheckCodeCopied": "کد‌پیگیری رزرو کپی شد"
  }
 }

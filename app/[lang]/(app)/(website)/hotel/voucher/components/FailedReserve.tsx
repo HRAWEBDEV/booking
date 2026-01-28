@@ -3,11 +3,14 @@ import { type ReserveVoucherDictionary } from '@/internalization/app/dictionarie
 import { Button } from '@/components/ui/button';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 import { useGoHome } from '../../../hooks/useGoHome';
+import { type BookReserveInfo } from '../../services/reserveApiActions';
 
 export default function FailedReserve({
  dic,
+ bookReserveInfo,
 }: {
  dic: ReserveVoucherDictionary;
+ bookReserveInfo: BookReserveInfo | null;
 }) {
  const { goHome } = useGoHome();
  return (

@@ -165,23 +165,32 @@ function getPaymentLink({
  );
 }
 
-function bookReserve({
- refNum,
- amount,
- paymentGatewayTypeID,
- ...queries
-}: ApiCredentialProps & {
- lockBookID: number;
- refNum: string;
- amount: number;
- paymentGatewayTypeID: number;
-}) {
+function getBookReserveParams(
+ queries: ApiCredentialProps & {
+  lockBookID: string;
+ },
+) {
  const searchParams = new URLSearchParams();
  Object.entries(queries).forEach(([key, val]) => {
   if (val !== undefined) {
    searchParams.set(key, String(val));
   }
  });
+ return searchParams;
+}
+
+function bookReserve({
+ refNum,
+ amount,
+ paymentGatewayTypeID,
+ ...queries
+}: ApiCredentialProps & {
+ lockBookID: string;
+ refNum: string;
+ amount: number;
+ paymentGatewayTypeID: number;
+}) {
+ const searchParams = getBookReserveParams(queries);
  return axios.post<BookReserveInfo>(
   `${bookReserveApi}?${searchParams.toString()}`,
   {
@@ -192,6 +201,25 @@ function bookReserve({
  );
 }
 
+const downloadReserveVoucher = ({
+ ...queries
+}: {
+ reserveID: string;
+ channelID: string;
+ hotelID: string;
+}) => {
+ const searchParams = new URLSearchParams();
+ Object.entries(queries).forEach(([key, val]) => {
+  searchParams.set(key, String(val));
+ });
+ return axios.get<Blob>(
+  `${'/CRS/OnlineReservation/GetVoucher'}?${searchParams.toString()}`,
+  {
+   responseType: 'blob',
+  },
+ );
+};
+
 export {
  type LockReserveProps,
  type LockReserveResult,
@@ -201,15 +229,19 @@ export {
  type LockInfoResult,
  type GateWay,
  type PaymentLink,
+ type BookReserveInfo,
 };
 export {
  getLockInfoApi,
  getGatewaysApi,
  cancelReserveLockApi,
+ bookReserveApi,
  lockReserve,
  getLockInfo,
  getGateways,
  getPaymentLink,
+ getBookReserveParams,
  bookReserve,
  cancelReserveLock,
+ downloadReserveVoucher,
 };

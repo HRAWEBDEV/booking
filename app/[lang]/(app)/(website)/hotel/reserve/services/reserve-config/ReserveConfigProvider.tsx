@@ -61,6 +61,15 @@ import {
  trackingCodeQueryName,
 } from '../../utils/reserveSteps';
 import NotFound from '../../../../components/NotFound';
+import { useVoucherVCb } from '../../../voucher/hooks/useVoucherCb';
+import { GatewayTypes, ZARIN_PAL, SEP } from '../../../utils/gatewayTypes';
+import {
+ hotelIDQueryName,
+ trackingCodeQueryName as voucherTrackingCodeQueryName,
+ amountQueryName,
+ gatewayTypeQueryName,
+ trackIDQueryName,
+} from '../../../voucher/utils/voucherQueries';
 
 export default function ReserveConfigProvider({
  children,
@@ -71,6 +80,7 @@ export default function ReserveConfigProvider({
 }) {
  const searchParams = useSearchParams();
  const trackingCodeQuery = searchParams.get(trackingCodeQueryName);
+ const { voucherCb } = useVoucherVCb();
  const [activeReserveStep, setActiveReserveStep] = useState<ReserveStep>(
   trackingCodeQuery ? 'payment' : 'reserve',
  );
@@ -245,6 +255,16 @@ export default function ReserveConfigProvider({
  });
 
  // payment link
+ function getVoucherRedirectLink() {
+  const searchParams = new URLSearchParams([
+   [hotelIDQueryName, hotelInfo!.hotelID.toString()],
+   [trackIDQueryName, lockInfo!.lockInfo.id.toString()],
+   [trackingCodeQueryName, lockInfo!.lockInfo.trackingCode],
+   [amountQueryName, lockInfo!.lockInfo.totalPrice.toString()],
+   [gatewayTypeQueryName, selectedGateway!.paymentGatewayTypeID.toString()],
+  ]);
+  return `${location.origin}${voucherCb}?${searchParams.toString()}`;
+ }
  const { mutate: getPaymentLinkMutate, isPending: getPaymentLinkIsPending } =
   useMutation({
    mutationFn() {
@@ -252,7 +272,7 @@ export default function ReserveConfigProvider({
      hotelID: hotelInfo!.hotelID.toString(),
      paymentGatewayTypeID: selectedGateway!.paymentGatewayTypeID.toString(),
      amount: lockInfo!.lockInfo.totalPrice,
-     callback_url: '',
+     callback_url: getVoucherRedirectLink(),
      mobile: lockInfo!.lockInfo.contactNo!,
      resNum: lockInfo!.lockInfo.id.toString(),
     });
@@ -264,6 +284,20 @@ export default function ReserveConfigProvider({
    },
    onSuccess(res) {
     // handle success payment
+    const gatewayType = GatewayTypes[selectedGateway!.paymentGatewayTypeID];
+    if (!res.data.gatewayUrl) {
+     toast.error(
+      dic.reserveInfo.reserveForm.somethingWrongHappendedTryAgainLater,
+     );
+     return;
+    }
+    if (gatewayType === ZARIN_PAL) {
+     location.href = res.data.gatewayUrl;
+     return;
+    }
+    if (gatewayType === SEP) {
+     return;
+    }
    },
   });
 
