@@ -76,7 +76,7 @@ export default function HotelCardListItem({
        </div>
       </div>
       <div className='flex items-center gap-2 flex-wrap'>
-       {dic?.hotelCard?.mockAmentities?.slice(0, 3).map((item, index) => (
+       {dic?.hotelCard?.mockAmenities?.slice(0, 3).map((item, index) => (
         <Badge
          key={index}
          variant='outline'
@@ -85,12 +85,12 @@ export default function HotelCardListItem({
          {item}
         </Badge>
        ))}
-       {(dic?.hotelCard?.mockAmentities?.length ?? 0) > 3 && (
+       {(dic?.hotelCard?.mockAmenities?.length ?? 0) > 3 && (
         <Badge
          variant='outline'
          className='p-2 px-4 rounded-lg text-gray-600 dark:text-gray-300'
         >
-         +{(dic?.hotelCard?.mockAmentities?.length ?? 0) - 3}
+         +{(dic?.hotelCard?.mockAmenities?.length ?? 0) - 3}
         </Badge>
        )}
       </div>

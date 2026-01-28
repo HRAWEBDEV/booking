@@ -62,7 +62,7 @@ export default function HotelItemRowAccordion({
           size={'sm'}
           className='w-full cursor-pointer rounded-sm border-primary text-primary dark:border-neutral-200'
          >
-          {dic.hotelCard.resserve}
+          {dic.hotelCard.reserve}
          </Button>
         </div>
        ))}
