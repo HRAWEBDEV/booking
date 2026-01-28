@@ -3,6 +3,7 @@
  "voucherInfo": {
   "failedReservation": "رزرو ناموفق",
   "confirmedReservation": "رزرو موفق",
+  "confirmedReservationMessage": "رزرو شما با موفقیت انجام شد.",
   "reserveCheckCode": "کدپیگیری رزرو",
   "downloadVoucher": "دانود واچر رزرو",
   "returnBack": "بازگشت",
