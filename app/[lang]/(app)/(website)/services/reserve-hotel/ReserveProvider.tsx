@@ -18,13 +18,19 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, XCircle, Clock } from 'lucide-react';
-import { FindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 import { useShareDictionary } from '../share-dictionary/shareDictionaryContext';
-
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 interface ReserveProviderProps {
  children: ReactNode;
- dic: FindHotelDictionary;
 }
+
+const trackingFormSchema = z.object({
+ trackingCode: z.string().min(1, 'کد پیگیری الزامی است'),
+ phoneNumber: z.string().min(1, 'شماره تلفن الزامی است'),
+});
+type TrackingFormData = z.infer<typeof trackingFormSchema>;
 
 type ReserveStatus = 'failed' | 'paid' | 'success';
 export default function ReserveProvider({ children }: ReserveProviderProps) {
@@ -47,19 +53,91 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   totalPrice: '15,000,000 تومان',
   phoneNumber: '09123456789',
  });
+ const {
+  register,
+  handleSubmit,
+  formState: { errors, isSubmitting },
+  reset,
+ } = useForm<TrackingFormData>({
+  resolver: zodResolver(trackingFormSchema),
+  mode: 'onBlur',
+  defaultValues: {
+   trackingCode: '',
+   phoneNumber: '',
+  },
+ });
 
- const handleSubmit = () => {
-  setIsOpen(false);
-  setIsResultOpen(true);
+ const onSubmit = async (data: TrackingFormData) => {
+  try {
+   await new Promise((resolve) => setTimeout(resolve, 1000));
+   console.log('valid form data: ', data);
+   setIsOpen(false);
+   setIsResultOpen(true);
+   reset();
+  } catch (err) {
+   console.error('Submission Error: ', err);
+  }
  };
 
  const handleCancel = () => {
   setIsOpen(false);
+  reset();
+ };
+
+ const handleOpenChange = (open: boolean) => {
+  setIsOpen(open);
+  if (!open) {
+   reset();
+  }
  };
 
  const handleContactSupport = () => {
   console.log('Contact support clicked');
  };
+
+ const formContent = (
+  <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+   <div className='transition-all'>
+    <Input
+     type='text'
+     placeholder={trackReserve.placeholderReserveCode}
+     {...register('trackingCode')}
+     className='text-right border-input focus:border-primary focus-visible:border-primary focus:ring-primary focus-visible:ring-0'
+    />
+    {errors.trackingCode && (
+     <p className='text-destructive text-sm mt-1'>
+      {errors.trackingCode.message}
+     </p>
+    )}
+   </div>
+   <div className='transition-all'>
+    <Input
+     type='tel'
+     placeholder={trackReserve.placeholderContactNumber}
+     {...register('phoneNumber')}
+     className='text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary text-right'
+    />
+    {errors.phoneNumber && (
+     <p className='text-destructive text-sm mt-1'>
+      {errors.phoneNumber.message}
+     </p>
+    )}
+   </div>
+   <div className='flex items-center gap-4'>
+    <Button
+     type='button'
+     className='flex-1'
+     variant='destructive'
+     onClick={handleCancel}
+    >
+     {trackReserve.closeBtn}
+    </Button>
+    <Button type='submit' className='flex-1' disabled={isSubmitting}>
+     {isSubmitting ? 'در حال پردازش...' : trackReserve.confirmBtn}
+    </Button>
+   </div>
+  </form>
+ );
 
  const getStatusConfig = (status: ReserveStatus) => {
   switch (status) {
@@ -162,33 +240,14 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   <ReserveHotelContext.Provider value={{ isOpen, setIsOpen }}>
    {children}
    {isDesktop ? (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
      <DialogContent className='w-full p-4'>
       <DialogHeader>
        <DialogTitle className='dark:text-gray-300 text-gray-700'>
         {trackReserve.titleTrackReserve}
        </DialogTitle>
       </DialogHeader>
-      <div className='flex flex-col gap-4'>
-       <Input
-        type='text'
-        placeholder={trackReserve.placeholderReserveCode}
-        className='text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary!'
-       />
-       <Input
-        type='number'
-        placeholder={trackReserve.placeholderContactNumber}
-        className='text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary!'
-       />
-       <div className='flex items-center gap-4'>
-        <Button className='flex-1' variant='destructive' onClick={handleCancel}>
-         {trackReserve.closeBtn}
-        </Button>
-        <Button className='flex-1' onClick={handleSubmit}>
-         {trackReserve.confirmBtn}
-        </Button>
-       </div>
-      </div>
+      {formContent}
      </DialogContent>
     </Dialog>
    ) : (
@@ -199,26 +258,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
         {trackReserve.titleTrackReserve}
        </DrawerTitle>
       </DrawerHeader>
-      <div className='flex flex-col gap-4'>
-       <Input
-        type='text'
-        placeholder={trackReserve.placeholderReserveCode}
-        className='text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary!'
-       />
-       <Input
-        type='number'
-        placeholder={trackReserve.placeholderContactNumber}
-        className='text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary!'
-       />
-       <div className='flex items-center gap-4'>
-        <Button className='flex-1' variant='destructive' onClick={handleCancel}>
-         {trackReserve.closeBtn}
-        </Button>
-        <Button className='flex-1' onClick={handleSubmit}>
-         {trackReserve.confirmBtn}
-        </Button>
-       </div>
-      </div>
+      {formContent}
      </DrawerContent>
     </Drawer>
    )}
