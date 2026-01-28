@@ -7,6 +7,7 @@ import { getMetaDictionary } from '@/internalization/app/dictionaries/meta/dicti
 import { Locale } from '@/internalization/app/localization';
 import AxiosCredentialsInterceptor from './services/axios-credentials/AxiosCredentialsInterceptor';
 import { Toaster } from 'sonner';
+import 'leaflet/dist/leaflet.css';
 
 export default async function WebsiteLayout({
  children,

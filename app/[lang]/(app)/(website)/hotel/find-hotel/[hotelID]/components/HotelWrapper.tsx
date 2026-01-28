@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import HotelInfo from './HotelInfo';
 import HotelGallery from './HotelGallery';
