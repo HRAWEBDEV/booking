@@ -1,0 +1,13 @@
+{
+ "title": "دریافت واچر",
+ "voucherInfo": {
+  "failedReservation": "رزرو ناموفق",
+  "confirmedReservation": "رزرو موفق",
+  "confirmedReservationMessage": "رزرو شما با موفقیت انجام شد.",
+  "reserveCheckCode": "کدپیگیری رزرو",
+  "downloadVoucher": "دانلود واچر رزرو",
+  "returnBack": "بازگشت",
+  "contactSupport": "تماس با پشتیبان",
+  "reserveCheckCodeCopied": "کد‌پیگیری رزرو کپی شد"
+ }
+}

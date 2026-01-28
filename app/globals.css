@@ -204,6 +204,11 @@
 .hide-scrollbar::-webkit-scrollbar {
  display: none; /* Chrome, Safari, Opera */
 }
+
+.leaflet-control-attribution {
+ display: none;
+}
+
 @layer base {
  * {
   @apply border-border outline-ring/50;

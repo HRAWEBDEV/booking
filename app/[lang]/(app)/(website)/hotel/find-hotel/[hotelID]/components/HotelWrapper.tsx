@@ -54,7 +54,7 @@ export default function HotelWrapper({
      <HotelGallery dic={dic} hotelImages={hotelImages} />
      <HotelMenuBar dic={dic} />
      <div className='mb-4 block md:hidden'>
-      <HotelLocation dic={dic} />
+      <HotelLocation dic={dic} hotelInfo={hotelInfo} />
      </div>
      <div className='block md:hidden'>
       <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
@@ -74,7 +74,7 @@ export default function HotelWrapper({
     </div>
     <div>
      <div className='mb-4 hidden md:block'>
-      <HotelLocation dic={dic} />
+      <HotelLocation dic={dic} hotelInfo={hotelInfo} />
      </div>
      <div className='sticky top-1 hidden md:block'>
       <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />

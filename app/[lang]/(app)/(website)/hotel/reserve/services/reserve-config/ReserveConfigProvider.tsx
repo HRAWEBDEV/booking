@@ -1,5 +1,12 @@
 'use client';
-import { useState, useCallback, ReactNode, useReducer, useEffect } from 'react';
+import {
+ useState,
+ useCallback,
+ ReactNode,
+ useReducer,
+ useEffect,
+ useRef,
+} from 'react';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import {
  type ReserveConfig,
@@ -61,6 +68,15 @@ import {
  trackingCodeQueryName,
 } from '../../utils/reserveSteps';
 import NotFound from '../../../../components/NotFound';
+import { useVoucherVCb } from '../../../voucher/hooks/useVoucherCb';
+import { GatewayTypes, ZARIN_PAL, SEP } from '../../../utils/gatewayTypes';
+import {
+ hotelIDQueryName,
+ trackingCodeQueryName as voucherTrackingCodeQueryName,
+ amountQueryName,
+ gatewayTypeQueryName,
+ trackIDQueryName,
+} from '../../../voucher/utils/voucherQueries';
 
 export default function ReserveConfigProvider({
  children,
@@ -69,8 +85,10 @@ export default function ReserveConfigProvider({
  dic: ReserveHotelDictionary;
  children: ReactNode;
 }) {
+ const unloadDocumentRefAbort = useRef(new AbortController());
  const searchParams = useSearchParams();
  const trackingCodeQuery = searchParams.get(trackingCodeQueryName);
+ const { voucherCb } = useVoucherVCb();
  const [activeReserveStep, setActiveReserveStep] = useState<ReserveStep>(
   trackingCodeQuery ? 'payment' : 'reserve',
  );
@@ -245,6 +263,16 @@ export default function ReserveConfigProvider({
  });
 
  // payment link
+ function getVoucherRedirectLink() {
+  const searchParams = new URLSearchParams([
+   [hotelIDQueryName, hotelInfo!.hotelID.toString()],
+   [trackIDQueryName, lockInfo!.lockInfo.id.toString()],
+   [voucherTrackingCodeQueryName, lockInfo!.lockInfo.trackingCode],
+   [amountQueryName, lockInfo!.lockInfo.totalPrice.toString()],
+   [gatewayTypeQueryName, selectedGateway!.paymentGatewayTypeID.toString()],
+  ]);
+  return `${location.origin}${voucherCb}?${searchParams.toString()}`;
+ }
  const { mutate: getPaymentLinkMutate, isPending: getPaymentLinkIsPending } =
   useMutation({
    mutationFn() {
@@ -252,7 +280,7 @@ export default function ReserveConfigProvider({
      hotelID: hotelInfo!.hotelID.toString(),
      paymentGatewayTypeID: selectedGateway!.paymentGatewayTypeID.toString(),
      amount: lockInfo!.lockInfo.totalPrice,
-     callback_url: '',
+     callback_url: getVoucherRedirectLink(),
      mobile: lockInfo!.lockInfo.contactNo!,
      resNum: lockInfo!.lockInfo.id.toString(),
     });
@@ -264,6 +292,21 @@ export default function ReserveConfigProvider({
    },
    onSuccess(res) {
     // handle success payment
+    const gatewayType = GatewayTypes[selectedGateway!.paymentGatewayTypeID];
+    if (!res.data.gatewayUrl) {
+     toast.error(
+      dic.reserveInfo.reserveForm.somethingWrongHappendedTryAgainLater,
+     );
+     return;
+    }
+    unloadDocumentRefAbort.current.abort();
+    if (gatewayType === ZARIN_PAL) {
+     location.href = res.data.gatewayUrl;
+     return;
+    }
+    if (gatewayType === SEP) {
+     return;
+    }
    },
   });
 
@@ -390,6 +433,7 @@ export default function ReserveConfigProvider({
    searchParams.set(fromDateQueryName, localeReserveInfo.fromDate);
    searchParams.set(toDateQueryName, localeReserveInfo.toDate);
   }
+  clearLocalReserveInfo();
   router.replace(
    `/${locale}/hotel/find-hotel/${hotelInfo?.hotelID}?${searchParams.toString()}`,
   );
@@ -460,7 +504,22 @@ export default function ReserveConfigProvider({
   };
  }, []);
 
- if (hotelInfoIsError)
+ useEffect(() => {
+  unloadDocumentRefAbort.current = new AbortController();
+  window.addEventListener(
+   'beforeunload',
+   (event) => {
+    event.preventDefault();
+    event.returnValue = 'are you sure?';
+   },
+   {
+    signal: unloadDocumentRefAbort.current.signal,
+   },
+  );
+  return () => unloadDocumentRefAbort.current.abort();
+ }, []);
+
+ if (hotelInfoIsError || lockInfoIsError)
   return (
    <div className='min-h-[calc(60svh-var(--website-header-height))] flex flex-col justify-center py-8'>
     <NotFound />

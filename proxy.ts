@@ -6,7 +6,6 @@ import {
  userLocaleCookieName,
 } from './utils/userLocaleManager';
 import { cookies } from 'next/headers';
-import { getSetupProviderCredentials } from './app/[lang]/(app)/(website)/utils/getSetupProviderCredentials';
 
 function ignorePath(path: string): boolean {
  const targetPaths = ['/api', '/static'];
