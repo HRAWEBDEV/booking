@@ -22,13 +22,17 @@ import { useShareDictionary } from '../share-dictionary/shareDictionaryContext';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isValidIranMobileNumber } from '../../utils/mobileNumberValidator';
 interface ReserveProviderProps {
  children: ReactNode;
 }
 
 const trackingFormSchema = z.object({
  trackingCode: z.string().min(1, 'کد پیگیری الزامی است'),
- phoneNumber: z.string().min(1, 'شماره تلفن الزامی است'),
+ phoneNumber: z
+  .string()
+  .min(1, 'شماره تلفن الزامی است')
+  .refine(isValidIranMobileNumber, 'شماره تلفن اشتباه است'),
 });
 type TrackingFormData = z.infer<typeof trackingFormSchema>;
 
@@ -102,7 +106,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      type='text'
      placeholder={trackReserve.placeholderReserveCode}
      {...register('trackingCode')}
-     className='text-right border-input focus:border-primary focus-visible:border-primary focus:ring-primary focus-visible:ring-0'
+     className='text-right border-input'
     />
     {errors.trackingCode && (
      <p className='text-destructive text-sm mt-1'>
@@ -115,7 +119,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      type='tel'
      placeholder={trackReserve.placeholderContactNumber}
      {...register('phoneNumber')}
-     className='text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-primary text-right'
+     className='text-foreground placeholder:text-muted-foreground text-right'
     />
     {errors.phoneNumber && (
      <p className='text-destructive text-sm mt-1'>
