@@ -40,6 +40,7 @@ export default function HotelWrapper({
  toDate: string;
  hotelID: string;
 }) {
+ console.log('here');
  return (
   <HotelConfigProvider
    hotelInfo={hotelInfo}
