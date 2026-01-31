@@ -26,22 +26,15 @@ import { isValidIranMobileNumber } from '../../utils/mobileNumberValidator';
 import { useRouter } from 'next/navigation';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Route } from 'next';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getLockInfo } from '../../hotel/services/reserveApiActions';
-import { getSetupProviderCredentials } from '../../utils/getSetupProviderCredentials';
+import { getHotelInfo } from '../../hotel/services/hotelApiActions';
 interface ReserveProviderProps {
  children: ReactNode;
 }
-const trackingFormSchema = z.object({
- trackingCode: z.string().min(1, 'کد پیگیری الزامی است'),
- phoneNumber: z
-  .string()
-  .min(1, 'شماره تلفن الزامی است')
-  .refine(isValidIranMobileNumber, 'شماره تلفن اشتباه است'),
-});
-type TrackingFormData = z.infer<typeof trackingFormSchema>;
 
 type ReserveStatus = 'failed' | 'pending' | 'success';
+
 export default function ReserveProvider({ children }: ReserveProviderProps) {
  const [isOpen, setIsOpen] = useState(false);
  const [isResultOpen, setIsResultOpen] = useState(false);
@@ -52,6 +45,20 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
    component: { trackReserve },
   },
  } = useShareDictionary();
+ const trackingFormSchema = z.object({
+  trackingCode: z
+   .string()
+   .min(1, trackReserve.formSchemaMessages.trackingCodeRequired),
+  phoneNumber: z
+   .string()
+   .min(1, trackReserve.formSchemaMessages.phoneNumberRequired)
+   .refine(
+    isValidIranMobileNumber,
+    trackReserve.formSchemaMessages.phoneNumberWrong,
+   ),
+ });
+ type TrackingFormData = z.infer<typeof trackingFormSchema>;
+
  const router = useRouter();
  const pathname = usePathname();
  const searchParams = useSearchParams();
@@ -111,12 +118,24 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   },
  });
 
+ const res = data?.data;
+ const hotelID = res?.lockInfo.hotelID;
+ const { isLoading, data: hotelInfoRes } = useQuery({
+  queryKey: ['hotel-info', hotelID],
+  queryFn: () =>
+   getHotelInfo({
+    signal: new AbortController().signal,
+    hotelID: String(hotelID),
+   }),
+
+  enabled: isResultOpen && !!hotelID,
+ });
  const reserveStatus: ReserveStatus = (() => {
   if (!data) return 'failed';
   if (data.data.isBooked === false) return 'pending';
   return 'success';
  })();
- const res = data?.data;
+
  const onSubmit = (data: TrackingFormData) => {
   setTrackingCode(data.trackingCode);
   mutate(data.trackingCode);
@@ -187,7 +206,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      {trackReserve.closeBtn}
     </Button>
     <Button type='submit' className='flex-1' disabled={isSubmitting}>
-     {isSubmitting ? 'در حال پردازش...' : trackReserve.confirmBtn}
+     {isSubmitting ? '' : trackReserve.confirmBtn}
     </Button>
    </div>
   </form>
@@ -234,23 +253,39 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
    <div className='flex flex-col gap-3 text-sm'>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
-      {trackReserve.successStatusFields.trackingCode}
+      {trackReserve.trackDetails.trackingCode}
      </span>
      <span className='font-medium'>{res?.lockInfo.trackingCode}</span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>نام هتل:</span>
-     {/* <span className='font-medium'>{res?.guestInfo}</span> */}
+     <span className='text-muted-foreground'>
+      {trackReserve.trackDetails.hotelName}
+     </span>
+     <span className='font-medium'>
+      {isLoading
+       ? trackReserve.trackDetails.hotelNameLoading
+       : hotelInfoRes?.data.fName}
+     </span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
-      {trackReserve.successStatusFields.checkIn}
+      {trackReserve.trackDetails.hotelCity}
+     </span>
+     <span className='font-medium'>
+      {isLoading
+       ? trackReserve.trackDetails.hotelCityLoading
+       : hotelInfoRes?.data.cityName}
+     </span>
+    </div>
+    <div className='flex justify-between items-center border-b pb-2'>
+     <span className='text-muted-foreground'>
+      {trackReserve.trackDetails.checkIn}
      </span>
      <span className='font-medium'>{res?.lockInfo.arrivelDateTimeOffset}</span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
-      {trackReserve.successStatusFields.checkOut}
+      {trackReserve.trackDetails.checkOut}
      </span>
      <span className='font-medium'>
       {res?.lockInfo.departureDateTimeOffset}
@@ -258,7 +293,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
-      {trackReserve.successStatusFields.guestName}
+      {trackReserve.trackDetails.guestName}
      </span>
      <span className='font-medium'>
       {res?.lockInfo.firstName} {res?.lockInfo.lastName}
@@ -266,19 +301,19 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
-      {trackReserve.successStatusFields.roomType}
+      {trackReserve.trackDetails.roomType}
      </span>
      <span className='font-medium'>{res?.rooms[0].fName}</span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
-      {trackReserve.successStatusFields.phoneNumber}
+      {trackReserve.trackDetails.phoneNumber}
      </span>
      <span className='font-medium'>{res?.lockInfo.contactNo}</span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
-      {trackReserve.successStatusFields.totalPrice}
+      {trackReserve.trackDetails.totalPrice}
      </span>
      <span className='font-bold text-primary'>{res?.lockInfo.totalPrice}</span>
     </div>

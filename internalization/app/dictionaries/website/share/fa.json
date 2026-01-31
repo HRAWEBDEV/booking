@@ -54,9 +54,12 @@
     "paid": "در انتظار تایید",
     "failed": "رزرو ناموفق"
    },
-   "successStatusFields": {
+   "trackDetails": {
+    "hotelName": "نام هتل:",
+    "hotelCity": "شهر هتل",
+    "hotelNameLoading": "⌛",
+    "hotelCityLoading": "⌛",
     "trackingCode": "کد پیگیری",
-    "hotelName": "نام هتل",
     "checkIn": "تاریخ ورود",
     "checkOut": "تاریخ خروج",
     "guestName": "نام مهمان",
@@ -67,7 +70,13 @@
    "titleTrackReserve": "پیگیری رزرو",
    "titleReserveDetails": "جزئیات رزرو",
    "placeholderReserveCode": "کد پیگیری رزرو",
-   "placeholderContactNumber": "شماره تماس"
+   "placeholderContactNumber": "شماره تماس",
+   "formSchemaMessages": {
+    "trackingCodeRequired": "کد پیگیری الزامی است",
+    "phoneNumberRequired": "شماره تلفن الزامی است",
+    "phoneNumberWrong": "شماره تلفن اشتباه است"
+   },
+   "submitBtnLoadingMsg": "در حال پردازش..."
   }
  }
 }
