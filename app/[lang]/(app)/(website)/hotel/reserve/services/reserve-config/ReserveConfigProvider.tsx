@@ -305,6 +305,13 @@ export default function ReserveConfigProvider({
      return;
     }
     if (gatewayType === SEP) {
+     if (!res.data.token) {
+      toast.error(
+       dic.reserveInfo.reserveForm.somethingWrongHappendedTryAgainLater,
+      );
+      return;
+     }
+     location.href = `${res.data.gatewayUrl}?token=${res.data.token}`;
      return;
     }
    },

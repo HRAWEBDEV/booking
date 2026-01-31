@@ -57,7 +57,7 @@
  "payment": {
   "gateways": {
    "zarinPal": "زرین پال",
-   "sepPayment": "سپ"
+   "sepPayment": "بانک سامان(سپ)"
   },
   "paymentInfo": {
    "title": "اطلاعات پرداخت",
