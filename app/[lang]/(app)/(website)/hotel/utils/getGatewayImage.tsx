@@ -21,5 +21,5 @@ export function getGatewayImage(gatetwayTypeID: number) {
     />
    );
  }
- return <FaCreditCard />;
+ return <FaCreditCard className='size-12' />;
 }
