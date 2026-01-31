@@ -5,7 +5,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Button } from '@/components/ui/button';
 import { GatewayTypes } from '../../../utils/gatewayTypes';
-import { FaCreditCard } from 'react-icons/fa';
+import { getGatewayImage } from '../../../utils/getGatewayImage';
 
 export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
  const {
@@ -152,15 +152,15 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
            data-is-selected={gateway.id === gateways.selectedGateway?.id}
            size={'icon'}
            variant={'outline'}
-           className='group h-auto flex flex-col size-24 text-neutral-600 dark:text-neutral-400 data-[is-selected="true"]:border-primary data-[is-selected="true"]:text-primary'
+           className='group h-auto flex flex-col size-32 text-neutral-600 dark:text-neutral-400 data-[is-selected="true"]:border-primary data-[is-selected="true"]:text-primary'
            onClick={() => {
             gateways.setSelectedGateway(gateway);
            }}
           >
-           <div className='grow overflow-hidden grid place-content-center'>
-            <FaCreditCard className='size-10' />
+           <div className='grow overflow-hidden flex items-center justify-center p-2'>
+            {getGatewayImage(gateway.paymentGatewayTypeID)}
            </div>
-           <p className='text-center text-sm p-1'>
+           <p className='text-center text-base p-1'>
             {
              dic.payment.gateways[
               GatewayTypes[
