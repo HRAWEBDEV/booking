@@ -26,6 +26,8 @@ import { isValidIranMobileNumber } from '../../utils/mobileNumberValidator';
 import { useRouter } from 'next/navigation';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Route } from 'next';
+import { useMutation } from '@tanstack/react-query';
+import { getLockInfo } from '../../hotel/services/reserveApiActions';
 interface ReserveProviderProps {
  children: ReactNode;
 }
@@ -43,6 +45,7 @@ type ReserveStatus = 'failed' | 'paid' | 'success';
 export default function ReserveProvider({ children }: ReserveProviderProps) {
  const [isOpen, setIsOpen] = useState(false);
  const [isResultOpen, setIsResultOpen] = useState(false);
+ const [trackingCode, setTrackingCode] = useState('');
  const isDesktop = useMediaQuery('(min-width: 768px)');
  const {
   shareDictionary: {
@@ -96,22 +99,33 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   },
  });
 
- const onSubmit = async (data: TrackingFormData) => {
-  try {
-   await new Promise((resolve) => setTimeout(resolve, 1000));
-   console.log('valid form data: ', data);
+ const { mutate, data } = useMutation({
+  mutationFn: (trackingCode: string) => {
+   return getLockInfo({
+    signal: new AbortController().signal,
+    trackingCode: trackingCode,
+   });
+  },
+  onSuccess: () => {
    setIsOpen(false);
-   setIsResultOpen(true);
    router.push(
     (pathname +
      '?' +
-     createQueryString('tracking_code', data.trackingCode)) as Route,
+     createQueryString('tracking_code', trackingCode)) as Route,
     { scroll: false },
    );
+   setIsResultOpen(true);
    reset();
-  } catch (err) {
-   console.error('Submission Error: ', err);
-  }
+   console.log(data);
+  },
+  onError: (err) => {
+   console.log(`API Request Failed `, err);
+  },
+ });
+
+ const onSubmit = (data: TrackingFormData) => {
+  setTrackingCode(data.trackingCode);
+  mutate(data.trackingCode);
  };
 
  const handleResultOpenChange = (open: boolean) => {
