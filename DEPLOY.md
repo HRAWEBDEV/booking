@@ -6,11 +6,11 @@ to run the project you need to create .env.development for development environme
 
 .env file key values 
 ```
-NEXT_PUBLIC_MODE
-NEXT_PUBLIC_CHANNELID
-NEXT_PUBLIC_PROVIDERID
-NEXT_PUBLIC_HOTELID
-NEXT_PUBLIC_ARZID
-NEXT_PUBLIC_API_URI
-NEXT_PUBLIC_X_AUTH
+NEXT_PUBLIC_MODE  // development or production
+NEXT_PUBLIC_CHANNELID // your channel id or empty
+NEXT_PUBLIC_PROVIDERID // your provider id or empty
+NEXT_PUBLIC_HOTELID // your hotel id or empty
+NEXT_PUBLIC_ARZID // your arz id or empty
+NEXT_PUBLIC_API_URI // your api uri or empty for example https://crsapi.crs-booking.com/Api
+NEXT_PUBLIC_X_AUTH  // your x-auth token or empty
 ```
