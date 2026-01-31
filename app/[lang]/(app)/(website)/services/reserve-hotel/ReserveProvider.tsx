@@ -28,10 +28,10 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { Route } from 'next';
 import { useMutation } from '@tanstack/react-query';
 import { getLockInfo } from '../../hotel/services/reserveApiActions';
+import { getSetupProviderCredentials } from '../../utils/getSetupProviderCredentials';
 interface ReserveProviderProps {
  children: ReactNode;
 }
-
 const trackingFormSchema = z.object({
  trackingCode: z.string().min(1, 'کد پیگیری الزامی است'),
  phoneNumber: z
@@ -41,7 +41,7 @@ const trackingFormSchema = z.object({
 });
 type TrackingFormData = z.infer<typeof trackingFormSchema>;
 
-type ReserveStatus = 'failed' | 'paid' | 'success';
+type ReserveStatus = 'failed' | 'pending' | 'success';
 export default function ReserveProvider({ children }: ReserveProviderProps) {
  const [isOpen, setIsOpen] = useState(false);
  const [isResultOpen, setIsResultOpen] = useState(false);
@@ -73,18 +73,6 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   },
   [searchParams],
  );
-
- const [reserveData] = useState({
-  status: 'success' as ReserveStatus,
-  trackingCode: 'RES-2024-123456',
-  hotelName: 'هتل پارسیان آزادی',
-  checkIn: '1403/10/15',
-  checkOut: '1403/10/18',
-  guestName: 'علی احمدی',
-  roomType: 'اتاق دو تخته',
-  totalPrice: '15,000,000 تومان',
-  phoneNumber: '09123456789',
- });
  const {
   register,
   handleSubmit,
@@ -111,7 +99,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
    router.push(
     (pathname +
      '?' +
-     createQueryString('tracking_code', trackingCode)) as Route,
+     createQueryString('reserve-tracking-code', trackingCode)) as Route,
     { scroll: false },
    );
    setIsResultOpen(true);
@@ -123,6 +111,12 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   },
  });
 
+ const reserveStatus: ReserveStatus = (() => {
+  if (!data) return 'failed';
+  if (data.data.isBooked === false) return 'pending';
+  return 'success';
+ })();
+ const res = data?.data;
  const onSubmit = (data: TrackingFormData) => {
   setTrackingCode(data.trackingCode);
   mutate(data.trackingCode);
@@ -132,7 +126,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   setIsResultOpen(open);
 
   if (!open) {
-   const newQueryString = removeQueryString('tracking_code');
+   const newQueryString = removeQueryString('reserve-tracking-code');
    const newUrl = newQueryString ? `${pathname}?${newQueryString}` : pathname;
 
    router.push(newUrl as Route, { scroll: false });
@@ -208,7 +202,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      bgColor: 'bg-green-50 dark:bg-green-950',
      textColor: 'text-green-700 dark:text-green-400',
     };
-   case 'paid':
+   case 'pending':
     return {
      icon: <Clock className='w-12 h-12 text-blue-500' />,
      text: trackReserve.reserveStatus.paid,
@@ -225,7 +219,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   }
  };
 
- const statusConfig = getStatusConfig(reserveData.status);
+ const statusConfig = getStatusConfig(reserveStatus);
 
  const resultContent = (
   <div className='flex flex-col gap-4'>
@@ -242,47 +236,51 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      <span className='text-muted-foreground'>
       {trackReserve.successStatusFields.trackingCode}
      </span>
-     <span className='font-medium'>{reserveData.trackingCode}</span>
+     <span className='font-medium'>{res?.lockInfo.trackingCode}</span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>نام هتل:</span>
-     <span className='font-medium'>{reserveData.hotelName}</span>
+     {/* <span className='font-medium'>{res?.guestInfo}</span> */}
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
       {trackReserve.successStatusFields.checkIn}
      </span>
-     <span className='font-medium'>{reserveData.checkIn}</span>
+     <span className='font-medium'>{res?.lockInfo.arrivelDateTimeOffset}</span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
       {trackReserve.successStatusFields.checkOut}
      </span>
-     <span className='font-medium'>{reserveData.checkOut}</span>
+     <span className='font-medium'>
+      {res?.lockInfo.departureDateTimeOffset}
+     </span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
       {trackReserve.successStatusFields.guestName}
      </span>
-     <span className='font-medium'>{reserveData.guestName}</span>
+     <span className='font-medium'>
+      {res?.lockInfo.firstName} {res?.lockInfo.lastName}
+     </span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
       {trackReserve.successStatusFields.roomType}
      </span>
-     <span className='font-medium'>{reserveData.roomType}</span>
+     <span className='font-medium'>{res?.rooms[0].fName}</span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
       {trackReserve.successStatusFields.phoneNumber}
      </span>
-     <span className='font-medium'>{reserveData.phoneNumber}</span>
+     <span className='font-medium'>{res?.lockInfo.contactNo}</span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
       {trackReserve.successStatusFields.totalPrice}
      </span>
-     <span className='font-bold text-primary'>{reserveData.totalPrice}</span>
+     <span className='font-bold text-primary'>{res?.lockInfo.totalPrice}</span>
     </div>
    </div>
    <div className='flex items-center gap-3 mt-2'>
