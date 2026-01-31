@@ -9,9 +9,11 @@ import { type BookReserveInfo } from '../../services/reserveApiActions';
 export default function VoucherWrapper({
  dic,
  bookReserveInfo,
+ trackingCode,
 }: {
  dic: ReserveVoucherDictionary;
  bookReserveInfo: BookReserveInfo | null;
+ trackingCode: string;
 }) {
  useEffect(() => {
   clearLocalReserveInfo();
@@ -21,7 +23,11 @@ export default function VoucherWrapper({
    {bookReserveInfo && bookReserveInfo.success ? (
     <ConfirmedVoucher dic={dic} bookReserveInfo={bookReserveInfo} />
    ) : (
-    <FailedReserve dic={dic} bookReserveInfo={bookReserveInfo} />
+    <FailedReserve
+     dic={dic}
+     bookReserveInfo={bookReserveInfo}
+     trackingCode={trackingCode}
+    />
    )}
   </>
  );

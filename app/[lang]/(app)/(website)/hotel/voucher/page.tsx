@@ -101,5 +101,11 @@ export default async function Voucher(
   }
  }
 
- return <VoucherWrapper dic={dic} bookReserveInfo={bookReserveInfo} />;
+ return (
+  <VoucherWrapper
+   dic={dic}
+   bookReserveInfo={bookReserveInfo}
+   trackingCode={trackingCode as string}
+  />
+ );
 }
