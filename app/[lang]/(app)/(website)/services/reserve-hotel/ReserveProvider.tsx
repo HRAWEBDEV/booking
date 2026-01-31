@@ -29,6 +29,8 @@ import { Route } from 'next';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getLockInfo } from '../../hotel/services/reserveApiActions';
 import { getHotelInfo } from '../../hotel/services/hotelApiActions';
+import { ConvertToLocalDate } from '../../utils/trackReserveUtils/convertToLocalDate';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 interface ReserveProviderProps {
  children: ReactNode;
 }
@@ -38,7 +40,6 @@ type ReserveStatus = 'failed' | 'pending' | 'success';
 export default function ReserveProvider({ children }: ReserveProviderProps) {
  const [isOpen, setIsOpen] = useState(false);
  const [isResultOpen, setIsResultOpen] = useState(false);
- const [trackingCode, setTrackingCode] = useState('');
  const isDesktop = useMediaQuery('(min-width: 768px)');
  const {
   shareDictionary: {
@@ -62,7 +63,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
  const router = useRouter();
  const pathname = usePathname();
  const searchParams = useSearchParams();
-
+ const priceFormatter = useCurrencyFormatter({ numberingSystem: 'arabext' });
  const createQueryString = useCallback(
   (name: string, value: string) => {
    const params = new URLSearchParams(searchParams.toString());
@@ -72,14 +73,11 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   [searchParams],
  );
 
- const removeQueryString = useCallback(
-  (name: string) => {
-   const params = new URLSearchParams(searchParams.toString());
-   params.delete(name);
-   return params.toString();
-  },
-  [searchParams],
- );
+ const removeQueryString = useCallback((name: string) => {
+  const params = new URLSearchParams(window.location.search);
+  params.delete(name);
+  return params.toString();
+ }, []);
  const {
   register,
   handleSubmit,
@@ -94,19 +92,28 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
   },
  });
 
- const { mutate, data } = useMutation({
-  mutationFn: (trackingCode: string) => {
+ const { mutate, data, isError } = useMutation({
+  mutationFn: ({
+   trackingCode,
+   signal,
+  }: {
+   trackingCode: string;
+   signal?: AbortSignal;
+  }) => {
    return getLockInfo({
-    signal: new AbortController().signal,
     trackingCode: trackingCode,
+    signal: signal!,
    });
   },
-  onSuccess: () => {
+  onSuccess: (data, variables) => {
    setIsOpen(false);
    router.push(
     (pathname +
      '?' +
-     createQueryString('reserve-tracking-code', trackingCode)) as Route,
+     createQueryString(
+      'reserve-tracking-code',
+      variables.trackingCode,
+     )) as Route,
     { scroll: false },
    );
    setIsResultOpen(true);
@@ -122,23 +129,22 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
  const hotelID = res?.lockInfo.hotelID;
  const { isLoading, data: hotelInfoRes } = useQuery({
   queryKey: ['hotel-info', hotelID],
-  queryFn: () =>
+  queryFn: ({ signal }) =>
    getHotelInfo({
-    signal: new AbortController().signal,
+    signal,
     hotelID: String(hotelID),
    }),
 
   enabled: isResultOpen && !!hotelID,
  });
  const reserveStatus: ReserveStatus = (() => {
-  if (!data) return 'failed';
-  if (data.data.isBooked === false) return 'pending';
-  return 'success';
+  if (isError) return 'failed';
+  if (data?.data.isBooked === false) return 'pending';
+  return data?.data.isBooked ? 'success' : 'failed';
  })();
 
  const onSubmit = (data: TrackingFormData) => {
-  setTrackingCode(data.trackingCode);
-  mutate(data.trackingCode);
+  mutate({ trackingCode: data.trackingCode });
  };
 
  const handleResultOpenChange = (open: boolean) => {
@@ -281,14 +287,16 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      <span className='text-muted-foreground'>
       {trackReserve.trackDetails.checkIn}
      </span>
-     <span className='font-medium'>{res?.lockInfo.arrivelDateTimeOffset}</span>
+     <span className='font-medium'>
+      {ConvertToLocalDate(res?.lockInfo.arrivelDateTimeOffset)}
+     </span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
      <span className='text-muted-foreground'>
       {trackReserve.trackDetails.checkOut}
      </span>
      <span className='font-medium'>
-      {res?.lockInfo.departureDateTimeOffset}
+      {ConvertToLocalDate(res?.lockInfo.departureDateTimeOffset)}
      </span>
     </div>
     <div className='flex justify-between items-center border-b pb-2'>
@@ -315,7 +323,10 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      <span className='text-muted-foreground'>
       {trackReserve.trackDetails.totalPrice}
      </span>
-     <span className='font-bold text-primary'>{res?.lockInfo.totalPrice}</span>
+     <span className='font-bold text-primary'>
+      {priceFormatter.format(Number(res?.lockInfo.totalPrice))}{' '}
+      {trackReserve.priceUnit}
+     </span>
     </div>
    </div>
    <div className='flex items-center gap-3 mt-2'>
@@ -334,7 +345,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
    {children}
    {isDesktop ? (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-     <DialogContent className='w-full p-4'>
+     <DialogContent className=' w-full  p-4'>
       <DialogHeader>
        <DialogTitle className='dark:text-gray-300 text-gray-700'>
         {trackReserve.titleTrackReserve}
@@ -369,10 +380,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
     </Dialog>
    ) : (
     <Drawer open={isResultOpen} onOpenChange={handleResultOpenChange}>
-     <DrawerContent
-      className='p-4'
-      style={{ height: 'fit-content', maxHeight: '90vh' }}
-     >
+     <DrawerContent className='p-4 pb-8' style={{ maxHeight: '95vh' }}>
       <DrawerHeader className='text-right px-0'>
        <DrawerTitle className='dark:text-gray-300 text-gray-700'>
         {trackReserve.titleReserveDetails}{' '}

@@ -55,7 +55,7 @@
     "failed": "رزرو ناموفق"
    },
    "trackDetails": {
-    "hotelName": "نام هتل:",
+    "hotelName": "نام هتل",
     "hotelCity": "شهر هتل",
     "hotelNameLoading": "⌛",
     "hotelCityLoading": "⌛",
@@ -76,7 +76,8 @@
     "phoneNumberRequired": "شماره تلفن الزامی است",
     "phoneNumberWrong": "شماره تلفن اشتباه است"
    },
-   "submitBtnLoadingMsg": "در حال پردازش..."
+   "submitBtnLoadingMsg": "در حال پردازش...",
+   "priceUnit": "تومان"
   }
  }
 }

@@ -10,7 +10,7 @@
     "failed": "Reservation Failed"
    },
    "trackDetails": {
-    "hotelName": "Hotel Name:",
+    "hotelName": "Hotel Name",
     "hotelCity": "Hotel City",
     "hotelNameLoading": "⌛",
     "hotelCityLoading": "⌛",
@@ -31,7 +31,8 @@
     "phoneNumberRequired": "Phone number is required",
     "phoneNumberWrong": "Invalid phone number"
    },
-   "submitBtnLoadingMsg": "Processing..."
+   "submitBtnLoadingMsg": "Processing...",
+   "priceUnit": "Toman"
   }
  }
 }
