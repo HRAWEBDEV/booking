@@ -100,6 +100,7 @@ export const useTrackReserve = () => {
 
  const handleReset = () => {
   resetTrack();
+  setIsOpen(false);
  };
 
  const handleDownloadVoucher = () => {
