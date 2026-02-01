@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, ReactNode } from 'react';
-import { ReserveHotelContext } from './ReserveHotelContext';
+import { TrackReserveHotelContext } from './ReserveHotelContext';
 import { useMediaQuery } from '@/services/base-config/hooks/useMediaQuery';
 import {
  Drawer,
@@ -377,7 +377,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
  );
 
  return (
-  <ReserveHotelContext.Provider value={{ isOpen, setIsOpen }}>
+  <TrackReserveHotelContext.Provider value={{ isOpen, setIsOpen }}>
    {children}
    {isDesktop ? (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -426,6 +426,6 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      </DrawerContent>
     </Drawer>
    )}
-  </ReserveHotelContext.Provider>
+  </TrackReserveHotelContext.Provider>
  );
 }

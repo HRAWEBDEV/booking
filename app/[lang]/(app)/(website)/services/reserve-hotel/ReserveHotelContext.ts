@@ -1,17 +1,16 @@
 import { use, createContext } from 'react';
 import { OutOfContext } from '@/utils/OutOfContext';
-export interface ReserveHotelContextValue {
+export interface TrackReserveHotelContextValue {
  isOpen: boolean;
  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const ReserveHotelContext = createContext<ReserveHotelContextValue | null>(
- null,
-);
+const TrackReserveHotelContext =
+ createContext<TrackReserveHotelContextValue | null>(null);
 
 export default function useReserveHotel() {
- const val = use(ReserveHotelContext);
- if (!val) throw new OutOfContext('ReserveHotelContext');
+ const val = use(TrackReserveHotelContext);
+ if (!val) throw new OutOfContext('TrackReserveHotelContext');
  return val;
 }
 
-export { useReserveHotel, ReserveHotelContext };
+export { useReserveHotel, TrackReserveHotelContext };
