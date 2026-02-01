@@ -36,7 +36,6 @@ export const useTrackReserve = () => {
   onSuccess: () => {
    setIsOpen(false);
    setIsResultOpen(true);
-   resetTrack();
   },
   onError: (err) => {
    setIsOpen(false);

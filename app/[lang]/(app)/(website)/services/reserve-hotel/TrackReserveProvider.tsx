@@ -118,7 +118,7 @@ export default function TrackReserveProvider({
         {trackReserve.titleReserveDetails}{' '}
        </DrawerTitle>
       </DrawerHeader>
-      <div>{resultContent}</div>
+      <div className='h-full flex flex-col'>{resultContent}</div>
      </DrawerContent>
     </Drawer>
    )}

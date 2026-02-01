@@ -92,7 +92,7 @@ export default function TrackReserveResult({
  const statusConfig = getStatusConfig(status);
 
  return (
-  <div className='flex flex-col gap-4'>
+  <div className='flex flex-col gap-4 h-full'>
    <div
     className={`flex flex-col items-center justify-center py-6 rounded-lg ${statusConfig.bgColor}`}
    >
@@ -195,7 +195,7 @@ export default function TrackReserveResult({
      {trackReserve.downloadVoucher}
     </Button>
    )}
-   <div className='flex items-center gap-3 mt-2'>
+   <div className='flex items-center gap-3 mt-auto'>
     <Button className='flex-1' variant='outline' onClick={onContactSupport}>
      {trackReserve.contactSupport}
     </Button>
@@ -203,7 +203,7 @@ export default function TrackReserveResult({
      {trackReserve.closeBtn}
     </Button>
    </div>
-   <a href='' ref={downloadVoucherAnchorRef} download className='invisible'></a>
+   <a href='' ref={downloadVoucherAnchorRef} download className='hidden'></a>
   </div>
  );
 }
