@@ -121,39 +121,36 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
  const { channelID } = getSetupProviderCredentials();
  const downloadVoucherAnchor = useRef<HTMLAnchorElement>(null);
 
- const {
-  mutate: downloadVoucher,
-  isPending: isDownloadVoucherPending,
-  isError: voucherError,
- } = useMutation({
-  mutationFn: ({
-   reserveID,
-   channelID,
-   hotelID,
-  }: {
-   reserveID: string;
-   channelID: string;
-   hotelID: string;
-  }) => {
-   return downloadReserveVoucher({
+ const { mutate: downloadVoucher, isPending: isDownloadVoucherPending } =
+  useMutation({
+   mutationFn: ({
     reserveID,
     channelID,
     hotelID,
-   });
-  },
-  onSuccess: async (data) => {
-   const reportFile = new Blob([data.data], { type: 'application/pdf' });
-   const reportFileUrl = URL.createObjectURL(reportFile);
-   if (downloadVoucherAnchor.current) {
-    downloadVoucherAnchor.current.href = reportFileUrl;
-    downloadVoucherAnchor.current.click();
-   }
-   window.open(reportFileUrl);
-  },
-  onError: (err) => {
-   console.log(err);
-  },
- });
+   }: {
+    reserveID: string;
+    channelID: string;
+    hotelID: string;
+   }) => {
+    return downloadReserveVoucher({
+     reserveID,
+     channelID,
+     hotelID,
+    });
+   },
+   onSuccess: async (data) => {
+    const reportFile = new Blob([data.data], { type: 'application/pdf' });
+    const reportFileUrl = URL.createObjectURL(reportFile);
+    if (downloadVoucherAnchor.current) {
+     downloadVoucherAnchor.current.href = reportFileUrl;
+     downloadVoucherAnchor.current.click();
+    }
+    window.open(reportFileUrl);
+   },
+   onError: (err) => {
+    console.log(err);
+   },
+  });
  const reserveStatus: ReserveStatus = (() => {
   if (isError) return 'failed';
   if (data?.data.isBooked === false) return 'pending';
