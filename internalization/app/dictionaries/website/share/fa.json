@@ -48,6 +48,7 @@
   "trackReserve": {
    "confirmBtn": "تایید",
    "closeBtn": "بستن",
+   "downloadVoucher": "دانلود واچر",
    "contactSupport": "تماس با پشتیبانی",
    "reserveStatus": {
     "success": "رزرو موفق",

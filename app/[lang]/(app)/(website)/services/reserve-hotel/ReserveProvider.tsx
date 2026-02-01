@@ -24,10 +24,16 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isValidIranMobileNumber } from '../../utils/mobileNumberValidator';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { getLockInfo } from '../../hotel/services/reserveApiActions';
+import {
+ getLockInfo,
+ downloadReserveVoucher,
+} from '../../hotel/services/reserveApiActions';
 import { getHotelInfo } from '../../hotel/services/hotelApiActions';
 import { ConvertToLocalDate } from '../../utils/trackReserveUtils/convertToLocalDate';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { getSetupProviderCredentials } from '../../utils/getSetupProviderCredentials';
+import { Spinner } from '@/components/ui/spinner';
+import { useRef } from 'react';
 interface ReserveProviderProps {
  children: ReactNode;
 }
@@ -110,6 +116,43 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
    }),
 
   enabled: isResultOpen && !!hotelID,
+ });
+
+ const { channelID } = getSetupProviderCredentials();
+ const downloadVoucherAnchor = useRef<HTMLAnchorElement>(null);
+
+ const {
+  mutate: downloadVoucher,
+  isPending: isDownloadVoucherPending,
+  isError: voucherError,
+ } = useMutation({
+  mutationFn: ({
+   reserveID,
+   channelID,
+   hotelID,
+  }: {
+   reserveID: string;
+   channelID: string;
+   hotelID: string;
+  }) => {
+   return downloadReserveVoucher({
+    reserveID,
+    channelID,
+    hotelID,
+   });
+  },
+  onSuccess: async (data) => {
+   const reportFile = new Blob([data.data], { type: 'application/pdf' });
+   const reportFileUrl = URL.createObjectURL(reportFile);
+   if (downloadVoucherAnchor.current) {
+    downloadVoucherAnchor.current.href = reportFileUrl;
+    downloadVoucherAnchor.current.click();
+   }
+   window.open(reportFileUrl);
+  },
+  onError: (err) => {
+   console.log(err);
+  },
  });
  const reserveStatus: ReserveStatus = (() => {
   if (isError) return 'failed';
@@ -303,6 +346,24 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      </div>
     </div>
    )}
+   {reserveStatus === 'success' && (
+    <Button
+     className='w-full'
+     onClick={() => {
+      if (hotelID && res?.lockInfo.pmsReserveID) {
+       downloadVoucher({
+        channelID,
+        hotelID: String(hotelID),
+        reserveID: String(res.lockInfo.pmsReserveID),
+       });
+      }
+     }}
+     disabled={isDownloadVoucherPending}
+    >
+     {isDownloadVoucherPending && <Spinner />}
+     {trackReserve.downloadVoucher}
+    </Button>
+   )}
    <div className='flex items-center gap-3 mt-2'>
     <Button className='flex-1' variant='outline' onClick={handleContactSupport}>
      {trackReserve.contactSupport}
@@ -311,6 +372,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
      {trackReserve.closeBtn}
     </Button>
    </div>
+   <a href='' ref={downloadVoucherAnchor} download className='invisible'></a>
   </div>
  );
 
@@ -354,7 +416,7 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
     </Dialog>
    ) : (
     <Drawer open={isResultOpen} onOpenChange={handleResultOpenChange}>
-     <DrawerContent className='p-4 pb-8' style={{ maxHeight: '95vh' }}>
+     <DrawerContent className='p-4 pb-4' style={{ maxHeight: '100dvh' }}>
       <DrawerHeader className='text-right px-0'>
        <DrawerTitle className='dark:text-gray-300 text-gray-700'>
         {trackReserve.titleReserveDetails}{' '}
