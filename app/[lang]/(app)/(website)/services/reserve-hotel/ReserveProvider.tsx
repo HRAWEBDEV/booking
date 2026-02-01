@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, ReactNode, useCallback } from 'react';
+import { useState, ReactNode } from 'react';
 import { ReserveHotelContext } from './ReserveHotelContext';
 import { useMediaQuery } from '@/services/base-config/hooks/useMediaQuery';
 import {
@@ -23,9 +23,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isValidIranMobileNumber } from '../../utils/mobileNumberValidator';
-import { useRouter } from 'next/navigation';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { Route } from 'next';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getLockInfo } from '../../hotel/services/reserveApiActions';
 import { getHotelInfo } from '../../hotel/services/hotelApiActions';
@@ -60,24 +57,8 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
  });
  type TrackingFormData = z.infer<typeof trackingFormSchema>;
 
- const router = useRouter();
- const pathname = usePathname();
- const searchParams = useSearchParams();
  const priceFormatter = useCurrencyFormatter({ numberingSystem: 'arabext' });
- const createQueryString = useCallback(
-  (name: string, value: string) => {
-   const params = new URLSearchParams(searchParams.toString());
-   params.set(name, value);
-   return params.toString();
-  },
-  [searchParams],
- );
 
- const removeQueryString = useCallback((name: string) => {
-  const params = new URLSearchParams(window.location.search);
-  params.delete(name);
-  return params.toString();
- }, []);
  const {
   register,
   handleSubmit,
@@ -105,22 +86,15 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
     signal: signal!,
    });
   },
-  onSuccess: (data, variables) => {
+  onSuccess: (data) => {
    setIsOpen(false);
-   router.push(
-    (pathname +
-     '?' +
-     createQueryString(
-      'reserve-tracking-code',
-      variables.trackingCode,
-     )) as Route,
-    { scroll: false },
-   );
    setIsResultOpen(true);
    reset();
    console.log(data);
   },
   onError: (err) => {
+   setIsOpen(false);
+   setIsResultOpen(true);
    console.log(`API Request Failed `, err);
   },
  });
@@ -149,13 +123,6 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
 
  const handleResultOpenChange = (open: boolean) => {
   setIsResultOpen(open);
-
-  if (!open) {
-   const newQueryString = removeQueryString('reserve-tracking-code');
-   const newUrl = newQueryString ? `${pathname}?${newQueryString}` : pathname;
-
-   router.push(newUrl as Route, { scroll: false });
-  }
  };
 
  const handleCancel = () => {
@@ -255,80 +222,87 @@ export default function ReserveProvider({ children }: ReserveProviderProps) {
     <p className={`text-lg font-bold mt-2 ${statusConfig.textColor}`}>
      {statusConfig.text}
     </p>
+    {reserveStatus === 'failed' && (
+     <p className={`text-sm text-center mt-2 px-4 ${statusConfig.textColor}`}>
+      {trackReserve.reserveStatus.failedMessage}
+     </p>
+    )}
    </div>
-   <div className='flex flex-col gap-3 text-sm'>
-    <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>
-      {trackReserve.trackDetails.trackingCode}
-     </span>
-     <span className='font-medium'>{res?.lockInfo.trackingCode}</span>
+   {reserveStatus !== 'failed' && (
+    <div className='flex flex-col gap-3 text-sm'>
+     <div className='flex justify-between items-center border-b pb-2'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.trackingCode}
+      </span>
+      <span className='font-medium'>{res?.lockInfo.trackingCode}</span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.hotelName}
+      </span>
+      <span className='font-medium'>
+       {isLoading
+        ? trackReserve.trackDetails.hotelNameLoading
+        : hotelInfoRes?.data.fName}
+      </span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.hotelCity}
+      </span>
+      <span className='font-medium'>
+       {isLoading
+        ? trackReserve.trackDetails.hotelCityLoading
+        : hotelInfoRes?.data.cityName}
+      </span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.checkIn}
+      </span>
+      <span className='font-medium'>
+       {ConvertToLocalDate(res?.lockInfo.arrivelDateTimeOffset)}
+      </span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.checkOut}
+      </span>
+      <span className='font-medium'>
+       {ConvertToLocalDate(res?.lockInfo.departureDateTimeOffset)}
+      </span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.guestName}
+      </span>
+      <span className='font-medium'>
+       {res?.lockInfo.firstName} {res?.lockInfo.lastName}
+      </span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.roomType}
+      </span>
+      <span className='font-medium'>{res?.rooms[0].fName}</span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.phoneNumber}
+      </span>
+      <span className='font-medium'>{res?.lockInfo.contactNo}</span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.totalPrice}
+      </span>
+      <span className='font-bold text-primary'>
+       {priceFormatter.format(Number(res?.lockInfo.totalPrice))}{' '}
+       {trackReserve.priceUnit}
+      </span>
+     </div>
     </div>
-    <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>
-      {trackReserve.trackDetails.hotelName}
-     </span>
-     <span className='font-medium'>
-      {isLoading
-       ? trackReserve.trackDetails.hotelNameLoading
-       : hotelInfoRes?.data.fName}
-     </span>
-    </div>
-    <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>
-      {trackReserve.trackDetails.hotelCity}
-     </span>
-     <span className='font-medium'>
-      {isLoading
-       ? trackReserve.trackDetails.hotelCityLoading
-       : hotelInfoRes?.data.cityName}
-     </span>
-    </div>
-    <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>
-      {trackReserve.trackDetails.checkIn}
-     </span>
-     <span className='font-medium'>
-      {ConvertToLocalDate(res?.lockInfo.arrivelDateTimeOffset)}
-     </span>
-    </div>
-    <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>
-      {trackReserve.trackDetails.checkOut}
-     </span>
-     <span className='font-medium'>
-      {ConvertToLocalDate(res?.lockInfo.departureDateTimeOffset)}
-     </span>
-    </div>
-    <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>
-      {trackReserve.trackDetails.guestName}
-     </span>
-     <span className='font-medium'>
-      {res?.lockInfo.firstName} {res?.lockInfo.lastName}
-     </span>
-    </div>
-    <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>
-      {trackReserve.trackDetails.roomType}
-     </span>
-     <span className='font-medium'>{res?.rooms[0].fName}</span>
-    </div>
-    <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>
-      {trackReserve.trackDetails.phoneNumber}
-     </span>
-     <span className='font-medium'>{res?.lockInfo.contactNo}</span>
-    </div>
-    <div className='flex justify-between items-center border-b pb-2'>
-     <span className='text-muted-foreground'>
-      {trackReserve.trackDetails.totalPrice}
-     </span>
-     <span className='font-bold text-primary'>
-      {priceFormatter.format(Number(res?.lockInfo.totalPrice))}{' '}
-      {trackReserve.priceUnit}
-     </span>
-    </div>
-   </div>
+   )}
    <div className='flex items-center gap-3 mt-2'>
     <Button className='flex-1' variant='outline' onClick={handleContactSupport}>
      {trackReserve.contactSupport}

@@ -7,7 +7,8 @@
    "reserveStatus": {
     "success": "Reservation Successful",
     "paid": "Awaiting Confirmation",
-    "failed": "Reservation Failed"
+    "failed": "Reservation Failed",
+    "failedMessage": "The tracking code you entered is invalid or does not exist. Please check and try again."
    },
    "trackDetails": {
     "hotelName": "Hotel Name",
