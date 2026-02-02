@@ -78,8 +78,8 @@ export default function TrackReserveResult({
     return {
      icon: <Clock className='w-18 h-18 text-primary' />,
      text: trackReserve.reserveStatus.paid,
-     bgColor: 'bg-blue-50 dark:bg-blue-950',
-     textColor: 'text-blue-700 dark:text-blue-400',
+     bgColor: 'bg-primary/10',
+     textColor: 'text-primary',
      border: 'border border-primary',
     };
    case 'failed':
