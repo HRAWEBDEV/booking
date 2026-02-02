@@ -10,7 +10,8 @@ export async function generateMetadata(
   locale: lang as Locale,
  });
  return {
-  title: dic.title,
+  title: dic.metadata.title,
+  description: dic.metadata.description,
  };
 }
 

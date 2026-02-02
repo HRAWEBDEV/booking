@@ -139,5 +139,19 @@
   "titleReserveDetails": "Reservation Details",
   "placeholderReserveCode": "Reservation Tracking Code",
   "placeholderContactNumber": "Contact Number"
+ },
+ "metadata": {
+  "title": "Find Hotel",
+
+  "description": "Aline Book | Online booking for hotels, accommodations, airline tickets, buses, and trains",
+  "keywords": [
+   "hotel booking",
+   "aparthotel",
+   "luxury hotel",
+   "hotel",
+   "accommodation",
+   "hotel reservation",
+   "hotel discovery"
+  ]
  }
 }

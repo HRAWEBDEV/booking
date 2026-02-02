@@ -1,0 +1,27 @@
+{
+ "name": "آلین بوک | رزرو آنلاین هتل، بلیط هواپیما، اتوبوس، قطار",
+ "short_name": "آللین بوک",
+ "description": "آلین بوک | سامانه جامع خرید بلیط هواپیما، اتوبوس، قطار و رزرو آنلاین هتل‌ها در کمترین زمان",
+ "start_url": "/",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#fff",
+ "theme_color": "#fff",
+ "dir": "",
+ "lang": "",
+ "categories": "",
+ "icons": [],
+ "screenshots": [],
+ "shortcuts": [],
+ "prefer_related_applications": false,
+ "related_applications": [],
+ "scope": "/",
+ "display_override": ["window-controls-overlay", "standalone", "browser"],
+ "handle_links": "preferred",
+ "launch_handler": {
+  "client_mode": ["navigate-existing", "auto"]
+ },
+ "edge_side_panel": {
+  "preferred_width": 480
+ }
+}
