@@ -42,7 +42,7 @@
   "mockRating": "5",
   "fromText": "From",
   "mockLocation": "Kish, Dariush Field",
-  "mockAmentities": [
+  "mockAmenities": [
    "Transfer with cost",
    "Parking",
    "Hotel",
@@ -52,7 +52,7 @@
   "discountBadge": "10% Discount",
   "catPrices": "See All Prices",
   "fastReserve": "Fast Booking",
-  "resserve": "Book",
+  "reserve": "Book",
   "FastReserveRoomsMocData": [
    {
     "title": "Double Bed Suite",
@@ -115,5 +115,29 @@
  },
  "filterButton": {
   "title": "Filter"
+ },
+ "trackReserve": {
+  "confirmBtn": "Confirm",
+  "closeBtn": "Close",
+  "contactSupport": "Contact Support",
+  "reserveStatus": {
+   "success": "Reservation Successful",
+   "paid": "Pending Confirmation",
+   "failed": "Reservation Failed"
+  },
+  "successStatusFields": {
+   "trackingCode": "Tracking Code",
+   "hotelName": "Hotel Name",
+   "checkIn": "Check-in Date",
+   "checkOut": "Check-out Date",
+   "guestName": "Guest Name",
+   "roomType": "Room Type",
+   "totalPrice": "Total Amount",
+   "phoneNumber": "Phone Number"
+  },
+  "titleTrackReserve": "Track Reservation",
+  "titleReserveDetails": "Reservation Details",
+  "placeholderReserveCode": "Reservation Tracking Code",
+  "placeholderContactNumber": "Contact Number"
  }
 }

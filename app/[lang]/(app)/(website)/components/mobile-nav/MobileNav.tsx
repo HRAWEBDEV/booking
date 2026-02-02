@@ -5,9 +5,11 @@ import { FaUser } from 'react-icons/fa';
 import { IoHome } from 'react-icons/io5';
 import { FaTicket } from 'react-icons/fa6';
 import { useGoHome } from '../../hooks/useGoHome';
+import useReserveHotel from '../../services/reserve-hotel/ReserveHotelContext';
 
 export default function MobileNav() {
  const { goHome, isHomePage } = useGoHome();
+ const { setIsOpen } = useReserveHotel();
  const {
   shareDictionary: {
    component: { mobileNav: mobileNavDic },
@@ -28,7 +30,12 @@ export default function MobileNav() {
     <IoHome className='size-6' />
     <span className='font-medium'>{mobileNavDic.home}</span>
    </Button>
-   <Button variant='ghost' size={'icon'} className='flex-col h-auto w-auto'>
+   <Button
+    variant='ghost'
+    size={'icon'}
+    className='flex-col h-auto w-auto'
+    onClick={() => setIsOpen(true)}
+   >
     <FaTicket className='size-6' />
     <span className='font-medium'>{mobileNavDic.checkReserve}</span>
    </Button>

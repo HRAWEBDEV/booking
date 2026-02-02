@@ -7,6 +7,7 @@ import { getMetaDictionary } from '@/internalization/app/dictionaries/meta/dicti
 import { Locale } from '@/internalization/app/localization';
 import AxiosCredentialsInterceptor from './services/axios-credentials/AxiosCredentialsInterceptor';
 import { Toaster } from 'sonner';
+import TrackReserveProvider from './services/reserve-hotel/TrackReserveProvider';
 import 'leaflet/dist/leaflet.css';
 
 export default async function WebsiteLayout({
@@ -24,9 +25,11 @@ export default async function WebsiteLayout({
   <ShareDictionaryProvider metaDictionary={metaDic} shareDictionary={shareDic}>
    <AxiosCredentialsInterceptor />
    <div>
-    <Header />
-    {children}
-    <MobileNav />
+    <TrackReserveProvider>
+     <Header />
+     {children}
+     <MobileNav />
+    </TrackReserveProvider>
     <Footer />
    </div>
    <Toaster

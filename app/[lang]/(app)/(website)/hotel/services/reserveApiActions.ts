@@ -53,6 +53,7 @@ interface LockInfo {
  totalPrice: number;
  trackingCode: string;
  nationalCode: string;
+ pmsReserveID: number;
 }
 
 interface LockInfoResult {
@@ -204,7 +205,8 @@ function bookReserve({
 const downloadReserveVoucher = ({
  ...queries
 }: {
- reserveID: string;
+ reserveID?: string;
+ pmsReserveID?: string;
  channelID: string;
  hotelID: string;
 }) => {

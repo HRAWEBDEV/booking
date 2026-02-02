@@ -33,14 +33,14 @@ export default function PricingInfo({ dic }: { dic: FindHotelDictionary }) {
 
    <div className='hidden group-data-[view="row"]:flex group-data-[view="row"]:flex-col group-data-[view="row"]:items-center group-data-[view="row"]:justify-center group-data-[view="row"]:gap-1 group-data-[view="row"]:w-full'>
     <div className='flex flex-col-reverse justify-center items-center w-full gap-1'>
-     <div className='font-semibold text-md'>
+     <div className='font-semibold text-sm'>
       {mockBaseDiscountPrice}
       <span className='text-sm text-muted-foreground'>/ {residentUnit}</span>
      </div>
     </div>
     <div className='flex relative items-center gap-2 w-full justify-center'>
      <div className='flex gap-1 items-center'>
-      <div className='text-sm font-semibold line-through text-destructive whitespace-nowrap'>
+      <div className='group-data-[view="grid"]:text-xs group-data-[view="row"]:text-sm font-semibold line-through text-destructive whitespace-nowrap'>
        {mockBasePrice}
       </div>
      </div>
@@ -48,9 +48,9 @@ export default function PricingInfo({ dic }: { dic: FindHotelDictionary }) {
    </div>
 
    <div className='flex items-center w-full group-data-[view="row"]:hidden justify-start'>
-    <div className='text-md font-semibold whitespace-nowrap'>
+    <div className='group-data-[view="row"]:text-md md:group-data-[view="grid"]:text-sm group-data-[view="grid"]:text-md font-semibold whitespace-nowrap'>
      {mockBaseDiscountPrice}
-     <span className='text-xs md:text-sm text-muted-foreground'>
+     <span className='md:group-data-[view="grid"]:text-[0.70rem] group-data-[view="grid"]:text-md text-muted-foreground'>
       / {residentUnit}
      </span>
     </div>

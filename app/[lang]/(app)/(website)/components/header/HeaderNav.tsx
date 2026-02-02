@@ -11,6 +11,7 @@ import {
  NavigationMenuList,
 } from '@/components/ui/navigation-menu';
 import { useShareDictionary } from '../../services/share-dictionary/shareDictionaryContext';
+import useReserveHotel from '../../services/reserve-hotel/ReserveHotelContext';
 
 export default function HeaderNav() {
  const { localeInfo } = useBaseConfig();
@@ -21,6 +22,7 @@ export default function HeaderNav() {
    },
   },
  } = useShareDictionary();
+ const { setIsOpen } = useReserveHotel();
  return (
   <div className='grow ms-10'>
    <div className='hidden lg:block'>
@@ -35,7 +37,7 @@ export default function HeaderNav() {
        </NavigationMenuLink>
       </NavigationMenuItem>
       <NavigationMenuItem>
-       <NavigationMenuLink asChild>
+       <NavigationMenuLink asChild onClick={() => setIsOpen(true)}>
         <Link href='#' className='flex items-center flex-row gap-2'>
          <FaTicket className='size-5' />
          <span className='font-medium'>{headerNavDic.checkReserve}</span>

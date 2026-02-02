@@ -42,7 +42,7 @@
   "mockRating": "5",
   "fromText": "از",
   "mockLocation": "کیش، میدان داریوش",
-  "mockAmentities": [
+  "mockAmenities": [
    "ترانسفر رفت با هزینه",
    "پارکینگ",
    "استخر",
@@ -52,7 +52,7 @@
   "discountBadge": "۱۰٪ تخفیف",
   "catPrices": "مشاهده قیمت‌ها",
   "fastReserve": "رزرو سریع",
-  "resserve": "رزرو",
+  "reserve": "رزرو",
   "FastReserveRoomsMocData": [
    {
     "title": "دو تخته دوبل",

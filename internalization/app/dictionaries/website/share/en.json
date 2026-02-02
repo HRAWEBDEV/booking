@@ -1,1 +1,39 @@
-{}
+{
+ "component": {
+  "trackReserve": {
+   "confirmBtn": "Confirm",
+   "closeBtn": "Close",
+   "contactSupport": "Contact Support",
+   "reserveStatus": {
+    "success": "Reservation Successful",
+    "paid": "Awaiting Confirmation",
+    "failed": "Reservation Failed",
+    "failedMessage": "The tracking code you entered is invalid or does not exist. Please check and try again."
+   },
+   "trackDetails": {
+    "hotelName": "Hotel Name",
+    "hotelCity": "Hotel City",
+    "hotelNameLoading": "⌛",
+    "hotelCityLoading": "⌛",
+    "trackingCode": "Tracking Code",
+    "checkIn": "Check-in Date",
+    "checkOut": "Check-out Date",
+    "guestName": "Guest Name",
+    "roomType": "Room Type",
+    "totalPrice": "Total Price",
+    "phoneNumber": "Phone Number"
+   },
+   "titleTrackReserve": "Track Reservation",
+   "titleReserveDetails": "Reservation Details",
+   "placeholderReserveCode": "Reservation tracking code",
+   "placeholderContactNumber": "Contact number",
+   "formSchemaMessages": {
+    "trackingCodeRequired": "Tracking code is required",
+    "phoneNumberRequired": "Phone number is required",
+    "phoneNumberWrong": "Invalid phone number"
+   },
+   "submitBtnLoadingMsg": "Processing...",
+   "priceUnit": "Toman"
+  }
+ }
+}
