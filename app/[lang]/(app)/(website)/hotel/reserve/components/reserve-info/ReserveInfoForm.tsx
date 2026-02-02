@@ -26,7 +26,7 @@ export default function ReserveInfoForm({
   onSubmitBookingFormInfo,
   onCancelReserve,
   cancelReserveIsLoading,
-  confirmPaymentIsPending,
+  confirmReserveIsPending,
  } = useReserveConfig();
  return (
   <div>
@@ -118,14 +118,14 @@ export default function ReserveInfoForm({
        isLoading ||
        hotelInfoIsLoading ||
        cancelReserveIsLoading ||
-       confirmPaymentIsPending
+       confirmReserveIsPending
       }
       onClick={onCancelReserve}
      >
       {(isLoading ||
        hotelInfoIsLoading ||
        cancelReserveIsLoading ||
-       confirmPaymentIsPending) && <Spinner />}
+       confirmReserveIsPending) && <Spinner />}
       {dic.reserveInfo.reserveForm.cancel}
      </Button>
      <Button
@@ -137,7 +137,7 @@ export default function ReserveInfoForm({
        isLoading ||
        hotelInfoIsLoading ||
        cancelReserveIsLoading ||
-       confirmPaymentIsPending
+       confirmReserveIsPending
       }
       onClick={(e) => {
        e.preventDefault();
@@ -147,7 +147,7 @@ export default function ReserveInfoForm({
       {(isLoading ||
        hotelInfoIsLoading ||
        cancelReserveIsLoading ||
-       confirmPaymentIsPending) && <Spinner />}
+       confirmReserveIsPending) && <Spinner />}
       {dic.reserveInfo.reserveForm.confirm}
      </Button>
     </div>
