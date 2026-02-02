@@ -69,10 +69,10 @@ export default function TrackReserveForm({
   >
    <FieldGroup className='mb-7'>
     <Field className='gap-2' data-invalid={!!errors.trackingCode}>
-     <FieldLabel htmlFor='trackingCode'>
+     <FieldLabel htmlFor='trackingCode' className='text-base'>
       {trackReserve.placeholderReserveCode}
      </FieldLabel>
-     <InputGroup data-invalid={!!errors.trackingCode}>
+     <InputGroup data-invalid={!!errors.trackingCode} className='h-11'>
       <InputGroupInput
        id='trackingCode'
        type='text'
@@ -85,10 +85,10 @@ export default function TrackReserveForm({
      )}
     </Field>
     <Field className='gap-2' data-invalid={!!errors.phoneNumber}>
-     <FieldLabel htmlFor='phone-number'>
+     <FieldLabel htmlFor='phone-number' className='text-base'>
       {trackReserve.placeholderContactNumber}
      </FieldLabel>
-     <InputGroup data-invalid={!!errors.phoneNumber}>
+     <InputGroup data-invalid={!!errors.phoneNumber} className='h-11'>
       <InputGroupInput
        id='phone-number'
        type='tel'
@@ -104,7 +104,7 @@ export default function TrackReserveForm({
    <div className='flex items-center gap-4'>
     <Button
      type='button'
-     className='flex-1'
+     className='flex-1 text-base'
      variant='outline'
      disabled={isSubmitting || isPending}
      onClick={onCancel}
@@ -115,7 +115,7 @@ export default function TrackReserveForm({
     </Button>
     <Button
      type='submit'
-     className='flex-1'
+     className='flex-1 text-base'
      disabled={isSubmitting || isPending}
      size='lg'
     >

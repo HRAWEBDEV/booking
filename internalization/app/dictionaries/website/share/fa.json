@@ -65,13 +65,13 @@
     "trackingCode": "کد پیگیری",
     "checkIn": "تاریخ ورود",
     "checkOut": "تاریخ خروج",
-    "guestName": "نام مهمان",
+    "guestName": "نام رزرو کننده",
     "roomType": "نوع اتاق",
     "totalPrice": "مبلغ کل",
     "phoneNumber": "شماره تماس"
    },
    "titleTrackReserve": "پیگیری رزرو",
-   "titleReserveDetails": "جزئیات رزرو",
+   "titleReserveDetails": "اطلاعات رزرو",
    "placeholderReserveCode": "کد پیگیری رزرو",
    "placeholderContactNumber": "شماره تماس",
    "formSchemaMessages": {
@@ -80,7 +80,7 @@
     "phoneNumberWrong": "شماره تلفن اشتباه است"
    },
    "submitBtnLoadingMsg": "در حال پردازش...",
-   "priceUnit": "تومان"
+   "priceUnit": "ریال"
   }
  }
 }

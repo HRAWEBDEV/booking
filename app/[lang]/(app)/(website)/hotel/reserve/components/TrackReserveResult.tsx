@@ -1,6 +1,7 @@
 'use client';
 
 import { CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { useShareDictionary } from '../../../services/share-dictionary/shareDictionaryContext';
@@ -67,17 +68,19 @@ export default function TrackReserveResult({
   switch (status) {
    case 'success':
     return {
-     icon: <CheckCircle2 className='w-12 h-12 text-green-500' />,
+     icon: <IoCheckmarkCircleOutline className='w-18 h-18 text-secondary' />,
      text: trackReserve.reserveStatus.success,
-     bgColor: 'bg-green-50 dark:bg-green-950',
-     textColor: 'text-green-700 dark:text-green-400',
+     bgColor: 'bg-secondary/10',
+     textColor: 'text-secondary',
+     border: 'border border-secondary',
     };
    case 'pending':
     return {
-     icon: <Clock className='w-12 h-12 text-blue-500' />,
+     icon: <Clock className='w-12 h-12 text-primary' />,
      text: trackReserve.reserveStatus.paid,
      bgColor: 'bg-blue-50 dark:bg-blue-950',
      textColor: 'text-blue-700 dark:text-blue-400',
+     border: 'border border-primary',
     };
    case 'failed':
     return {
@@ -85,6 +88,7 @@ export default function TrackReserveResult({
      text: trackReserve.reserveStatus.failed,
      bgColor: 'bg-red-50 dark:bg-red-950',
      textColor: 'text-red-700 dark:text-red-400',
+     border: 'border border-red-700 dark:border-red-400',
     };
   }
  };
@@ -94,10 +98,10 @@ export default function TrackReserveResult({
  return (
   <div className='flex flex-col gap-4 h-full'>
    <div
-    className={`flex flex-col items-center justify-center py-6 rounded-lg ${statusConfig.bgColor}`}
+    className={`flex flex-col items-center justify-center py-5 rounded-lg ${statusConfig.bgColor} ${statusConfig.border} mb-4`}
    >
     {statusConfig.icon}
-    <p className={`text-lg font-bold mt-2 ${statusConfig.textColor}`}>
+    <p className={`text-2xl font-bold mt-2 ${statusConfig.textColor}`}>
      {statusConfig.text}
     </p>
     {status === 'failed' && (
@@ -107,14 +111,14 @@ export default function TrackReserveResult({
     )}
    </div>
    {status !== 'failed' && (
-    <div className='flex flex-col gap-3 text-sm'>
-     <div className='flex justify-between items-center border-b pb-2'>
+    <div className='flex flex-col gap-3 text-sm mb-4'>
+     <div className='flex justify-between items-center border-b pb-2 font-medium text-base'>
       <span className='text-muted-foreground'>
        {trackReserve.trackDetails.trackingCode}
       </span>
-      <span className='font-medium'>{trackDetails?.lockInfo.trackingCode}</span>
+      <span>{trackDetails?.lockInfo.trackingCode}</span>
      </div>
-     <div className='flex justify-between items-center border-b pb-2'>
+     <div className='flex justify-between items-center border-b pb-2 font-medium text-base'>
       <span className='text-muted-foreground'>
        {trackReserve.trackDetails.hotelName}
       </span>
@@ -124,7 +128,7 @@ export default function TrackReserveResult({
         : hotelInfo?.fName}
       </span>
      </div>
-     <div className='flex justify-between items-center border-b pb-2'>
+     <div className='flex justify-between items-center border-b pb-2 font-medium text-base'>
       <span className='text-muted-foreground'>
        {trackReserve.trackDetails.hotelCity}
       </span>
@@ -134,7 +138,21 @@ export default function TrackReserveResult({
         : hotelInfo?.cityName}
       </span>
      </div>
-     <div className='flex justify-between items-center border-b pb-2'>
+     <div className='flex justify-between items-center border-b pb-2 font-medium text-base'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.guestName}
+      </span>
+      <span className='font-medium'>
+       {trackDetails?.lockInfo.firstName} {trackDetails?.lockInfo.lastName}
+      </span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2 font-medium text-base'>
+      <span className='text-muted-foreground'>
+       {trackReserve.trackDetails.phoneNumber}
+      </span>
+      <span className='font-medium'>{trackDetails?.lockInfo.contactNo}</span>
+     </div>
+     <div className='flex justify-between items-center border-b pb-2 font-medium text-base'>
       <span className='text-muted-foreground'>
        {trackReserve.trackDetails.checkIn}
       </span>
@@ -144,7 +162,7 @@ export default function TrackReserveResult({
        )}
       </span>
      </div>
-     <div className='flex justify-between items-center border-b pb-2'>
+     <div className='flex justify-between items-center border-b pb-2 font-medium text-base'>
       <span className='text-muted-foreground'>
        {trackReserve.trackDetails.checkOut}
       </span>
@@ -154,53 +172,42 @@ export default function TrackReserveResult({
        )}
       </span>
      </div>
-     <div className='flex justify-between items-center border-b pb-2'>
-      <span className='text-muted-foreground'>
-       {trackReserve.trackDetails.guestName}
-      </span>
-      <span className='font-medium'>
-       {trackDetails?.lockInfo.firstName} {trackDetails?.lockInfo.lastName}
-      </span>
-     </div>
-     <div className='flex justify-between items-center border-b pb-2'>
-      <span className='text-muted-foreground'>
-       {trackReserve.trackDetails.roomType}
-      </span>
-      <span className='font-medium'>{trackDetails?.rooms[0].fName}</span>
-     </div>
-     <div className='flex justify-between items-center border-b pb-2'>
-      <span className='text-muted-foreground'>
-       {trackReserve.trackDetails.phoneNumber}
-      </span>
-      <span className='font-medium'>{trackDetails?.lockInfo.contactNo}</span>
-     </div>
-     <div className='flex justify-between items-center border-b pb-2'>
+     <div className='flex justify-between items-center pb-2 font-medium text-base'>
       <span className='text-muted-foreground'>
        {trackReserve.trackDetails.totalPrice}
       </span>
-      <span className='font-bold text-primary'>
+      <span className='font-bold text-primary text-xl'>
        {priceFormatter.format(Number(trackDetails?.lockInfo.totalPrice))}{' '}
        {trackReserve.priceUnit}
       </span>
      </div>
     </div>
    )}
-   {status === 'success' && (
-    <Button
-     className='w-full'
-     onClick={onDownloadVoucher}
-     disabled={isDownloading}
-    >
-     {isDownloading && <Spinner />}
-     {trackReserve.downloadVoucher}
-    </Button>
-   )}
-   <div className='flex items-center gap-3 mt-auto'>
-    <Button className='flex-1' variant='outline' onClick={onContactSupport}>
-     {trackReserve.contactSupport}
-    </Button>
-    <Button className='flex-1' onClick={onClose}>
+   <div className='grid grid-cols-2 gap-4'>
+    {status === 'success' && (
+     <div className='col-span-2'>
+      <Button
+       size='lg'
+       variant='secondary'
+       className='w-full text-base'
+       onClick={onDownloadVoucher}
+       disabled={isDownloading}
+      >
+       {isDownloading && <Spinner />}
+       {trackReserve.downloadVoucher}
+      </Button>
+     </div>
+    )}
+    <Button onClick={onClose} size='lg' className='text-base' variant='outline'>
      {trackReserve.closeBtn}
+    </Button>
+    <Button
+     variant='outline'
+     onClick={onContactSupport}
+     size='lg'
+     className='text-base'
+    >
+     {trackReserve.contactSupport}
     </Button>
    </div>
    <a href='' ref={downloadVoucherAnchorRef} download className='hidden'></a>
