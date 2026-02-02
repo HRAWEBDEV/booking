@@ -23,7 +23,39 @@ export const generateMetadata = async (
 ): Promise<Metadata> => {
  const { lang } = await props.params;
  const meta = getMetaDictionary({ locale: lang as Locale });
- return meta;
+ return {
+  openGraph: {
+   type: 'website',
+   url: `${process.env.NEXT_PUBLIC_MODE === 'PRODUCTION' ? process.env.NEXT_PUBLIC_BASE_URL : `http://localhost:3000/${lang}/`}`,
+   locale: lang as Locale,
+   siteName: (await meta).title,
+   title: (await meta).title,
+   description: (await meta).description,
+   images: [
+    {
+     url: `${process.env.NEXT_PUBLIC_MODE === 'PRODUCTION' ? process.env.NEXT_PUBLIC_BASE_URL : `http://localhost:3000`}/images/opengraph-image.jpg`,
+     with: 1200,
+     height: 630,
+    },
+   ],
+  },
+  twitter: {
+   card: 'summary_large_image',
+   title: (await meta).title,
+   description: (await meta).description,
+   images: [
+    `${process.env.NEXT_PUBLIC_MODE === 'PRODUCTION' ? process.env.NEXT_PUBLIC_BASE_URL : `http://localhost:3000`}/images/twitter-image.jpg`,
+   ],
+   creator: (await meta).creator,
+  },
+  manifest: '/manifest.json',
+  icons: {
+   icon: '/favicon.ico',
+   shortcut: '/favicon.ico',
+   apple: '/apple-icon.png',
+  },
+  ...meta,
+ };
 };
 
 const faSans = localFont({
@@ -128,6 +160,7 @@ export default async function RootLayout(props: LayoutProps<'/[lang]'>) {
       async
      />
     )}
+    <meta name='apple-mobile-web-app-title' content='Alin' />
    </head>
    <body className={`antialiased flex flex-col h-svh`}>
     <ReactQueryProvider>

@@ -2,5 +2,14 @@
  "title": "رزرو آنلاین",
  "description": "رزرو آنلاین هتل |‌ آلین",
  "keywords": "رزرو آنلاین، هتل،وب‌سایت، نرم‌افزار",
- "author": "تیم آلین"
+ "author": "تیم آلین",
+ "creator": "@alintech",
+ "formatDetection": {
+  "telephone": true,
+  "date": true,
+  "address": true,
+  "email": true,
+  "url": true
+ },
+ "category": "travel"
 }
