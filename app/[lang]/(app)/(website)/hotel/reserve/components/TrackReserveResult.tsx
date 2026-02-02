@@ -96,7 +96,7 @@ export default function TrackReserveResult({
  const statusConfig = getStatusConfig(status);
 
  return (
-  <div className='flex flex-col gap-4 h-full mt-4'>
+  <div className='flex flex-col gap-4 h-full overflow-auto p-4'>
    <div
     className={`flex flex-col items-center justify-center py-5 rounded-lg ${statusConfig.bgColor} ${statusConfig.border} mb-4`}
    >
