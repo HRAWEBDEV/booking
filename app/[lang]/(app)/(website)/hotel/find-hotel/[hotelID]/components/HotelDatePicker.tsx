@@ -101,6 +101,13 @@ export default function HotelDatePicker({
       }
       filtersUserForm.setValue('fromDate', newFromDate!);
       filtersUserForm.setValue('toDate', newUntilDate!);
+      if (
+       newFromDate &&
+       newUntilDate &&
+       newFromDate.getTime() !== newUntilDate.getTime()
+      ) {
+       setOpenDatePickerCalendar(false);
+      }
      }}
      defaultMonth={fromDateValue || new Date()}
      showOutsideDays={false}
