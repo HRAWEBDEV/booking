@@ -48,6 +48,7 @@ export default function TrackReserveProvider({
   downloadVoucherAnchor,
   isDownloadVoucherPending,
   handleDownloadVoucher,
+  reserveTrackIsPending,
  } = useTrackReserve();
 
  const handleContactSupport = () => {
@@ -55,7 +56,11 @@ export default function TrackReserveProvider({
  };
 
  const formContent = (
-  <TrackReserveForm onSubmit={handleTrackSubmit} onCancel={handleReset} />
+  <TrackReserveForm
+   onSubmit={handleTrackSubmit}
+   onCancel={handleReset}
+   isPending={reserveTrackIsPending}
+  />
  );
 
  const resultContent = (

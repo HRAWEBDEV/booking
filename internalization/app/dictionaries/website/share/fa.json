@@ -46,6 +46,7 @@
    "profile": "پروفایل"
   },
   "trackReserve": {
+   "somethingWentWrongTryAgain": "مشکلی پیش آمده، لطفا دوباره تلاش کنید.",
    "confirmBtn": "تایید",
    "closeBtn": "بستن",
    "downloadVoucher": "دانلود واچر",

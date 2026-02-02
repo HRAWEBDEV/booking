@@ -1,21 +1,29 @@
 'use client';
-
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@/components/ui/input';
+import {
+ Field,
+ FieldLabel,
+ FieldError,
+ FieldGroup,
+} from '@/components/ui/field';
+import { InputGroup, InputGroupInput } from '@/components/ui/input-group';
 import { Button } from '@/components/ui/button';
 import { useShareDictionary } from '../../../services/share-dictionary/shareDictionaryContext';
 import { isValidIranMobileNumber } from '../../../utils/mobileNumberValidator';
+import { Spinner } from '@/components/ui/spinner';
 
 interface TrackReserveFormProps {
  onSubmit: (trackingCode: string) => void;
  onCancel: () => void;
+ isPending: boolean;
 }
 
 export default function TrackReserveForm({
  onSubmit,
  onCancel,
+ isPending,
 }: TrackReserveFormProps) {
  const {
   shareDictionary: {
@@ -44,7 +52,6 @@ export default function TrackReserveForm({
   formState: { errors, isSubmitting },
  } = useForm<TrackingFormData>({
   resolver: zodResolver(trackingFormSchema),
-  mode: 'onBlur',
   defaultValues: {
    trackingCode: '',
    phoneNumber: '',
@@ -58,45 +65,62 @@ export default function TrackReserveForm({
  return (
   <form
    onSubmit={handleSubmit(handleFormSubmit)}
-   className='flex flex-col gap-4'
+   className='flex flex-col gap-4 pt-7'
   >
-   <div className='transition-all'>
-    <Input
-     type='text'
-     placeholder={trackReserve.placeholderReserveCode}
-     {...register('trackingCode')}
-     className='text-right border-input'
-    />
-    {errors.trackingCode && (
-     <p className='text-destructive text-sm mt-1'>
-      {errors.trackingCode.message}
-     </p>
-    )}
-   </div>
-   <div className='transition-all'>
-    <Input
-     type='tel'
-     placeholder={trackReserve.placeholderContactNumber}
-     {...register('phoneNumber')}
-     className='text-foreground placeholder:text-muted-foreground text-right'
-    />
-    {errors.phoneNumber && (
-     <p className='text-destructive text-sm mt-1'>
-      {errors.phoneNumber.message}
-     </p>
-    )}
-   </div>
+   <FieldGroup className='mb-7'>
+    <Field className='gap-2' data-invalid={!!errors.trackingCode}>
+     <FieldLabel htmlFor='trackingCode'>
+      {trackReserve.placeholderReserveCode}
+     </FieldLabel>
+     <InputGroup data-invalid={!!errors.trackingCode}>
+      <InputGroupInput
+       id='trackingCode'
+       type='text'
+       {...register('trackingCode')}
+       className='text-right border-input'
+      />
+     </InputGroup>
+     {!!errors.trackingCode && (
+      <FieldError>{errors.trackingCode.message}</FieldError>
+     )}
+    </Field>
+    <Field className='gap-2' data-invalid={!!errors.phoneNumber}>
+     <FieldLabel htmlFor='phone-number'>
+      {trackReserve.placeholderContactNumber}
+     </FieldLabel>
+     <InputGroup data-invalid={!!errors.phoneNumber}>
+      <InputGroupInput
+       id='phone-number'
+       type='tel'
+       {...register('phoneNumber')}
+       className='text-foreground placeholder:text-muted-foreground text-right'
+      />
+     </InputGroup>
+     {!!errors.phoneNumber && (
+      <FieldError>{errors.phoneNumber.message}</FieldError>
+     )}
+    </Field>
+   </FieldGroup>
    <div className='flex items-center gap-4'>
     <Button
      type='button'
      className='flex-1'
-     variant='destructive'
+     variant='outline'
+     disabled={isSubmitting || isPending}
      onClick={onCancel}
+     size='lg'
     >
+     {(isSubmitting || isPending) && <Spinner />}
      {trackReserve.closeBtn}
     </Button>
-    <Button type='submit' className='flex-1' disabled={isSubmitting}>
-     {isSubmitting ? '' : trackReserve.confirmBtn}
+    <Button
+     type='submit'
+     className='flex-1'
+     disabled={isSubmitting || isPending}
+     size='lg'
+    >
+     {(isSubmitting || isPending) && <Spinner />}
+     {trackReserve.confirmBtn}
     </Button>
    </div>
   </form>
