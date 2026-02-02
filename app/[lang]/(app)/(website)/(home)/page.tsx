@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 export async function generateMetadata({
  props,
 }: {
- props: PageProps<'/[lang]'>;
+ props: PageProps<'/[lang]/hotel'>;
 }): Promise<Metadata> {
  const { lang } = await props.params;
  const dic = await getHotelHomePageDictionary({
@@ -22,7 +22,7 @@ export async function generateMetadata({
   keywords: dic.metadata.hotel.keywords,
  };
 }
-export default async function WebsitePage(props: PageProps<'/[lang]'>) {
+export default async function WebsitePage(props: PageProps<'/[lang]/hotel'>) {
  const { lang } = await props.params;
  const dic = await getHotelHomePageDictionary({
   locale: lang as Locale,
