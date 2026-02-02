@@ -1,7 +1,7 @@
 'use client';
-
-import { CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { XCircle, Clock } from 'lucide-react';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
+import {} from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { useShareDictionary } from '../../../services/share-dictionary/shareDictionaryContext';
@@ -76,7 +76,7 @@ export default function TrackReserveResult({
     };
    case 'pending':
     return {
-     icon: <Clock className='w-12 h-12 text-primary' />,
+     icon: <Clock className='w-18 h-18 text-primary' />,
      text: trackReserve.reserveStatus.paid,
      bgColor: 'bg-blue-50 dark:bg-blue-950',
      textColor: 'text-blue-700 dark:text-blue-400',
@@ -84,7 +84,7 @@ export default function TrackReserveResult({
     };
    case 'failed':
     return {
-     icon: <XCircle className='w-12 h-12 text-red-500' />,
+     icon: <XCircle className='w-18 h-18 text-red-700 dark:text-red-400' />,
      text: trackReserve.reserveStatus.failed,
      bgColor: 'bg-red-50 dark:bg-red-950',
      textColor: 'text-red-700 dark:text-red-400',
@@ -96,7 +96,7 @@ export default function TrackReserveResult({
  const statusConfig = getStatusConfig(status);
 
  return (
-  <div className='flex flex-col gap-4 h-full'>
+  <div className='flex flex-col gap-4 h-full mt-4'>
    <div
     className={`flex flex-col items-center justify-center py-5 rounded-lg ${statusConfig.bgColor} ${statusConfig.border} mb-4`}
    >
@@ -105,7 +105,9 @@ export default function TrackReserveResult({
      {statusConfig.text}
     </p>
     {status === 'failed' && (
-     <p className={`text-sm text-center mt-2 px-4 ${statusConfig.textColor}`}>
+     <p
+      className={`text-sm text-center mt-2 px-4 ${statusConfig.textColor} font-medium text-base`}
+     >
       {trackReserve.reserveStatus.failedMessage}
      </p>
     )}
@@ -202,7 +204,7 @@ export default function TrackReserveResult({
      {trackReserve.closeBtn}
     </Button>
     <Button
-     variant='outline'
+     variant='destructive'
      onClick={onContactSupport}
      size='lg'
      className='text-base'

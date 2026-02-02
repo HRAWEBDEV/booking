@@ -93,7 +93,7 @@ export const useTrackReserve = () => {
     window.open(reportFileUrl);
    },
    onError: (err) => {
-    toast.error(trackReserveDic.somethingWentWrongTryAgain);
+    // toast.error(trackReserveDic.somethingWentWrongTryAgain);
     console.error('download voucher failed: ', err);
    },
   });
