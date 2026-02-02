@@ -77,6 +77,7 @@ import {
  gatewayTypeQueryName,
  trackIDQueryName,
 } from '../../../voucher/utils/voucherQueries';
+import { useDateFns } from '@/hooks/useDateFns';
 
 export default function ReserveConfigProvider({
  children,
@@ -85,6 +86,7 @@ export default function ReserveConfigProvider({
  dic: ReserveHotelDictionary;
  children: ReactNode;
 }) {
+ const dateFns = useDateFns();
  const unloadDocumentRefAbort = useRef(new AbortController());
  const searchParams = useSearchParams();
  const trackingCodeQuery = searchParams.get(trackingCodeQueryName);
@@ -450,11 +452,20 @@ export default function ReserveConfigProvider({
   setShowConfirmCancelReserve(true);
  }
 
+ const nights =
+  localeReserveInfo?.fromDate && localeReserveInfo?.toDate
+   ? dateFns.differenceInDays(
+      localeReserveInfo?.toDate,
+      localeReserveInfo?.fromDate,
+     )
+   : 0;
+
  const ctx: ReserveConfig = {
   activeReserveStep,
   fromDate: localeReserveInfo?.fromDate,
   toDate: localeReserveInfo?.toDate,
   bookingInvoiceInfo,
+  nights,
   hotelInfo: {
    data: hotelInfo,
    isLoading: hotelInfoIsLoading,

@@ -16,6 +16,7 @@ import { type ReserveStep } from '../../utils/reserveSteps';
 interface ReserveConfig {
  fromDate?: string;
  toDate?: string;
+ nights: number;
  bookingInvoiceInfo: BookingInvoiceInfo;
  activeReserveStep: ReserveStep;
  rooms: {
