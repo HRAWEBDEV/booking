@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import { getFindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 import { type Locale } from '@/internalization/app/localization';
 export const metadata: Metadata = {
- title: 'جستجوی هتل: کیش',
+ title: '',
 };
 
 export default async function layout({
