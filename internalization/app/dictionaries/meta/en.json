@@ -1,6 +1,26 @@
 {
- "title": "نرم افزار یکپارچه هتل داری آلین",
- "description": "",
- "keywords": "",
- "author": ""
+ "title": "Alin Book | Online Reservation System",
+ "description": "Alin Book | Online booking for hotels, flights, trains, and buses with 24/7 support",
+ "keywords": [
+  "online booking",
+  "hotel reservation",
+  "flight ticket",
+  "train ticket",
+  "bus ticket",
+  "accommodation",
+  "alin book",
+  "travel",
+  "tourism",
+  "tour"
+ ],
+ "author": "Alin Team",
+ "creator": "@alintech",
+ "formatDetection": {
+  "telephone": true,
+  "date": true,
+  "address": true,
+  "email": true,
+  "url": true
+ },
+ "category": "travel"
 }
