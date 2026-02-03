@@ -102,7 +102,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
       <div className='flex flex-col gap-2 justify-between group-data-[view="row"]:h-full'>
        <div className='flex flex-col gap-2'>
         <div className='flex items-center justify-between'>
-         <span className='flex items-center justify-ceter gap-1'>
+         <span className='flex items-center justify-center gap-1'>
           {Array.from({ length: 5 }, (_, i) => i).map((i) => (
            <Star key={i} size={12} fill='#ed6c02' stroke='#ed6c02' />
           ))}

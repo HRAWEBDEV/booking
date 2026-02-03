@@ -2,11 +2,9 @@ import HotelHomePageWrapper from '../hotel/components/HotelHomePageWrapper';
 import { getHotelHomePageDictionary } from '@/internalization/app/dictionaries/website/hotel/home/dictionary';
 import { type Locale } from '@/internalization/app/localization';
 import { Metadata } from 'next';
-export async function generateMetadata({
- props,
-}: {
- props: PageProps<'/[lang]'>;
-}): Promise<Metadata> {
+export async function generateMetadata(
+ props: PageProps<'/[lang]'>,
+): Promise<Metadata> {
  const { lang } = await props.params;
  const dic = await getHotelHomePageDictionary({
   locale: lang as Locale,
@@ -14,9 +12,10 @@ export async function generateMetadata({
 
  return {
   metadataBase:
-   process.env.NEXT_PUBLIC_MODE === 'PRODUCTION'
-    ? process.env.NEXT_PUBLIC_BASE_URL
-    : '',
+   process.env.NEXT_PUBLIC_MODE === 'PRODUCTION' &&
+   process.env.NEXT_PUBLIC_BASE_URL
+    ? new URL(process.env.NEXT_PUBLIC_BASE_URL)
+    : undefined,
   title: dic.metadata.hotel.title,
   description: dic.metadata.hotel.description,
   keywords: dic.metadata.hotel.keywords,
