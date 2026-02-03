@@ -1,6 +1,5 @@
 'use client';
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
-import { reserveSteps } from '../utils/reserveSteps';
 import { useReserveConfig } from '../services/reserve-config/reserveConfigContext';
 
 export default function ReserveStepper({

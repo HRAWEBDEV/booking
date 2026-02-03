@@ -2,7 +2,6 @@
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { useKeenSlider } from 'keen-slider/react';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function HotelMenuBar({ dic }: { dic: PreviewHotelDictionary }) {
