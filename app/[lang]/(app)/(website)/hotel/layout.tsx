@@ -9,8 +9,11 @@ export async function generateMetadata(
  const dic = await getHotelHomePageDictionary({
   locale: lang as Locale,
  });
+
  return {
-  title: dic.title,
+  title: dic.metadata.home.title,
+  description: dic.metadata.home.description,
+  keywords: dic.metadata.home.keywords,
  };
 }
 

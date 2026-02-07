@@ -3,19 +3,26 @@ import React from 'react';
 import { Metadata } from 'next';
 import { getFindHotelDictionary } from '@/internalization/app/dictionaries/website/find-hotel/dictionary';
 import { type Locale } from '@/internalization/app/localization';
-export const metadata: Metadata = {
- title: '',
-};
+
+export async function generateMetadata(
+ props: LayoutProps<'/[lang]/hotel'>,
+): Promise<Metadata> {
+ const { lang } = await props.params;
+ const dic = await getFindHotelDictionary({
+  locale: lang as Locale,
+ });
+
+ return {
+  title: dic.metadata.title,
+  description: dic.metadata.description,
+  keywords: dic.metadata.keywords,
+ };
+}
 
 export default async function layout({
  children,
- params,
 }: {
  children: React.ReactNode;
- params: Promise<{ lang: string }>;
 }) {
- const { lang } = await params;
- const dic = await getFindHotelDictionary({ locale: lang as Locale });
-
  return <>{children}</>;
 }

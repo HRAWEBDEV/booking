@@ -25,7 +25,65 @@ import { appendApiUri } from '../../../utils/appendApiUri';
 
 const dateFns = supportedDateFns['en'];
 
+import { Metadata } from 'next';
+
 const cacheTime = 60 * 10;
+
+export async function generateMetadata(
+ props: PageProps<'/[lang]/hotel/find-hotel/[hotelID]'>,
+): Promise<Metadata> {
+ const { hotelID } = await props.params;
+
+ const { channelID } = getSetupProviderCredentials();
+ const requestCredentialHeader = {
+  'x-token': process.env.NEXT_PUBLIC_X_AUTH!,
+ };
+
+ const hotelInfoSearchParams = new URLSearchParams([
+  ['channelID', channelID],
+  ['hotelID', hotelID.toString()],
+ ]);
+
+ const hotelInfo: HotelInfo | null = await fetch(
+  `${appendApiUri(getHotelInfoApi)}?${hotelInfoSearchParams.toString()}`,
+  {
+   method: 'GET',
+   headers: requestCredentialHeader,
+   next: {
+    revalidate: cacheTime,
+   },
+  },
+ )
+  .then((res) => (res.ok ? res.json() : null))
+  .catch((err) => {
+   console.log('metadata hotel info err', err);
+   return null;
+  });
+
+ const hotelImages: HotelImage[] | null = await fetch(
+  `${appendApiUri(getHotelImagesApi)}?${hotelInfoSearchParams.toString()}`,
+  {
+   method: 'GET',
+   headers: requestCredentialHeader,
+   next: {
+    revalidate: cacheTime,
+   },
+  },
+ )
+  .then((res) => (res.ok ? res.json() : null))
+  .catch((err) => {
+   console.log('metadata hotel image err', err);
+   return null;
+  });
+
+ return {
+  title: hotelInfo?.fName,
+  description: hotelInfo?.description,
+  openGraph: {
+   images: hotelImages?.[0]?.imageURL,
+  },
+ };
+}
 
 export default async function HotelPage(
  props: PageProps<'/[lang]/hotel/find-hotel/[hotelID]'>,
