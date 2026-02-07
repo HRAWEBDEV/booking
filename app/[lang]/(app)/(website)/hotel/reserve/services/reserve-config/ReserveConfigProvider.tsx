@@ -177,8 +177,8 @@ export default function ReserveConfigProvider({
   enabled: (!!localeReserveInfo && !!localeReserveInfo.hotelID) || !!lockInfo,
   queryKey: [
    getHotelInfoApi,
-   localeReserveInfo?.hotelID.toString() ||
-    lockInfo?.lockInfo.hotelID.toString(),
+   localeReserveInfo?.hotelID?.toString() ||
+    lockInfo?.lockInfo.hotelID?.toString(),
    channelID.toString(),
   ],
   async queryFn({ signal }) {
@@ -200,7 +200,7 @@ export default function ReserveConfigProvider({
  } = useQuery({
   staleTime: 'static',
   enabled: !!hotelInfo && activeReserveStep === 'payment' && !!lockInfo,
-  queryKey: [getGatewaysApi, hotelInfo?.hotelID.toString()],
+  queryKey: [getGatewaysApi, hotelInfo?.hotelID?.toString()],
   async queryFn({ signal }) {
    const res = await getGateways({
     signal,
@@ -225,7 +225,7 @@ export default function ReserveConfigProvider({
   staleTime: 'static',
   queryKey: [
    getSelectedRoomsApi,
-   localeReserveInfo?.hotelID.toString(),
+   localeReserveInfo?.hotelID?.toString(),
    arzID.toString(),
   ],
   async queryFn({ signal }) {

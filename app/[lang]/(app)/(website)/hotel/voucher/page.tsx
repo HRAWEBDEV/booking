@@ -98,6 +98,7 @@ export default async function Voucher(
    if (res && res.ok) {
     bookReserveInfo = await res.json();
    }
+   console.log(await res?.json());
   }
  }
 
