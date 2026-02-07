@@ -15,6 +15,11 @@
   }
  },
  "component": {
+  "errorPage": {
+   "errorHappened": "خطایی رخ داده است",
+   "tryAgain": "تلاش مجدد",
+   "goHome": "برو به خانه"
+  },
   "notFound": {
    "noItemFound": "اطلاعاتی یافت نشد.",
    "tryAgain": "تلاش مجدد",
