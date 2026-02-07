@@ -56,6 +56,7 @@ export const useTrackReserve = () => {
  const hotelID = res?.lockInfo.hotelID;
 
  const { isLoading: isHotelInfoLoading, data: hotelInfoRes } = useQuery({
+  staleTime: 'static',
   enabled: isResultOpen && !!hotelID,
   queryKey: [getHotelInfoApi, hotelID?.toString(), channelID.toString()],
   queryFn: async ({ signal }) => {
