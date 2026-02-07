@@ -82,7 +82,7 @@ export default function TrackReserveProvider({
    {children}
    {isDesktop ? (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-     <DialogContent className=' w-full  p-4'>
+     <DialogContent className=' w-full p-4'>
       <DialogHeader>
        <DialogTitle className='dark:text-gray-300 text-gray-700 text-xl'>
         {trackReserve.titleTrackReserve}
@@ -117,7 +117,7 @@ export default function TrackReserveProvider({
     </Dialog>
    ) : (
     <Drawer open={isResultOpen} onOpenChange={setIsResultOpen}>
-     <DrawerContent className='flex flex-col p-0 max-h-[95svh] overflow-hidden gap-0'>
+     <DrawerContent className='flex flex-col p-0 max-h-[95svh]! overflow-hidden gap-0'>
       <DrawerHeader className='text-right'>
        <DrawerTitle className='dark:text-gray-300 text-gray-700 text-xl'>
         {trackReserve.titleReserveDetails}{' '}
