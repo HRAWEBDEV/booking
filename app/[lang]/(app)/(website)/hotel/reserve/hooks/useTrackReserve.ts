@@ -48,7 +48,6 @@ export const useTrackReserve = () => {
   onError: (err) => {
    setIsOpen(false);
    setIsResultOpen(true);
-   toast.error(trackReserveDic.somethingWentWrongTryAgain);
    console.error('track reserve failed ', err);
   },
  });
