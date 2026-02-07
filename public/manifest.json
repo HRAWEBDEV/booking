@@ -5,16 +5,16 @@
  "start_url": "/",
  "display": "standalone",
  "orientation": "portrait",
- "background_color": "#ffffff",
- "theme_color": "#ffffff",
- "dir": "",
- "lang": "",
+ "background_color": "#fff",
+ "theme_color": "#0284c7",
+ "dir": "rtl",
+ "lang": "fa",
  "categories": "",
  "screenshots": [],
  "shortcuts": [],
  "prefer_related_applications": false,
  "related_applications": [],
- "scope": "/",
+ "scope": ".",
  "display_override": ["window-controls-overlay", "standalone", "browser"],
  "handle_links": "preferred",
  "launch_handler": {
@@ -34,7 +34,7 @@
    "src": "/web-app-manifest-512x512.png",
    "sizes": "512x512",
    "type": "image/png",
-   "purpose": "maskable"
+   "purpose": "any"
   }
  ]
 }
