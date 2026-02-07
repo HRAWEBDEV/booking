@@ -78,6 +78,7 @@ import {
  trackIDQueryName,
 } from '../../../voucher/utils/voucherQueries';
 import { useDateFns } from '@/hooks/useDateFns';
+import { useGoHome } from '../../../../hooks/useGoHome';
 
 export default function ReserveConfigProvider({
  children,
@@ -86,6 +87,7 @@ export default function ReserveConfigProvider({
  dic: ReserveHotelDictionary;
  children: ReactNode;
 }) {
+ const { goHome } = useGoHome();
  const dateFns = useDateFns();
  const unloadDocumentRefAbort = useRef(new AbortController());
  const searchParams = useSearchParams();
@@ -536,6 +538,11 @@ export default function ReserveConfigProvider({
   );
   return () => unloadDocumentRefAbort.current.abort();
  }, []);
+
+ useEffect(() => {
+  if (localeReserveInfo || trackingCodeQuery) return;
+  goHome();
+ }, [localeReserveInfo, trackingCodeQuery, goHome]);
 
  if (hotelInfoIsError || lockInfoIsError)
   return (
