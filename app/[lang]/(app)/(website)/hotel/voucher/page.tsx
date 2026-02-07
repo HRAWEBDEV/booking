@@ -43,7 +43,7 @@ export default async function Voucher(
 
  if (!hotelID || !trackingID || !amount || !gatewayType)
   return (
-   <div className='py-12'>
+   <div className='p-4 py-12'>
     <NotFound />
    </div>
   );

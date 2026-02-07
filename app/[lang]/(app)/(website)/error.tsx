@@ -1,16 +1,16 @@
 'use client';
 import { useShareDictionary } from './services/share-dictionary/shareDictionaryContext';
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
 import { BiSolidError } from 'react-icons/bi';
+import { useGoHome } from './hooks/useGoHome';
 
 export default function WebsiteLayoutError(error: Error, reset: () => unknown) {
- const router = useRouter();
+ const { goHome } = useGoHome();
  const {
   shareDictionary: { component },
  } = useShareDictionary();
  return (
-  <div className='min-h-[calc(60svh-var(--website-header-height))] flex flex-col justify-center py-8'>
+  <div className='min-h-[calc(60svh-var(--website-header-height))] flex flex-col justify-center p-4 py-8'>
    <div className='w-[min(100%,30rem)] mx-auto border bg-destructive/10 border-destructive py-8 rounded-md flex flex-col items-center'>
     <div className='mx-auto text-destructive mb-6 flex flex-col items-center'>
      <BiSolidError className='text-9xl text-center' />
@@ -23,7 +23,7 @@ export default function WebsiteLayoutError(error: Error, reset: () => unknown) {
       size='lg'
       className='md:w-44 font-medium text-base'
       variant='outline'
-      onClick={() => router.refresh()}
+      onClick={reset}
      >
       {component.errorPage.tryAgain}
      </Button>
@@ -31,7 +31,7 @@ export default function WebsiteLayoutError(error: Error, reset: () => unknown) {
       variant='destructive'
       size='lg'
       className='md:w-44 font-medium text-base'
-      onClick={reset}
+      onClick={() => goHome()}
      >
       {component.errorPage.goHome}
      </Button>
