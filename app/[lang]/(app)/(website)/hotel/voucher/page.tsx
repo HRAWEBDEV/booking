@@ -94,7 +94,7 @@ export default async function Voucher(
   }
  } else if (gatewayTypeName === SEP) {
   if (state === 'OK' && refNum) {
-   const res = await confirmBooking({ refNum: authority as string });
+   const res = await confirmBooking({ refNum: refNum as string });
    if (res && res.ok) {
     bookReserveInfo = await res.json();
    }
