@@ -58,11 +58,13 @@ export const useTrackReserve = () => {
  const { isLoading: isHotelInfoLoading, data: hotelInfoRes } = useQuery({
   enabled: isResultOpen && !!hotelID,
   queryKey: [getHotelInfoApi, hotelID?.toString(), channelID.toString()],
-  queryFn: ({ signal }) =>
-   getHotelInfo({
+  queryFn: async ({ signal }) => {
+   const res = await getHotelInfo({
     signal,
     hotelID: hotelID!.toString(),
-   }),
+   });
+   return res.data;
+  },
  });
 
  const { mutate: downloadVoucher, isPending: isDownloadVoucherPending } =
@@ -129,7 +131,7 @@ export const useTrackReserve = () => {
   setIsResultOpen,
   reserveStatus,
   trackData: res,
-  hotelInfo: hotelInfoRes?.data,
+  hotelInfo: hotelInfoRes,
   isHotelInfoLoading,
   handleTrackSubmit,
   handleReset,
