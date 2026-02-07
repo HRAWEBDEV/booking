@@ -81,6 +81,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
             {numberFormatter.format(
              room.accommodationTypePrice.roomOnlineShowRate,
             )}
+            ریال
            </span>
           )}
          </div>
@@ -99,18 +100,20 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
      })}
     </ul>
    </section>
-   <section className='grid grid-cols-1 md:grid-cols-2 mb-4'>
+   <section className='grid grid-cols-1 md:grid-cols-2 mb-4 gap-2'>
     <div className='text-neutral-800 dark:text-neutral-400 font-medium'>
-     <span className='text-primary'>
-      {dic.reserveInfo.reserveSummary.discountTotalPrice}:{' '}
-     </span>
-     <span className='font-medium text-xl'>
-      {numberFormatter.format(bookingInvoiceInfo.totalDiscountPrice)}
-     </span>
-     <span className='text-xs me-2'> ریال</span>
+     <div>
+      <span className='text-primary'>
+       {dic.reserveInfo.reserveSummary.discountTotalPrice}:{' '}
+      </span>
+      <span className='font-medium text-xl'>
+       {numberFormatter.format(bookingInvoiceInfo.totalDiscountPrice)}
+      </span>
+      <span className='text-xs me-2'> ریال</span>
+     </div>
      {!!bookingInvoiceInfo.totalDiscount && (
       <span className='font-medium text-sm line-through text-red-600 dark:text-red-400'>
-       {numberFormatter.format(bookingInvoiceInfo.price)}
+       {numberFormatter.format(bookingInvoiceInfo.price)}ریال
       </span>
      )}
     </div>
