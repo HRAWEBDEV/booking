@@ -119,7 +119,7 @@ function getLockInfo({
  signal,
  trackingCode,
 }: {
- signal: AbortSignal;
+ signal?: AbortSignal;
  trackingCode: string;
 }) {
  const searchParams = new URLSearchParams([['trackingCode', trackingCode]]);

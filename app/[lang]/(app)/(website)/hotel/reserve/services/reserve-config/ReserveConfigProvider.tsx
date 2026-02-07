@@ -77,6 +77,8 @@ import {
  gatewayTypeQueryName,
  trackIDQueryName,
 } from '../../../voucher/utils/voucherQueries';
+import { useDateFns } from '@/hooks/useDateFns';
+import { useGoHome } from '../../../../hooks/useGoHome';
 
 export default function ReserveConfigProvider({
  children,
@@ -85,6 +87,8 @@ export default function ReserveConfigProvider({
  dic: ReserveHotelDictionary;
  children: ReactNode;
 }) {
+ const { goHome } = useGoHome();
+ const dateFns = useDateFns();
  const unloadDocumentRefAbort = useRef(new AbortController());
  const searchParams = useSearchParams();
  const trackingCodeQuery = searchParams.get(trackingCodeQueryName);
@@ -305,6 +309,33 @@ export default function ReserveConfigProvider({
      return;
     }
     if (gatewayType === SEP) {
+     if (!res.data.token) {
+      toast.error(
+       dic.reserveInfo.reserveForm.somethingWrongHappendedTryAgainLater,
+      );
+      return;
+     }
+     const form = document.createElement('form');
+     form.method = 'POST';
+     form.action = `${res.data.gatewayUrl}/OnlinePG`;
+     form.style.opacity = '0';
+     form.style.height = '0';
+
+     const tokenInput = document.createElement('input');
+     tokenInput.type = 'hidden';
+     tokenInput.name = 'Token';
+     tokenInput.value = res.data.token;
+
+     const getMethodInput = document.createElement('input');
+     getMethodInput.type = 'hidden';
+     getMethodInput.name = 'GetMethod';
+     getMethodInput.value = 'true';
+
+     form.appendChild(tokenInput);
+     form.appendChild(getMethodInput);
+
+     document.body.appendChild(form);
+     form.submit();
      return;
     }
    },
@@ -443,11 +474,20 @@ export default function ReserveConfigProvider({
   setShowConfirmCancelReserve(true);
  }
 
+ const nights =
+  localeReserveInfo?.fromDate && localeReserveInfo?.toDate
+   ? dateFns.differenceInDays(
+      localeReserveInfo?.toDate,
+      localeReserveInfo?.fromDate,
+     )
+   : 0;
+
  const ctx: ReserveConfig = {
   activeReserveStep,
   fromDate: localeReserveInfo?.fromDate,
   toDate: localeReserveInfo?.toDate,
   bookingInvoiceInfo,
+  nights,
   hotelInfo: {
    data: hotelInfo,
    isLoading: hotelInfoIsLoading,
@@ -518,6 +558,11 @@ export default function ReserveConfigProvider({
   );
   return () => unloadDocumentRefAbort.current.abort();
  }, []);
+
+ useEffect(() => {
+  if (localeReserveInfo || trackingCodeQuery) return;
+  goHome();
+ }, [localeReserveInfo, trackingCodeQuery, goHome]);
 
  if (hotelInfoIsError || lockInfoIsError)
   return (

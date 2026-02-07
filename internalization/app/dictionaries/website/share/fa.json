@@ -15,6 +15,11 @@
   }
  },
  "component": {
+  "errorPage": {
+   "errorHappened": "خطایی رخ داده است",
+   "tryAgain": "تلاش مجدد",
+   "goHome": "برو به خانه"
+  },
   "notFound": {
    "noItemFound": "اطلاعاتی یافت نشد.",
    "tryAgain": "تلاش مجدد",
@@ -46,6 +51,7 @@
    "profile": "پروفایل"
   },
   "trackReserve": {
+   "somethingWentWrongTryAgain": "مشکلی پیش آمده، لطفا دوباره تلاش کنید.",
    "confirmBtn": "تایید",
    "closeBtn": "بستن",
    "downloadVoucher": "دانلود واچر",
@@ -53,8 +59,8 @@
    "reserveStatus": {
     "success": "رزرو موفق",
     "paid": "در انتظار تایید",
-    "failed": "رزرو ناموفق",
-    "failedMessage": "کد پیگیری وارد شده نامعتبر است یا وجود ندارد. لطفا بررسی کرده و دوباره تلاش کنید."
+    "failed": "رزرو یافت نشد.",
+    "failedMessage": "کد پیگیری وارد شده نامعتبر است یا وجود ندارد."
    },
    "trackDetails": {
     "hotelName": "نام هتل",
@@ -64,13 +70,13 @@
     "trackingCode": "کد پیگیری",
     "checkIn": "تاریخ ورود",
     "checkOut": "تاریخ خروج",
-    "guestName": "نام مهمان",
+    "guestName": "نام رزرو کننده",
     "roomType": "نوع اتاق",
     "totalPrice": "مبلغ کل",
     "phoneNumber": "شماره تماس"
    },
    "titleTrackReserve": "پیگیری رزرو",
-   "titleReserveDetails": "جزئیات رزرو",
+   "titleReserveDetails": "اطلاعات رزرو",
    "placeholderReserveCode": "کد پیگیری رزرو",
    "placeholderContactNumber": "شماره تماس",
    "formSchemaMessages": {
@@ -79,7 +85,7 @@
     "phoneNumberWrong": "شماره تلفن اشتباه است"
    },
    "submitBtnLoadingMsg": "در حال پردازش...",
-   "priceUnit": "تومان"
+   "priceUnit": "ریال"
   }
  }
 }

@@ -101,6 +101,13 @@ export default function HotelDatePicker({
       }
       filtersUserForm.setValue('fromDate', newFromDate!);
       filtersUserForm.setValue('toDate', newUntilDate!);
+      if (
+       newFromDate &&
+       newUntilDate &&
+       newFromDate.getTime() !== newUntilDate.getTime()
+      ) {
+       setOpenDatePickerCalendar(false);
+      }
      }}
      defaultMonth={fromDateValue || new Date()}
      showOutsideDays={false}
@@ -259,8 +266,8 @@ export default function HotelDatePicker({
         <PopoverContent className='w-auto overflow-hidden p-0' align='end'>
          {renderCalendar}
         </PopoverContent>
-        <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden w-svw max-w-svw h-svh rounded-none'>
-         <DialogHeader className='p-4 shrink-0'>
+        <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden w-svw max-w-svw! h-svh rounded-none'>
+         <DialogHeader className='p-4 shrink-0 border-b border-input'>
           <DialogTitle className='text-base font-medium'>
            {dic.hotelDatePicker.changeFilters}{' '}
            <div className='text-sm text-neutral-500 inline-block'>

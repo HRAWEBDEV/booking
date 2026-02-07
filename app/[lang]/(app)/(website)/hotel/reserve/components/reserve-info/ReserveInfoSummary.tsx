@@ -22,6 +22,7 @@ export default function ReserveInfoSummary({
   onCancelReserve,
   cancelReserveIsLoading,
   confirmReserveIsPending,
+  nights,
   rooms: { storeRooms, isLoading },
  } = useReserveConfig();
 
@@ -56,7 +57,9 @@ export default function ReserveInfoSummary({
         </p>
        </div>
        <div className='flex flex-col text-sm text-neutral-500'>
-        <span>- 4 {dic.reserveInfo.reserveSummary.night} -</span>
+        <span>
+         - {nights.toString()} {dic.reserveInfo.reserveSummary.night} -
+        </span>
        </div>
        <div className='flex flex-col justify-center text-center gap-1'>
         <p className='text-primary text-sm font-medium'>

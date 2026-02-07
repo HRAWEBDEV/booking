@@ -12,7 +12,7 @@ export default function PaymentSummary({
 }: {
  dic: ReserveHotelDictionary;
 }) {
- const { hotelInfo, lockInfo } = useReserveConfig();
+ const { hotelInfo, lockInfo, nights } = useReserveConfig();
  const { locale } = useBaseConfig();
 
  return (
@@ -47,7 +47,9 @@ export default function PaymentSummary({
         </p>
        </div>
        <div className='flex flex-col text-sm text-neutral-500'>
-        <span>- 4 {dic.reserveInfo.reserveSummary.night} -</span>
+        <span>
+         - {nights.toString()} {dic.reserveInfo.reserveSummary.night} -
+        </span>
        </div>
        <div className='flex flex-col justify-center text-center gap-1'>
         <p className='text-primary text-sm font-medium'>

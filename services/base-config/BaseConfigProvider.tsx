@@ -38,7 +38,11 @@ export default function BaseConfigProvider({ children, activeLocale }: Props) {
 
  return (
   <baseConfigContext.Provider value={ctx}>
-   <ThemeProvider storageKey='app-theme' themes={[...appModes]} enableSystem>
+   <ThemeProvider
+    storageKey='app-theme'
+    themes={['light']}
+    enableSystem={false}
+   >
     {children}
    </ThemeProvider>
   </baseConfigContext.Provider>

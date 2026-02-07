@@ -4,12 +4,19 @@ import {
  getLockInfo,
  downloadReserveVoucher,
 } from '../../services/reserveApiActions';
-import { getHotelInfo } from '../../services/hotelApiActions';
+import { getHotelInfoApi, getHotelInfo } from '../../services/hotelApiActions';
 import { getSetupProviderCredentials } from '@/app/[lang]/(app)/(website)/utils/getSetupProviderCredentials';
+import { useShareDictionary } from '../../../services/share-dictionary/shareDictionaryContext';
+import { toast } from 'sonner';
 
 export type ReserveStatus = 'failed' | 'pending' | 'success';
 
 export const useTrackReserve = () => {
+ const {
+  shareDictionary: {
+   component: { trackReserve: trackReserveDic },
+  },
+ } = useShareDictionary();
  const [isOpen, setIsOpen] = useState(false);
  const [isResultOpen, setIsResultOpen] = useState(false);
  const downloadVoucherAnchor = useRef<HTMLAnchorElement>(null);
@@ -20,6 +27,7 @@ export const useTrackReserve = () => {
   data: trackData,
   isError: isTrackError,
   reset: resetTrack,
+  isPending: reserveTrackIsPending,
  } = useMutation({
   mutationFn: ({
    trackingCode,
@@ -30,7 +38,7 @@ export const useTrackReserve = () => {
   }) => {
    return getLockInfo({
     trackingCode: trackingCode,
-    signal: signal!,
+    signal: signal,
    });
   },
   onSuccess: () => {
@@ -40,7 +48,8 @@ export const useTrackReserve = () => {
   onError: (err) => {
    setIsOpen(false);
    setIsResultOpen(true);
-   console.error(`API Request Failed `, err);
+   toast.error(trackReserveDic.somethingWentWrongTryAgain);
+   console.error('track reserve failed ', err);
   },
  });
 
@@ -48,13 +57,13 @@ export const useTrackReserve = () => {
  const hotelID = res?.lockInfo.hotelID;
 
  const { isLoading: isHotelInfoLoading, data: hotelInfoRes } = useQuery({
-  queryKey: ['hotel-info', hotelID],
+  enabled: isResultOpen && !!hotelID,
+  queryKey: [getHotelInfoApi, hotelID?.toString(), channelID.toString()],
   queryFn: ({ signal }) =>
    getHotelInfo({
     signal,
-    hotelID: String(hotelID),
+    hotelID: hotelID!.toString(),
    }),
-  enabled: isResultOpen && !!hotelID,
  });
 
  const { mutate: downloadVoucher, isPending: isDownloadVoucherPending } =
@@ -84,7 +93,8 @@ export const useTrackReserve = () => {
     window.open(reportFileUrl);
    },
    onError: (err) => {
-    console.error(err);
+    // toast.error(trackReserveDic.somethingWentWrongTryAgain);
+    console.error('download voucher failed: ', err);
    },
   });
 
@@ -107,8 +117,8 @@ export const useTrackReserve = () => {
   if (hotelID && res?.lockInfo.pmsReserveID) {
    downloadVoucher({
     channelID,
-    hotelID: String(hotelID),
-    reserveID: String(res.lockInfo.pmsReserveID),
+    hotelID: hotelID.toString(),
+    reserveID: res.lockInfo.pmsReserveID.toString(),
    });
   }
  };
@@ -127,5 +137,6 @@ export const useTrackReserve = () => {
   downloadVoucherAnchor,
   isDownloadVoucherPending,
   handleDownloadVoucher,
+  reserveTrackIsPending,
  };
 };

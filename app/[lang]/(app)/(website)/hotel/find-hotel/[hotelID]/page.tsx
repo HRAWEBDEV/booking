@@ -100,7 +100,7 @@ export default async function HotelPage(
 
  if (!fromDateQuery || !toDateQuery) {
   const startDate = dateFns.startOfDay(new Date());
-  const endDate = dateFns.addDays(startDate, 3);
+  const endDate = dateFns.addDays(startDate, 1);
   const newSearchParams = new URLSearchParams([
    [fromDateQueryName, startDate.toISOString()],
    [toDateQueryName, endDate.toISOString()],

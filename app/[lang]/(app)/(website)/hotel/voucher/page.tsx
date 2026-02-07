@@ -10,6 +10,8 @@ import {
  gatewayTypeQueryName,
  statusQueryName,
  trackIDQueryName,
+ stateQueryName,
+ refNumQueryName,
 } from './utils/voucherQueries';
 import { getSetupProviderCredentials } from '../../utils/getSetupProviderCredentials';
 import {
@@ -18,6 +20,7 @@ import {
  getBookReserveParams,
 } from '../services/reserveApiActions';
 import { appendApiUri } from '../../utils/appendApiUri';
+import { GatewayTypes, SEP, ZARIN_PAL } from '../utils/gatewayTypes';
 
 export default async function Voucher(
  props: PageProps<'/[lang]/hotel/voucher'>,
@@ -35,8 +38,10 @@ export default async function Voucher(
  const authority = searchParams[authorityQueryName];
  const gatewayType = searchParams[gatewayTypeQueryName];
  const status = searchParams[statusQueryName];
+ const state = searchParams[stateQueryName];
+ const refNum = searchParams[refNumQueryName];
 
- if (!hotelID || !trackingID || !amount)
+ if (!hotelID || !trackingID || !amount || !gatewayType)
   return (
    <div className='py-12'>
     <NotFound />
@@ -48,34 +53,59 @@ export default async function Voucher(
  };
 
  let bookReserveInfo: BookReserveInfo | null = null;
- try {
-  const bookReserveRes = await fetch(
-   `${appendApiUri(bookReserveApi)}?${getBookReserveParams({
-    hotelID: hotelID as string,
-    arzID,
-    channelID,
-    providerID,
-    lockBookID: trackingID as string,
-   })}`,
-   {
-    method: 'POST',
-    headers: {
-     ...requestCredentialHeader,
-     'content-type': 'application/json',
+ async function confirmBooking({ refNum }: { refNum: string }) {
+  try {
+   const bookReserveRes = await fetch(
+    `${appendApiUri(bookReserveApi)}?${getBookReserveParams({
+     hotelID: hotelID as string,
+     arzID,
+     channelID,
+     providerID,
+     lockBookID: trackingID as string,
+    })}`,
+    {
+     method: 'POST',
+     headers: {
+      ...requestCredentialHeader,
+      'content-type': 'application/json',
+     },
+     body: JSON.stringify({
+      refNum,
+      amount,
+      paymentGatewayTypeID: gatewayType as string,
+     }),
     },
-    body: JSON.stringify({
-     refNum: authority as string,
-     amount,
-     paymentGatewayTypeID: gatewayType as string,
-    }),
-   },
-  );
-  if (bookReserveRes.ok) {
-   bookReserveInfo = await bookReserveRes.json();
+   );
+   return bookReserveRes;
+  } catch (err) {
+   console.log(err);
+   return null;
   }
- } catch (err) {
-  console.log(err);
  }
 
- return <VoucherWrapper dic={dic} bookReserveInfo={bookReserveInfo} />;
+ const gatewayTypeName = GatewayTypes[Number(gatewayType)];
+
+ if (gatewayTypeName === ZARIN_PAL) {
+  if (status === 'OK' && authority) {
+   const res = await confirmBooking({ refNum: authority as string });
+   if (res && res.ok) {
+    bookReserveInfo = await res.json();
+   }
+  }
+ } else if (gatewayTypeName === SEP) {
+  if (state === 'OK' && refNum) {
+   const res = await confirmBooking({ refNum: refNum as string });
+   if (res && res.ok) {
+    bookReserveInfo = await res.json();
+   }
+  }
+ }
+
+ return (
+  <VoucherWrapper
+   dic={dic}
+   bookReserveInfo={bookReserveInfo}
+   trackingCode={trackingCode as string}
+  />
+ );
 }

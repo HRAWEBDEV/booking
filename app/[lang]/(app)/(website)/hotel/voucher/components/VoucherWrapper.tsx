@@ -1,3 +1,6 @@
+'use client';
+import { useEffect } from 'react';
+import { clearLocalReserveInfo } from '../../find-hotel/[hotelID]/utils/localReserveInfoManager';
 import { type ReserveVoucherDictionary } from '@/internalization/app/dictionaries/website/hotel/voucher/dictionary';
 import FailedReserve from './FailedReserve';
 import ConfirmedVoucher from './ConfirmedVoucher';
@@ -6,16 +9,25 @@ import { type BookReserveInfo } from '../../services/reserveApiActions';
 export default function VoucherWrapper({
  dic,
  bookReserveInfo,
+ trackingCode,
 }: {
  dic: ReserveVoucherDictionary;
  bookReserveInfo: BookReserveInfo | null;
+ trackingCode: string;
 }) {
+ useEffect(() => {
+  clearLocalReserveInfo();
+ }, []);
  return (
   <>
    {bookReserveInfo && bookReserveInfo.success ? (
     <ConfirmedVoucher dic={dic} bookReserveInfo={bookReserveInfo} />
    ) : (
-    <FailedReserve dic={dic} bookReserveInfo={bookReserveInfo} />
+    <FailedReserve
+     dic={dic}
+     bookReserveInfo={bookReserveInfo}
+     trackingCode={trackingCode}
+    />
    )}
   </>
  );

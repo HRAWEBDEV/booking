@@ -48,6 +48,7 @@ export default function TrackReserveProvider({
   downloadVoucherAnchor,
   isDownloadVoucherPending,
   handleDownloadVoucher,
+  reserveTrackIsPending,
  } = useTrackReserve();
 
  const handleContactSupport = () => {
@@ -55,7 +56,11 @@ export default function TrackReserveProvider({
  };
 
  const formContent = (
-  <TrackReserveForm onSubmit={handleTrackSubmit} onCancel={handleReset} />
+  <TrackReserveForm
+   onSubmit={handleTrackSubmit}
+   onCancel={handleReset}
+   isPending={reserveTrackIsPending}
+  />
  );
 
  const resultContent = (
@@ -77,9 +82,9 @@ export default function TrackReserveProvider({
    {children}
    {isDesktop ? (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-     <DialogContent className=' w-full  p-4'>
+     <DialogContent className=' w-full p-4'>
       <DialogHeader>
-       <DialogTitle className='dark:text-gray-300 text-gray-700'>
+       <DialogTitle className='dark:text-gray-300 text-gray-700 text-xl'>
         {trackReserve.titleTrackReserve}
        </DialogTitle>
       </DialogHeader>
@@ -90,7 +95,7 @@ export default function TrackReserveProvider({
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
      <DrawerContent className='p-4 [&_div.bg-muted]:bg-primary!'>
       <DrawerHeader className='text-right px-0'>
-       <DrawerTitle className='dark:text-gray-300 text-gray-700'>
+       <DrawerTitle className='dark:text-gray-300 text-gray-700 text-xl'>
         {trackReserve.titleTrackReserve}
        </DrawerTitle>
       </DrawerHeader>
@@ -101,9 +106,9 @@ export default function TrackReserveProvider({
 
    {isDesktop ? (
     <Dialog open={isResultOpen} onOpenChange={setIsResultOpen}>
-     <DialogContent className='w-full p-4 max-w-md'>
-      <DialogHeader>
-       <DialogTitle className='dark:text-gray-300 text-gray-700'>
+     <DialogContent className='flex flex-col w-full p-0 max-w-md max-h-[95svh] overflow-hidden gap-0'>
+      <DialogHeader className='p-4'>
+       <DialogTitle className='dark:text-gray-300 text-gray-700 text-xl'>
         {trackReserve.titleReserveDetails}
        </DialogTitle>
       </DialogHeader>
@@ -112,13 +117,13 @@ export default function TrackReserveProvider({
     </Dialog>
    ) : (
     <Drawer open={isResultOpen} onOpenChange={setIsResultOpen}>
-     <DrawerContent className='p-4 pb-4' style={{ maxHeight: '100dvh' }}>
-      <DrawerHeader className='text-right px-0'>
-       <DrawerTitle className='dark:text-gray-300 text-gray-700'>
+     <DrawerContent className='flex flex-col p-0 max-h-[95svh]! overflow-hidden gap-0'>
+      <DrawerHeader className='text-right'>
+       <DrawerTitle className='dark:text-gray-300 text-gray-700 text-xl'>
         {trackReserve.titleReserveDetails}{' '}
        </DrawerTitle>
       </DrawerHeader>
-      <div className='h-full flex flex-col'>{resultContent}</div>
+      {resultContent}
      </DrawerContent>
     </Drawer>
    )}
