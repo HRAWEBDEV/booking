@@ -18,6 +18,7 @@ import {
 import HotelConfigProvider from '../services/hotel-config/HotelConfigProvider';
 import { Skeleton } from '@/components/ui/skeleton';
 import HotelLocation from './HotelLocation';
+import HotelDatePickerWrapper from './HotelDatePickerWrapper';
 
 export default function HotelWrapper({
  dic,
@@ -76,9 +77,7 @@ export default function HotelWrapper({
      <div className='mb-4 hidden md:block'>
       <HotelLocation dic={dic} hotelInfo={hotelInfo} />
      </div>
-     <div className='sticky top-1 hidden md:block'>
-      <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
-     </div>
+     <HotelDatePickerWrapper dic={dic} hotelInfo={hotelInfo} />
     </div>
    </div>
   </HotelConfigProvider>
