@@ -266,7 +266,7 @@ export default function HotelDatePicker({
         <PopoverContent className='w-auto overflow-hidden p-0' align='end'>
          {renderCalendar}
         </PopoverContent>
-        <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden w-svw max-w-svw! h-svh rounded-none'>
+        <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden w-screen max-w-screen! h-dvh rounded-none'>
          <DialogHeader className='p-4 shrink-0 border-b border-input'>
           <DialogTitle className='text-base font-medium'>
            {dic.hotelDatePicker.changeFilters}{' '}
