@@ -6,6 +6,7 @@
   "reserveVoucher": "واچر رزرو"
  },
  "reserveInfo": {
+  "reserveRoomsArefull": "ظرفیت اتاق های انتخاب شده تکمیل شده است.",
   "reserveSummary": {
    "arrivalDate": "تاریخ ورود",
    "departureDate": "تاریخ خروج",

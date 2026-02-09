@@ -9,6 +9,8 @@ import { Spinner } from '@/components/ui/spinner';
 import { useFormContext } from 'react-hook-form';
 import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
 import ReserveInfoRoomForm from './ReserveInfoRoomForm';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { LockReserveErrorCodes } from '../../../utils/lockReserveErrorCodes';
 
 export default function ReserveInfoForm({
  dic,
@@ -27,11 +29,28 @@ export default function ReserveInfoForm({
   onCancelReserve,
   cancelReserveIsLoading,
   confirmReserveIsPending,
+  confirmReserveError,
  } = useReserveConfig();
+
+ const reserveRoomsAreFull =
+  confirmReserveError?.response?.data.errorInfo.code ===
+  LockReserveErrorCodes.ROOMS_ARE_FULL;
+
+ const reserveRoomsAreFullAlert = (
+  <Alert variant='destructive' className='bg-destructive/10 border-destructive'>
+   <AlertDescription className='font-medium'>
+    {dic.reserveInfo.reserveRoomsArefull}
+   </AlertDescription>
+  </Alert>
+ );
+
  return (
   <div>
    <form>
     <section className='p-4 border border-input rounded-md mb-6'>
+     {reserveRoomsAreFull && (
+      <div className='mb-2'>{reserveRoomsAreFullAlert}</div>
+     )}
      <div>
       <h3 className='font-medium mb-4 text-neutral-600 dark:text-neutral-400'>
        {dic.reserveInfo.reserveForm.reservePersonInfo}

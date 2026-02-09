@@ -12,6 +12,8 @@ import { type BookingInvoiceInfo } from '../../utils/bookingInvoiceInfo';
 import { type RoomsPickerActions } from '../../utils/ReserveRoomsPickerReducer';
 import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
 import { type ReserveStep } from '../../utils/reserveSteps';
+import { ErrorInfo } from '@/app/[lang]/(app)/utils/apiBaseTypes';
+import { AxiosError } from 'axios';
 
 interface ReserveConfig {
  fromDate?: string;
@@ -49,6 +51,7 @@ interface ReserveConfig {
   setSelectedGateway: (prop: GateWay | null) => unknown;
  };
  confirmReserveIsPending: boolean;
+ confirmReserveError: AxiosError<ErrorInfo, any> | null;
  confirmPaymentIsPending: boolean;
  cancelReserveIsLoading: boolean;
  onCancelReserve: () => unknown;

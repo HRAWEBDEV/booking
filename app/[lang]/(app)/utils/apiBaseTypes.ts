@@ -12,4 +12,11 @@ type Combo = {
  value: string;
 };
 
-export type { PagedData, Pagination, Combo };
+type ErrorInfo = {
+ errorInfo: {
+  code: number | null;
+  description: string;
+ };
+};
+
+export type { PagedData, Pagination, Combo, ErrorInfo };
