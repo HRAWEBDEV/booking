@@ -110,7 +110,7 @@ export default function ReserveInfoForm({
     </div>
     <div className='flex justify-end gap-4 lg:opacity-0 mb-4 lg:h-0 lg:mb-0 overflow-hidden'>
      <Button
-      className='text-base w-40'
+      className='text-base w-40 flex-1 md:flex-none'
       variant='outline'
       size='lg'
       type='button'
@@ -129,7 +129,7 @@ export default function ReserveInfoForm({
       {dic.reserveInfo.reserveForm.cancel}
      </Button>
      <Button
-      className='text-base w-40'
+      className='text-base w-40 flex-1 md:flex-none'
       variant='secondary'
       size='lg'
       type='submit'

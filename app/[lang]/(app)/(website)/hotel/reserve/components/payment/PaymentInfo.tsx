@@ -178,7 +178,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
     </ul>
     <div className='flex justify-end gap-4'>
      <Button
-      className='text-base w-36'
+      className='text-base w-36 flex-1 md:flex-none'
       variant='outline'
       size='lg'
       type='button'
@@ -207,7 +207,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
        cancelReserveIsLoading
       }
       size='lg'
-      className='w-36'
+      className='w-36 flex-1 md:flex-none'
       onClick={onConfirmPayment}
      >
       {(gateways.isLoading ||

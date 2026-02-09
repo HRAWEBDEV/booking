@@ -87,6 +87,7 @@ const cancelReserveLockApi = '/CRS/OnlineReservation/CancelLock';
 const getGatewaysApi = '/CRS/OnlineReservation/getGateways';
 const getPaymentLinkApi = '/CRS/OnlineReservation/getPaymentLink';
 const bookReserveApi = '/CRS/OnlineReservation/book';
+const getLockExpireTimeApi = '/CRS/OnlineReservation/getLockRemainedTime';
 
 function lockReserve({ lockInfo, ...queries }: LockReserveProps) {
  const searchParams = new URLSearchParams();
@@ -222,6 +223,19 @@ const downloadReserveVoucher = ({
  );
 };
 
+function getLockExpireTime({
+ signal,
+ trackingCode,
+}: {
+ signal?: AbortSignal;
+ trackingCode: string;
+}) {
+ const searchParams = new URLSearchParams([['trackingCode', trackingCode]]);
+ return axios.get(`${getLockExpireTimeApi}?${searchParams.toString()}`, {
+  signal,
+ });
+}
+
 export {
  type LockReserveProps,
  type LockReserveResult,
@@ -246,4 +260,5 @@ export {
  bookReserve,
  cancelReserveLock,
  downloadReserveVoucher,
+ getLockExpireTime,
 };
