@@ -111,6 +111,7 @@ export default function TrackReserveResult({
  } = useQuery({
   enabled: status === 'pending' && !!trackDetails?.lockInfo.trackingCode,
   queryKey: [getLockExpireTimeApi, trackDetails?.lockInfo.trackingCode],
+  gcTime: 0,
   async queryFn({ signal }) {
    const res = await getLockExpireTime({
     signal,
