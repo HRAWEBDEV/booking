@@ -7,6 +7,7 @@
  },
  "reserveInfo": {
   "reserveRoomsArefull": "ظرفیت اتاق های انتخاب شده تکمیل شده است.",
+  "pendingReserveIsExpired": "زمان ثبت رزرو منقضی شده است",
   "reserveSummary": {
    "arrivalDate": "تاریخ ورود",
    "departureDate": "تاریخ خروج",

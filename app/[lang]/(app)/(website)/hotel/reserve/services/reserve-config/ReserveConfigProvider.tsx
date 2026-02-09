@@ -303,7 +303,17 @@ export default function ReserveConfigProvider({
  }
  const { mutate: getPaymentLinkMutate, isPending: getPaymentLinkIsPending } =
   useMutation({
-   mutationFn() {
+   async mutationFn() {
+    try {
+     const { data: expireTime } = await getLockExpireTime({
+      trackingCode: lockInfo?.lockInfo.trackingCode!,
+     });
+     if (expireTime <= 0) {
+      throw new Error('Lock_expired');
+     }
+    } catch (error) {
+     throw new Error('something went wrong');
+    }
     return getPaymentLink({
      hotelID: hotelInfo!.hotelID.toString(),
      paymentGatewayTypeID: selectedGateway!.paymentGatewayTypeID.toString(),
@@ -313,7 +323,11 @@ export default function ReserveConfigProvider({
      resNum: lockInfo!.lockInfo.id.toString(),
     });
    },
-   onError() {
+   onError(err: Error) {
+    if (err instanceof Error && err.message === 'Lock_expired') {
+     toast.error(dic.reserveInfo.pendingReserveIsExpired);
+     return;
+    }
     toast.error(
      dic.reserveInfo.reserveForm.somethingWrongHappendedTryAgainLater,
     );
