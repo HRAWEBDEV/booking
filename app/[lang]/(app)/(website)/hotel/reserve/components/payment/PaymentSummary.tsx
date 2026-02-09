@@ -90,9 +90,20 @@ export default function PaymentSummary({
         <AlertDescription className='text-sky-800 dark:text-sky-200 font-medium'>
          <p>
           {dic.payment.paymentSummary.lockReserveMaxTime}:{' '}
-          <span className='font-medium text-lg'>
-           20 {dic.payment.paymentSummary.minutes}
-          </span>
+          {lockInfo.lockExpireTimeIsSuccess &&
+          lockInfo.lockExpireTime !== undefined ? (
+           lockInfo.lockExpireTime <= 0 ? (
+            <span>dic.reserveInfo.pendingReserveIsExpired</span>
+           ) : (
+            <span className='font-medium text-lg'>
+             {Math.floor(lockInfo.lockExpireTime / 60).toString() +
+              ' ' +
+              dic.payment.paymentSummary.minutes}
+            </span>
+           )
+          ) : (
+           '---'
+          )}
          </p>
         </AlertDescription>
        </Alert>

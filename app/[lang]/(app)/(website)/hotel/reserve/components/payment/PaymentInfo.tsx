@@ -6,6 +6,7 @@ import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Button } from '@/components/ui/button';
 import { GatewayTypes } from '../../../utils/gatewayTypes';
 import { getGatewayImage } from '../../../utils/getGatewayImage';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
  const {
@@ -21,6 +22,20 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
  if (lockInfo.isLoading) return <Skeleton className='w-full h-56' />;
  return (
   <section className='border border-input rounded-md p-4'>
+   {lockInfo.lockExpireTimeIsSuccess &&
+    lockInfo.lockExpireTime !== undefined &&
+    lockInfo.lockExpireTime <= 0 && (
+     <div className='mb-2'>
+      <Alert
+       variant='destructive'
+       className='bg-destructive/10 border-destructive'
+      >
+       <AlertDescription className='font-medium'>
+        {dic.reserveInfo.pendingReserveIsExpired}
+       </AlertDescription>
+      </Alert>
+     </div>
+    )}
    <h3 className='font-medium mb-4 text-lg'>{dic.payment.paymentInfo.title}</h3>
    <div className='grid gap-4 grid-cols-1 md:grid-cols-2 mb-3 pb-3 border-b border-input'>
     <div>
@@ -204,7 +219,10 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
        !gateways.data?.length ||
        !gateways.selectedGateway ||
        confirmPaymentIsPending ||
-       cancelReserveIsLoading
+       cancelReserveIsLoading ||
+       !lockInfo.lockExpireTimeIsSuccess ||
+       !lockInfo.lockExpireTime ||
+       lockInfo.lockExpireTime <= 0
       }
       size='lg'
       className='w-36 flex-1 md:flex-none'

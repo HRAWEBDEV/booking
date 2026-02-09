@@ -1,5 +1,4 @@
 'use client';
-
 import { ReactNode } from 'react';
 import { TrackReserveHotelContext } from './ReserveHotelContext';
 import { useMediaQuery } from '@/services/base-config/hooks/useMediaQuery';
