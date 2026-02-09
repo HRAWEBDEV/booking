@@ -18,7 +18,7 @@ import {
  clearLocalReserveInfo,
 } from '../../../find-hotel/[hotelID]/utils/localReserveInfoManager';
 import { getSetupProviderCredentials } from '../../../../utils/getSetupProviderCredentials';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import {
  getSelectedRoomsApi,
  getSelectedRooms,
@@ -61,8 +61,9 @@ import {
  getGateways,
  getPaymentLink,
  cancelReserveLock,
+ getLockExpireTimeApi,
+ getLockExpireTime,
 } from '../../../services/reserveApiActions';
-import { useMutation } from '@tanstack/react-query';
 import {
  type ReserveStep,
  trackingCodeQueryName,
@@ -169,6 +170,25 @@ export default function ReserveConfigProvider({
    return res.data;
   },
  });
+
+ const {
+  data: lockExpireTime,
+  isLoading: lockExpireTimeIsLoading,
+  isError: lockExpireTimeIsError,
+  isSuccess: lockExpireTimeIsSuccess,
+ } = useQuery({
+  gcTime: 0,
+  staleTime: 'static',
+  enabled: !!lockInfoIsSuccess && !!lockInfo?.lockInfo.trackingCode,
+  queryKey: [getLockExpireTimeApi, lockInfo?.lockInfo.trackingCode],
+  async queryFn({ signal }) {
+   const res = await getLockExpireTime({
+    signal,
+    trackingCode: lockInfo?.lockInfo.trackingCode!,
+   });
+   return res.data;
+  },
+ });
  // hotel info
  const {
   data: hotelInfo,
@@ -194,6 +214,7 @@ export default function ReserveConfigProvider({
    return res.data;
   },
  });
+
  // gateways
  const {
   data: gateways,
@@ -513,6 +534,10 @@ export default function ReserveConfigProvider({
    isLoading: lockInfoIsLoading,
    isSuccess: lockInfoIsSuccess,
    isError: lockInfoIsError,
+   lockExpireTime,
+   lockExpireTimeIsLoading,
+   lockExpireTimeIsError,
+   lockExpireTimeIsSuccess,
   },
   gateways: {
    data: gateways,

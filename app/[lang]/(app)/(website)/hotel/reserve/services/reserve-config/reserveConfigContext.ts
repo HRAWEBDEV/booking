@@ -41,6 +41,10 @@ interface ReserveConfig {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
+  lockExpireTime?: number;
+  lockExpireTimeIsLoading: boolean;
+  lockExpireTimeIsError: boolean;
+  lockExpireTimeIsSuccess: boolean;
  };
  gateways: {
   data?: GateWay[];
