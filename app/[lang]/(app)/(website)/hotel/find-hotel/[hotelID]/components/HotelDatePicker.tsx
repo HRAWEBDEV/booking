@@ -316,7 +316,7 @@ export default function HotelDatePicker({
         data-invalid={!!filtersUserForm.formState.errors.toDate}
        >
         <Label className='px-1'>{dic.hotelDatePicker.toDate}</Label>
-        <DialogTrigger asChild className='md:hidden'>
+        <DialogTrigger asChild className='md:hidden text-base'>
          <div>{renderToDateInput}</div>
         </DialogTrigger>
         <PopoverTrigger asChild className='hidden md:block'>

@@ -29,13 +29,14 @@ const VirtualMonth = memo(
      disableNavigation
      showOutsideDays={false}
      hideNavigation
-     className='w-full flex justify-center p-2'
+     className='w-full flex justify-center p-2 [--cell-size:3rem]'
      classNames={{
       month: 'space-y-4 w-full ',
       table: 'w-full border-collapse space-y-1',
       head_row: 'hidden',
-      row: 'flex w-full mt-2 justify-between',
+      row: 'flex w-full mt-6 justify-between',
       caption: 'hidden',
+      day: 'text-xl',
      }}
     />
    </div>
