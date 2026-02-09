@@ -17,12 +17,17 @@ const HotelLocaltionMap = dynamic(() => import('./HotelLocationMap'), {
 export default function HotelLocation({
  dic,
  hotelInfo,
+ isDrawer = false,
 }: {
  dic: PreviewHotelDictionary;
  hotelInfo: HotelInfo;
+ isDrawer?: boolean;
 }) {
  return (
-  <div className='h-44 w-full border border-input rounded-md bg-neutral-100 dark:bg-neutral-900 overflow-hidden relative'>
+  <div
+   data-is-drawer={isDrawer}
+   className='h-44 data-[is-drawer="true"]:h-[50svh] w-full border border-input rounded-md bg-neutral-100 dark:bg-neutral-900 overflow-hidden relative'
+  >
    {hotelInfo && (hotelInfo.latitude || hotelInfo.longitude) ? (
     <HotelLocaltionMap dic={dic} hotelInfo={hotelInfo} />
    ) : (

@@ -3,6 +3,7 @@ import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaStar } from 'react-icons/fa6';
 import ShareHotelButton from './ShareHotelButton';
+import HotelLocationDrawer from './HotelLocationDrawer';
 
 export default function HotelTitle({
  dic,
@@ -25,10 +26,15 @@ export default function HotelTitle({
      ({hotelInfo.hotelGradeID}) {dic.hotelInfo.star}
     </span>
    </div>
-   <h1 className='text-2xl lg:text-3xl font-medium mb-2'>
-    <ShareHotelButton dic={dic} />
-    <span>{hotelInfo.fName}</span>
-   </h1>
+   <div className='mb-2 flex gap-2 justify-between'>
+    <h1 className='text-2xl lg:text-3xl font-medium grow'>
+     <ShareHotelButton dic={dic} />
+     <span>{hotelInfo.fName}</span>
+    </h1>
+    <div className='md:hidden'>
+     <HotelLocationDrawer hotelInfo={hotelInfo} dic={dic} />
+    </div>
+   </div>
    <div className='text-sm lg:text-[0.9rem] text-neutral-600 dark:text-neutral-400'>
     <FaLocationDot className='inline size-4 text-rose-700 dark:text-rose-400' />
     <p className='inline ms-2'>
