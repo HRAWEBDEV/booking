@@ -198,7 +198,17 @@ export default function HotelDatePicker({
     onSubmitReserveInfo();
    }}
   >
+   <div className='basis-6'></div>
    {dic.hotelDatePicker.confirmReserve}
+   <div>
+    <div className='basis-6'>
+     {!!selectedRooms.length && (
+      <Badge className='border-destructive bg-background text-foreground font-medium'>
+       {selectedRooms.length}
+      </Badge>
+     )}
+    </div>
+   </div>
   </Button>
  );
 
