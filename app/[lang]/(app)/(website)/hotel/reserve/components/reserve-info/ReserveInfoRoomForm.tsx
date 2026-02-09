@@ -75,9 +75,7 @@ export default function ReserveInfoRoomForm({
     </Button>
    </div>
    <div className='mb-3'>
-    <h4 className='font-medium mb-2'>
-     {i + 1}) {room.fName}
-    </h4>
+    <h4 className='font-medium mb-2'>{room.fName}</h4>
     <p className='font-medium text-neutral-600 dark:text-neutral-400'>
      {room.accommodationTypePrice.beds} {dic.reserveInfo.reserveForm.person}
     </p>
