@@ -33,7 +33,7 @@ export default function ReserveInfoSummary({
    {isLoading || hotelInfo.isLoading ? (
     <Skeleton className='w-full h-96' />
    ) : (
-    <div ref={containerRef}>
+    <div ref={containerRef} className='lg:sticky lg:top-1'>
      <section className='p-4 rounded-md border border-input mb-2'>
       <div className='mb-3 pb-3 border-b border-input'>
        <h1 className='text-lg font-medium'>{hotelInfo.data?.fName}</h1>
