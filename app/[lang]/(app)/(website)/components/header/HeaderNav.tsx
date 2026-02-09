@@ -12,6 +12,13 @@ import {
 } from '@/components/ui/navigation-menu';
 import { useShareDictionary } from '../../services/share-dictionary/shareDictionaryContext';
 import useReserveHotel from '../../services/reserve-hotel/ReserveHotelContext';
+import {
+ Popover,
+ PopoverTrigger,
+ PopoverContent,
+} from '@/components/ui/popover';
+import { BsTelephoneFill } from 'react-icons/bs';
+import { Button } from '@/components/ui/button';
 
 export default function HeaderNav() {
  const { localeInfo } = useBaseConfig();
@@ -30,10 +37,22 @@ export default function HeaderNav() {
      <NavigationMenuList className='flex-wrap'>
       <NavigationMenuItem>
        <NavigationMenuLink asChild>
-        <Link href='#' className='flex items-center flex-row gap-2'>
-         <MdSupportAgent className='size-6' />
-         <span className='font-medium'>{headerNavDic.support}</span>
-        </Link>
+        <Popover>
+         <PopoverTrigger asChild className='text-inherit text-sm'>
+          <Link href='#' className='flex items-center flex-row gap-2'>
+           <MdSupportAgent className='size-6 text-muted-foreground' />
+           <span className='font-medium'>{headerNavDic.support}</span>
+          </Link>
+         </PopoverTrigger>
+         <PopoverContent dir={localeInfo.contentDirection} align='start'>
+          <Button asChild className='w-full' variant='outline'>
+           <Link href='tel:02191780185'>
+            <span>021-91780185</span>
+            <BsTelephoneFill />
+           </Link>
+          </Button>
+         </PopoverContent>
+        </Popover>
        </NavigationMenuLink>
       </NavigationMenuItem>
       <NavigationMenuItem>

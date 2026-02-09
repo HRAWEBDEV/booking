@@ -16,6 +16,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useRouter } from 'next/navigation';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { trackingCodeQueryName } from '../utils/reserveSteps';
+import Link from 'next/link';
 
 interface LockInfo {
  trackingCode: string | null;
@@ -266,8 +267,9 @@ export default function TrackReserveResult({
      onClick={onContactSupport}
      size='lg'
      className='text-base'
+     asChild
     >
-     {trackReserve.contactSupport}
+     <Link href='tel:02191780185'>{trackReserve.contactSupport}</Link>
     </Button>
    </div>
    <a href='' ref={downloadVoucherAnchorRef} download className='hidden'></a>
