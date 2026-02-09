@@ -96,7 +96,7 @@ export default function PaymentSummary({
             <span>dic.reserveInfo.pendingReserveIsExpired</span>
            ) : (
             <span className='font-medium text-lg'>
-             {Math.floor(lockInfo.lockExpireTime / 60).toString() +
+             {Math.floor(lockInfo.lockExpireTime / 60) +
               ' ' +
               dic.payment.paymentSummary.minutes}
             </span>

@@ -107,7 +107,7 @@ export default function HotelRooms({
    {!!selectedRooms.length && (
     <div className='mb-2'>
      <Alert className='border-primary text-primary bg-primary/10'>
-      <AlertDescription className='text-base text-primary font-medium'>
+      <AlertDescription className='text-primary font-medium'>
        {dic.hotelRooms.forEachPurchaseOnlyReserveRoomsWithSameRatePlan}.
       </AlertDescription>
      </Alert>
