@@ -1,12 +1,12 @@
 'use client';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import {
- Drawer,
- DrawerTrigger,
- DrawerTitle,
- DrawerHeader,
- DrawerContent,
-} from '@/components/ui/drawer';
+ Dialog,
+ DialogTrigger,
+ DialogContent,
+ DialogHeader,
+ DialogTitle,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FaMapMarkedAlt } from 'react-icons/fa';
 import HotelLocation from './HotelLocation';
@@ -21,23 +21,23 @@ export default function HotelLocationDrawer({
 }) {
  return (
   <div>
-   <Drawer>
-    <DrawerTrigger asChild>
+   <Dialog>
+    <DialogTrigger asChild>
      <Button size='lg'>
       <FaMapMarkedAlt className='size-6' />
      </Button>
-    </DrawerTrigger>
-    <DrawerContent>
-     <DrawerHeader>
-      <DrawerTitle className='font-medium text-lg'>
+    </DialogTrigger>
+    <DialogContent>
+     <DialogHeader>
+      <DialogTitle className='font-medium text-lg'>
        {dic.hotelInfo.location}
-      </DrawerTitle>
-     </DrawerHeader>
+      </DialogTitle>
+     </DialogHeader>
      <div>
       <HotelLocation dic={dic} hotelInfo={hotelInfo} isDrawer />
      </div>
-    </DrawerContent>
-   </Drawer>
+    </DialogContent>
+   </Dialog>
   </div>
  );
 }
