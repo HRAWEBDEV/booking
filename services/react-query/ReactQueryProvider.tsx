@@ -14,9 +14,10 @@ function createQueryClient(): QueryClient {
  return new QueryClient({
   defaultOptions: {
    queries: {
+    refetchOnWindowFocus: false,
     retry: process.env.NEXT_PUBLIC_MODE === DEVELOPMENT ? 0 : 3,
     staleTime() {
-     return 5 * 60 * 1000; // 5 min
+     return 10 * 60 * 1000; // 10 min
     },
    },
   },
