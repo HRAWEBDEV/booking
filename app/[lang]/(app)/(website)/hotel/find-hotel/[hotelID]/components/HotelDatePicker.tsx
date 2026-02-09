@@ -306,13 +306,14 @@ export default function HotelDatePicker({
        </Field>
        <div>
         <div>{renderSearchButton}</div>
-        <p className='text-xs mt-1 text-neutral-600 dark:text-neutral-400'>
+        <p className='text-xs mt-2 text-neutral-600 dark:text-neutral-400'>
          <span>{dic.hotelDatePicker.results}: </span>
          <span>{data.length || 0}</span>
         </p>
        </div>
        {!!selectedRooms.length && (
-        <div className='pt-2 border-t border-input flex flex-col'>
+        <div className='pt-2 border-t border-input flex flex-col gap-4'>
+         <div>{renderConfirmReserveButton}</div>
          <ul className='max-h-24 overflow-auto'>
           {selectedRooms.map((room) => (
            <li
@@ -332,14 +333,13 @@ export default function HotelDatePicker({
            </li>
           ))}
          </ul>
-         <div className='mb-2 font-medium'>
+         <div className='mb-t font-medium'>
           <span className='text-xs'>
            {dic.reserveInfo.totalDiscountPrice}:{' '}
           </span>
           <span>{numberFormatter.format(reserveInfo.totalDiscountPrice)}</span>
           <span className='text-xs'> ریال</span>
          </div>
-         <div>{renderConfirmReserveButton}</div>
         </div>
        )}
       </Dialog>

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export default function useStickyScroll(offset = 16) {
+export default function useStickyScroll(offset = 16, minWidth = 1024) {
  const containerRef = useRef<HTMLDivElement>(null);
 
  useEffect(() => {
@@ -12,6 +12,11 @@ export default function useStickyScroll(offset = 16) {
   let currTop = offset;
 
   const handleScroll = () => {
+   if (window.innerWidth < minWidth) {
+    sidebar.style.position = '';
+    sidebar.style.top = '';
+    return;
+   }
    const scrollY = window.scrollY;
    const delta = scrollY - prevScrollY;
 
@@ -55,23 +60,20 @@ export default function useStickyScroll(offset = 16) {
 
    prevScrollY = scrollY;
   };
-
-  // Set initial position
-  sidebar.style.position = 'sticky';
-  sidebar.style.top = `${offset}px`;
+  handleScroll();
 
   window.addEventListener('scroll', handleScroll, { passive: true });
-  window.addEventListener('resize', () => {
-   // Reset on resize
-   currTop = offset;
-   handleScroll();
-  });
-
+  window.addEventListener('resize', handleScroll);
   return () => {
    window.removeEventListener('scroll', handleScroll);
    window.removeEventListener('resize', handleScroll);
+   if (sidebar) {
+    sidebar.style.position = '';
+    sidebar.style.top = '';
+    return;
+   }
   };
- }, [offset]);
+ }, [offset, minWidth]);
 
  return { containerRef };
 }

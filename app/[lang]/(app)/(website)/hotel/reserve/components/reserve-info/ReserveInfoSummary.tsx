@@ -6,6 +6,7 @@ import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Skeleton } from '@/components/ui/skeleton';
+import useStickyScroll from '@/utils/useStickyScroll';
 
 export default function ReserveInfoSummary({
  dic,
@@ -25,14 +26,14 @@ export default function ReserveInfoSummary({
   nights,
   rooms: { storeRooms, isLoading },
  } = useReserveConfig();
-
+ const { containerRef } = useStickyScroll(16, 1024);
  const { locale } = useBaseConfig();
  return (
   <div className='row-start-1 lg:row-start-auto'>
    {isLoading || hotelInfo.isLoading ? (
     <Skeleton className='w-full h-96' />
    ) : (
-    <div className='sticky top-1'>
+    <div ref={containerRef}>
      <section className='p-4 rounded-md border border-input mb-2'>
       <div className='mb-3 pb-3 border-b border-input'>
        <h1 className='text-lg font-medium'>{hotelInfo.data?.fName}</h1>
