@@ -6,17 +6,10 @@ import {
 } from '../../services/reserveApiActions';
 import { getHotelInfoApi, getHotelInfo } from '../../services/hotelApiActions';
 import { getSetupProviderCredentials } from '@/app/[lang]/(app)/(website)/utils/getSetupProviderCredentials';
-import { useShareDictionary } from '../../../services/share-dictionary/shareDictionaryContext';
-import { toast } from 'sonner';
 
 export type ReserveStatus = 'failed' | 'pending' | 'success';
 
 export const useTrackReserve = () => {
- const {
-  shareDictionary: {
-   component: { trackReserve: trackReserveDic },
-  },
- } = useShareDictionary();
  const [isOpen, setIsOpen] = useState(false);
  const [isResultOpen, setIsResultOpen] = useState(false);
  const downloadVoucherAnchor = useRef<HTMLAnchorElement>(null);

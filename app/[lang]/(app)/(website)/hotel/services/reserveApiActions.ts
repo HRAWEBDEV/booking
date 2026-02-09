@@ -231,9 +231,12 @@ function getLockExpireTime({
  trackingCode: string;
 }) {
  const searchParams = new URLSearchParams([['trackingCode', trackingCode]]);
- return axios.get(`${getLockExpireTimeApi}?${searchParams.toString()}`, {
-  signal,
- });
+ return axios.get<number>(
+  `${getLockExpireTimeApi}?${searchParams.toString()}`,
+  {
+   signal,
+  },
+ );
 }
 
 export {
@@ -252,6 +255,7 @@ export {
  getGatewaysApi,
  cancelReserveLockApi,
  bookReserveApi,
+ getLockExpireTimeApi,
  lockReserve,
  getLockInfo,
  getGateways,

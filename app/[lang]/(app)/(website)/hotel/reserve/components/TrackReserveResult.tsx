@@ -1,13 +1,21 @@
 'use client';
 import { XCircle, Clock } from 'lucide-react';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
-import {} from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { useShareDictionary } from '../../../services/share-dictionary/shareDictionaryContext';
 import { ConvertToLocalDate } from '../../../utils/trackReserveUtils/convertToLocalDate';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { ReserveStatus } from '../hooks/useTrackReserve';
+import {
+ getLockExpireTimeApi,
+ getLockExpireTime,
+} from '../../services/reserveApiActions';
+import { useQuery } from '@tanstack/react-query';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useRouter } from 'next/navigation';
+import { useBaseConfig } from '@/services/base-config/baseConfigContext';
+import { trackingCodeQueryName } from '../utils/reserveSteps';
 
 interface LockInfo {
  trackingCode: string | null;
@@ -56,6 +64,8 @@ export default function TrackReserveResult({
  onContactSupport,
  downloadVoucherAnchorRef,
 }: TrackReserveResultProps) {
+ const { locale } = useBaseConfig();
+ const router = useRouter();
  const {
   shareDictionary: {
    component: { trackReserve },
@@ -92,11 +102,38 @@ export default function TrackReserveResult({
     };
   }
  };
-
  const statusConfig = getStatusConfig(status);
+
+ const {
+  data: lockExpireTime,
+  isLoading: lockExpireTimeLoading,
+  isSuccess: lockExpireTimeSuccess,
+ } = useQuery({
+  enabled: status === 'pending' && !!trackDetails?.lockInfo.trackingCode,
+  queryKey: [getLockExpireTimeApi, trackDetails?.lockInfo.trackingCode],
+  async queryFn({ signal }) {
+   const res = await getLockExpireTime({
+    signal,
+    trackingCode: trackDetails!.lockInfo.trackingCode!,
+   });
+   return res.data;
+  },
+ });
 
  return (
   <div className='flex flex-col gap-4 h-full overflow-auto p-4'>
+   {lockExpireTimeSuccess && lockExpireTime <= 0 && (
+    <div>
+     <Alert
+      variant='destructive'
+      className='bg-destructive/10 border-destructive'
+     >
+      <AlertDescription className='font-medium'>
+       {trackReserve.pendingReserveIsExpired}.
+      </AlertDescription>
+     </Alert>
+    </div>
+   )}
    <div
     className={`flex flex-col items-center justify-center py-5 rounded-lg ${statusConfig.bgColor} ${statusConfig.border} mb-4`}
    >
@@ -197,6 +234,26 @@ export default function TrackReserveResult({
       >
        {isDownloading && <Spinner />}
        {trackReserve.downloadVoucher}
+      </Button>
+     </div>
+    )}
+    {status === 'pending' && (
+     <div className='col-span-2'>
+      <Button
+       size='lg'
+       className='w-full text-base'
+       disabled={lockExpireTimeLoading || !lockExpireTimeSuccess}
+       onClick={() => {
+        if (!trackDetails?.lockInfo.trackingCode) return;
+        const searchParams = new URLSearchParams([
+         [trackingCodeQueryName, trackDetails?.lockInfo.trackingCode],
+        ]);
+        router.push(`/${locale}/hotel/reserve?${searchParams.toString()}`);
+        onClose();
+       }}
+      >
+       {lockExpireTimeLoading && <Spinner />}
+       {trackReserve.continueReserve}
       </Button>
      </div>
     )}

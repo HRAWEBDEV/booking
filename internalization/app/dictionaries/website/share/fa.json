@@ -51,10 +51,12 @@
    "profile": "پروفایل"
   },
   "trackReserve": {
+   "pendingReserveIsExpired": "زمان ثبت رزرو منقضی شده است",
    "somethingWentWrongTryAgain": "مشکلی پیش آمده، لطفا دوباره تلاش کنید.",
    "confirmBtn": "تایید",
    "closeBtn": "بستن",
    "downloadVoucher": "دانلود واچر",
+   "continueReserve": "ادامه فرآیند رزرو",
    "contactSupport": "تماس با پشتیبانی",
    "reserveStatus": {
     "success": "رزرو موفق",
