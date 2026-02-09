@@ -20,16 +20,18 @@ const VirtualMonth = memo(
   onSelect: (range: DateRange | undefined) => void;
  }) => {
   return (
-   <div className='w-full flex flex-col items-center pb-6 border-b last:border-0'>
+   <div className='w-full flex flex-col gap-4 items-center pb-6 border-b last:border-0'>
     <Calendar
      mode='range'
      month={monthDate}
      selected={selected}
      onSelect={onSelect}
      disableNavigation
-     className='w-full flex justify-center p-0'
+     showOutsideDays={false}
+     hideNavigation
+     className='w-full flex justify-center p-2'
      classNames={{
-      month: 'space-y-4 w-full max-w-[300px]',
+      month: 'space-y-4 w-full ',
       table: 'w-full border-collapse space-y-1',
       head_row: 'hidden',
       row: 'flex w-full mt-2 justify-between',
@@ -42,7 +44,8 @@ const VirtualMonth = memo(
  (prev, next) => {
   return (
    prev.monthDate.getTime() === next.monthDate.getTime() &&
-   prev.selected === next.selected
+   prev.selected?.from?.getTime() === next.selected?.from?.getTime() &&
+   prev.selected?.to?.getTime() === next.selected?.to?.getTime()
   );
  },
 );
