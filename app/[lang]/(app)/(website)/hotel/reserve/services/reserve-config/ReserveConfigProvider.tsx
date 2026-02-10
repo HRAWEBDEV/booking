@@ -83,6 +83,7 @@ import { useGoHome } from '../../../../hooks/useGoHome';
 import { AxiosError } from 'axios';
 import { type ErrorInfo } from '@/app/[lang]/(app)/utils/apiBaseTypes';
 import { LockReserveErrorCodes } from '../../../utils/lockReserveErrorCodes';
+import { IoLogOut } from 'react-icons/io5';
 
 export default function ReserveConfigProvider({
  children,
@@ -523,13 +524,32 @@ export default function ReserveConfigProvider({
   setShowConfirmCancelReserve(true);
  }
 
- const nights =
-  localeReserveInfo?.fromDate && localeReserveInfo?.toDate
-   ? dateFns.differenceInDays(
-      localeReserveInfo?.toDate,
-      localeReserveInfo?.fromDate,
-     )
-   : 0;
+ const nights = (() => {
+  switch (activeReserveStep) {
+   case 'reserve':
+    return localeReserveInfo?.fromDate && localeReserveInfo?.toDate
+     ? dateFns.differenceInDays(
+        localeReserveInfo?.toDate,
+        localeReserveInfo?.fromDate,
+       )
+     : 0;
+   case 'payment':
+    return lockInfo
+     ? dateFns.differenceInDays(
+        lockInfo.lockInfo.departureDateTimeOffset,
+        lockInfo.lockInfo.arrivelDateTimeOffset,
+       )
+     : 0;
+   default:
+    return 0;
+  }
+ })();
+ localeReserveInfo?.fromDate && localeReserveInfo?.toDate
+  ? dateFns.differenceInDays(
+     localeReserveInfo?.toDate,
+     localeReserveInfo?.fromDate,
+    )
+  : 0;
 
  const ctx: ReserveConfig = {
   activeReserveStep,
