@@ -244,7 +244,9 @@ export default function TrackReserveResult({
       <Button
        size='lg'
        className='w-full text-base'
-       disabled={lockExpireTimeLoading || !lockExpireTimeSuccess}
+       disabled={
+        lockExpireTimeLoading || !lockExpireTimeSuccess || lockExpireTime <= 0
+       }
        onClick={() => {
         if (!trackDetails?.lockInfo.trackingCode) return;
         const searchParams = new URLSearchParams([
