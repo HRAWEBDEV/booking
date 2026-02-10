@@ -1,11 +1,11 @@
-import { useRef, memo, ReactNode } from 'react';
+import { useRef, memo, ReactNode, useMemo } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Calendar } from '@/components/ui/calendar';
 import { DateRange } from 'react-day-picker';
 import { cn } from '@/lib/utils';
 import { useDateFns } from '@/hooks/useDateFns';
 
-const TOTAL_MONTHS = 24;
+const TOTAL_MONTHS = 12;
 
 const VirtualMonth = memo(
  ({
@@ -98,7 +98,18 @@ export default function ScrollableCalendar({
 }: ScrollableCalendarProps) {
  const parentRef = useRef<HTMLDivElement>(null);
  const dateFns = useDateFns();
- const START_DATE = dateFns.startOfMonth(new Date());
+
+ const monthsData = useMemo(() => {
+  const START_DATE = dateFns.startOfMonth(new Date());
+  return Array.from({ length: TOTAL_MONTHS }).map((_, index) => {
+   const monthDate = dateFns.addMonths(START_DATE, index);
+   return {
+    monthDate,
+    monthStart: dateFns.startOfMonth(monthDate).getTime(),
+    monthEnd: dateFns.endOfMonth(monthDate).getTime(),
+   };
+  });
+ }, [dateFns]);
 
  const rowVirtualizer = useVirtualizer({
   count: TOTAL_MONTHS,
@@ -121,9 +132,7 @@ export default function ScrollableCalendar({
      }}
     >
      {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-      const monthDate = dateFns.addMonths(START_DATE, virtualRow.index);
-      const monthStart = dateFns.startOfMonth(monthDate).getTime();
-      const monthEnd = dateFns.endOfMonth(monthDate).getTime();
+      const { monthDate, monthStart, monthEnd } = monthsData[virtualRow.index];
 
       return (
        <div
