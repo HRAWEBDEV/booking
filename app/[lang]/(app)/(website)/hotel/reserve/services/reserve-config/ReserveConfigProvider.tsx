@@ -474,6 +474,9 @@ export default function ReserveConfigProvider({
     clearLocalReserveInfo();
     router.replace(
      `/${locale}/hotel/reserve?${trackingCodeQueryName}=${res.data.trackingCode}`,
+     {
+      scroll: true,
+     },
     );
    }
   },
