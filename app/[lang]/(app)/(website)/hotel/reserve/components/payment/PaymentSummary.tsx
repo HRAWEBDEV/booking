@@ -93,7 +93,7 @@ export default function PaymentSummary({
           {lockInfo.lockExpireTimeIsSuccess &&
           lockInfo.lockExpireTime !== undefined ? (
            lockInfo.lockExpireTime <= 0 ? (
-            <span>dic.reserveInfo.pendingReserveIsExpired</span>
+            <span>{dic.reserveInfo.pendingReserveIsExpired}</span>
            ) : (
             <span className='font-medium text-lg'>
              {Math.floor(lockInfo.lockExpireTime / 60) +
