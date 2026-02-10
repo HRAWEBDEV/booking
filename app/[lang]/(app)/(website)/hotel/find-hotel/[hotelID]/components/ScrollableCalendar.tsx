@@ -1,13 +1,11 @@
-'use client';
 import { useRef, memo, ReactNode } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { addMonths, startOfMonth } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { DateRange } from 'react-day-picker';
 import { cn } from '@/lib/utils';
+import { useDateFns } from '@/hooks/useDateFns';
 
 const TOTAL_MONTHS = 24;
-const START_DATE = startOfMonth(new Date());
 
 const VirtualMonth = memo(
  ({
@@ -16,8 +14,10 @@ const VirtualMonth = memo(
   onSelect,
  }: {
   monthDate: Date;
+  monthStart: number;
+  monthEnd: number;
   selected: DateRange | undefined;
-  onSelect: (range: DateRange | undefined) => void;
+  onSelect: (range: DateRange | undefined, selectedDay: Date) => void;
  }) => {
   return (
    <div className='w-full flex flex-col gap-4 items-center pb-6 border-b last:border-0'>
@@ -43,11 +43,41 @@ const VirtualMonth = memo(
   );
  },
  (prev, next) => {
-  return (
-   prev.monthDate.getTime() === next.monthDate.getTime() &&
-   prev.selected?.from?.getTime() === next.selected?.from?.getTime() &&
-   prev.selected?.to?.getTime() === next.selected?.to?.getTime()
-  );
+  const isMonthChanged = prev.monthDate.getTime() !== next.monthDate.getTime();
+  if (isMonthChanged) return false;
+
+  // Check if selection ranges are equal
+  const prevFrom = prev.selected?.from?.getTime();
+  const prevTo = prev.selected?.to?.getTime();
+  const nextFrom = next.selected?.from?.getTime();
+  const nextTo = next.selected?.to?.getTime();
+
+  if (prevFrom === nextFrom && prevTo === nextTo) return true;
+
+  // Smart re-render: Only re-render if the month is involved in the change
+  // We use the passed locale-aware timestamps
+  const monthStart = prev.monthStart;
+  const monthEnd = prev.monthEnd;
+
+  const isOverlap = (range: DateRange | undefined) => {
+   if (!range?.from) return false;
+   const rangeStart = range.from.getTime();
+   const rangeEnd = range.to ? range.to.getTime() : rangeStart;
+
+   // Check if the range overlaps with the month
+   // Range overlaps month if: RangeStart <= MonthEnd AND RangeEnd >= MonthStart
+   return rangeStart <= monthEnd && rangeEnd >= monthStart;
+  };
+
+  const prevOverlap = isOverlap(prev.selected);
+  const nextOverlap = isOverlap(next.selected);
+
+  // If the month was not involved in previous selection AND is not involved in new selection,
+  // we can skip re-render.
+  if (!prevOverlap && !nextOverlap) return true;
+
+  // Otherwise, if ranges differ and we are involved, we must re-render
+  return false;
  },
 );
 
@@ -55,7 +85,7 @@ VirtualMonth.displayName = 'VirtualMonth';
 
 interface ScrollableCalendarProps {
  selected: DateRange | undefined;
- onSelect: (range: DateRange | undefined) => void;
+ onSelect: (range: DateRange | undefined, selectedDay: Date) => void;
  className?: string;
  children: ReactNode;
 }
@@ -67,6 +97,8 @@ export default function ScrollableCalendar({
  children,
 }: ScrollableCalendarProps) {
  const parentRef = useRef<HTMLDivElement>(null);
+ const dateFns = useDateFns();
+ const START_DATE = dateFns.startOfMonth(new Date());
 
  const rowVirtualizer = useVirtualizer({
   count: TOTAL_MONTHS,
@@ -89,7 +121,9 @@ export default function ScrollableCalendar({
      }}
     >
      {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-      const monthDate = addMonths(START_DATE, virtualRow.index);
+      const monthDate = dateFns.addMonths(START_DATE, virtualRow.index);
+      const monthStart = dateFns.startOfMonth(monthDate).getTime();
+      const monthEnd = dateFns.endOfMonth(monthDate).getTime();
 
       return (
        <div
@@ -103,6 +137,8 @@ export default function ScrollableCalendar({
        >
         <VirtualMonth
          monthDate={monthDate}
+         monthStart={monthStart}
+         monthEnd={monthEnd}
          selected={selected}
          onSelect={onSelect}
         />

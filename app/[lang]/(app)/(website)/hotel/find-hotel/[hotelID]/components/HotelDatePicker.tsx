@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { FieldGroup, Field } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
@@ -77,35 +77,62 @@ export default function HotelDatePicker({
   return activeCount;
  })();
 
- const handleRangeSelect = (selected: DateRange | undefined) => {
-  if (!selected) return;
+ // Use refs to keep track of current selection without triggering re-renders of the callback
+ const fromDateRef = useRef(fromDateValue);
+ const toDateRef = useRef(toDateValue);
 
-  let newFromDate = selected.from;
-  let newUntilDate = selected.to;
+ // Sync refs with state using useLayoutEffect to avoid side effects during render
+ useLayoutEffect(() => {
+  fromDateRef.current = fromDateValue;
+  toDateRef.current = toDateValue;
+ }, [fromDateValue, toDateValue]);
 
-  if (
-   fromDateValue &&
-   toDateValue &&
-   fromDateValue.getTime() !== toDateValue.getTime()
-  ) {
-   if (newFromDate && newFromDate.getTime() < fromDateValue.getTime()) {
-    newUntilDate = newFromDate;
+ const handleRangeSelect = useCallback(
+  (_range: DateRange | undefined, selectedDay: Date) => {
+   const currentFrom = fromDateRef.current;
+   const currentTo = toDateRef.current;
+
+   let newFromDate: Date | undefined;
+   let newToDate: Date | undefined;
+
+   if (
+    currentFrom &&
+    currentTo &&
+    currentFrom.getTime() !== currentTo.getTime()
+   ) {
+    // Reset range if a full range is already selected
+    newFromDate = selectedDay;
+    newToDate = undefined;
+   } else if (!currentFrom) {
+    // select first date
+    newFromDate = selectedDay;
+   } else if (selectedDay.getTime() < currentFrom.getTime()) {
+    // select first date if it is before the current from date
+    newFromDate = selectedDay;
+    newToDate = currentFrom;
+   } else if (selectedDay.getTime() === currentFrom.getTime()) {
+    // deselect if clicked on same start date
+    newFromDate = undefined;
+    newToDate = undefined;
    } else {
-    newFromDate = newUntilDate;
+    // select end date
+    newFromDate = currentFrom;
+    newToDate = selectedDay;
    }
-  }
 
-  filtersUserForm.setValue('fromDate', newFromDate!);
-  filtersUserForm.setValue('toDate', newUntilDate || newFromDate!);
+   filtersUserForm.setValue('fromDate', newFromDate || null);
+   filtersUserForm.setValue('toDate', newToDate || newFromDate || null);
 
-  if (
-   newFromDate &&
-   newUntilDate &&
-   newFromDate.getTime() !== newUntilDate.getTime()
-  ) {
-   setOpenDatePickerCalendar(false);
-  }
- };
+   if (
+    newFromDate &&
+    newToDate &&
+    newFromDate.getTime() !== newToDate.getTime()
+   ) {
+    setOpenDatePickerCalendar(false);
+   }
+  },
+  [filtersUserForm, setOpenDatePickerCalendar],
+ );
 
  // --- RENDER: Desktop Calendar (Standard Paged View) ---
  const renderDesktopCalendar = (
