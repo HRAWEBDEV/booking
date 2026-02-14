@@ -168,42 +168,6 @@ export default function ReserveInfoRoomForm({
       {dic.reserveInfo.reserveForm.saveAsReservePersonInfo}
      </Label>
     </div>
-    <div className='flex gap-3 flex-wrap'>
-     <Controller
-      name={`guestInfo.${i}.hasEarlyCheckin`}
-      control={control}
-      render={({ field: { value, onChange, ...other } }) => (
-       <Checkbox
-        id={`earlyCheckinCharge${i + 1}`}
-        className='scale-125'
-        {...other}
-        checked={value}
-        onCheckedChange={(value) => onChange(value)}
-       />
-      )}
-     />
-     <Label htmlFor={`earlyCheckinCharge${i + 1}`}>
-      {dic.reserveInfo.reserveForm.earlyCheckinCharge}
-     </Label>
-    </div>
-    <div className='flex gap-3 flex-wrap'>
-     <Controller
-      name={`guestInfo.${i}.hasLateCheckout`}
-      control={control}
-      render={({ field: { value, onChange, ...other } }) => (
-       <Checkbox
-        id={`lateCheckoutCharge${i + 1}`}
-        className='scale-125'
-        {...other}
-        checked={value}
-        onCheckedChange={(value) => onChange(value)}
-       />
-      )}
-     />
-     <Label htmlFor={`lateCheckoutCharge${i + 1}`}>
-      {dic.reserveInfo.reserveForm.lateCheckoutCharge}
-     </Label>
-    </div>
    </div>
    {!saveAsReserveInfo && (
     <div className='grid gap-4 grid-cols-1 md:grid-cols-2 gap-y-5'>
