@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+
+import { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { FieldGroup, Field } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
@@ -37,6 +38,8 @@ import {
  SelectValue,
 } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
+import { DateRange } from 'react-day-picker';
+import ScrollableCalendar from './ScrollableCalendar';
 
 export default function HotelDatePicker({
  dic,
@@ -74,47 +77,101 @@ export default function HotelDatePicker({
   return activeCount;
  })();
 
- const renderCalendar = (
+ // Use refs to keep track of current selection without triggering re-renders of the callback
+ const fromDateRef = useRef(fromDateValue);
+ const toDateRef = useRef(toDateValue);
+
+ // Sync refs with state using useLayoutEffect to avoid side effects during render
+ useLayoutEffect(() => {
+  fromDateRef.current = fromDateValue;
+  toDateRef.current = toDateValue;
+ }, [fromDateValue, toDateValue]);
+
+ const handleRangeSelect = useCallback(
+  (_range: DateRange | undefined, selectedDay: Date) => {
+   const currentFrom = fromDateRef.current;
+   const currentTo = toDateRef.current;
+
+   let newFromDate: Date | undefined;
+   let newToDate: Date | undefined;
+
+   if (
+    currentFrom &&
+    currentTo &&
+    currentFrom.getTime() !== currentTo.getTime()
+   ) {
+    // Reset range if a full range is already selected
+    newFromDate = selectedDay;
+    newToDate = undefined;
+   } else if (!currentFrom) {
+    // select first date
+    newFromDate = selectedDay;
+   } else if (selectedDay.getTime() < currentFrom.getTime()) {
+    // select first date if it is before the current from date
+    newFromDate = selectedDay;
+    newToDate = currentFrom;
+   } else if (selectedDay.getTime() === currentFrom.getTime()) {
+    // deselect if clicked on same start date
+    newFromDate = undefined;
+    newToDate = undefined;
+   } else {
+    // select end date
+    newFromDate = currentFrom;
+    newToDate = selectedDay;
+   }
+
+   filtersUserForm.setValue('fromDate', newFromDate || null);
+   filtersUserForm.setValue('toDate', newToDate || newFromDate || null);
+
+   if (
+    newFromDate &&
+    newToDate &&
+    newFromDate.getTime() !== newToDate.getTime()
+   ) {
+    setOpenDatePickerCalendar(false);
+   }
+  },
+  [filtersUserForm, setOpenDatePickerCalendar],
+ );
+
+ // --- RENDER: Desktop Calendar (Standard Paged View) ---
+ const renderDesktopCalendar = (
   <Controller
    control={filtersUserForm.control}
    name='toDate'
-   render={({ field: { ...other } }) => (
+   render={() => (
     <Calendar
      mode='range'
-     {...other}
-     required
      numberOfMonths={2}
      startMonth={dateFns.startOfMonth(new Date())}
      selected={{
-      to: fromDateValue || undefined,
-      from: toDateValue || undefined,
+      from: fromDateValue || undefined,
+      to: toDateValue || undefined,
      }}
-     onSelect={(selected) => {
-      let newFromDate = selected.from;
-      let newUntilDate = selected.to;
-      if (fromDateValue!.getTime() !== toDateValue!.getTime()) {
-       if (newFromDate!.getTime() < fromDateValue!.getTime()) {
-        newUntilDate = newFromDate;
-       } else {
-        newFromDate = newUntilDate;
-       }
-      }
-      filtersUserForm.setValue('fromDate', newFromDate!);
-      filtersUserForm.setValue('toDate', newUntilDate!);
-      if (
-       newFromDate &&
-       newUntilDate &&
-       newFromDate.getTime() !== newUntilDate.getTime()
-      ) {
-       setOpenDatePickerCalendar(false);
-      }
-     }}
+     onSelect={handleRangeSelect}
      defaultMonth={fromDateValue || new Date()}
      showOutsideDays={false}
      disabled={(date) => {
       return date.getTime() < dateFns.startOfDay(new Date()).getTime();
      }}
     />
+   )}
+  />
+ );
+ const renderMobileCalendar = (
+  <Controller
+   control={filtersUserForm.control}
+   name='toDate'
+   render={() => (
+    <ScrollableCalendar
+     selected={{
+      from: fromDateValue || undefined,
+      to: toDateValue || undefined,
+     }}
+     onSelect={handleRangeSelect}
+    >
+     {renderMobileInputs}
+    </ScrollableCalendar>
    )}
   />
  );
@@ -186,6 +243,25 @@ export default function HotelDatePicker({
     </Select>
    )}
   />
+ );
+
+ const renderMobileInputs = (
+  <div className='p-4 grid grid-cols-2 gap-1 gap-y-3 bg-background'>
+   <Field className='gap-2'>
+    <Label htmlFor='fromDate' className='px-1'>
+     {dic.hotelDatePicker.fromDate}
+    </Label>
+    {renderFromDateInput}
+   </Field>
+   <Field className='gap-2'>
+    <Label htmlFor='toDate'>{dic.hotelDatePicker.toDate}</Label>
+    {renderToDateInput}
+   </Field>
+   <Field className='gap-2 col-span-full'>
+    <Label htmlFor='ratePlan'>{dic.hotelDatePicker.ratePlan}</Label>
+    {renderRatePlanSelect}
+   </Field>
+  </div>
  );
 
  const renderConfirmReserveButton = (
@@ -265,16 +341,18 @@ export default function HotelDatePicker({
         data-invalid={!!filtersUserForm.formState.errors.toDate}
        >
         <Label className='px-1'>{dic.hotelDatePicker.toDate}</Label>
-        <DialogTrigger asChild className='md:hidden'>
+        <DialogTrigger asChild className='md:hidden text-base'>
          <div>{renderToDateInput}</div>
         </DialogTrigger>
         <PopoverTrigger asChild className='hidden md:block'>
          <div>{renderToDateInput}</div>
         </PopoverTrigger>
+
         <PopoverContent className='w-auto overflow-hidden p-0' align='end'>
-         {renderCalendar}
+         {renderDesktopCalendar}
         </PopoverContent>
-        <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden w-screen max-w-screen! h-dvh rounded-none'>
+
+        <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden w-screen max-w-screen! h-screen rounded-none'>
          <DialogHeader className='p-4 shrink-0 border-b border-input'>
           <DialogTitle className='text-base font-medium'>
            {dic.hotelDatePicker.changeFilters}{' '}
@@ -284,30 +362,18 @@ export default function HotelDatePicker({
            </div>
           </DialogTitle>
          </DialogHeader>
-         <div className='grow overflow-auto flex flex-col'>
-          <div className='p-4 grid grid-cols-2 gap-1 gap-y-3'>
-           <Field className='gap-2'>
-            <Label htmlFor='toDate' className='px-1'>
-             {dic.hotelDatePicker.fromDate}
-            </Label>
-            {renderFromDateInput}
-           </Field>
-           <Field className='gap-2'>
-            <Label htmlFor='toDate'>{dic.hotelDatePicker.toDate}</Label>
-            {renderToDateInput}
-           </Field>
-           <Field className='gap-2 col-span-full'>
-            <Label htmlFor='toDate'>{dic.hotelDatePicker.ratePlan}</Label>
-            {renderRatePlanSelect}
-           </Field>
+
+         <div className='grow flex flex-col overflow-hidden'>
+          <div className='grow min-h-0 relative bg-background h-full'>
+           {renderMobileCalendar}
           </div>
-          <div className='mx-auto *:[--cell-size:2.5rem]'>{renderCalendar}</div>
-          <div className='sticky bottom-0 bg-background p-2 border-t border-input'>
+          <div className='p-2 border-t bg-background shrink-0'>
            {renderSearchButton}
           </div>
          </div>
         </DialogContent>
        </Field>
+
        <Field className='gap-2'>
         <Label htmlFor='ratePlan'>{dic.hotelDatePicker.ratePlan}</Label>
         {renderRatePlanSelect}
@@ -319,6 +385,7 @@ export default function HotelDatePicker({
          <span>{data.length || 0}</span>
         </p>
        </div>
+
        {!!selectedRooms.length && (
         <div className='pt-2 border-t border-input flex flex-col gap-4'>
          <div>{renderConfirmReserveButton}</div>
@@ -354,6 +421,7 @@ export default function HotelDatePicker({
      </Popover>
     </FieldGroup>
    </form>
+
    <div className='p-2 bg-neutral-100 fixed z-3 bottom-(--website-mobile-nav-height) start-0 end-0 grid grid-cols-2 gap-4 md:hidden'>
     <div>
      <Button
