@@ -5,7 +5,7 @@ import { DateRange } from 'react-day-picker';
 import { cn } from '@/lib/utils';
 import { useDateFns } from '@/hooks/useDateFns';
 
-const TOTAL_MONTHS = 12;
+const TOTAL_MONTHS = 20;
 
 const VirtualMonth = memo(
  ({
@@ -19,6 +19,7 @@ const VirtualMonth = memo(
   selected: DateRange | undefined;
   onSelect: (range: DateRange | undefined, selectedDay: Date) => void;
  }) => {
+  const dateFns = useDateFns();
   return (
    <div className='w-full flex flex-col gap-4 items-center pb-6 border-b last:border-0'>
     <Calendar
@@ -30,6 +31,9 @@ const VirtualMonth = memo(
      showOutsideDays={false}
      hideNavigation
      className='w-full flex justify-center p-2 [--cell-size:3rem]'
+     disabled={(date) => {
+      return date.getTime() < dateFns.startOfDay(new Date()).getTime();
+     }}
      classNames={{
       month: 'space-y-4 w-full ',
       table: 'w-full border-collapse space-y-1',
