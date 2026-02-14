@@ -50,6 +50,8 @@ interface RatePlanType {
 interface RoomAccomodationType {
  roomOnlineShowRate: number;
  netRoomRate: number;
+ earlyCheckInRate: number;
+ lateCheckOutRate: number;
  beds: number;
  dailyPrices: {
   price: number;

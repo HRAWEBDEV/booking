@@ -83,7 +83,6 @@ import { useGoHome } from '../../../../hooks/useGoHome';
 import { AxiosError } from 'axios';
 import { type ErrorInfo } from '@/app/[lang]/(app)/utils/apiBaseTypes';
 import { LockReserveErrorCodes } from '../../../utils/lockReserveErrorCodes';
-import { IoLogOut } from 'react-icons/io5';
 
 export default function ReserveConfigProvider({
  children,
@@ -185,7 +184,7 @@ export default function ReserveConfigProvider({
   async queryFn({ signal }) {
    const res = await getLockExpireTime({
     signal,
-    trackingCode: lockInfo?.lockInfo.trackingCode!,
+    trackingCode: lockInfo!.lockInfo.trackingCode!,
    });
    return res.data;
   },
@@ -307,12 +306,12 @@ export default function ReserveConfigProvider({
    async mutationFn() {
     try {
      const { data: expireTime } = await getLockExpireTime({
-      trackingCode: lockInfo?.lockInfo.trackingCode!,
+      trackingCode: lockInfo!.lockInfo.trackingCode!,
      });
      if (expireTime <= 0) {
       throw new Error('Lock_expired');
      }
-    } catch (error) {
+    } catch {
      throw new Error('something went wrong');
     }
     return getPaymentLink({
@@ -547,12 +546,6 @@ export default function ReserveConfigProvider({
     return 0;
   }
  })();
- localeReserveInfo?.fromDate && localeReserveInfo?.toDate
-  ? dateFns.differenceInDays(
-     localeReserveInfo?.toDate,
-     localeReserveInfo?.fromDate,
-    )
-  : 0;
 
  const ctx: ReserveConfig = {
   activeReserveStep,
