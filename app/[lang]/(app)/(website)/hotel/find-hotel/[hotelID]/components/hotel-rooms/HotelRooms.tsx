@@ -43,8 +43,9 @@ export default function HotelRooms({
  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
  const {
   hotelID,
+  ratePlanTypes,
   rooms: { selectedRooms, isLoading, onUpdateRoomInventory },
-  reserve: { fromDateValue, toDateValue },
+  reserve: { fromDateValue, toDateValue, ratePlanValue },
  } = useHotelConfig();
 
  const data = use(roomInventoriesPromise);
@@ -106,10 +107,13 @@ export default function HotelRooms({
  return (
   <section id='rooms' className='scroll-mt-16 mb-4'>
    <div className='p-2 flex flex-wrap items-center gap-2'>
-    <span className='text-sm'>{dic.hotelRooms.searched}: </span>
+    <span className='text-sm'>
+     {dic.hotelRooms.searched} ({dic.hotelDatePicker.results} {data?.length}
+     ):{' '}
+    </span>
     <Badge
      variant='outline'
-     className='p-1 px-2 rounded-md text-base font-normal'
+     className='p-1 px-2 rounded-md text-[0.9rem] font-normal'
     >
      <span>{dic.hotelDatePicker.from} </span>
      <span>
@@ -118,13 +122,27 @@ export default function HotelRooms({
     </Badge>
     <Badge
      variant='outline'
-     className='p-1 px-2 rounded-md text-base font-normal'
+     className='p-1 px-2 rounded-md text-[0.9rem] font-normal'
     >
      <span>{dic.hotelDatePicker.to} </span>
      <span>
       {toDateValue?.toLocaleDateString(locale, { dateStyle: 'long' })}
      </span>
     </Badge>
+
+    {ratePlanValue && (
+     <Badge
+      variant='outline'
+      className='p-1 px-2 rounded-md text-[0.9rem] font-normal'
+     >
+      <span>{dic.hotelDatePicker.ratePlan} </span>
+      <span>
+       {ratePlanTypes.data?.find(
+        (item) => item.ratePlanID.toString() === ratePlanValue,
+       )?.fName || ''}
+      </span>
+     </Badge>
+    )}
    </div>
    {!!selectedRooms.length && (
     <div className='mb-2'>

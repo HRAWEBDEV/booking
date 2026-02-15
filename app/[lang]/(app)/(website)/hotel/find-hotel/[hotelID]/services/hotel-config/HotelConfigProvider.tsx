@@ -162,6 +162,7 @@ export default function HotelConfigProvider({
    reserveRoomNights,
    fromDateValue: fromDateQuery,
    toDateValue: toDateQuery,
+   ratePlanValue: ratePlanTypeQuery,
    onChangeReserveDate: handleChangeReserveDate,
    onSubmitReserveInfo: handleSubmitReserveInfo,
   },

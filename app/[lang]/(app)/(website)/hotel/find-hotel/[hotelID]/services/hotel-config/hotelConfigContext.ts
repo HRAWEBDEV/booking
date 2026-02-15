@@ -31,6 +31,7 @@ interface HotelConfig {
   reserveRoomNights: number;
   fromDateValue: Date | null;
   toDateValue: Date | null;
+  ratePlanValue: string;
   onChangeReserveDate: (params: HotelDatePickerSchema) => unknown;
   onSubmitReserveInfo: () => unknown;
  };
