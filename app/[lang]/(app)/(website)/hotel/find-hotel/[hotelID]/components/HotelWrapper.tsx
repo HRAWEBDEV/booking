@@ -53,7 +53,7 @@ export default function HotelWrapper({
    <div className='grid md:grid-cols-[1fr_18rem] gap-4 mb-4'>
     <div className='grid grid-cols-1'>
      <HotelGallery dic={dic} hotelImages={hotelImages} />
-     <div className='hidden md:block'>
+     <div className='md:sticky md:top-3'>
       <HotelMenuBar dic={dic} />
      </div>
      <div className='block md:hidden'>

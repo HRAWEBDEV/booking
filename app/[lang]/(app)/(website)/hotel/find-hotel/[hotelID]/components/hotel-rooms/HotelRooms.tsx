@@ -26,6 +26,7 @@ import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { IoSearch } from 'react-icons/io5';
+import { Badge } from '@/components/ui/badge';
 
 export default function HotelRooms({
  dic,
@@ -104,6 +105,27 @@ export default function HotelRooms({
 
  return (
   <section id='rooms' className='scroll-mt-16 mb-4'>
+   <div className='p-2 flex flex-wrap items-center gap-2'>
+    <span className='text-sm'>{dic.hotelRooms.searched}: </span>
+    <Badge
+     variant='outline'
+     className='p-1 px-2 rounded-md text-base font-normal'
+    >
+     <span>{dic.hotelDatePicker.from} </span>
+     <span>
+      {fromDateValue?.toLocaleDateString(locale, { dateStyle: 'long' })}
+     </span>
+    </Badge>
+    <Badge
+     variant='outline'
+     className='p-1 px-2 rounded-md text-base font-normal'
+    >
+     <span>{dic.hotelDatePicker.to} </span>
+     <span>
+      {toDateValue?.toLocaleDateString(locale, { dateStyle: 'long' })}
+     </span>
+    </Badge>
+   </div>
    {!!selectedRooms.length && (
     <div className='mb-2'>
      <Alert className='border-primary text-primary bg-primary/10'>

@@ -185,9 +185,11 @@ export default function HotelDatePicker({
    data-invalid={!!filtersUserForm.formState.errors.fromDate}
   >
    {fromDateValue
-    ? fromDateValue.toLocaleDateString(locale, {
-       dateStyle: 'full',
-      })
+    ? `${fromDateValue.toLocaleDateString(locale, {
+       dateStyle: 'long',
+      })}, ${fromDateValue.toLocaleDateString(locale, {
+       weekday: 'long',
+      })}`
     : '---'}
    <ChevronDownIcon className='hidden md:inline-block' />
   </Button>
@@ -203,9 +205,11 @@ export default function HotelDatePicker({
   >
    {!toDateValue || toDateValue.getTime() === fromDateValue?.getTime()
     ? '---'
-    : toDateValue?.toLocaleDateString(locale, {
-       dateStyle: 'full',
-      })}
+    : `${toDateValue.toLocaleDateString(locale, {
+       dateStyle: 'long',
+      })}, ${toDateValue.toLocaleDateString(locale, {
+       weekday: 'long',
+      })}`}
    <ChevronDownIcon className='hidden md:inline-block' />
   </Button>
  );
@@ -314,7 +318,7 @@ export default function HotelDatePicker({
 
  return (
   <>
-   <form className='shadow-lg border border-input p-4 rounded-md mb-2'>
+   <form className='hidden md:block shadow-lg border border-input p-4 rounded-md mb-2'>
     <FieldGroup className='gap-4'>
      <Popover
       open={openDatePickerCalendar}
