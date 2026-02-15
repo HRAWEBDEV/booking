@@ -35,11 +35,15 @@ export default function PaymentSummary({
         </p>
         <p className='font-medium text-sm'>
          {lockInfo.data?.lockInfo.arrivelDateTimeOffset
-          ? new Date(
+          ? `${new Date(
              lockInfo.data?.lockInfo.arrivelDateTimeOffset,
             ).toLocaleDateString(locale, {
-             dateStyle: 'full',
-            })
+             dateStyle: 'long',
+            })}, ${new Date(
+             lockInfo.data?.lockInfo.arrivelDateTimeOffset,
+            ).toLocaleDateString(locale, {
+             weekday: 'long',
+            })}`
           : ''}
         </p>
         <p className='text-neutral-600 dark:text-neutral-400'>
@@ -57,11 +61,15 @@ export default function PaymentSummary({
         </p>
         <p className='font-medium text-sm'>
          {lockInfo.data?.lockInfo.departureDateTimeOffset
-          ? new Date(
+          ? `${new Date(
              lockInfo.data?.lockInfo.departureDateTimeOffset,
             ).toLocaleDateString(locale, {
-             dateStyle: 'full',
-            })
+             dateStyle: 'long',
+            })}, ${new Date(
+             lockInfo.data?.lockInfo.departureDateTimeOffset,
+            ).toLocaleDateString(locale, {
+             weekday: 'long',
+            })}`
           : ''}
         </p>
         <p className='text-neutral-600 dark:text-neutral-400'>
