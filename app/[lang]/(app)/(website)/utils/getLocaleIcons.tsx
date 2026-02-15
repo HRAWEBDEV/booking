@@ -6,7 +6,7 @@ import { SVGProps } from 'react';
 export function getLocaleIcon(locale: Locale, props?: SVGProps<SVGSVGElement>) {
  switch (locale) {
   case 'en':
-   return <EnglandFlag {...props} />;
+   return <EnglandFlag {...props} opacity={0} />;
  }
  return <IranFlag {...props} />;
 }
