@@ -486,7 +486,7 @@ export default function ReserveConfigProvider({
    (data) => {
     confirmReserveMutate(data);
    },
-   () => {
+   (err) => {
     toast.error(dic.reserveInfo.reserveForm.fillRequiredInfo);
    },
   )();

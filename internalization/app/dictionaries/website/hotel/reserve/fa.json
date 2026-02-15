@@ -34,6 +34,7 @@
    "firstName": "نام",
    "lastName": "نام خانوادگی",
    "nationalCode": "کدملی",
+   "passport": "شماره پاسپورت",
    "email": "ایمیل",
    "person": "نفره",
    "earlyCheckinCharge": "نیم شارژ ورود",

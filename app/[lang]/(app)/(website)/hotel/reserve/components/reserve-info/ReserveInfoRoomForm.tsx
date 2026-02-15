@@ -40,9 +40,11 @@ export default function ReserveInfoRoomForm({
   register,
   control,
   setValue,
+  clearErrors,
   formState: { errors },
  } = useFormContext<BookingInfoSchema>();
  const saveAsReserveInfo = guestInfo[i].saveAsReserveInfo;
+ const isForeign = guestInfo[i].type === 'foreign';
  const isRemoved = guestInfo[i].removed;
 
  const { localeInfo } = useBaseConfig();
@@ -125,15 +127,20 @@ export default function ReserveInfoRoomForm({
         <TabsTrigger
          className='data-[state="active"]:border-primary'
          value='inner'
-         onClick={() => onChange('inner')}
+         onClick={() => {
+          clearErrors(`guestInfo.${i}.nationalCode`);
+          onChange('inner');
+         }}
         >
          {dic.reserveInfo.reserveForm.innerGuest}
         </TabsTrigger>
         <TabsTrigger
-         disabled
          className='data-[state="active"]:border-primary'
          value='foreign'
-         onClick={() => onChange('foreign')}
+         onClick={() => {
+          clearErrors(`guestInfo.${i}.nationalCode`);
+          onChange('foreign');
+         }}
         >
          {dic.reserveInfo.reserveForm.foreignGuest}
         </TabsTrigger>
@@ -203,7 +210,10 @@ export default function ReserveInfoRoomForm({
       data-invalid={!!errors.guestInfo?.[i]?.nationalCode}
      >
       <FieldLabel htmlFor={`nationalCode${i + 1}`}>
-       {dic.reserveInfo.reserveForm.nationalCode} *
+       {isForeign
+        ? dic.reserveInfo.reserveForm.passport
+        : dic.reserveInfo.reserveForm.nationalCode}{' '}
+       *
       </FieldLabel>
       <InputGroup data-invalid={!!errors.guestInfo?.[i]?.nationalCode}>
        <InputGroupInput

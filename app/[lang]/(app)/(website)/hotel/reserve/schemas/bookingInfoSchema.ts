@@ -15,8 +15,8 @@ const defaultValues: Partial<BookingInfoSchema> = {
 function createBookingInfoSchema({ dic }: { dic: ReserveHotelDictionary }) {
  return z
   .object({
-   firstName: z.string().min(1),
-   lastName: z.string().min(1),
+   firstName: z.string().min(1, dic.reserveInfo.reserveForm.fillRequiredInfo),
+   lastName: z.string().min(1, dic.reserveInfo.reserveForm.fillRequiredInfo),
    nationalCode: z
     .string()
     .min(1, dic.reserveInfo.reserveForm.fillRequiredInfo)
@@ -70,7 +70,10 @@ function createBookingInfoSchema({ dic }: { dic: ReserveHotelDictionary }) {
       message: dic.reserveInfo.reserveForm.fillRequiredInfo,
      });
     }
-    if (!isValidIranNationalCode(guest.nationalCode)) {
+    if (
+     guest.type === 'inner' &&
+     !isValidIranNationalCode(guest.nationalCode)
+    ) {
      ctx.addIssue({
       code: 'custom',
       path: [`guestInfo[${i}].nationalCode`],
