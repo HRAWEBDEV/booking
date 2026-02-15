@@ -5,7 +5,7 @@ export default function HeaderProfile() {
  return (
   <Button variant='ghost' size='icon' className='h-auto w-auto'>
    <Avatar className='size-12'>
-    <AvatarFallback className='size-12'>H</AvatarFallback>
+    <AvatarFallback className='size-12'>U</AvatarFallback>
    </Avatar>
   </Button>
  );

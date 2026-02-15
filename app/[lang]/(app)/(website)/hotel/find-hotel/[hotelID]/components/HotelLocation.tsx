@@ -26,7 +26,7 @@ export default function HotelLocation({
  return (
   <div
    data-is-drawer={isDrawer}
-   className='h-44 data-[is-drawer="true"]:h-[50svh] w-full border border-input rounded-md bg-neutral-100 dark:bg-neutral-900 overflow-hidden relative'
+   className='h-44 data-[is-drawer="true"]:h-[80dvh] w-full border border-input rounded-md bg-neutral-100 dark:bg-neutral-900 overflow-hidden relative'
   >
    {hotelInfo && (hotelInfo.latitude || hotelInfo.longitude) ? (
     <HotelLocaltionMap dic={dic} hotelInfo={hotelInfo} />

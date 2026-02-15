@@ -5,7 +5,6 @@ import { LatLngTuple, DivIcon } from 'leaflet';
 import { type HotelInfo } from '../../../services/hotelApiActions';
 
 export default function HotelLocationMap({
- dic,
  hotelInfo,
 }: {
  dic: PreviewHotelDictionary;
@@ -16,7 +15,7 @@ export default function HotelLocationMap({
  const createCustomIcon = () => {
   return new DivIcon({
    html: `<div style="
-     color: #ef4444; 
+     color: #ef4444;
      transform: translate(-12px, -24px);
      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
    ">
