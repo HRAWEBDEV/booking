@@ -84,20 +84,22 @@ export default function ReserveInfoSummary({
       </div>
       <div className='flex flex-col border-t border-input pt-4'>
        <ul className='max-h-24 overflow-auto mb-2'>
-        {storeRooms.map((room, i) => (
-         <li
-          key={i}
-          className='flex flex-wrap gap-2 text-sm text-neutral-600 dark:text-neutral-400'
-         >
-          <span>{room.fName}: </span>
-          <div>
-           <span>
-            {numberFormatter.format(room.accommodationTypePrice.netRoomRate)}
-           </span>
-           <span className='text-xs'> ریال</span>
-          </div>
-         </li>
-        ))}
+        {storeRooms
+         .filter((item) => !item.isDeleted)
+         .map((room, i) => (
+          <li
+           key={i}
+           className='flex flex-wrap gap-2 text-sm text-neutral-600 dark:text-neutral-400'
+          >
+           <span>{room.fName}: </span>
+           <div>
+            <span>
+             {numberFormatter.format(room.accommodationTypePrice.netRoomRate)}
+            </span>
+            <span className='text-xs'> ریال</span>
+           </div>
+          </li>
+         ))}
        </ul>
        {!!bookingInvoiceInfo.totalDiscount && (
         <>

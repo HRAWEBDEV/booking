@@ -287,7 +287,9 @@ export default function ReserveConfigProvider({
  });
 
  const bookingInvoiceInfo = getBookingInvoiceInfo({
-  rooms: lockInfo?.rooms ? lockInfo.rooms : storeRooms,
+  rooms: lockInfo?.rooms
+   ? lockInfo.rooms
+   : storeRooms.filter((item) => !item.isDeleted),
  });
 
  // payment link
@@ -398,8 +400,8 @@ export default function ReserveConfigProvider({
    phoneNumber,
   }: BookingInfoSchema) {
    const lockRoomInfo: LockRoomInfo[] = [];
-   rooms!.forEach((room, i) => {
-    if (guestInfo[i].removed) return;
+   storeRooms!.forEach((room, i) => {
+    if (room.isDeleted) return;
     const {
      firstName: guestFirstName,
      lastName: guestLastName,
