@@ -14,7 +14,7 @@ export function useGoHome() {
  const dateFns = useDateFns();
 
  const startDate = dateFns.startOfDay(new Date());
- const endDate = dateFns.addDays(startDate, 3);
+ const endDate = dateFns.addDays(startDate, 1);
  const { locale } = useBaseConfig();
  const { hotelID } = getSetupProviderCredentials();
 
