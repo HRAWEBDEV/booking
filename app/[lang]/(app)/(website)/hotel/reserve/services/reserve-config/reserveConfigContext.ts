@@ -35,6 +35,7 @@ interface ReserveConfig {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
+  onShowHotelRules: (open?: boolean) => void;
  };
  lockInfo: {
   data?: LockInfoResult;
@@ -55,7 +56,7 @@ interface ReserveConfig {
   setSelectedGateway: (prop: GateWay | null) => unknown;
  };
  confirmReserveIsPending: boolean;
- confirmReserveError: AxiosError<ErrorInfo, any> | null;
+ confirmReserveError: AxiosError<ErrorInfo, unknown> | null;
  confirmPaymentIsPending: boolean;
  cancelReserveIsLoading: boolean;
  onCancelReserve: () => unknown;

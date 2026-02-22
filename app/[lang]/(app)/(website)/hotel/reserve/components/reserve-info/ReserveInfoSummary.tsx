@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Skeleton } from '@/components/ui/skeleton';
 import useStickyScroll from '@/utils/useStickyScroll';
+import { RiInformationLine } from 'react-icons/ri';
 
 export default function ReserveInfoSummary({
  dic,
@@ -36,11 +37,22 @@ export default function ReserveInfoSummary({
     ) : (
      <>
       <section className='p-4 rounded-md border border-input mb-2'>
-       <div className='mb-3 pb-3 border-b border-input'>
-        <h1 className='text-lg font-medium'>{hotelInfo.data?.fName}</h1>
-        <p className='text-sm text-neutral-600 dark:text-neutral-400'>
-         {hotelInfo.data?.address}
-        </p>
+       <div className='mb-3 pb-3 border-b border-input flex gap-2'>
+        <div className='grow'>
+         <h1 className='text-lg font-medium'>{hotelInfo.data?.fName}</h1>
+         <p className='text-sm text-neutral-600 dark:text-neutral-400'>
+          {hotelInfo.data?.address}
+         </p>
+        </div>
+        <Button
+         variant='outline'
+         disabled={!hotelInfo.data?.publicRules}
+         onClick={() => hotelInfo.onShowHotelRules(true)}
+         className='border-destructive text-destructive'
+        >
+         <RiInformationLine className='size-6' />
+         <span>{dic.reserveInfo.reserveSummary.hotelRules}</span>
+        </Button>
        </div>
        <div className='grid grid-cols-[1fr_max-content_1fr] gap-2 justify-center items-center mb-3 pb-3'>
         <div className='flex flex-col justify-center text-center gap-1'>

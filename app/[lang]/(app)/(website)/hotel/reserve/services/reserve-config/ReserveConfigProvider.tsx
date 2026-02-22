@@ -47,6 +47,7 @@ import {
  DialogContent,
  DialogHeader,
  DialogFooter,
+ DialogTitle,
 } from '@/components/ui/dialog';
 import { BiError } from 'react-icons/bi';
 import { Button } from '@/components/ui/button';
@@ -97,6 +98,7 @@ export default function ReserveConfigProvider({
  const searchParams = useSearchParams();
  const trackingCodeQuery = searchParams.get(trackingCodeQueryName);
  const { voucherCb } = useVoucherVCb();
+ const [showHotelRules, setShowHotelRules] = useState(false);
  const [activeReserveStep, setActiveReserveStep] = useState<ReserveStep>(
   trackingCodeQuery ? 'payment' : 'reserve',
  );
@@ -115,6 +117,10 @@ export default function ReserveConfigProvider({
   reserveRoomsPickerReducer,
   [],
  );
+ //
+ function handleShowHotelRules(open?: boolean) {
+  setShowHotelRules((pre) => (open === undefined ? !pre : open));
+ }
  // booking info
  const bookingInfoForm = useForm<BookingInfoSchema>({
   resolver: zodResolver(createBookingInfoSchema({ dic })),
@@ -560,6 +566,7 @@ export default function ReserveConfigProvider({
    isLoading: hotelInfoIsLoading,
    isSuccess: hotelInfoIsSuccess,
    isError: hotelInfoIsError,
+   onShowHotelRules: handleShowHotelRules,
   },
   lockInfo: {
    data: lockInfo,
@@ -677,6 +684,30 @@ export default function ReserveConfigProvider({
         }}
        >
         {dic.cancelReserve.confirm}
+       </Button>
+      </DialogClose>
+     </DialogFooter>
+    </DialogContent>
+   </Dialog>
+   <Dialog
+    open={showHotelRules}
+    onOpenChange={(newValue) => setShowHotelRules(newValue)}
+   >
+    <DialogContent className='p-0 gap-0 flex flex-col overflow-hidden max-h-[90svh]'>
+     <DialogHeader className='p-4'>
+      <DialogTitle>{dic.reserveInfo.reserveSummary.hotelRules}</DialogTitle>
+     </DialogHeader>
+     <div className='p-4 grow overflow-auto'>
+      <p>{hotelInfo?.publicRules}</p>
+     </div>
+     <DialogFooter className='p-4'>
+      <DialogClose asChild>
+       <Button
+        className='sm:w-24 h-11'
+        variant='outline'
+        onClick={() => setShowHotelRules(false)}
+       >
+        {dic.reserveInfo.reserveSummary.close}
        </Button>
       </DialogClose>
      </DialogFooter>

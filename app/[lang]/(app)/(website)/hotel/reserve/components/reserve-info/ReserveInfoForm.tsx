@@ -47,7 +47,7 @@ export default function ReserveInfoForm({
  return (
   <div>
    <form>
-    <section className='p-4 border border-input rounded-md mb-6'>
+    <section className='p-4 border border-input rounded-md mb-6 bg-neutral-50 dark:bg-neutral-950'>
      {reserveRoomsAreFull && (
       <div className='mb-2'>{reserveRoomsAreFullAlert}</div>
      )}

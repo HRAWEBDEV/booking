@@ -9,6 +9,7 @@
   "reserveRoomsArefull": "ظرفیت اتاق های انتخاب شده تکمیل شده است.",
   "pendingReserveIsExpired": "زمان ثبت رزرو منقضی شده است",
   "reserveSummary": {
+   "hotelRules": "قوانین هتل",
    "arrivalDate": "تاریخ ورود",
    "departureDate": "تاریخ خروج",
    "night": "شب",
@@ -16,7 +17,8 @@
    "totalDiscount": "تخفیف کل",
    "discountTotalPrice": "جمع کل (پرداختی)",
    "price": "قیمت",
-   "discount": "تخفیف"
+   "discount": "تخفیف",
+   "close": "بستن"
   },
   "reserveForm": {
    "somethingWrongHappendedTryAgainLater": "خطایی رخ داده است، لطفا دقایقی دیگر مجددا تلاش کنید",
