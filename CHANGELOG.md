@@ -2,8 +2,8 @@
 ### New Features
 - add rooms image preview
 - add hotel cancel policies to booking reserve page
-- remove scrolls from booking date picker
-- show reserved rooms in mobile mode
-- change filter buttons label in mobile mode
-- add rooms features section
-- update rooms person icon
+- remove scrolls from booking date picker (hra-done)
+- show reserved rooms in mobile mode (hra-done)
+- change filter buttons label in mobile mode (hra-done)
+- add rooms features section (hra-done)
+- update rooms person icon (hra-done)

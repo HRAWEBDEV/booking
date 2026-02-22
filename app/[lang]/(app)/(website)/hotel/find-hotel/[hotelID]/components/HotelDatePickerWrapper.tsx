@@ -13,7 +13,7 @@ export default function HotelDatePickerWrapper({
  const { containerRef } = useStickyScroll(16, 768);
 
  return (
-  <div ref={containerRef} className=' hidden md:block'>
+  <div ref={containerRef} className='hidden md:block'>
    <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
   </div>
  );

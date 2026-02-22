@@ -8,7 +8,7 @@ export default function ReserveInfoWrapper({
  dic: ReserveHotelDictionary;
 }) {
  return (
-  <div className='grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-4'>
+  <div className='grid grid-cols-1 lg:grid-cols-[1fr_24rem] gap-4 gap-y-0'>
    <ReserveInfoForm dic={dic} />
    <ReserveInfoSummary dic={dic} />
   </div>
