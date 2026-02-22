@@ -1,16 +1,13 @@
 'use client';
 import { useState } from 'react';
-import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { useKeenSlider } from 'keen-slider/react';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { type HotelImage } from '../../../services/hotelApiActions';
 import { LuImageOff } from 'react-icons/lu';
 
 export default function HotelGallery({
- dic,
  hotelImages,
 }: {
- dic: PreviewHotelDictionary;
  hotelImages: HotelImage[] | null;
 }) {
  const [activeBannerSliderIndex, setActiveBannderSliderIndex] = useState(0);

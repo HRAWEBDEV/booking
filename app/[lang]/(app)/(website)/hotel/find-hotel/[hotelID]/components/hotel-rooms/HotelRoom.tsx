@@ -14,6 +14,7 @@ import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { LuImageOff } from 'react-icons/lu';
 import { ratePlanTypes } from '../../utils/ratePlanTypes';
 import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
+import { GrGallery } from 'react-icons/gr';
 import {
  type Room,
  findRoom,
@@ -22,6 +23,14 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '@/components/ui/spinner';
 import { FaUserFriends, FaCaretDown, FaCaretUp } from 'react-icons/fa';
+import HotelGallery from '../HotelGallery';
+import {
+ DialogTrigger,
+ Dialog,
+ DialogContent,
+ DialogHeader,
+ DialogTitle,
+} from '@/components/ui/dialog';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-40 grow-0 relative shrink-0 self-start';
@@ -105,7 +114,39 @@ export default function HotelRoom({
     data-sold-out={roomType.roomCount === 0}
     className='p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input data-[sold-out="true"]:bg-neutral-100 dark:data-[sold-out="true"]:bg-neutral-900'
    >
-    <div className={`keen-slider ${imageContainerClass}`} ref={bannerSlideRef}>
+    <div
+     className={`keen-slider ${imageContainerClass} relative`}
+     ref={bannerSlideRef}
+    >
+     {!!roomType.accommodationImages.length && (
+      <div className='absolute top-1 start-1 z-2'>
+       <Dialog>
+        <DialogTrigger asChild>
+         <Button
+          variant='ghost'
+          size='icon'
+          className='bg-background/30 text-primary/80'
+         >
+          <GrGallery className='size-5' />
+         </Button>
+        </DialogTrigger>
+        <DialogContent className='p-0 gap-0 flex flex-col overflow-hidden max-h-[90svh]'>
+         <DialogHeader className='p-4'>
+          <DialogTitle>{roomType.fName}</DialogTitle>
+         </DialogHeader>
+         <div className='p-4 grow overflow-auto'>
+          <HotelGallery
+           hotelImages={roomType.accommodationImages.map((item) => ({
+            hotelID: 1,
+            imageURL: item.imageURL,
+           }))}
+          />
+         </div>
+        </DialogContent>
+       </Dialog>
+      </div>
+     )}
+
      {roomType.accommodationImages.length ? (
       roomType.accommodationImages.map(({ imageURL }) => (
        <div
