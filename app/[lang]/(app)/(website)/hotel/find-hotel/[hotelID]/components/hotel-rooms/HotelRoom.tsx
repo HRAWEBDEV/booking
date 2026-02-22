@@ -130,7 +130,7 @@ export default function HotelRoom({
           <GrGallery className='size-5' />
          </Button>
         </DialogTrigger>
-        <DialogContent className='p-0 gap-0 flex flex-col overflow-hidden max-h-[90svh]'>
+        <DialogContent className='p-0 gap-0 flex flex-col overflow-hidden max-h-[90svh] max-w-[unset]! w-[min(95%,45rem)]!'>
          <DialogHeader className='p-4'>
           <DialogTitle>{roomType.fName}</DialogTitle>
          </DialogHeader>
