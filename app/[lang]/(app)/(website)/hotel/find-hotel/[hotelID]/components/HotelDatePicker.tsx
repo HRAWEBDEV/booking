@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useRef, useCallback, useLayoutEffect } from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { FieldGroup, Field } from '@/components/ui/field';
@@ -249,6 +248,36 @@ export default function HotelDatePicker({
   />
  );
 
+ const renderReserveRooms = (
+  <ul>
+   {selectedRooms.map((room) => (
+    <li
+     key={
+      room.ratePlanTypeID.toString() +
+      room.roomTypeID.toString() +
+      room.ratePlanID.toString() +
+      room.beds.toString()
+     }
+     className='flex flex-wrap gap-2 text-xs text-neutral-600 dark:text-neutral-400'
+    >
+     <span>{room.roomTypeName}: </span>
+     <div style={{ direction: 'ltr' }}>
+      <span>{room.count} </span>x
+      <span> {numberFormatter.format(room.discountPrice)}</span>
+     </div>
+    </li>
+   ))}
+  </ul>
+ );
+
+ const renderReservePrice = (
+  <div className='font-medium'>
+   <span className='text-xs'>{dic.reserveInfo.totalDiscountPrice}: </span>
+   <span>{numberFormatter.format(reserveInfo.totalDiscountPrice)}</span>
+   <span className='text-xs'> ریال</span>
+  </div>
+ );
+
  const renderMobileInputs = (
   <div className='p-4 grid grid-cols-2 gap-1 gap-y-3 bg-background'>
    <Field className='gap-2'>
@@ -393,31 +422,9 @@ export default function HotelDatePicker({
        {!!selectedRooms.length && (
         <div className='pt-2 border-t border-input flex flex-col gap-4'>
          <div>{renderConfirmReserveButton}</div>
-         <ul className='max-h-24 overflow-auto'>
-          {selectedRooms.map((room) => (
-           <li
-            key={
-             room.ratePlanTypeID.toString() +
-             room.roomTypeID.toString() +
-             room.ratePlanID.toString() +
-             room.beds.toString()
-            }
-            className='flex flex-wrap gap-2 text-xs text-neutral-600 dark:text-neutral-400'
-           >
-            <span>{room.roomTypeName}: </span>
-            <div style={{ direction: 'ltr' }}>
-             <span>{room.count} </span>x
-             <span> {numberFormatter.format(room.discountPrice)}</span>
-            </div>
-           </li>
-          ))}
-         </ul>
-         <div className='mb-t font-medium'>
-          <span className='text-xs'>
-           {dic.reserveInfo.totalDiscountPrice}:{' '}
-          </span>
-          <span>{numberFormatter.format(reserveInfo.totalDiscountPrice)}</span>
-          <span className='text-xs'> ریال</span>
+         <div>
+          <div className='mb-2'>{renderReserveRooms}</div>
+          {renderReservePrice}
          </div>
         </div>
        )}
@@ -426,19 +433,31 @@ export default function HotelDatePicker({
     </FieldGroup>
    </form>
 
-   <div className='p-2 bg-neutral-100 fixed z-3 bottom-(--website-mobile-nav-height) start-0 end-0 grid grid-cols-2 gap-4 md:hidden'>
-    <div>
-     <Button
-      variant='outline'
-      type='button'
-      className='w-full text-primary border border-primary'
-      onClick={() => setShowChangeReserveDate(true)}
-     >
-      {dic.hotelDatePicker.changeFilters}
-      {!!activeFiltersCount && <Badge>{activeFiltersCount}</Badge>}
-     </Button>
+   <div className='p-2 bg-neutral-100 fixed z-3 bottom-(--website-mobile-nav-height) start-0 end-0 md:hidden'>
+    <div
+     className='my-1'
+     style={{
+      overflow: selectedRooms.length > 4 ? 'auto' : 'hidden',
+      height: selectedRooms.length > 4 ? 70 : 'unset',
+     }}
+    >
+     {renderReserveRooms}
     </div>
-    <div>{renderConfirmReserveButton}</div>
+    <div className='mb-1'>{renderReservePrice}</div>
+    <div className='grid grid-cols-2 gap-4'>
+     <div>
+      <Button
+       variant='outline'
+       type='button'
+       className='w-full text-primary border border-primary'
+       onClick={() => setShowChangeReserveDate(true)}
+      >
+       {dic.hotelDatePicker.changeFilters}
+       {!!activeFiltersCount && <Badge>{activeFiltersCount}</Badge>}
+      </Button>
+     </div>
+     <div>{renderConfirmReserveButton}</div>
+    </div>
    </div>
   </>
  );
