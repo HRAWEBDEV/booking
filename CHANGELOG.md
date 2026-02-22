@@ -1,6 +1,6 @@
 ## v 1.1.0
 ### New Features
-- add rooms image preview
+- add rooms image preview (hra-done)
 - add hotel cancel policies to booking reserve page (hra-done)
 - remove scrolls from booking date picker (hra-done)
 - show reserved rooms in mobile mode (hra-done)
