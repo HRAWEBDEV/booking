@@ -21,7 +21,7 @@ import {
 } from '../../utils/hotelRoomsPickerReducer';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '@/components/ui/spinner';
-import { FaUserAlt, FaCaretDown, FaCaretUp } from 'react-icons/fa';
+import { FaUserFriends, FaCaretDown, FaCaretUp } from 'react-icons/fa';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-40 grow-0 relative shrink-0 self-start';
@@ -149,7 +149,7 @@ export default function HotelRoom({
      <h3 className='text-lg font-medium mb-2'>{roomType.fName}</h3>
      <div className='flex gap-4 items-center'>
       <div className='flex gap-2 items-center mb-4 text-neutral-600 dark:text-neutral-400'>
-       <FaUserAlt />
+       <FaUserFriends className='size-6' />
        <p className='font-medium'>
         {accType.beds} {dic.hotelRooms.person}
        </p>
