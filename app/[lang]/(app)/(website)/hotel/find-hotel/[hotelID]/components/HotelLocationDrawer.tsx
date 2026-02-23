@@ -27,7 +27,7 @@ export default function HotelLocationDrawer({
       <FaMapMarkedAlt className='size-6' />
      </Button>
     </DialogTrigger>
-    <DialogContent className='h-dvh w-dvw max-w-dvw'>
+    <DialogContent className='h-dvh w-dvw max-w-dvw rounded-none'>
      <DialogHeader>
       <DialogTitle className='font-medium text-lg'>
        {dic.hotelInfo.location} {hotelInfo.fName}

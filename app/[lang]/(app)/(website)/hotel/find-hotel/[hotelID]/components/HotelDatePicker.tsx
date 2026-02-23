@@ -385,7 +385,7 @@ export default function HotelDatePicker({
          {renderDesktopCalendar}
         </PopoverContent>
 
-        <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden w-screen max-w-screen! h-screen rounded-none'>
+        <DialogContent className='gap-0 p-0 flex flex-col overflow-hidden h-dvh w-dvw max-w-dvw! rounded-none'>
          <DialogHeader className='p-4 shrink-0 border-b border-input'>
           <DialogTitle className='text-base font-medium'>
            {dic.hotelDatePicker.changeFilters}{' '}
