@@ -26,7 +26,7 @@ export function useGoHome() {
  const redirectLink: Parameters<
   typeof router.push<`/${Locale}` | `/${Locale}/hotel/find-hotel/${string}`>
  >['0'] = hotelID
-  ? `/${locale}/hotel/find-hotel/${hotelID}?${searchParams}`
+  ? `/${locale}/hotel/find-hotel/${hotelID}?${searchParams}#`
   : `/${locale}`;
  const isHomePage = pathname === redirectLink;
  return {

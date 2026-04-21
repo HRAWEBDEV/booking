@@ -44,7 +44,7 @@ export default function HotelRooms({
  const {
   hotelID,
   ratePlanTypes,
-  rooms: { selectedRooms, isLoading, onUpdateRoomInventory },
+  rooms: { result, selectedRooms, isLoading, onUpdateRoomInventory },
   reserve: { fromDateValue, toDateValue, ratePlanValue },
  } = useHotelConfig();
 
@@ -108,7 +108,7 @@ export default function HotelRooms({
   <section id='rooms' className='scroll-mt-16 mb-4'>
    <div className='p-2 flex flex-wrap items-center gap-2'>
     <span className='text-sm'>
-     {dic.hotelRooms.searched} ({dic.hotelDatePicker.results} {data?.length}
+     {dic.hotelRooms.searched} ({dic.hotelDatePicker.results} {result}
      ):{' '}
     </span>
     <Badge

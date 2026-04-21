@@ -143,6 +143,10 @@ export default function HotelConfigProvider({
   });
  }
 
+ const roomsResult = rooms.reduce((acc, cur) => {
+  return acc + cur.accommodationTypePrices.length;
+ }, 0);
+
  const ctx: HotelConfig = {
   hotelInfo,
   hotelID,
@@ -152,6 +156,7 @@ export default function HotelConfigProvider({
   },
   rooms: {
    data: rooms,
+   result: roomsResult,
    roomTypeCapacity,
    selectedRooms,
    isLoading: isPending,

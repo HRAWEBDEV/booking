@@ -1,5 +1,11 @@
 'use client';
-import { useState, useRef, useCallback, useLayoutEffect } from 'react';
+import {
+ useState,
+ useRef,
+ useCallback,
+ useLayoutEffect,
+ startTransition,
+} from 'react';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { FieldGroup, Field } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
@@ -49,7 +55,7 @@ export default function HotelDatePicker({
  const numberFormatter = useCurrencyFormatter();
  const {
   ratePlanTypes,
-  rooms: { data, selectedRooms, isLoading },
+  rooms: { result, selectedRooms, isLoading },
   reserve: { onChangeReserveDate, onSubmitReserveInfo },
  } = useHotelConfig();
  const { locale, localeInfo } = useBaseConfig();
@@ -329,7 +335,9 @@ export default function HotelDatePicker({
     filtersUserForm.handleSubmit(
      (data) => {
       if (!data.fromDate || !data.toDate) return;
-      setShowChangeReserveDate(false);
+      startTransition(() => {
+       setShowChangeReserveDate(false);
+      });
       onChangeReserveDate(data);
      },
      (err) => {
@@ -391,7 +399,7 @@ export default function HotelDatePicker({
            {dic.hotelDatePicker.changeFilters}{' '}
            <div className='text-sm text-neutral-500 inline-block'>
             (<span>{dic.hotelDatePicker.results}: </span>
-            <span>{data.length || 0}</span>)
+            <span>{result}</span>)
            </div>
           </DialogTitle>
          </DialogHeader>
@@ -415,7 +423,7 @@ export default function HotelDatePicker({
         <div>{renderSearchButton}</div>
         <p className='text-xs mt-2 text-neutral-600 dark:text-neutral-400'>
          <span>{dic.hotelDatePicker.results}: </span>
-         <span>{data.length || 0}</span>
+         <span>{result}</span>
         </p>
        </div>
 

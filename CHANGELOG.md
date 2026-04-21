@@ -1,4 +1,4 @@
-## v 1.1.0
+## v 1.1.2
 ### New Features
 - add find hotel banner image preview
 - add gallery text for room image preview button

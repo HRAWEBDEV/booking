@@ -21,6 +21,7 @@ interface HotelConfig {
  };
  rooms: {
   data: RoomInventory[];
+  result: number;
   selectedRooms: SelectedRoom[];
   roomTypeCapacity: RoomTypeCapacityWatcher;
   isLoading: boolean;

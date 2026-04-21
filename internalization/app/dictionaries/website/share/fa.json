@@ -75,12 +75,12 @@
     "guestName": "نام رزرو کننده",
     "roomType": "نوع اتاق",
     "totalPrice": "مبلغ کل",
-    "phoneNumber": "شماره تماس"
+    "phoneNumber": "شماره همراه"
    },
    "titleTrackReserve": "پیگیری رزرو",
    "titleReserveDetails": "اطلاعات رزرو",
    "placeholderReserveCode": "کد پیگیری رزرو",
-   "placeholderContactNumber": "شماره تماس",
+   "placeholderContactNumber": "شماره همراه",
    "formSchemaMessages": {
     "trackingCodeRequired": "کد پیگیری الزامی است",
     "phoneNumberRequired": "شماره تلفن الزامی است",

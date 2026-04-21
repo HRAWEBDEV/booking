@@ -19,7 +19,7 @@ export default function HotelTitle({
      <FaStar
       data-active={i < (hotelInfo.hotelGradeID || 0)}
       key={i}
-      className='size-4 text-neutral-200 dark:text-neutral-800 data-[active="true"]:text-orange-400 data-[active="true"]:dark:text-orange-800'
+      className='size-5 text-neutral-200 dark:text-neutral-800 data-[active="true"]:text-orange-400 data-[active="true"]:dark:text-orange-800'
      />
     ))}
     <span className='text-xs text-neutral-500'>
@@ -27,7 +27,7 @@ export default function HotelTitle({
     </span>
    </div>
    <div className='mb-2 flex gap-2 justify-between'>
-    <h1 className='text-2xl lg:text-3xl font-medium grow'>
+    <h1 className='text-3xl lg:text-4xl font-medium grow'>
      <ShareHotelButton dic={dic} />
      <span>{hotelInfo.fName}</span>
     </h1>
