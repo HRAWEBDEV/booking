@@ -1,14 +1,28 @@
 'use client';
 import { useState } from 'react';
+import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { useKeenSlider } from 'keen-slider/react';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { type HotelImage } from '../../../services/hotelApiActions';
 import { LuImageOff } from 'react-icons/lu';
+import {
+ Dialog,
+ DialogContent,
+ DialogHeader,
+ DialogTitle,
+ DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { GrGallery } from 'react-icons/gr';
 
 export default function HotelGallery({
  hotelImages,
+ dic,
+ showGallery = false,
 }: {
  hotelImages: HotelImage[] | null;
+ dic: PreviewHotelDictionary;
+ showGallery?: boolean;
 }) {
  const [activeBannerSliderIndex, setActiveBannderSliderIndex] = useState(0);
  const [bannerSliderCount, setBannerSliderCount] = useState(0);
@@ -51,6 +65,33 @@ export default function HotelGallery({
      ref={bannerSlideRef}
      className='keen-slider mb-2 overflow-hidden rounded-lg relative'
     >
+     {showGallery && (
+      <div className='absolute top-1 start-1 z-2'>
+       <Dialog>
+        <DialogTrigger asChild>
+         <Button variant='ghost' className='bg-background/50 text-primary/80'>
+          <GrGallery className='size-5' />
+          <span className='text-sm'>{dic.hotelRooms.images}</span>
+         </Button>
+        </DialogTrigger>
+        <DialogContent className='p-0 gap-0 flex flex-col overflow-hidden max-h-[90svh] max-w-[unset]! w-[min(95%,45rem)]!'>
+         <DialogHeader className='p-4'>
+          <DialogTitle></DialogTitle>
+         </DialogHeader>
+         <div className='p-4 grow overflow-auto'>
+          <HotelGallery
+           dic={dic}
+           hotelImages={hotelImages.map((item) => ({
+            hotelID: 1,
+            imageURL: item.imageURL,
+           }))}
+          />
+         </div>
+        </DialogContent>
+       </Dialog>
+      </div>
+     )}
+
      {hotelImages.map((image, i) => (
       <div
        className='keen-slider__slide rounded-lg h-92 overflow-hidden'

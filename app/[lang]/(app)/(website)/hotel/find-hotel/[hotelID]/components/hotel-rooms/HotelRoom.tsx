@@ -122,12 +122,9 @@ export default function HotelRoom({
       <div className='absolute top-1 start-1 z-2'>
        <Dialog>
         <DialogTrigger asChild>
-         <Button
-          variant='ghost'
-          size='icon'
-          className='bg-background/30 text-primary/80'
-         >
+         <Button variant='ghost' className='bg-background/50 text-primary/80'>
           <GrGallery className='size-5' />
+          <span className='text-sm'>{dic.hotelRooms.images}</span>
          </Button>
         </DialogTrigger>
         <DialogContent className='p-0 gap-0 flex flex-col overflow-hidden max-h-[90svh] max-w-[unset]! w-[min(95%,45rem)]!'>
@@ -136,6 +133,7 @@ export default function HotelRoom({
          </DialogHeader>
          <div className='p-4 grow overflow-auto'>
           <HotelGallery
+           dic={dic}
            hotelImages={roomType.accommodationImages.map((item) => ({
             hotelID: 1,
             imageURL: item.imageURL,
