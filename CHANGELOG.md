@@ -1,3 +1,8 @@
+
+## v 1.1.5
+### Features 
+- use hotel logo png when hotel id is set (hra-done)
+
 ## v 1.1.2
 ### New Features
 - add find hotel banner image preview
