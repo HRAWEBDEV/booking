@@ -6,11 +6,12 @@ import { useReserveConfig } from '../../services/reserve-config/reserveConfigCon
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 import { type BookingInfoSchema } from '../../schemas/bookingInfoSchema';
 import ReserveInfoRoomForm from './ReserveInfoRoomForm';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { LockReserveErrorCodes } from '../../../utils/lockReserveErrorCodes';
+import { toEnglishNumbers } from '@/utils/numberReplacer';
 
 export default function ReserveInfoForm({
  dic,
@@ -19,6 +20,7 @@ export default function ReserveInfoForm({
 }) {
  const {
   register,
+  control,
   formState: { errors },
  } = useFormContext<BookingInfoSchema>();
 
@@ -74,32 +76,60 @@ export default function ReserveInfoForm({
          </InputGroup>
         </Field>
        </div>
-       <Field className='gap-2' data-invalid={!!errors.nationalCode}>
-        <FieldLabel htmlFor='nationalCode'>
-         {dic.reserveInfo.reserveForm.nationalCode} *
-        </FieldLabel>
-        <InputGroup data-invalid={!!errors.nationalCode}>
-         <InputGroupInput id='nationalCode' {...register('nationalCode')} />
-        </InputGroup>
-        {!!errors.nationalCode && (
-         <FieldError>
-          <p>{errors.nationalCode.message}</p>
-         </FieldError>
+       <Controller
+        control={control}
+        name='nationalCode'
+        render={({ field: { onChange, ...other } }) => (
+         <Field className='gap-2' data-invalid={!!errors.nationalCode}>
+          <FieldLabel htmlFor='nationalCode'>
+           {dic.reserveInfo.reserveForm.nationalCode} *
+          </FieldLabel>
+          <InputGroup data-invalid={!!errors.nationalCode}>
+           <InputGroupInput
+            id='nationalCode'
+            {...other}
+            onChange={(e) => {
+             const value = e.target.value;
+             const englishValue = toEnglishNumbers(value);
+             onChange(englishValue);
+            }}
+           />
+          </InputGroup>
+          {!!errors.nationalCode && (
+           <FieldError>
+            <p>{errors.nationalCode.message}</p>
+           </FieldError>
+          )}
+         </Field>
         )}
-       </Field>
-       <Field className='gap-2' data-invalid={!!errors.phoneNumber}>
-        <FieldLabel htmlFor='phoneNumber'>
-         {dic.reserveInfo.reserveForm.phoneNumber} *
-        </FieldLabel>
-        <InputGroup data-invalid={!!errors.phoneNumber}>
-         <InputGroupInput id='phoneNumber' {...register('phoneNumber')} />
-        </InputGroup>
-        {!!errors.phoneNumber && (
-         <FieldError>
-          <p>{errors.phoneNumber.message}</p>
-         </FieldError>
+       />
+       <Controller
+        control={control}
+        name='phoneNumber'
+        render={({ field: { onChange, ...other } }) => (
+         <Field className='gap-2' data-invalid={!!errors.phoneNumber}>
+          <FieldLabel htmlFor='phoneNumber'>
+           {dic.reserveInfo.reserveForm.phoneNumber} *
+          </FieldLabel>
+          <InputGroup data-invalid={!!errors.phoneNumber}>
+           <InputGroupInput
+            id='phoneNumber'
+            {...other}
+            onChange={(e) => {
+             const value = e.target.value;
+             const englishValue = toEnglishNumbers(value);
+             onChange(englishValue);
+            }}
+           />
+          </InputGroup>
+          {!!errors.phoneNumber && (
+           <FieldError>
+            <p>{errors.phoneNumber.message}</p>
+           </FieldError>
+          )}
+         </Field>
         )}
-       </Field>
+       />
        <Field className='gap-2' data-invalid={!!errors.email}>
         <FieldLabel htmlFor='email'>
          {dic.reserveInfo.reserveForm.email}

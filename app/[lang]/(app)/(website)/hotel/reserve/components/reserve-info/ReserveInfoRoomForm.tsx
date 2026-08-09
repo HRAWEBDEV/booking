@@ -22,6 +22,7 @@ import {
 import { BiError } from 'react-icons/bi';
 import { ratePlanTypes } from '../../../find-hotel/[hotelID]/utils/ratePlanTypes';
 import { Badge } from '@/components/ui/badge';
+import { toEnglishNumbers } from '@/utils/numberReplacer';
 
 export default function ReserveInfoRoomForm({
  room,
@@ -205,28 +206,39 @@ export default function ReserveInfoRoomForm({
        </InputGroup>
       </Field>
      </div>
-     <Field
-      className='gap-2'
-      data-invalid={!!errors.guestInfo?.[i]?.nationalCode}
-     >
-      <FieldLabel htmlFor={`nationalCode${i + 1}`}>
-       {isForeign
-        ? dic.reserveInfo.reserveForm.passport
-        : dic.reserveInfo.reserveForm.nationalCode}{' '}
-       *
-      </FieldLabel>
-      <InputGroup data-invalid={!!errors.guestInfo?.[i]?.nationalCode}>
-       <InputGroupInput
-        id={`nationalCode${i + 1}`}
-        {...register(`guestInfo.${i}.nationalCode`)}
-       />
-      </InputGroup>
-      {!!errors.guestInfo?.[i]?.nationalCode && (
-       <FieldError>
-        <p>{errors.guestInfo?.[i]?.nationalCode.message}</p>
-       </FieldError>
+     <Controller
+      control={control}
+      name={`guestInfo.${i}.nationalCode`}
+      render={({ field: { onChange, ...other } }) => (
+       <Field
+        className='gap-2'
+        data-invalid={!!errors.guestInfo?.[i]?.nationalCode}
+       >
+        <FieldLabel htmlFor={`nationalCode${i + 1}`}>
+         {isForeign
+          ? dic.reserveInfo.reserveForm.passport
+          : dic.reserveInfo.reserveForm.nationalCode}{' '}
+         *
+        </FieldLabel>
+        <InputGroup data-invalid={!!errors.guestInfo?.[i]?.nationalCode}>
+         <InputGroupInput
+          id={`nationalCode${i + 1}`}
+          {...other}
+          onChange={(e) => {
+           const value = e.target.value;
+           const englishValue = toEnglishNumbers(value);
+           onChange(englishValue);
+          }}
+         />
+        </InputGroup>
+        {!!errors.guestInfo?.[i]?.nationalCode && (
+         <FieldError>
+          <p>{errors.guestInfo?.[i]?.nationalCode.message}</p>
+         </FieldError>
+        )}
+       </Field>
       )}
-     </Field>
+     />
     </div>
    )}
    <Dialog
