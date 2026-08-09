@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { FaRegQuestionCircle } from 'react-icons/fa';
+// import { FaRegQuestionCircle } from 'react-icons/fa';
 import { MdSupportAgent } from 'react-icons/md';
 import { FaTicket } from 'react-icons/fa6';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
@@ -63,14 +63,14 @@ export default function HeaderNav() {
         </Link>
        </NavigationMenuLink>
       </NavigationMenuItem>
-      <NavigationMenuItem>
+      {/*<NavigationMenuItem>
        <NavigationMenuLink asChild>
         <Link href='#' className='flex items-center flex-row gap-2'>
          <FaRegQuestionCircle className='size-5' />
          <span className='font-medium'>{headerNavDic.aboutReserveOnline}</span>
         </Link>
        </NavigationMenuLink>
-      </NavigationMenuItem>
+      </NavigationMenuItem>*/}
      </NavigationMenuList>
     </NavigationMenu>
    </div>
