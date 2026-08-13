@@ -30,6 +30,7 @@ export default function HeaderNav() {
   },
  } = useShareDictionary();
  const { setIsOpen } = useReserveHotel();
+ const supportNo = process.env.NEXT_PUBLIC_HOTEL_SUPPORT || '02191780185';
  return (
   <div className='grow ms-10'>
    <div className='hidden lg:block'>
@@ -46,8 +47,8 @@ export default function HeaderNav() {
          </PopoverTrigger>
          <PopoverContent dir={localeInfo.contentDirection} align='start'>
           <Button asChild className='w-full' variant='outline'>
-           <Link href='tel:02191780185'>
-            <span>021-91780185</span>
+           <Link href={`tel:${supportNo}`}>
+            <span>{supportNo}</span>
             <BsTelephoneFill />
            </Link>
           </Button>
