@@ -62,9 +62,7 @@ export default function ReserveInfoSummary({
          <p className='font-medium text-sm'>
           {fromDate
            ? `${new Date(fromDate).toLocaleDateString(locale, {
-              dateStyle: 'long',
-             })}, ${new Date(fromDate).toLocaleDateString(locale, {
-              weekday: 'long',
+              dateStyle: 'full',
              })}`
            : ''}
          </p>
@@ -84,9 +82,7 @@ export default function ReserveInfoSummary({
          <p className='font-medium text-sm'>
           {toDate
            ? `${new Date(toDate).toLocaleDateString(locale, {
-              dateStyle: 'long',
-             })}, ${new Date(toDate).toLocaleDateString(locale, {
-              weekday: 'long',
+              dateStyle: 'full',
              })}`
            : ''}
          </p>

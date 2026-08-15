@@ -42,11 +42,7 @@ export default function PaymentSummary({
            ? `${new Date(
               lockInfo.data?.lockInfo.arrivelDateTimeOffset,
              ).toLocaleDateString(locale, {
-              dateStyle: 'long',
-             })}, ${new Date(
-              lockInfo.data?.lockInfo.arrivelDateTimeOffset,
-             ).toLocaleDateString(locale, {
-              weekday: 'long',
+              dateStyle: 'full',
              })}`
            : ''}
          </p>
@@ -68,11 +64,7 @@ export default function PaymentSummary({
            ? `${new Date(
               lockInfo.data?.lockInfo.departureDateTimeOffset,
              ).toLocaleDateString(locale, {
-              dateStyle: 'long',
-             })}, ${new Date(
-              lockInfo.data?.lockInfo.departureDateTimeOffset,
-             ).toLocaleDateString(locale, {
-              weekday: 'long',
+              dateStyle: 'full',
              })}`
            : ''}
          </p>
