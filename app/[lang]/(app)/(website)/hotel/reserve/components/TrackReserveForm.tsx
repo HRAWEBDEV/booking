@@ -1,5 +1,5 @@
 'use client';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { useShareDictionary } from '../../../services/share-dictionary/shareDictionaryContext';
 import { isValidIranMobileNumber } from '../../../utils/mobileNumberValidator';
 import { Spinner } from '@/components/ui/spinner';
+import { toEnglishNumbers } from '@/utils/numberReplacer';
 
 interface TrackReserveFormProps {
  onSubmit: (trackingCode: string) => void;
@@ -49,6 +50,7 @@ export default function TrackReserveForm({
  const {
   register,
   handleSubmit,
+  control,
   formState: { errors, isSubmitting },
  } = useForm<TrackingFormData>({
   resolver: zodResolver(trackingFormSchema),
@@ -68,38 +70,58 @@ export default function TrackReserveForm({
    className='flex flex-col gap-4 pt-7'
   >
    <FieldGroup className='mb-7'>
-    <Field className='gap-2' data-invalid={!!errors.trackingCode}>
-     <FieldLabel htmlFor='trackingCode' className='text-base'>
-      {trackReserve.placeholderReserveCode}
-     </FieldLabel>
-     <InputGroup data-invalid={!!errors.trackingCode} className='h-11'>
-      <InputGroupInput
-       id='trackingCode'
-       type='text'
-       {...register('trackingCode')}
-       className='text-right border-input'
-      />
-     </InputGroup>
-     {!!errors.trackingCode && (
-      <FieldError>{errors.trackingCode.message}</FieldError>
+    <Controller
+     control={control}
+     name='trackingCode'
+     render={({ field: { onChange, ...other } }) => (
+      <Field className='gap-2' data-invalid={!!errors.trackingCode}>
+       <FieldLabel htmlFor='trackingCode' className='text-base'>
+        {trackReserve.placeholderReserveCode}
+       </FieldLabel>
+       <InputGroup data-invalid={!!errors.trackingCode} className='h-11'>
+        <InputGroupInput
+         {...other}
+         onChange={(e) => {
+          const value = e.target.value;
+          onChange(toEnglishNumbers(value));
+         }}
+         id='trackingCode'
+         type='text'
+         className='text-right border-input'
+        />
+       </InputGroup>
+       {!!errors.trackingCode && (
+        <FieldError>{errors.trackingCode.message}</FieldError>
+       )}
+      </Field>
      )}
-    </Field>
-    <Field className='gap-2' data-invalid={!!errors.phoneNumber}>
-     <FieldLabel htmlFor='phone-number' className='text-base'>
-      {trackReserve.placeholderContactNumber}
-     </FieldLabel>
-     <InputGroup data-invalid={!!errors.phoneNumber} className='h-11'>
-      <InputGroupInput
-       id='phone-number'
-       type='tel'
-       {...register('phoneNumber')}
-       className='text-foreground placeholder:text-muted-foreground text-right'
-      />
-     </InputGroup>
-     {!!errors.phoneNumber && (
-      <FieldError>{errors.phoneNumber.message}</FieldError>
+    />
+    <Controller
+     control={control}
+     name='phoneNumber'
+     render={({ field: { onChange, ...other } }) => (
+      <Field className='gap-2' data-invalid={!!errors.phoneNumber}>
+       <FieldLabel htmlFor='phone-number' className='text-base'>
+        {trackReserve.placeholderContactNumber}
+       </FieldLabel>
+       <InputGroup data-invalid={!!errors.phoneNumber} className='h-11'>
+        <InputGroupInput
+         id='phone-number'
+         type='tel'
+         {...other}
+         onChange={(e) => {
+          const value = e.target.value;
+          onChange(toEnglishNumbers(value));
+         }}
+         className='text-foreground placeholder:text-muted-foreground text-right'
+        />
+       </InputGroup>
+       {!!errors.phoneNumber && (
+        <FieldError>{errors.phoneNumber.message}</FieldError>
+       )}
+      </Field>
      )}
-    </Field>
+    />
    </FieldGroup>
    <div className='flex items-center gap-4'>
     <Button
