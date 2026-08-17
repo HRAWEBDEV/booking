@@ -99,6 +99,8 @@ export default function ReserveConfigProvider({
  const trackingCodeQuery = searchParams.get(trackingCodeQueryName);
  const { voucherCb } = useVoucherVCb();
  const [showHotelRules, setShowHotelRules] = useState(false);
+ const [acceptedHotelTermsAndConditions, setAcceptedHotelTermsAndConditions] =
+  useState(false);
  const [activeReserveStep, setActiveReserveStep] = useState<ReserveStep>(
   trackingCodeQuery ? 'payment' : 'reserve',
  );
@@ -118,8 +120,17 @@ export default function ReserveConfigProvider({
   [],
  );
  //
+ function handleAcceptHotelTermsAndConditions(accepted: boolean) {
+  setAcceptedHotelTermsAndConditions(accepted);
+ }
+ //
+ //
  function handleShowHotelRules(open?: boolean) {
-  setShowHotelRules((pre) => (open === undefined ? !pre : open));
+  const newValue = open === undefined ? !showHotelRules : open;
+  if (newValue) {
+   setAcceptedHotelTermsAndConditions(true);
+  }
+  setShowHotelRules(newValue);
  }
  // booking info
  const bookingInfoForm = useForm<BookingInfoSchema>({
@@ -492,6 +503,10 @@ export default function ReserveConfigProvider({
  function handleSubmitBookingFormInfo() {
   bookingInfoForm.handleSubmit(
    (data) => {
+    if (!acceptedHotelTermsAndConditions) {
+     toast.error(dic.reserveInfo.readHotelTermsAndCondtions);
+     return;
+    }
     confirmReserveMutate(data);
    },
    (err) => {
@@ -567,6 +582,8 @@ export default function ReserveConfigProvider({
    isSuccess: hotelInfoIsSuccess,
    isError: hotelInfoIsError,
    onShowHotelRules: handleShowHotelRules,
+   acceptedHotelTermsAndConditions,
+   onAcceptHotelTermsAndConditions: handleAcceptHotelTermsAndConditions,
   },
   lockInfo: {
    data: lockInfo,

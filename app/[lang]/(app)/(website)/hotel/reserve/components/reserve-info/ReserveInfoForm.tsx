@@ -12,6 +12,7 @@ import ReserveInfoRoomForm from './ReserveInfoRoomForm';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { LockReserveErrorCodes } from '../../../utils/lockReserveErrorCodes';
 import { toEnglishNumbers } from '@/utils/numberReplacer';
+import CheckHotelTermsAndConditions from './CheckHotelTermsAndConditions';
 
 export default function ReserveInfoForm({
  dic,
@@ -156,6 +157,9 @@ export default function ReserveInfoForm({
        return <ReserveInfoRoomForm i={i} room={room} key={i} dic={dic} />;
       })
      )}
+    </div>
+    <div className='mb-4 block lg:hidden'>
+     <CheckHotelTermsAndConditions dic={dic} />
     </div>
     <div className='flex justify-end gap-4 lg:opacity-0 mb-4 lg:h-0 lg:mb-0 overflow-hidden'>
      <Button

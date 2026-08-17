@@ -8,6 +8,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { Skeleton } from '@/components/ui/skeleton';
 import useStickyScroll from '@/utils/useStickyScroll';
 import { RiInformationLine } from 'react-icons/ri';
+import CheckHotelTermsAndConditions from './CheckHotelTermsAndConditions';
 
 export default function ReserveInfoSummary({
  dic,
@@ -144,6 +145,9 @@ export default function ReserveInfoSummary({
        </div>
       </section>
       <div className='gap-4 grid-cols-2 hidden lg:grid'>
+       <div className='col-span-full'>
+        <CheckHotelTermsAndConditions dic={dic} />
+       </div>
        <Button
         className='text-base'
         variant='outline'

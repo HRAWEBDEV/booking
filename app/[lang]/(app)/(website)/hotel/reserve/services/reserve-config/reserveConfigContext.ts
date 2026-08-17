@@ -36,6 +36,8 @@ interface ReserveConfig {
   isSuccess: boolean;
   isError: boolean;
   onShowHotelRules: (open?: boolean) => void;
+  acceptedHotelTermsAndConditions: boolean;
+  onAcceptHotelTermsAndConditions: (accepted: boolean) => void;
  };
  lockInfo: {
   data?: LockInfoResult;

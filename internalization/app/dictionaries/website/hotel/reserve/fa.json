@@ -6,6 +6,9 @@
   "reserveVoucher": "واچر رزرو"
  },
  "reserveInfo": {
+  "readHotelTermsAndCondtions": "قوانین و مقررات هتل را مطالعه کنید.",
+  "accept": "را قبول دارم",
+  "hotelTermsAndConditions": "قوانین و مقررات هتل",
   "reserveRoomsArefull": "ظرفیت اتاق های انتخاب شده تکمیل شده است.",
   "pendingReserveIsExpired": "زمان ثبت رزرو منقضی شده است",
   "reserveSummary": {
