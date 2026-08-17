@@ -13,13 +13,14 @@ export default function CheckHotelTermsAndConditions({
  return (
   <div className='flex items-center gap-4'>
    <Checkbox
+    id='terms-and-conditions'
     className='scale-150'
     checked={hotelInfo.acceptedHotelTermsAndConditions}
     onCheckedChange={(value) =>
      hotelInfo.onAcceptHotelTermsAndConditions(value as boolean)
     }
    />
-   <p>
+   <label htmlFor='terms-and-conditions'>
     <Link
      className='underline text-destructive'
      href='#'
@@ -28,7 +29,7 @@ export default function CheckHotelTermsAndConditions({
      {dic.reserveInfo.hotelTermsAndConditions}
     </Link>
     <span> {dic.reserveInfo.accept}.</span>
-   </p>
+   </label>
   </div>
  );
 }
