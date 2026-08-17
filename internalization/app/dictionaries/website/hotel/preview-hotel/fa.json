@@ -4,6 +4,7 @@
   "star": "ستاره",
   "share": "اشتراک گذاری",
   "location": "موقعیت",
+  "close": "بستن",
   "unknownAddress": "موقعیت نامعلوم"
  },
  "hotelMenuBar": {
@@ -60,7 +61,8 @@
   "dailyPrice": "نرخ روزانه اتاق",
   "more": "بیشتر",
   "less": "کمتر",
-  "images": "تصاویر"
+  "images": "تصاویر",
+  "close": "بستن"
  },
  "hotelDescription": {
   "floors": "طبقات",

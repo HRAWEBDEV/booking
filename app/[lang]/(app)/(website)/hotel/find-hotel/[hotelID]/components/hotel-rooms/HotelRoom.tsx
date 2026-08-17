@@ -30,6 +30,8 @@ import {
  DialogContent,
  DialogHeader,
  DialogTitle,
+ DialogFooter,
+ DialogClose,
 } from '@/components/ui/dialog';
 
 const imageContainerClass =
@@ -151,6 +153,13 @@ export default function HotelRoom({
            }))}
           />
          </div>
+         <DialogFooter>
+          <DialogClose asChild>
+           <Button variant='outline' className='w-full'>
+            <span>{dic.hotelRooms.close}</span>
+           </Button>
+          </DialogClose>
+         </DialogFooter>
         </DialogContent>
        </Dialog>
       </div>

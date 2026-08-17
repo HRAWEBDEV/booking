@@ -6,6 +6,8 @@ import {
  DialogContent,
  DialogHeader,
  DialogTitle,
+ DialogFooter,
+ DialogClose,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FaMapMarkedAlt } from 'react-icons/fa';
@@ -27,15 +29,22 @@ export default function HotelLocationDrawer({
       <FaMapMarkedAlt className='size-6' />
      </Button>
     </DialogTrigger>
-    <DialogContent className='h-dvh w-dvw max-w-dvw rounded-none'>
+    <DialogContent className='h-[95dvh] w-[95dvw] max-w-dvw flex flex-col'>
      <DialogHeader>
       <DialogTitle className='font-medium text-lg'>
        {dic.hotelInfo.location} {hotelInfo.fName}
       </DialogTitle>
      </DialogHeader>
-     <div>
+     <div className='grow flex flex-col'>
       <HotelLocation dic={dic} hotelInfo={hotelInfo} isDrawer />
      </div>
+     <DialogFooter>
+      <DialogClose asChild>
+       <Button size='lg' variant='outline' className='w-full'>
+        {dic.hotelInfo.close}
+       </Button>
+      </DialogClose>
+     </DialogFooter>
     </DialogContent>
    </Dialog>
   </div>

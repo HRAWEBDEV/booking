@@ -11,6 +11,8 @@ import {
  DialogHeader,
  DialogTitle,
  DialogTrigger,
+ DialogClose,
+ DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { GrGallery } from 'react-icons/gr';
@@ -87,6 +89,13 @@ export default function HotelGallery({
            }))}
           />
          </div>
+         <DialogFooter>
+          <DialogClose asChild>
+           <Button variant='outline' className='w-full'>
+            <span>{dic.hotelRooms.close}</span>
+           </Button>
+          </DialogClose>
+         </DialogFooter>
         </DialogContent>
        </Dialog>
       </div>
