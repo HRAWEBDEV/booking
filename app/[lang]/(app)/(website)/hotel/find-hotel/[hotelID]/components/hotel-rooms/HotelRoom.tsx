@@ -102,6 +102,15 @@ export default function HotelRoom({
   ? isTargetRoom(selectedRoom, roomInfo) && roomDailyPriceIsLoading
   : false;
 
+ let roomTypeBadgeImagesContent = '';
+ if (roomType.accommodationImages.length >= 1) {
+  if (roomType.accommodationImages.length >= 20) {
+   roomTypeBadgeImagesContent = '20+';
+  } else {
+   roomTypeBadgeImagesContent = roomType.accommodationImages.length.toString();
+  }
+ }
+
  useEffect(() => {
   if (!facilitiesRef.current) return;
   if (facilitiesRef.current.scrollHeight > facilitiesRef.current.clientHeight) {
@@ -124,7 +133,9 @@ export default function HotelRoom({
         <DialogTrigger asChild>
          <Button variant='ghost' className='bg-background/50 text-primary/80'>
           <GrGallery className='size-5' />
-          <span className='text-sm'>{dic.hotelRooms.images}</span>
+          <span className='text-sm'>
+           {dic.hotelRooms.images} ({roomTypeBadgeImagesContent})
+          </span>
          </Button>
         </DialogTrigger>
         <DialogContent className='p-0 gap-0 flex flex-col overflow-hidden max-h-[90svh] max-w-[unset]! w-[min(95%,45rem)]!'>
@@ -166,9 +177,9 @@ export default function HotelRoom({
        <LuImageOff className='size-16 text-neutral-400 dark:text-neutral-600' />
       </div>
      )}
-     {roomType.accommodationImages.length > 1 && (
+     {roomTypeBadgeImagesContent && (
       <div className='flex justify-center gap-2 py-3 absolute bottom-0 left-0 right-0'>
-       {roomType.accommodationImages.map((_, idx) => (
+       {roomType.accommodationImages.slice(0, 5).map((_, idx) => (
         <button
          key={idx}
          onClick={() => {

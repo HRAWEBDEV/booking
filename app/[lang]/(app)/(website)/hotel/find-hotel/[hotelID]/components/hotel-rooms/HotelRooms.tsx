@@ -260,7 +260,9 @@ export default function HotelRooms({
             </div>
             <div className='text-[0.7rem] basis-5 font-medium'>
              {dayPrice && !roomDailyPriceIsLoading ? (
-              numberFormatter.format(dayPrice?.netRoomRate / 1000)
+              numberFormatter.format(
+               Math.round((dayPrice?.netRoomRate || 0) / 1000),
+              )
              ) : roomDailyPriceIsLoading ? (
               <div className='px-2'>
                <Skeleton className='h-3' />
