@@ -34,6 +34,11 @@ export default async function WebsiteLayout({
    </div>
    <Toaster
     className='font-[inherit]!'
+    toastOptions={{
+     style: {
+      fontSize: '0.9rem',
+     },
+    }}
     position='top-center'
     richColors
     closeButton
