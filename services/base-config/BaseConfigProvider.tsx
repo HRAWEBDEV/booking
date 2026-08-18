@@ -9,7 +9,6 @@ import {
 import { type Locale, locales } from '@/internalization/app/localization';
 import { setUserLocale } from '@/utils/userLocaleManager';
 import { ThemeProvider } from 'next-themes';
-import { appModes } from '@/theme/appModes';
 
 interface Props {
  activeLocale: Locale;

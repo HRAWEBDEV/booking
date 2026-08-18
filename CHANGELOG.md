@@ -1,10 +1,15 @@
-## v 1.1.6
+## v 1.1.7
 
 ### Features
 
 - add map full screen mode (hra-done)
-- add national code input replacer to english numbers (hra-done)
 - add hotel gallery close button (hra-done)
+
+## v 1.1.6
+
+### Features
+
+- add national code input replacer to english numbers (hra-done)
 
 ## v 1.1.5
 
