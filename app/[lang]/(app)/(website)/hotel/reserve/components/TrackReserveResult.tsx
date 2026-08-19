@@ -122,6 +122,8 @@ export default function TrackReserveResult({
   },
  });
 
+ const supportNo = process.env.NEXT_PUBLIC_HOTEL_SUPPORT || '02191780185';
+
  return (
   <div className='flex flex-col gap-4 h-full overflow-auto p-4'>
    {lockExpireTimeSuccess && lockExpireTime <= 0 && (
@@ -271,7 +273,7 @@ export default function TrackReserveResult({
      className='text-base'
      asChild
     >
-     <Link href='tel:02191780185'>{trackReserve.contactSupport}</Link>
+     <Link href={`tel:${supportNo}`}>{trackReserve.contactSupport}</Link>
     </Button>
    </div>
    <a href='' ref={downloadVoucherAnchorRef} download className='hidden'></a>
