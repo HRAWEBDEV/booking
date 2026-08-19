@@ -1,3 +1,9 @@
+## v 1.1.8
+
+### Features
+
+- add hotel location redirection to Neshan and Google Maps app
+
 ## v 1.1.7
 
 ### Features
