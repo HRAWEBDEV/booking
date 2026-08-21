@@ -19,6 +19,7 @@ import HotelConfigProvider from '../services/hotel-config/HotelConfigProvider';
 import { Skeleton } from '@/components/ui/skeleton';
 import HotelLocation from './HotelLocation';
 import HotelDatePickerWrapper from './HotelDatePickerWrapper';
+import ImageLightboxProvider from '@/components/image-lightbox/ImageLightboxProvider';
 
 export default function HotelWrapper({
  dic,
@@ -42,46 +43,53 @@ export default function HotelWrapper({
  hotelID: string;
 }) {
  return (
-  <HotelConfigProvider
-   hotelInfo={hotelInfo}
-   dic={dic}
-   fromDate={fromDate}
-   toDate={toDate}
-   hotelID={hotelID}
-  >
-   <HotelInfo dic={dic} hotelInfo={hotelInfo} />
-   <div className='grid md:grid-cols-[1fr_18rem] gap-4 mb-4'>
-    <div className='grid grid-cols-1'>
-     <HotelGallery hotelImages={hotelImages} dic={dic} showGallery />
-     <div className='md:sticky md:top-3 z-3'>
-      <HotelMenuBar dic={dic} />
-     </div>
-     <div className='block md:hidden'>
-      <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
-     </div>
-     <Suspense fallback={<Skeleton className='h-36 mb-4' />}>
-      <HotelFacilities
+  <ImageLightboxProvider labels={dic.gallery}>
+   <HotelConfigProvider
+    hotelInfo={hotelInfo}
+    dic={dic}
+    fromDate={fromDate}
+    toDate={toDate}
+    hotelID={hotelID}
+   >
+    <HotelInfo dic={dic} hotelInfo={hotelInfo} />
+    <div className='grid md:grid-cols-[1fr_18rem] gap-4 mb-4'>
+     <div className='grid grid-cols-1'>
+      <HotelGallery
+       hotelImages={hotelImages}
        dic={dic}
-       hotelFacilityPromise={hotelFacilityPromise}
-       roomFacilityPromise={roomFacilityPromise}
+       hotelName={hotelInfo.fName}
+       showGallery
       />
-     </Suspense>
-     <Suspense fallback={<HotelRoomsLoading />}>
-      <HotelRooms dic={dic} roomInventoriesPromise={roomInventoriesPromise} />
-     </Suspense>
-     <HotelDescription dic={dic} hotelInfo={hotelInfo} />
-     <div className='mb-4 block md:hidden'>
-      <HotelLocation dic={dic} hotelInfo={hotelInfo} />
+      <div className='md:sticky md:top-3 z-3'>
+       <HotelMenuBar dic={dic} />
+      </div>
+      <div className='block md:hidden'>
+       <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
+      </div>
+      <Suspense fallback={<Skeleton className='h-36 mb-4' />}>
+       <HotelFacilities
+        dic={dic}
+        hotelFacilityPromise={hotelFacilityPromise}
+        roomFacilityPromise={roomFacilityPromise}
+       />
+      </Suspense>
+      <Suspense fallback={<HotelRoomsLoading />}>
+       <HotelRooms dic={dic} roomInventoriesPromise={roomInventoriesPromise} />
+      </Suspense>
+      <HotelDescription dic={dic} hotelInfo={hotelInfo} />
+      <div className='mb-4 block md:hidden'>
+       <HotelLocation dic={dic} hotelInfo={hotelInfo} />
+      </div>
+      <HotelCancelPolicies dic={dic} hotelInfo={hotelInfo} />
      </div>
-     <HotelCancelPolicies dic={dic} hotelInfo={hotelInfo} />
-    </div>
-    <div>
-     <div className='mb-4 hidden md:block'>
-      <HotelLocation dic={dic} hotelInfo={hotelInfo} />
+     <div>
+      <div className='mb-4 hidden md:block'>
+       <HotelLocation dic={dic} hotelInfo={hotelInfo} />
+      </div>
+      <HotelDatePickerWrapper dic={dic} hotelInfo={hotelInfo} />
      </div>
-     <HotelDatePickerWrapper dic={dic} hotelInfo={hotelInfo} />
     </div>
-   </div>
-  </HotelConfigProvider>
+   </HotelConfigProvider>
+  </ImageLightboxProvider>
  );
 }
