@@ -5,6 +5,11 @@
 - add hotel image preview lightbox (poursha-done)
 - update facilities and about hotel and cancel policies sections styles (hra-done)
 
+## bug fixes
+
+- fix scrollable calendar styles (hra-done)
+- add fridays modifiers (hra-done)
+
 ## v 1.1.8
 
 ### Features
