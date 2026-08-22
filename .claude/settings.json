@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(git show \":app/[lang]/\\(app\\)/\\(website\\)/hotel/find-hotel/[hotelID]/components/HotelGallery.tsx\" | Select-Object -First 20; Write-Output \"=== line count index ===\"; \\(git show \":app/[lang]/\\(app\\)/\\(website\\)/hotel/find-hotel/[hotelID]/components/HotelGallery.tsx\"\\).Count)"
+    ]
+  }
+}

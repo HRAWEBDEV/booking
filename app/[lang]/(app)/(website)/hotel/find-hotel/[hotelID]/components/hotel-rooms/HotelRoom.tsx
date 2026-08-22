@@ -14,7 +14,6 @@ import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { LuImageOff } from 'react-icons/lu';
 import { ratePlanTypes } from '../../utils/ratePlanTypes';
 import { useHotelConfig } from '../../services/hotel-config/hotelConfigContext';
-import { GrGallery } from 'react-icons/gr';
 import {
  type Room,
  findRoom,
@@ -23,16 +22,8 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '@/components/ui/spinner';
 import { FaUserFriends, FaCaretDown, FaCaretUp } from 'react-icons/fa';
-import HotelGallery from '../HotelGallery';
-import {
- DialogTrigger,
- Dialog,
- DialogContent,
- DialogHeader,
- DialogTitle,
- DialogFooter,
- DialogClose,
-} from '@/components/ui/dialog';
+import { useImageLightbox } from '@/components/image-lightbox/imageLightboxContext';
+import GalleryOpenButton from '../gallery/GalleryOpenButton';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-40 grow-0 relative shrink-0 self-start';
@@ -56,19 +47,16 @@ export default function HotelRoom({
  const facilitiesRef = useRef<HTMLDivElement>(null);
  const [showFacilities, setShowFacilities] = useState(false);
  const [expandableFacilities, setExpandableFacilities] = useState(false);
+ const lightbox = useImageLightbox();
  const {
   rooms: { selectedRoomsDispatch, selectedRooms, roomTypeCapacity },
   reserve: { reserveRoomNights, toDateValue, fromDateValue },
  } = useHotelConfig();
  const formatNumber = useCurrencyFormatter();
- const [sliderCount, setSliderCount] = useState(0);
  const [activeSliderIndex, setActiveSliderIndex] = useState(0);
  const { locale, localeInfo } = useBaseConfig();
  const [bannerSlideRef, instanceRef] = useKeenSlider({
   rtl: localeInfo.contentDirection === 'rtl',
-  created(slider) {
-   setSliderCount(slider.track.details.slidesLength);
-  },
   slideChanged(slider) {
    setActiveSliderIndex(slider.track.details.rel);
   },
@@ -113,11 +101,66 @@ export default function HotelRoom({
   }
  }
 
+ const roomDescription = (
+  <div className='flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-medium'>
+   <span>
+    {formatNumber.format(accType.netRoomRate)} ریال / {reserveRoomNights}{' '}
+    {dic.hotelRooms.nights}
+   </span>
+   <span>•</span>
+   <span>
+    {accType.beds} {dic.hotelRooms.person}
+   </span>
+   {!!discountPercentage && (
+    <>
+     <span>•</span>
+     <span className='line-through text-red-300'>
+      {formatNumber.format(accType.roomOnlineShowRate)} ریال
+     </span>
+     <span className='text-amber-300 font-bold'>
+      ({discountPercentage}٪ {dic.hotelRooms.discount})
+     </span>
+    </>
+   )}
+   {!!activeRatePlanTypes.length && (
+    <>
+     <span>•</span>
+     <span className='text-neutral-300'>
+      {activeRatePlanTypes
+       .map((item) => dic.hotelRooms.ratePlanTypes[item.type])
+       .join('، ')}
+     </span>
+    </>
+   )}
+  </div>
+ );
+
+ const slides = roomType.accommodationImages.map(({ imageURL }, index) => ({
+  src: imageURL,
+  alt: `${roomType.fName} ${dic.gallery.image} ${index + 1}`,
+  title: roomType.fName,
+  description: roomDescription,
+ }));
+
+ function handleOpenLightbox(index: number) {
+  lightbox.open({
+   images: slides,
+   index,
+   onClose: (lastIndex) => instanceRef.current?.moveToIdx(lastIndex),
+  });
+ }
+
  useEffect(() => {
   if (!facilitiesRef.current) return;
-  if (facilitiesRef.current.scrollHeight > facilitiesRef.current.clientHeight) {
-   setExpandableFacilities(true);
-  }
+  const frame = requestAnimationFrame(() => {
+   if (
+    facilitiesRef.current &&
+    facilitiesRef.current.scrollHeight > facilitiesRef.current.clientHeight
+   ) {
+    setExpandableFacilities(true);
+   }
+  });
+  return () => cancelAnimationFrame(frame);
  }, []);
  return (
   <div className='overflow-hidden shadow-lg rounded-md'>
@@ -131,45 +174,21 @@ export default function HotelRoom({
     >
      {!!roomType.accommodationImages.length && (
       <div className='absolute top-1 start-1 z-2'>
-       <Dialog>
-        <DialogTrigger asChild>
-         <Button variant='ghost' className='bg-background/50 text-primary/80'>
-          <GrGallery className='size-5' />
-          <span className='text-sm'>
-           {dic.hotelRooms.images} ({roomTypeBadgeImagesContent})
-          </span>
-         </Button>
-        </DialogTrigger>
-        <DialogContent className='p-0 gap-0 flex flex-col overflow-hidden max-h-[90svh] max-w-[unset]! w-[min(95%,45rem)]!'>
-         <DialogHeader className='p-4'>
-          <DialogTitle>{roomType.fName}</DialogTitle>
-         </DialogHeader>
-         <div className='p-4 grow overflow-auto'>
-          <HotelGallery
-           dic={dic}
-           hotelImages={roomType.accommodationImages.map((item) => ({
-            hotelID: 1,
-            imageURL: item.imageURL,
-           }))}
-          />
-         </div>
-         <DialogFooter>
-          <DialogClose asChild>
-           <Button variant='outline' className='w-full'>
-            <span>{dic.hotelRooms.close}</span>
-           </Button>
-          </DialogClose>
-         </DialogFooter>
-        </DialogContent>
-       </Dialog>
+       <GalleryOpenButton
+        label={dic.hotelRooms.images}
+        count={roomTypeBadgeImagesContent}
+        onClick={() => handleOpenLightbox(activeSliderIndex)}
+        onPreload={lightbox.preload}
+       />
       </div>
      )}
 
      {roomType.accommodationImages.length ? (
-      roomType.accommodationImages.map(({ imageURL }) => (
+      roomType.accommodationImages.map(({ imageURL }, index) => (
        <div
-        className={`keen-slider__slide ${imageWrapperClass}`}
+        className={`keen-slider__slide ${imageWrapperClass} cursor-pointer`}
         key={imageURL}
+        onClick={() => handleOpenLightbox(index)}
        >
         <img
          src={imageURL}
