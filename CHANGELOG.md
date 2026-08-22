@@ -1,3 +1,9 @@
+## v 2.0.2
+
+### Features
+
+- add scroll to top button (poursha-done)
+
 ## v 2.0.0
 
 ### Features
