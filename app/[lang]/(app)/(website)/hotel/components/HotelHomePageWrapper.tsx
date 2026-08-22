@@ -1,6 +1,7 @@
 import { type HotelHomePageDictionary } from '@/internalization/app/dictionaries/website/hotel/home/dictionary';
 import CitiesHotelsSection from './cities/CitiesHotelsSection';
 import TrendHotelsSection from './trend-hotels/TrendHotelsSection';
+import ScrollToTop from './ScrollToTop';
 
 export default function HotelHomePageWrapper({
  dic,
@@ -11,6 +12,7 @@ export default function HotelHomePageWrapper({
   <main>
    <CitiesHotelsSection dic={dic} />
    <TrendHotelsSection dic={dic} />
+   <ScrollToTop />
   </main>
  );
 }
