@@ -20,6 +20,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import HotelLocation from './HotelLocation';
 import HotelDatePickerWrapper from './HotelDatePickerWrapper';
 import ImageLightboxProvider from '@/components/image-lightbox/ImageLightboxProvider';
+import ScrollToTop from '../../../components/ScrollToTop';
 
 export default function HotelWrapper({
  dic,
@@ -89,6 +90,7 @@ export default function HotelWrapper({
       <HotelDatePickerWrapper dic={dic} hotelInfo={hotelInfo} />
      </div>
     </div>
+    <ScrollToTop />
    </HotelConfigProvider>
   </ImageLightboxProvider>
  );
