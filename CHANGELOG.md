@@ -1,9 +1,15 @@
+## v 2.0.0
+
+### Features
+
+- add hotel image preview lightbox (poursha-done)
+- update facilities and about hotel and cancel policies sections styles (hra-done)
+
 ## v 1.1.8
 
 ### Features
 
 - add hotel location redirection to Neshan and Google Maps app (poursha-done)
-- add hotel image preview lightbox (poursha-done)
 
 ## v 1.1.7
 
