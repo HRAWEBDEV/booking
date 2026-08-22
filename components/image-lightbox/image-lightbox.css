@@ -1,12 +1,19 @@
 /*
  * Theme for `yet-another-react-lightbox`.
  *
- * The viewer is always a dark surface, so its root also carries `.dark-surface`
- * (see globals.css) and every value below can be expressed with the regular
- * design tokens instead of hard coded colors.
+ * The viewer is always a dark surface whatever the active app theme is, so it
+ * pins the dark values of the tokens it needs and everything below is expressed
+ * against those instead of one-off colors. Scoped to `.app-lightbox`, nothing
+ * here leaks outside the lightbox.
  */
 
 .app-lightbox {
+ --background: oklch(0.145 0 0);
+ --foreground: oklch(0.985 0 0);
+ --primary: oklch(0.746 0.16 232.661);
+ --ring: oklch(0.556 0 0);
+ --destructive: oklch(0.704 0.191 22.216);
+
  --yarl__color_backdrop: var(--background);
  --yarl__color_button: color-mix(in oklab, var(--foreground) 88%, transparent);
  --yarl__color_button_active: var(--foreground);
@@ -21,8 +28,7 @@
  --yarl__toolbar_padding: 0.75rem;
  --yarl__navigation_button_padding: 0.625rem;
  --yarl__slide_icon_error_color: var(--destructive);
-
- --yarl__thumbnails_container_background_color: transparent;
+ --yarl__thumbnails_container_background_color: var(--background);
  --yarl__thumbnails_container_padding: 0.75rem 1rem 1rem;
  --yarl__thumbnails_thumbnail_background: color-mix(
   in oklab,
@@ -72,6 +78,7 @@
 .app-lightbox .yarl__toolbar {
  gap: 0.5rem;
  align-items: center;
+ padding-top: max(0.75rem, env(safe-area-inset-top));
 }
 
 .app-lightbox .yarl__navigation_prev,
@@ -139,6 +146,10 @@
  line-height: 1.6;
 }
 
+.app-lightbox .yarl__thumbnails_container {
+ padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
 .app-lightbox .yarl__thumbnails_thumbnail {
  opacity: 0.55;
  transition:
@@ -154,14 +165,6 @@
 
 .app-lightbox .yarl__thumbnails_thumbnail_active {
  opacity: 1;
-}
-
-.app-lightbox .yarl__toolbar {
- padding-top: max(0.75rem, env(safe-area-inset-top));
-}
-
-.app-lightbox .yarl__thumbnails_container {
- padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 @media (prefers-reduced-motion: reduce) {

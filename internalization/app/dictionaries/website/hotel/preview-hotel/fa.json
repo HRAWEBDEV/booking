@@ -63,16 +63,12 @@
   "dailyPrice": "نرخ روزانه اتاق",
   "more": "بیشتر",
   "less": "کمتر",
+  "images": "تصاویر",
   "close": "بستن"
  },
  "gallery": {
   "title": "گالری تصاویر",
-  "images": "تصاویر",
   "image": "تصویر",
-  "openImage": "مشاهده تصویر در اندازه کامل",
-  "goToImage": "رفتن به تصویر",
-  "previousImage": "تصویر قبلی",
-  "nextImage": "تصویر بعدی",
   "previous": "قبلی",
   "next": "بعدی",
   "close": "بستن",
@@ -80,8 +76,7 @@
   "zoomOut": "کوچک‌نمایی",
   "thumbnails": "تصاویر کوچک",
   "showThumbnails": "نمایش تصاویر کوچک",
-  "hideThumbnails": "پنهان کردن تصاویر کوچک",
-  "noImages": "تصویری ثبت نشده است"
+  "hideThumbnails": "پنهان کردن تصاویر کوچک"
  },
  "hotelDescription": {
   "floors": "طبقات",

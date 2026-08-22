@@ -22,9 +22,7 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Spinner } from '@/components/ui/spinner';
 import { FaUserFriends, FaCaretDown, FaCaretUp } from 'react-icons/fa';
-import { useTapGuard } from '@/hooks/useTapGuard';
 import { useImageLightbox } from '@/components/image-lightbox/imageLightboxContext';
-import GalleryDots from '../gallery/GalleryDots';
 import GalleryOpenButton from '../gallery/GalleryOpenButton';
 
 const imageContainerClass =
@@ -50,7 +48,6 @@ export default function HotelRoom({
  const [showFacilities, setShowFacilities] = useState(false);
  const [expandableFacilities, setExpandableFacilities] = useState(false);
  const lightbox = useImageLightbox();
- const tapGuard = useTapGuard();
  const {
   rooms: { selectedRoomsDispatch, selectedRooms, roomTypeCapacity },
   reserve: { reserveRoomNights, toDateValue, fromDateValue },
@@ -95,7 +92,14 @@ export default function HotelRoom({
   ? isTargetRoom(selectedRoom, roomInfo) && roomDailyPriceIsLoading
   : false;
 
- const roomImages = roomType.accommodationImages;
+ let roomTypeBadgeImagesContent = '';
+ if (roomType.accommodationImages.length >= 1) {
+  if (roomType.accommodationImages.length >= 20) {
+   roomTypeBadgeImagesContent = '20+';
+  } else {
+   roomTypeBadgeImagesContent = roomType.accommodationImages.length.toString();
+  }
+ }
 
  const roomDescription = (
   <div className='flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-medium'>
@@ -131,7 +135,7 @@ export default function HotelRoom({
   </div>
  );
 
- const slides = roomImages.map(({ imageURL }, index) => ({
+ const slides = roomType.accommodationImages.map(({ imageURL }, index) => ({
   src: imageURL,
   alt: `${roomType.fName} ${dic.gallery.image} ${index + 1}`,
   title: roomType.fName,
@@ -142,7 +146,6 @@ export default function HotelRoom({
   lightbox.open({
    images: slides,
    index,
-   // leaves the card on whichever photo the user stopped at
    onClose: (lastIndex) => instanceRef.current?.moveToIdx(lastIndex),
   });
  }
@@ -165,59 +168,58 @@ export default function HotelRoom({
     data-sold-out={roomType.roomCount === 0}
     className='p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input data-[sold-out="true"]:bg-neutral-100 dark:data-[sold-out="true"]:bg-neutral-900'
    >
-    <div className={imageContainerClass}>
-     {roomImages.length ? (
-      <>
-       <div className='keen-slider' ref={bannerSlideRef}>
-        {roomImages.map(({ imageURL }, index) => (
-         <button
-          type='button'
-          key={`${imageURL}-${index}`}
-          aria-label={`${dic.gallery.openImage} — ${index + 1}`}
-          className={`keen-slider__slide block w-full ${imageWrapperClass} cursor-zoom-in bg-neutral-200 dark:bg-neutral-800`}
-          onPointerDown={tapGuard.onPointerDown}
-          onPointerEnter={lightbox.preload}
-          onClick={(event) => {
-           if (!tapGuard.isTap(event)) return;
-           handleOpenLightbox(index);
-          }}
-         >
-          <img
-           src={imageURL}
-           alt={slides[index].alt}
-           loading='lazy'
-           decoding='async'
-           draggable={false}
-           className='h-full w-full object-cover object-center'
-          />
-         </button>
-        ))}
-       </div>
-       <div className='absolute top-2 start-2 z-2'>
-        <GalleryOpenButton
-         label={dic.gallery.images}
-         count={formatNumber.format(roomImages.length)}
-         onClick={() => handleOpenLightbox(activeSliderIndex)}
-         onPreload={lightbox.preload}
+    <div
+     className={`keen-slider ${imageContainerClass} relative`}
+     ref={bannerSlideRef}
+    >
+     {!!roomType.accommodationImages.length && (
+      <div className='absolute top-1 start-1 z-2'>
+       <GalleryOpenButton
+        label={dic.hotelRooms.images}
+        count={roomTypeBadgeImagesContent}
+        onClick={() => handleOpenLightbox(activeSliderIndex)}
+        onPreload={lightbox.preload}
+       />
+      </div>
+     )}
+
+     {roomType.accommodationImages.length ? (
+      roomType.accommodationImages.map(({ imageURL }, index) => (
+       <div
+        className={`keen-slider__slide ${imageWrapperClass} cursor-pointer`}
+        key={imageURL}
+        onClick={() => handleOpenLightbox(index)}
+       >
+        <img
+         src={imageURL}
+         alt='hotel image'
+         loading='lazy'
+         className='h-full w-full object-cover object-center'
         />
        </div>
-       {roomImages.length > 1 && (
-        <>
-         <div className='pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/45 to-transparent' />
-         <GalleryDots
-          count={roomImages.length}
-          activeIndex={activeSliderIndex}
-          label={dic.gallery.goToImage}
-          onSelect={(index) => instanceRef.current?.moveToIdx(index)}
-         />
-        </>
-       )}
-      </>
+      ))
      ) : (
       <div
-       className={`bg-neutral-100 dark:bg-neutral-800 ${imageWrapperClass} w-full grid place-content-center`}
+       className={`bg-neutral-100 ${imageWrapperClass} w-full grid place-content-center`}
       >
        <LuImageOff className='size-16 text-neutral-400 dark:text-neutral-600' />
+      </div>
+     )}
+     {roomTypeBadgeImagesContent && (
+      <div className='flex justify-center gap-2 py-3 absolute bottom-0 left-0 right-0'>
+       {roomType.accommodationImages.slice(0, 5).map((_, idx) => (
+        <button
+         key={idx}
+         onClick={() => {
+          instanceRef.current?.moveToIdx(idx);
+         }}
+         className={`h-2 border cursor-pointer border-gray-300 rounded-full transition-all ${
+          activeSliderIndex === idx
+           ? 'bg-white w-6'
+           : 'bg-gray-200/80 hover:bg-white w-2'
+         }`}
+        />
+       ))}
       </div>
      )}
     </div>

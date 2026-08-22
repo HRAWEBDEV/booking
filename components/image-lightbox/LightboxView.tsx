@@ -74,7 +74,7 @@ export default function LightboxView({
    close={close}
    index={index}
    slides={images}
-   className='app-lightbox dark-surface'
+   className='app-lightbox'
    labels={lightboxLabels}
    plugins={[Captions, Thumbnails, Zoom]}
    toolbar={{
