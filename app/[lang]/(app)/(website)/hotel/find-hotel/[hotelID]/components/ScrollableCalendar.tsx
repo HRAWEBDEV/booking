@@ -4,6 +4,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { DateRange } from 'react-day-picker';
 import { cn } from '@/lib/utils';
 import { useDateFns } from '@/hooks/useDateFns';
+import { modifiers, modifiersClassNames } from '../utils/calendarModifiers';
 
 const TOTAL_MONTHS = 20;
 
@@ -24,6 +25,8 @@ const VirtualMonth = memo(
    <div className='w-full flex flex-col gap-4 items-center pb-6 border-b last:border-0'>
     <Calendar
      mode='range'
+     modifiers={modifiers}
+     modifiersClassNames={modifiersClassNames}
      month={monthDate}
      selected={selected}
      onSelect={onSelect}
@@ -33,14 +36,6 @@ const VirtualMonth = memo(
      className='w-full flex justify-center p-2 [--cell-size:3rem]'
      disabled={(date) => {
       return date.getTime() < dateFns.startOfDay(new Date()).getTime();
-     }}
-     classNames={{
-      month: 'space-y-4 w-full ',
-      table: 'w-full border-collapse space-y-1',
-      head_row: 'hidden',
-      row: 'flex w-full mt-6 justify-between',
-      caption: 'hidden',
-      day: 'text-xl',
      }}
     />
    </div>

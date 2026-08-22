@@ -45,6 +45,7 @@ import {
 import { Spinner } from '@/components/ui/spinner';
 import { DateRange } from 'react-day-picker';
 import ScrollableCalendar from './ScrollableCalendar';
+import { modifiers, modifiersClassNames } from '../utils/calendarModifiers';
 
 export default function HotelDatePicker({
  dic,
@@ -147,6 +148,8 @@ export default function HotelDatePicker({
    render={() => (
     <Calendar
      mode='range'
+     modifiers={modifiers}
+     modifiersClassNames={modifiersClassNames}
      numberOfMonths={2}
      startMonth={dateFns.startOfMonth(new Date())}
      selected={{
