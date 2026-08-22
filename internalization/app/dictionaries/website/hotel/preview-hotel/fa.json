@@ -66,6 +66,18 @@
   "images": "تصاویر",
   "close": "بستن"
  },
+ "gallery": {
+  "title": "گالری تصاویر",
+  "image": "تصویر",
+  "previous": "قبلی",
+  "next": "بعدی",
+  "close": "بستن",
+  "zoomIn": "بزرگ‌نمایی",
+  "zoomOut": "کوچک‌نمایی",
+  "thumbnails": "تصاویر کوچک",
+  "showThumbnails": "نمایش تصاویر کوچک",
+  "hideThumbnails": "پنهان کردن تصاویر کوچک"
+ },
  "hotelDescription": {
   "floors": "طبقات",
   "rooms": "اتاق‌ها"

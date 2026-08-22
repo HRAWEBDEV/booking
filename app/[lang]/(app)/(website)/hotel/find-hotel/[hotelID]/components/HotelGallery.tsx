@@ -5,37 +5,29 @@ import { useKeenSlider } from 'keen-slider/react';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { type HotelImage } from '../../../services/hotelApiActions';
 import { LuImageOff } from 'react-icons/lu';
-import {
- Dialog,
- DialogContent,
- DialogHeader,
- DialogTitle,
- DialogTrigger,
- DialogClose,
- DialogFooter,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { GrGallery } from 'react-icons/gr';
+import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
+import { useImageLightbox } from '@/components/image-lightbox/imageLightboxContext';
+import GalleryOpenButton from './gallery/GalleryOpenButton';
 
 export default function HotelGallery({
  hotelImages,
  dic,
+ hotelName,
  showGallery = false,
 }: {
  hotelImages: HotelImage[] | null;
  dic: PreviewHotelDictionary;
+ hotelName?: string | null;
  showGallery?: boolean;
 }) {
  const [activeBannerSliderIndex, setActiveBannderSliderIndex] = useState(0);
- const [bannerSliderCount, setBannerSliderCount] = useState(0);
  const { localeInfo } = useBaseConfig();
+ const formatNumber = useCurrencyFormatter();
+ const lightbox = useImageLightbox();
  const [bannerSlideRef, bannerSliderInstance] = useKeenSlider({
   rtl: localeInfo.contentDirection === 'rtl',
   slideChanged(slider) {
    setActiveBannderSliderIndex(slider.track.details.rel);
-  },
-  created(slider) {
-   setBannerSliderCount(slider.track.details.slidesLength);
   },
  });
  const [sliderRef] = useKeenSlider({
@@ -60,6 +52,21 @@ export default function HotelGallery({
   },
  });
 
+ const slides =
+  hotelImages?.map((image, index) => ({
+   src: image.imageURL,
+   alt: `${hotelName || ''} ${dic.gallery.image} ${index + 1}`.trim(),
+   title: hotelName || undefined,
+  })) || [];
+
+ function handleOpenLightbox(index: number) {
+  lightbox.open({
+   images: slides,
+   index,
+   onClose: (lastIndex) => bannerSliderInstance.current?.moveToIdx(lastIndex),
+  });
+ }
+
  return (
   <section className='grid grid-cols-1 mb-4'>
    {hotelImages && hotelImages.length ? (
@@ -69,42 +76,20 @@ export default function HotelGallery({
     >
      {showGallery && (
       <div className='absolute top-1 start-1 z-2'>
-       <Dialog>
-        <DialogTrigger asChild>
-         <Button variant='ghost' className='bg-background/50 text-primary/80'>
-          <GrGallery className='size-5' />
-          <span className='text-sm'>{dic.hotelRooms.images}</span>
-         </Button>
-        </DialogTrigger>
-        <DialogContent className='p-0 gap-0 flex flex-col overflow-hidden max-h-[90svh] max-w-[unset]! w-[min(95%,45rem)]!'>
-         <DialogHeader className='p-4'>
-          <DialogTitle></DialogTitle>
-         </DialogHeader>
-         <div className='p-4 grow overflow-auto'>
-          <HotelGallery
-           dic={dic}
-           hotelImages={hotelImages.map((item) => ({
-            hotelID: 1,
-            imageURL: item.imageURL,
-           }))}
-          />
-         </div>
-         <DialogFooter>
-          <DialogClose asChild>
-           <Button variant='outline' className='w-full'>
-            <span>{dic.hotelRooms.close}</span>
-           </Button>
-          </DialogClose>
-         </DialogFooter>
-        </DialogContent>
-       </Dialog>
+       <GalleryOpenButton
+        label={dic.hotelRooms.images}
+        count={formatNumber.format(hotelImages.length)}
+        onClick={() => handleOpenLightbox(activeBannerSliderIndex)}
+        onPreload={lightbox.preload}
+       />
       </div>
      )}
 
      {hotelImages.map((image, i) => (
       <div
-       className='keen-slider__slide rounded-lg h-92 overflow-hidden'
+       className='keen-slider__slide rounded-lg h-92 overflow-hidden cursor-pointer'
        key={i}
+       onClick={() => handleOpenLightbox(i)}
       >
        <img
         src={image.imageURL}
