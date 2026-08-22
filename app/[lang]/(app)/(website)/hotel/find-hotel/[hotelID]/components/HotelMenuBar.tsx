@@ -8,20 +8,13 @@ export default function HotelMenuBar({ dic }: { dic: PreviewHotelDictionary }) {
  const { localeInfo } = useBaseConfig();
  const [sliderRef] = useKeenSlider({
   rtl: localeInfo.contentDirection === 'rtl',
-  breakpoints: {
-   '(max-width:700px)': {
-    slides: {
-     perView: 2,
-    },
-   },
-  },
   slides: {
    perView: 4,
   },
  });
 
  return (
-  <section className='bg-neutral-200 dark:bg-neutral-800 shadow-lg rounded-md mb-4 md:sticky top-1 overflow-hidden z-1'>
+  <section className='bg-neutral-200 dark:bg-neutral-800 shadow-lg rounded-md mb-4 md:sticky top-1 overflow-hidden z-1 border border-neutral-400 dark:border-neutral-600'>
    <nav ref={sliderRef} className='keen-slider'>
     {Object.keys(dic.hotelMenuBar).map((key) => {
      return (

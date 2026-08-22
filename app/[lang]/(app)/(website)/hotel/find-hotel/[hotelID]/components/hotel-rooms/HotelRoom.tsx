@@ -163,7 +163,7 @@ export default function HotelRoom({
   return () => cancelAnimationFrame(frame);
  }, []);
  return (
-  <div className='overflow-hidden shadow-lg rounded-md'>
+  <div className='overflow-hidden shadow-lg rounded-md border border-neutral-200 dark:border-neutral-800'>
    <article
     data-sold-out={roomType.roomCount === 0}
     className='p-3 flex flex-col lg:flex-row overflow-hidden dark:border dark:border-input data-[sold-out="true"]:bg-neutral-100 dark:data-[sold-out="true"]:bg-neutral-900'

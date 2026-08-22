@@ -214,7 +214,7 @@ export default function HotelRooms({
         <span className='text-sm text-neutral-500'>(x ۱۰۰۰) (ریال)</span>
        </DialogTitle>
       </DialogHeader>
-      <div className='grow overflow-auto flex flex-col *:[--cell-size:2.5rem] md:*:[--cell-size:3rem] lg:*:[--cell-size:3.3rem]'>
+      <div className='grow overflow-auto flex flex-col *:[--cell-size:2.8rem] md:*:[--cell-size:3rem] lg:*:[--cell-size:3.3rem]'>
        <Calendar
         showOutsideDays={false}
         mode='single'
@@ -258,7 +258,7 @@ export default function HotelRooms({
             <div className='grow text-center grid place-content-center text-neutral-600 dark:text-neutral-400'>
              {dayNumber}
             </div>
-            <div className='text-[0.7rem] basis-5 font-medium'>
+            <div className='text-[0.74rem] basis-5 font-medium'>
              {dayPrice && !roomDailyPriceIsLoading ? (
               numberFormatter.format(
                Math.round((dayPrice?.netRoomRate || 0) / 1000),

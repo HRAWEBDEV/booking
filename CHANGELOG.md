@@ -2,7 +2,8 @@
 
 ### Features
 
-- add hotel location redirection to Neshan and Google Maps app
+- add hotel location redirection to Neshan and Google Maps app (poursha-done)
+- add hotel image preview lightbox (poursha-done)
 
 ## v 1.1.7
 

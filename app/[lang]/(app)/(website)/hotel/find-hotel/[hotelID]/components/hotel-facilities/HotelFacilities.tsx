@@ -16,9 +16,9 @@ export default function HotelFacilities({
  return (
   <section
    id='hotelFacilities'
-   className='scroll-mt-16 mb-4 p-4 shadow-md rounded-md dark:border dark:border-input'
+   className='scroll-mt-16 mb-4 p-4 shadow-md rounded-md border border-secondary bg-secondary/5'
   >
-   <h3 className='text-lg font-medium text-primary mb-3'>
+   <h3 className='text-lg font-medium text-secondary mb-3'>
     {dic.hotelFacilities.title}
    </h3>
    <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-2'>
