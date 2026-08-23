@@ -26,6 +26,7 @@ interface ReserveConfig {
   data?: RoomInventory[];
   storeRooms: (RoomInventory & { isDeleted?: boolean })[];
   storeRoomsDispatcher: ActionDispatch<[action: RoomsPickerActions]>;
+  expectedCount: number;
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;

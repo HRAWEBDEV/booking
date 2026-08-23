@@ -17,5 +17,9 @@ export async function generateMetadata(
 export default function ReserveHotelLayout(
  props: LayoutProps<'/[lang]/hotel/reserve'>,
 ) {
- return <>{props.children}</>;
+ return (
+  <div className='min-h-[calc(100svh-var(--website-header-height))]'>
+   {props.children}
+  </div>
+ );
 }

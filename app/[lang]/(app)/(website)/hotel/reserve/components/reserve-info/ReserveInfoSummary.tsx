@@ -5,7 +5,7 @@ import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { Skeleton } from '@/components/ui/skeleton';
+import ReserveInfoSummaryLoading from './ReserveInfoSummaryLoading';
 import useStickyScroll from '@/utils/useStickyScroll';
 import { RiInformationLine } from 'react-icons/ri';
 import CheckHotelTermsAndConditions from './CheckHotelTermsAndConditions';
@@ -34,7 +34,7 @@ export default function ReserveInfoSummary({
   <div className='row-start-1 lg:row-start-auto mb-4'>
    <div ref={containerRef}>
     {isLoading || hotelInfo.isLoading ? (
-     <Skeleton className='w-full h-96' />
+     <ReserveInfoSummaryLoading />
     ) : (
      <>
       <section className='p-4 rounded-md border border-input mb-2'>

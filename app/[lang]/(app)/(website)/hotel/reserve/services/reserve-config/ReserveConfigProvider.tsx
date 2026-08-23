@@ -168,6 +168,9 @@ export default function ReserveConfigProvider({
   }
  });
 
+ const expectedRoomsCount =
+  localeReserveInfo?.rooms.reduce((total, room) => total + room.count, 0) || 1;
+
  // lock info
  const {
   data: lockInfo,
@@ -611,6 +614,7 @@ export default function ReserveConfigProvider({
    isSuccess: roomsIsSuccess,
    isError: roomsIsError,
    storeRoomsDispatcher: storeRoomsDispatch,
+   expectedCount: expectedRoomsCount,
   },
   confirmReserveIsPending,
   confirmReserveError,

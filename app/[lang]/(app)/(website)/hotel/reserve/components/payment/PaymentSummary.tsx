@@ -1,5 +1,5 @@
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
-import { Skeleton } from '@/components/ui/skeleton';
+import PaymentSummaryLoading from './PaymentSummaryLoading';
 import { useReserveConfig } from '../../services/reserve-config/reserveConfigContext';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ export default function PaymentSummary({
   <div className='row-start-1 lg:row-start-auto mb-4'>
    <div ref={containerRef}>
     {lockInfo.isLoading || hotelInfo.isLoading ? (
-     <Skeleton className='w-full h-56' />
+     <PaymentSummaryLoading />
     ) : (
      <>
       <section className='p-4 rounded-md border border-input mb-2'>

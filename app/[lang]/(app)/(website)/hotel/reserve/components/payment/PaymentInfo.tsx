@@ -1,6 +1,7 @@
 import { type ReserveHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/reserve/dictionary';
 import { useReserveConfig } from '../../services/reserve-config/reserveConfigContext';
 import { Skeleton } from '@/components/ui/skeleton';
+import PaymentInfoLoading from './PaymentInfoLoading';
 import { Spinner } from '@/components/ui/spinner';
 import { useCurrencyFormatter } from '@/hooks/useCurrencyFormatter';
 import { Button } from '@/components/ui/button';
@@ -12,6 +13,7 @@ import { cn } from '@/lib/utils';
 export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
  const {
   lockInfo,
+  rooms,
   bookingInvoiceInfo,
   gateways,
   confirmPaymentIsPending,
@@ -21,7 +23,8 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
  } = useReserveConfig();
  const numberFormatter = useCurrencyFormatter();
 
- if (lockInfo.isLoading) return <Skeleton className='w-full h-56' />;
+ if (lockInfo.isLoading)
+  return <PaymentInfoLoading roomsCount={rooms.expectedCount} />;
 
  return (
   <section className='border border-input rounded-md p-4'>
