@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { GatewayTypes } from '../../../utils/gatewayTypes';
 import { getGatewayImage } from '../../../utils/getGatewayImage';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { cn } from '@/lib/utils';
 
 export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
  const {
@@ -19,7 +20,9 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
   onConfirmPayment,
  } = useReserveConfig();
  const numberFormatter = useCurrencyFormatter();
+
  if (lockInfo.isLoading) return <Skeleton className='w-full h-56' />;
+
  return (
   <section className='border border-input rounded-md p-4'>
    {lockInfo.lockExpireTimeIsSuccess &&
@@ -36,7 +39,9 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
       </Alert>
      </div>
     )}
+
    <h3 className='font-medium mb-4 text-lg'>{dic.payment.paymentInfo.title}</h3>
+
    <div className='grid gap-4 grid-cols-1 md:grid-cols-2 mb-3 pb-3 border-b border-input'>
     <div>
      <span className='text-neutral-600 dark:text-neutral-400'>
@@ -65,6 +70,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
      </span>
     </div>
    </div>
+
    <section className='pb-3 mb-2 border-b border-input'>
     <ul>
      {lockInfo.data?.rooms.map((room, i) => {
@@ -115,6 +121,7 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
      })}
     </ul>
    </section>
+
    <section className='grid grid-cols-1 md:grid-cols-2 mb-4 gap-2'>
     <div className='text-neutral-800 dark:text-neutral-400 font-medium'>
      <div>
@@ -142,8 +149,10 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
      <span className='text-xs'> ریال</span>
     </div>
    </section>
+
+   {/* Payment Gateway Selection (Snapp Market Style) */}
    <section>
-    <h4 className='font-medium mb-2'>
+    <h4 className='font-medium mb-3'>
      <span>{dic.payment.paymentInfo.paymentMethod}: </span>
      {gateways.selectedGateway && (
       <span className='text-primary'>
@@ -157,40 +166,93 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
       </span>
      )}
     </h4>
-    <ul className='mb-6 flex flex-wrap gap-4'>
-     {gateways.isLoading
-      ? Array.from({ length: 4 }, (_, i) => i).map((item) => (
-         <li key={item} className='size-24 rounded-md'>
-          <Skeleton className='w-full h-full' />
-         </li>
-        ))
-      : gateways.data?.map((gateway) => (
-         <li key={gateway.id}>
-          <Button
-           data-is-selected={gateway.id === gateways.selectedGateway?.id}
-           size={'icon'}
-           variant={'outline'}
-           className='group h-auto flex flex-col size-32 text-neutral-600 dark:text-neutral-400 data-[is-selected="true"]:border-primary data-[is-selected="true"]:text-primary'
-           onClick={() => {
-            gateways.setSelectedGateway(gateway);
-           }}
+
+    {gateways.isLoading ? (
+     <div className='space-y-3 mb-6'>
+      {Array.from({ length: 3 }, (_, i) => i).map((item) => (
+       <div key={item} className='h-16 w-full rounded-2xl'>
+        <Skeleton className='w-full h-full rounded-2xl' />
+       </div>
+      ))}
+     </div>
+    ) : !gateways.data?.length ? (
+     <Alert className='bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 mb-6'>
+      <AlertDescription className='text-sm text-neutral-600 dark:text-neutral-400'>
+       {dic.payment.paymentInfo.noGatewaysAvailable || 'در حال حاضر درگاه پرداختی یافت نشد.'}
+      </AlertDescription>
+     </Alert>
+    ) : (
+     <div
+      role='radiogroup'
+      aria-label={dic.payment.paymentInfo.paymentMethod}
+      className='space-y-3 mb-6'
+     >
+      {gateways.data.map((gateway) => {
+       const isSelected = gateway.id === gateways.selectedGateway?.id;
+       const gatewayName =
+        dic.payment.gateways[
+         GatewayTypes[gateway.paymentGatewayTypeID] as keyof typeof dic.payment.gateways
+        ] || gateway.paymentGatewayTypeName;
+
+       return (
+        <div
+         key={gateway.id}
+         role='radio'
+         aria-checked={isSelected}
+         tabIndex={0}
+         onClick={() => {
+          gateways.setSelectedGateway(gateway);
+         }}
+         onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+           e.preventDefault();
+           gateways.setSelectedGateway(gateway);
+          }
+         }}
+         className={cn(
+          'group relative flex items-center justify-between p-3.5 sm:p-4 rounded-2xl border transition-all duration-200 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
+          isSelected
+           ? 'border-neutral-900 dark:border-neutral-100 bg-neutral-50/90 dark:bg-neutral-900/70 shadow-xs ring-1 ring-neutral-900/10 dark:ring-white/10'
+           : 'border-neutral-200 dark:border-neutral-800 bg-card hover:border-neutral-400 dark:hover:border-neutral-600 hover:bg-neutral-50/50 dark:hover:bg-neutral-900/30'
+         )}
+        >
+         {/* Right Side (RTL Start): Gateway Name & Bank Logo */}
+         <div className='flex items-center gap-3 sm:gap-3.5'>
+          <div className='size-11 sm:size-12 rounded-xl bg-white dark:bg-neutral-950 p-1.5 shadow-2xs border border-neutral-100 dark:border-neutral-800 flex items-center justify-center shrink-0 overflow-hidden'>
+           {getGatewayImage(gateway.paymentGatewayTypeID)}
+          </div>
+          <div className='flex flex-col'>
+           <span className='font-semibold text-sm sm:text-base text-foreground group-hover:text-primary transition-colors'>
+            {gatewayName}
+           </span>
+           <span className='text-xs text-muted-foreground'>
+            {dic.payment.paymentInfo.shetabCards || 'کلیه کارت‌های عضو شتاب'}
+           </span>
+          </div>
+         </div>
+
+         {/* Left Side (RTL End): Snapp-style Radio Indicator */}
+         <div className='flex items-center justify-center shrink-0 me-1'>
+          <div
+           className={cn(
+            'size-5 sm:size-5.5 rounded-full border-2 transition-all flex items-center justify-center',
+            isSelected
+             ? 'border-neutral-900 dark:border-neutral-100 bg-transparent'
+             : 'border-neutral-300 dark:border-neutral-600 bg-background group-hover:border-neutral-400 dark:group-hover:border-neutral-500'
+           )}
           >
-           <div className='grow overflow-hidden flex items-center justify-center p-2'>
-            {getGatewayImage(gateway.paymentGatewayTypeID)}
-           </div>
-           <p className='text-center text-base p-1'>
-            {
-             dic.payment.gateways[
-              GatewayTypes[
-               gateway.paymentGatewayTypeID
-              ] as keyof typeof dic.payment.gateways
-             ]
-            }
-           </p>
-          </Button>
-         </li>
-        ))}
-    </ul>
+           {isSelected && (
+            <div className='size-2.5 sm:size-3 rounded-full bg-neutral-900 dark:bg-neutral-100 animate-in zoom-in-50 duration-150' />
+           )}
+          </div>
+         </div>
+        </div>
+       );
+      })}
+     </div>
+    )}
+
+    {/* Original Action Buttons */}
     <div className='flex justify-end gap-4'>
      <Button
       className='text-base w-36 flex-1 md:flex-none'
@@ -238,3 +300,5 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
   </section>
  );
 }
+
+

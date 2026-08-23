@@ -70,7 +70,12 @@
   "paymentInfo": {
    "title": "اطلاعات پرداخت",
    "paymentMethod": "روش پرداخت",
-   "confirmPayment": "پرداخت"
+   "onlinePaymentWith": "پرداخت آنلاین با",
+   "shetabCards": "کلیه کارت‌های عضو شتاب",
+   "payableAmount": "مبلغ قابل پرداخت",
+   "confirmPayment": "پرداخت",
+   "confirmAndPay": "تایید و پرداخت",
+   "noGatewaysAvailable": "در حال حاضر درگاه پرداختی یافت نشد."
   },
   "paymentSummary": {
    "reserveCheckCode": "کد‌پیگیری رزرو",
