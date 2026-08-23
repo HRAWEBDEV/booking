@@ -87,7 +87,7 @@ export default function HotelGallery({
 
      {hotelImages.map((image, i) => (
       <div
-       className='keen-slider__slide rounded-lg h-92 overflow-hidden cursor-pointer'
+       className='keen-slider__slide rounded-lg h-92 overflow-hidden cursor-pointer shrink-0'
        key={i}
        onClick={() => handleOpenLightbox(i)}
       >
@@ -125,7 +125,7 @@ export default function HotelGallery({
      <div ref={sliderRef} className='keen-slider relative'>
       {hotelImages.map((image, i) => (
        <button
-        className='keen-slider__slide rounded-lg size-20 cursor-pointer'
+        className='keen-slider__slide rounded-lg size-20 cursor-pointer shrink-0'
         key={i}
         onClick={() => {
          bannerSliderInstance.current?.moveToIdx(i);

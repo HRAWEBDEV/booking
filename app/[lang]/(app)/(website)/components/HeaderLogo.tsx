@@ -4,20 +4,19 @@ import Link from 'next/link';
 import LogoShapeIcon from '@/components/icons/LogoShapeIcon';
 import { useGoHome } from '../hooks/useGoHome';
 
-export default function HeaderLogo() {
+export default function HeaderLogo({ logoUrl }: { logoUrl: string | null }) {
  const [loadLogoError, setLoadLogoError] = useState(false);
  const { link, isHomePage } = useGoHome();
- const hotelID = process.env.NEXT_PUBLIC_HOTELID;
 
  function renderHeaderLogo() {
-  if (loadLogoError || !hotelID)
+  if (loadLogoError || !logoUrl)
    return (
     <LogoShapeIcon className='size-16 text-primary' fill='currentColor' />
    );
   return (
    <img
     alt='hotel image'
-    src='/hotel-logo.png'
+    src={logoUrl}
     className='size-16 object-center object-contain'
     onError={() => {
      setLoadLogoError(true);

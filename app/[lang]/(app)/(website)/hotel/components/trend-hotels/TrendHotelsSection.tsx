@@ -34,7 +34,7 @@ export default function TrendHotelsSection({
    </div>
    <div ref={sliderRef} className='keen-slider'>
     {Array.from({ length: 6 }, (_, i) => i).map((i) => (
-     <article key={i} className='keen-slider__slide number-slide1'>
+     <article key={i} className='keen-slider__slide number-slide1 shrink-0'>
       <Link href='#' className='flex flex-col border border-input rounded-md'>
        <div className='h-52 border border-input rounded-md rounded-ee-none rounded-es-none overflow-hidden'>
         <img

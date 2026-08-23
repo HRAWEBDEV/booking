@@ -20,7 +20,7 @@ export default function HotelMenuBar({ dic }: { dic: PreviewHotelDictionary }) {
      return (
       <Link
        key={key}
-       className='keen-slider__slide text-center p-1 py-2 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-sm text-neutral-600 dark:text-neutral-400 font-medium'
+       className='keen-slider__slide text-center p-1 py-2 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-sm text-neutral-600 dark:text-neutral-400 font-medium shrink-0'
        href={`#${key}`}
       >
        {dic.hotelMenuBar[key as keyof typeof dic.hotelMenuBar]}

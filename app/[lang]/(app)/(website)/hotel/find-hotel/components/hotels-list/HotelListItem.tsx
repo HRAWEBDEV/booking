@@ -69,7 +69,7 @@ export default function HotelListItem({ dic }: { dic: FindHotelDictionary }) {
       {Array.from({ length: 2 }, (_, i) => i).map((i) => (
        <div
         key={i}
-        className='keen-slider__slide cursor-grab active:cursor-grabbing overflow-hidden'
+        className='keen-slider__slide cursor-grab active:cursor-grabbing overflow-hidden shrink-0'
        >
         <div className='h-52 mx-auto border border-input rounded-lg group-data-[view="grid"]:rounded-b-none group-data-[view="row"]:rounded-b-none group-data-[view="row"]:rounded-tl-none group-data-[view="row"]:rounded-r-lg bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
          <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />

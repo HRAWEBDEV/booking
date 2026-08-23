@@ -19,7 +19,7 @@ export async function generateMetadata(
 
 export default function HotelHomeLayout(props: LayoutProps<'/[lang]/hotel'>) {
  return (
-  <main className='w-[min(100%,var(--website-container-max-width))] mx-auto px-4'>
+  <main className='w-[min(100%,var(--website-container-max-width))] mx-auto px-4 min-h-[calc(100svh-var(--website-header-height))]'>
    {props.children}
   </main>
  );

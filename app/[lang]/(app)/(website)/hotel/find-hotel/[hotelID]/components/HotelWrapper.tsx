@@ -6,6 +6,7 @@ import HotelDatePicker from './HotelDatePicker';
 import HotelMenuBar from './HotelMenuBar';
 import HotelDescription from './hotel-description/HotelDescription';
 import HotelFacilities from './hotel-facilities/HotelFacilities';
+import HotelFacilitiesLoading from './hotel-facilities/HotelFacilitiesLoading';
 import HotelRooms from './hotel-rooms/HotelRooms';
 import HotelRoomsLoading from './hotel-rooms/HotelRoomsLoading';
 import HotelCancelPolicies from './hotel-cancel-policies/HotelCancelPolicies';
@@ -16,7 +17,6 @@ import {
  type RoomInventory,
 } from '../../../services/hotelApiActions';
 import HotelConfigProvider from '../services/hotel-config/HotelConfigProvider';
-import { Skeleton } from '@/components/ui/skeleton';
 import HotelLocation from './HotelLocation';
 import HotelDatePickerWrapper from './HotelDatePickerWrapper';
 import ImageLightboxProvider from '@/components/image-lightbox/ImageLightboxProvider';
@@ -67,7 +67,7 @@ export default function HotelWrapper({
       <div className='block md:hidden'>
        <HotelDatePicker dic={dic} hotelInfo={hotelInfo} />
       </div>
-      <Suspense fallback={<Skeleton className='h-36 mb-4' />}>
+      <Suspense fallback={<HotelFacilitiesLoading />}>
        <HotelFacilities
         dic={dic}
         hotelFacilityPromise={hotelFacilityPromise}

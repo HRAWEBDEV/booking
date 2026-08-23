@@ -34,7 +34,7 @@ export default function HotelCardListItem({
       {Array.from({ length: 2 }, (_, i) => i).map((i) => (
        <div
         key={i}
-        className='keen-slider__slide cursor-grab active:cursor-grabbing overflow-hidden w-full'
+        className='keen-slider__slide cursor-grab active:cursor-grabbing overflow-hidden w-full shrink-0'
        >
         <div className='h-60 border border-input rounded-xl rounded-b-none bg-gray-200 dark:bg-gray-600 flex items-center justify-center gap-4 w-full'>
          <ImageMinus className='text-gray-600 dark:text-gray-300' size={64} />
