@@ -1,10 +1,12 @@
 ## v 2.0.2
 
+- add validFromDate and validToDate to convert date queries
+
+## v 2.0.0
+
 ### Features
 
 - add scroll to top button (poursha-done)
-
-## v 2.0.0
 
 ### Features
 
