@@ -109,6 +109,12 @@ export default async function HotelPage(
    `/${lang}/hotel/find-hotel/${hotelID}?${newSearchParams.toString()}`,
   );
  }
+
+ const validFromDate = dateFns
+  .startOfDay(fromDateQuery as string)
+  .toISOString();
+ const validToDate = dateFns.startOfDay(toDateQuery as string).toISOString();
+
  const { channelID, providerID, arzID } = getSetupProviderCredentials();
  const requestCredentialHeader = {
   'x-token': process.env.NEXT_PUBLIC_X_AUTH!,
@@ -147,8 +153,8 @@ export default async function HotelPage(
   hotelID,
   providerID,
   channelID,
-  checkinDate: fromDateQuery as string,
-  checkoutDate: toDateQuery as string,
+  checkinDate: validFromDate,
+  checkoutDate: validToDate,
   ratePlanID: ratePlanQuery as string | undefined,
  });
  const [hotelImages] = await Promise.all([
@@ -232,18 +238,16 @@ export default async function HotelPage(
   });
 
  return (
-  <>
-   <HotelWrapper
-    roomInventoriesPromise={hotelInventoriesPromise}
-    hotelInfo={hotelInfoPromise}
-    hotelFacilityPromise={hotelFacilityPromise}
-    roomFacilityPromise={roomFacilityPromise}
-    hotelImages={hotelImages}
-    fromDate={fromDateQuery as string}
-    toDate={toDateQuery as string}
-    dic={dic}
-    hotelID={hotelID as string}
-   />
-  </>
+  <HotelWrapper
+   roomInventoriesPromise={hotelInventoriesPromise}
+   hotelInfo={hotelInfoPromise}
+   hotelFacilityPromise={hotelFacilityPromise}
+   roomFacilityPromise={roomFacilityPromise}
+   hotelImages={hotelImages}
+   fromDate={validFromDate}
+   toDate={validToDate}
+   dic={dic}
+   hotelID={hotelID as string}
+  />
  );
 }
