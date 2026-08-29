@@ -61,7 +61,7 @@ export default function HotelWrapper({
        hotelName={hotelInfo.fName}
        showGallery
       />
-      <div className='md:sticky md:top-3 z-3'>
+      <div className='sticky top-3 z-3'>
        <HotelMenuBar dic={dic} />
       </div>
       <div className='block md:hidden'>

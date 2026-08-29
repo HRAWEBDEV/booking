@@ -1,3 +1,7 @@
+## v 2.0.3
+
+- make find hotel navigation bar sticky in mobile resolution (hra-done)
+
 ## v 2.0.2
 
 - add validFromDate and validToDate to convert date queries
