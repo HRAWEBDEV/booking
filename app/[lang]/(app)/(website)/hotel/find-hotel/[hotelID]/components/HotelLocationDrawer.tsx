@@ -27,7 +27,11 @@ export default function HotelLocationDrawer({
   <div>
    <Dialog>
     <DialogTrigger asChild>
-     <Button size='lg'>
+     <Button
+      variant='outline'
+      className='text-primary border border-primary'
+      size='lg'
+     >
       <FaMapMarkedAlt className='size-6' />
      </Button>
     </DialogTrigger>

@@ -46,6 +46,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { DateRange } from 'react-day-picker';
 import ScrollableCalendar from './ScrollableCalendar';
 import { modifiers, modifiersClassNames } from '../utils/calendarModifiers';
+import { IoCalendarOutline } from 'react-icons/io5';
 
 export default function HotelDatePicker({
  dic,
@@ -192,13 +193,16 @@ export default function HotelDatePicker({
    className='w-full justify-between font-normal text-base'
    data-invalid={!!filtersUserForm.formState.errors.fromDate}
   >
-   {fromDateValue
-    ? `${fromDateValue.toLocaleDateString(locale, {
-       dateStyle: 'long',
-      })}, ${fromDateValue.toLocaleDateString(locale, {
-       weekday: 'long',
-      })}`
-    : '---'}
+   <div className='flex gap-2 items-center'>
+    <IoCalendarOutline className='size-5' />
+    {fromDateValue
+     ? `${fromDateValue.toLocaleDateString(locale, {
+        dateStyle: 'long',
+       })}, ${fromDateValue.toLocaleDateString(locale, {
+        weekday: 'long',
+       })}`
+     : '---'}
+   </div>
    <ChevronDownIcon className='hidden md:inline-block' />
   </Button>
  );
@@ -211,13 +215,16 @@ export default function HotelDatePicker({
    id='toDate'
    className='w-full justify-between font-normal text-base'
   >
-   {!toDateValue || toDateValue.getTime() === fromDateValue?.getTime()
-    ? '---'
-    : `${toDateValue.toLocaleDateString(locale, {
-       dateStyle: 'long',
-      })}, ${toDateValue.toLocaleDateString(locale, {
-       weekday: 'long',
-      })}`}
+   <div className='flex gap-2 items-center'>
+    <IoCalendarOutline className='size-5' />
+    {!toDateValue || toDateValue.getTime() === fromDateValue?.getTime()
+     ? '---'
+     : `${toDateValue.toLocaleDateString(locale, {
+        dateStyle: 'long',
+       })}, ${toDateValue.toLocaleDateString(locale, {
+        weekday: 'long',
+       })}`}
+   </div>
    <ChevronDownIcon className='hidden md:inline-block' />
   </Button>
  );
@@ -267,7 +274,7 @@ export default function HotelDatePicker({
       room.ratePlanID.toString() +
       room.beds.toString()
      }
-     className='flex flex-wrap gap-2 text-xs text-neutral-600 dark:text-neutral-400'
+     className='flex flex-wrap gap-2 text-sm text-neutral-600 dark:text-neutral-400'
     >
      <span>{room.roomTypeName}: </span>
      <div style={{ direction: 'ltr' }}>
@@ -282,8 +289,10 @@ export default function HotelDatePicker({
  const renderReservePrice = (
   <div className='font-medium'>
    <span className='text-xs'>{dic.reserveInfo.totalDiscountPrice}: </span>
-   <span>{numberFormatter.format(reserveInfo.totalDiscountPrice)}</span>
-   <span className='text-xs'> ریال</span>
+   <span className='text-primary text-xl'>
+    {numberFormatter.format(reserveInfo.totalDiscountPrice)}
+   </span>
+   <span className='text-primary text-md'> ریال</span>
   </div>
  );
 
@@ -358,7 +367,7 @@ export default function HotelDatePicker({
 
  return (
   <>
-   <form className='hidden md:block shadow-lg border border-input p-4 rounded-md mb-2'>
+   <form className='hidden md:block shadow-xl p-4 rounded-md mb-2'>
     <FieldGroup className='gap-4'>
      <Popover
       open={openDatePickerCalendar}
@@ -424,7 +433,7 @@ export default function HotelDatePicker({
        </Field>
        <div>
         <div>{renderSearchButton}</div>
-        <p className='text-xs mt-2 text-neutral-600 dark:text-neutral-400'>
+        <p className='text-sm mt-2 text-neutral-700 dark:text-neutral-400'>
          <span>{dic.hotelDatePicker.results}: </span>
          <span>{result}</span>
         </p>

@@ -14,7 +14,7 @@ export default function HotelMenuBar({ dic }: { dic: PreviewHotelDictionary }) {
  });
 
  return (
-  <section className='bg-neutral-200 dark:bg-neutral-800 shadow-lg rounded-md mb-4 md:sticky top-1 overflow-hidden z-1 border border-neutral-400 dark:border-neutral-600'>
+  <section className='bg-neutral-200 dark:bg-neutral-800 rounded-md mb-4 md:sticky top-1 overflow-hidden z-1 border border-neutral-400 dark:border-neutral-600'>
    <nav ref={sliderRef} className='keen-slider'>
     {Object.keys(dic.hotelMenuBar).map((key) => {
      return (

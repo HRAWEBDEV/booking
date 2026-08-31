@@ -106,14 +106,14 @@ export default function HotelRooms({
 
  return (
   <section id='rooms' className='scroll-mt-16 mb-4'>
-   <div className='p-2 flex flex-wrap items-center gap-2'>
-    <span className='text-sm'>
+   <div className='p-2 flex flex-wrap items-center gap-2 text-md'>
+    <span>
      {dic.hotelRooms.searched} ({dic.hotelDatePicker.results} {result}
      ):{' '}
     </span>
     <Badge
      variant='outline'
-     className='p-1 px-2 rounded-md text-[0.9rem] font-normal'
+     className='p-1 px-2 rounded-md text-md font-normal'
     >
      <span>{dic.hotelDatePicker.from} </span>
      <span>
@@ -122,7 +122,7 @@ export default function HotelRooms({
     </Badge>
     <Badge
      variant='outline'
-     className='p-1 px-2 rounded-md text-[0.9rem] font-normal'
+     className='p-1 px-2 rounded-md text-md font-normal'
     >
      <span>{dic.hotelDatePicker.to} </span>
      <span>
@@ -133,7 +133,7 @@ export default function HotelRooms({
     {ratePlanValue && (
      <Badge
       variant='outline'
-      className='p-1 px-2 rounded-md text-[0.9rem] font-normal'
+      className='p-1 px-2 rounded-md text-md font-normal'
      >
       <span>{dic.hotelDatePicker.ratePlan} </span>
       <span>

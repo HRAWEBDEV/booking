@@ -22,7 +22,7 @@ export default function ShareHotelButton({
     });
    }}
   >
-   <FaShareAlt />
+   <FaShareAlt className='size-5' />
   </Button>
  );
 }

@@ -78,9 +78,6 @@ export default function HotelWrapper({
        <HotelRooms dic={dic} roomInventoriesPromise={roomInventoriesPromise} />
       </Suspense>
       <HotelDescription dic={dic} hotelInfo={hotelInfo} />
-      <div className='mb-4 block md:hidden'>
-       <HotelLocation dic={dic} hotelInfo={hotelInfo} />
-      </div>
       <HotelCancelPolicies dic={dic} hotelInfo={hotelInfo} />
      </div>
      <div>
