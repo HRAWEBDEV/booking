@@ -24,6 +24,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { FaUserFriends, FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useImageLightbox } from '@/components/image-lightbox/imageLightboxContext';
 import GalleryOpenButton from '../gallery/GalleryOpenButton';
+import { IoCalendarOutline } from 'react-icons/io5';
 
 const imageContainerClass =
  'mb-4 rounded-md overflow-hidden lg:mb-0 lg:me-4 lg:basis-40 grow-0 relative shrink-0 self-start';
@@ -348,10 +349,14 @@ export default function HotelRoom({
        variant='outline'
        size='lg'
        disabled={targetRoomDailyPricingIsLoading}
-       className='w-full'
+       className='w-full items-center'
        onClick={() => onShowDailyPrice(roomInfo)}
       >
-       {targetRoomDailyPricingIsLoading && <Spinner />}
+       {targetRoomDailyPricingIsLoading ? (
+        <Spinner />
+       ) : (
+        <IoCalendarOutline className='size-5' />
+       )}
        {dic.hotelRooms.viewPricingCalendar}
       </Button>
      </div>
