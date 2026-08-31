@@ -715,12 +715,12 @@ export default function ReserveConfigProvider({
       <DialogTitle>{dic.reserveInfo.reserveSummary.hotelRules}</DialogTitle>
      </DialogHeader>
      <div className='p-4 grow overflow-auto'>
-      <p>{hotelInfo?.publicRules}</p>
+      <p className='leading-7'>{hotelInfo?.publicRules}</p>
      </div>
      <DialogFooter className='p-4'>
       <DialogClose asChild>
        <Button
-        className='sm:w-24 h-11'
+        className='w-full h-11'
         variant='outline'
         onClick={() => setShowHotelRules(false)}
        >

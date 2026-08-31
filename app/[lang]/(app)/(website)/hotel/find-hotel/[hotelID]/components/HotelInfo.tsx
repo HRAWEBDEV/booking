@@ -1,9 +1,9 @@
 import { type HotelInfo } from '../../../services/hotelApiActions';
 import { type PreviewHotelDictionary } from '@/internalization/app/dictionaries/website/hotel/preview-hotel/dictionary';
 import { FaLocationDot } from 'react-icons/fa6';
-import { FaStar } from 'react-icons/fa6';
 import ShareHotelButton from './ShareHotelButton';
 import HotelLocationDrawer from './HotelLocationDrawer';
+import HotelStars from '../../../components/HotelStars';
 
 export default function HotelTitle({
  dic,
@@ -14,17 +14,11 @@ export default function HotelTitle({
 }) {
  return (
   <div className='py-4'>
-   <div className='flex gap-1 mb-2 items-center'>
-    {Array.from({ length: 5 }, (_, i) => i).map((i) => (
-     <FaStar
-      data-active={i < (hotelInfo.hotelGradeID || 0)}
-      key={i}
-      className='size-6 text-neutral-200 dark:text-neutral-800 data-[active="true"]:text-orange-400 data-[active="true"]:dark:text-orange-800'
-     />
-    ))}
-    <span className='text-md text-neutral-500'>
-     ({hotelInfo.hotelGradeID}) {dic.hotelInfo.star}
-    </span>
+   <div className='mb-2'>
+    <HotelStars
+     grade={hotelInfo.hotelGradeID || 0}
+     label={dic.hotelInfo.star}
+    />
    </div>
    <div className='mb-2 flex gap-2 justify-between'>
     <h1 className='text-2xl lg:text-3xl font-medium grow'>

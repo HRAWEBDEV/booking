@@ -9,6 +9,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import useStickyScroll from '@/utils/useStickyScroll';
 import { RiInformationLine } from 'react-icons/ri';
 import CheckHotelTermsAndConditions from './CheckHotelTermsAndConditions';
+import { FaLocationDot } from 'react-icons/fa6';
+import HotelStars from '../../../components/HotelStars';
 
 export default function ReserveInfoSummary({
  dic,
@@ -38,22 +40,31 @@ export default function ReserveInfoSummary({
     ) : (
      <>
       <section className='p-4 rounded-md border border-input mb-2'>
-       <div className='mb-3 pb-3 border-b border-input flex gap-2'>
-        <div className='grow'>
-         <h1 className='text-lg font-medium'>{hotelInfo.data?.fName}</h1>
-         <p className='text-sm text-neutral-600 dark:text-neutral-400'>
-          {hotelInfo.data?.address}
-         </p>
+       <div className='mb-3 pb-3 border-b border-border'>
+        <div className='flex gap-2 mb-3 justify-between items-center'>
+         <HotelStars
+          grade={hotelInfo.data?.hotelGradeID || 0}
+          label={dic.reserveInfo.reserveSummary.star}
+         />
+         <Button
+          variant='outline'
+          disabled={!hotelInfo.data?.publicRules}
+          onClick={() => hotelInfo.onShowHotelRules(true)}
+          className='border-destructive text-destructive'
+         >
+          <RiInformationLine className='size-6' />
+          <span>{dic.reserveInfo.reserveSummary.hotelRules}</span>
+         </Button>
         </div>
-        <Button
-         variant='outline'
-         disabled={!hotelInfo.data?.publicRules}
-         onClick={() => hotelInfo.onShowHotelRules(true)}
-         className='border-destructive text-destructive'
-        >
-         <RiInformationLine className='size-6' />
-         <span>{dic.reserveInfo.reserveSummary.hotelRules}</span>
-        </Button>
+        <div className='grow'>
+         <h1 className='text-xl font-medium mb-1'>{hotelInfo.data?.fName}</h1>
+         <div>
+          <FaLocationDot className='inline me-2 size-4 text-rose-700 dark:text-rose-400 ' />
+          <p className='text-md text-neutral-600 dark:text-neutral-400 inline-block'>
+           {hotelInfo.data?.address}
+          </p>
+         </div>
+        </div>
        </div>
        <div className='grid grid-cols-[1fr_max-content_1fr] gap-2 justify-center items-center mb-3 pb-3'>
         <div className='flex flex-col justify-center text-center gap-1'>
