@@ -34,7 +34,7 @@ function getBookingInvoiceInfo({
   } as Omit<BookingInvoiceInfo, 'commitionPrice'>,
  );
  const commitionPrice = Math.round(
-  result.totalDiscountPrice * onlineReservationCommitionRate,
+  (result.totalDiscountPrice * onlineReservationCommitionRate) / 100,
  );
  result.totalDiscountPrice += commitionPrice;
  return { ...result, commitionPrice };

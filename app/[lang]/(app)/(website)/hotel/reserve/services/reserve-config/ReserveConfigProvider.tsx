@@ -304,7 +304,7 @@ export default function ReserveConfigProvider({
  });
 
  const bookingInvoiceInfo = getBookingInvoiceInfo({
-  onlineReservationCommitionRate: 0,
+  onlineReservationCommitionRate: hotelInfo?.onlineCommission || 0,
   rooms: lockInfo?.rooms
    ? lockInfo.rooms
    : storeRooms.filter((item) => !item.isDeleted),

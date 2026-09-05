@@ -21,6 +21,7 @@ interface HotelInfo {
  publicRules: string | null;
  checkin: string;
  checkout: string;
+ onlineCommission?: number;
 }
 
 interface HotelImage {
