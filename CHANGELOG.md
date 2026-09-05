@@ -1,3 +1,7 @@
+## v 2.0.5
+
+- add online commition rate (hra-done)
+
 ## v 2.0.4
 
 - update flat styles (hra-done)
