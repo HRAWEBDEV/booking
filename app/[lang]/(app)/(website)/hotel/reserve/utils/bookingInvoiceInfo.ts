@@ -4,14 +4,17 @@ interface BookingInvoiceInfo {
  totalDiscount: number;
  price: number;
  totalDiscountPrice: number;
+ commitionPrice: number;
 }
 
 function getBookingInvoiceInfo({
  rooms,
+ onlineReservationCommitionRate,
 }: {
  rooms: RoomInventory[];
+ onlineReservationCommitionRate: number;
 }): BookingInvoiceInfo {
- return rooms.reduce(
+ const result = rooms.reduce(
   (acc, cur) => {
    const newPrice = acc.price + cur.accommodationTypePrice.roomOnlineShowRate;
    const newTotalDiscountPrice =
@@ -28,8 +31,13 @@ function getBookingInvoiceInfo({
    totalDiscount: 0,
    price: 0,
    totalDiscountPrice: 0,
-  } as BookingInvoiceInfo,
+  } as Omit<BookingInvoiceInfo, 'commitionPrice'>,
  );
+ const commitionPrice = Math.round(
+  result.totalDiscountPrice * onlineReservationCommitionRate,
+ );
+ result.totalDiscountPrice += commitionPrice;
+ return { ...result, commitionPrice };
 }
 
 export type { BookingInvoiceInfo };

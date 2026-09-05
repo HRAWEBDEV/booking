@@ -116,6 +116,13 @@ export default function PaymentInfo({ dic }: { dic: ReserveHotelDictionary }) {
     </ul>
    </section>
    <section className='grid grid-cols-1 md:grid-cols-2 mb-4 gap-2'>
+    <div className='flex flex-wrap gap-2 text-sm text-neutral-600 dark:text-neutral-400 col-span-full'>
+     <span>{dic.reserveInfo.onlineReserveCommition}: </span>
+     <div>
+      <span>{numberFormatter.format(bookingInvoiceInfo.commitionPrice)}</span>
+      <span className='text-xs'> ریال</span>
+     </div>
+    </div>
     <div className='text-neutral-800 dark:text-neutral-400 font-medium'>
      <div>
       <span className='text-primary'>

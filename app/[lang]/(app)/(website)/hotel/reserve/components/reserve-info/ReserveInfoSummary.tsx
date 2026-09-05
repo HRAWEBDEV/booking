@@ -144,6 +144,15 @@ export default function ReserveInfoSummary({
           </div>
          </>
         )}
+        <div className='flex flex-wrap gap-2 text-sm text-neutral-600 dark:text-neutral-400'>
+         <span>{dic.reserveInfo.onlineReserveCommition}: </span>
+         <div>
+          <span>
+           {numberFormatter.format(bookingInvoiceInfo.commitionPrice)}
+          </span>
+          <span className='text-xs'> ریال</span>
+         </div>
+        </div>
         <div className='font-medium'>
          <span className='text-primary'>
           {dic.reserveInfo.reserveSummary.discountTotalPrice}:{' '}
