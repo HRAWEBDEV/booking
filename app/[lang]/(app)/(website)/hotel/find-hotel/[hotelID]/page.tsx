@@ -138,6 +138,7 @@ export default async function HotelPage(
  )
   .then(async (res) => {
    if (res.ok) {
+    console.log('update hotel info');
     return (await res.json()) as Promise<HotelInfo>;
    }
    console.log('hotel info err', res.status);
@@ -170,6 +171,7 @@ export default async function HotelPage(
   )
    .then(async (res) => {
     if (res.ok) {
+     console.log('update hotel images');
      return (await res.json()) as Promise<HotelImage[]>;
     }
     console.log('hotel image err', res.status);
@@ -191,6 +193,7 @@ export default async function HotelPage(
  )
   .then(async (res) => {
    if (res.ok) {
+    console.log('update hotel inventory');
     return (await res.json()) as Promise<RoomInventory[]>;
    }
    console.log('hotel inventory err', res.status);
@@ -212,6 +215,7 @@ export default async function HotelPage(
   },
  )
   .then((res) => {
+   console.log('update hotel facilities');
    return res.json() as Promise<HotelFacility[]>;
   })
   .catch((err) => {
@@ -230,6 +234,7 @@ export default async function HotelPage(
   },
  )
   .then((res) => {
+   console.log('update room facilities');
    return res.json() as Promise<HotelFacility[]>;
   })
   .catch((err) => {

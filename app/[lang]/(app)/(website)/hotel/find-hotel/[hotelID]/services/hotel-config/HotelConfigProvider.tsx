@@ -42,6 +42,9 @@ export default function HotelConfigProvider({
  toDate: string;
  hotelID: string;
 }) {
+ const [lastRoomInventoryUpdate, setLastRoomInventoryUpdate] = useState(
+  new Date().toISOString(),
+ );
  const [isPending, startTransition] = useTransition();
  const { channelID, providerID } = getSetupProviderCredentials();
  const dateFns = useDateFns();
@@ -124,6 +127,7 @@ export default function HotelConfigProvider({
    searchParams.set(fromDateQueryName, fromDate!.toISOString());
    searchParams.set(toDateQueryName, toDate!.toISOString());
    searchParams.set(ratePlanTypeQueryName, ratePlan === 'all' ? '' : ratePlan);
+   setLastRoomInventoryUpdate(new Date().toISOString());
    router.push(
     `/${locale}/hotel/find-hotel/${hotelID}?${searchParams.toString()}#rooms`,
    );
