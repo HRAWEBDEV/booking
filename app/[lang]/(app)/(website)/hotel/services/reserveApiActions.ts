@@ -84,6 +84,7 @@ type BookReserveInfo = {
 
 const getLockInfoApi = '/CRS/OnlineReservation/getLockInformation';
 const cancelReserveLockApi = '/CRS/OnlineReservation/CancelLock';
+const refreshReserveLockApi = '/CRS/OnlineReservation/ExpandLock';
 const getGatewaysApi = '/CRS/OnlineReservation/getGateways';
 const getPaymentLinkApi = '/CRS/OnlineReservation/getPaymentLink';
 const bookReserveApi = '/CRS/OnlineReservation/book';
@@ -114,6 +115,20 @@ function cancelReserveLock(
   }
  });
  return axios.get(`${cancelReserveLockApi}?${searchParams.toString()}`);
+}
+
+function refreshReserveLock(
+ props: Omit<ApiCredentialProps, 'arzID'> & {
+  lockBookID: number;
+ },
+) {
+ const searchParams = new URLSearchParams();
+ Object.entries(props).forEach(([key, val]) => {
+  if (val !== undefined) {
+   searchParams.set(key, String(val));
+  }
+ });
+ return axios.get(`${refreshReserveLockApi}?${searchParams.toString()}`);
 }
 
 function getLockInfo({
@@ -254,6 +269,7 @@ export {
  getLockInfoApi,
  getGatewaysApi,
  cancelReserveLockApi,
+ refreshReserveLockApi,
  bookReserveApi,
  getLockExpireTimeApi,
  lockReserve,
@@ -265,4 +281,5 @@ export {
  cancelReserveLock,
  downloadReserveVoucher,
  getLockExpireTime,
+ refreshReserveLock,
 };

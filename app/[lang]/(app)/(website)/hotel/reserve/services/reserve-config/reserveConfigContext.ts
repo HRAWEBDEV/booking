@@ -62,6 +62,8 @@ interface ReserveConfig {
  confirmPaymentIsPending: boolean;
  cancelReserveIsLoading: boolean;
  onCancelReserve: () => unknown;
+ refreshReserveLockIsPending: boolean;
+ onRefreshReserveLock: () => unknown;
  onSubmitBookingFormInfo: () => unknown;
  onConfirmPayment: () => unknown;
 }

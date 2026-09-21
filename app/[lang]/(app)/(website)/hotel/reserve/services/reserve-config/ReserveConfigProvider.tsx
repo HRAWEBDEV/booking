@@ -62,6 +62,7 @@ import {
  getGateways,
  getPaymentLink,
  cancelReserveLock,
+ refreshReserveLock,
  getLockExpireTimeApi,
  getLockExpireTime,
 } from '../../../services/reserveApiActions';
@@ -362,6 +363,7 @@ export default function ReserveConfigProvider({
      return;
     }
     unloadDocumentRefAbort.current.abort();
+    confirmRefreshReserveLock();
     if (gatewayType === ZARIN_PAL) {
      location.href = res.data.gatewayUrl;
      return;
@@ -531,6 +533,21 @@ export default function ReserveConfigProvider({
   },
  });
 
+ // refresh reserve lock
+ const {
+  mutate: confirmRefreshReserveLock,
+  isPending: confirmRefreshReserveLockIsPending,
+ } = useMutation({
+  mutationFn() {
+   return refreshReserveLock({
+    hotelID: hotelInfo!.hotelID.toString(),
+    lockBookID: lockInfo!.lockInfo.id,
+    channelID,
+    providerID,
+   });
+  },
+ });
+
  function confirmCancelReserve() {
   if (hotelInfo && lockInfo) {
    confirmCancelReserveLock();
@@ -617,6 +634,8 @@ export default function ReserveConfigProvider({
   confirmReserveError,
   confirmPaymentIsPending: getPaymentLinkIsPending,
   cancelReserveIsLoading: confirmCancelReserveLockIsPending,
+  refreshReserveLockIsPending: confirmRefreshReserveLockIsPending,
+  onRefreshReserveLock: confirmRefreshReserveLock,
   onCancelReserve: handleCancelReserve,
   onSubmitBookingFormInfo: handleSubmitBookingFormInfo,
   onConfirmPayment: handleConfirmPayment,
