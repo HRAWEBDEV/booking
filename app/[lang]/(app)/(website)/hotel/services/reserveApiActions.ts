@@ -81,6 +81,11 @@ type BookReserveInfo = {
   reserveNo: number;
  } & Pick<LockInfoResult, 'lockInfo'>;
 };
+type BookReserveError = {
+ errorInfo: {
+  code: number;
+ };
+};
 
 const getLockInfoApi = '/CRS/OnlineReservation/getLockInformation';
 const cancelReserveLockApi = '/CRS/OnlineReservation/CancelLock';
@@ -264,6 +269,7 @@ export {
  type GateWay,
  type PaymentLink,
  type BookReserveInfo,
+ type BookReserveError,
 };
 export {
  getLockInfoApi,

@@ -7,6 +7,10 @@ import { type BookReserveInfo } from '../../services/reserveApiActions';
 import { IoIosCopy } from 'react-icons/io';
 import { toast } from 'sonner';
 
+import { BsTelephoneFill } from 'react-icons/bs';
+import Link from 'next/link';
+import { contactUs } from '../../../utils/contractUs';
+
 export default function FailedReserve({
  dic,
  trackingCode,
@@ -48,7 +52,7 @@ export default function FailedReserve({
      <div className='grid grid-cols-2 gap-4 text-red-700 dark:text-red-300'>
       <Button
        size='lg'
-       className='w-36 font-medium text-base border border-red-700 dark:border-red-300 '
+       className='w-36 font-medium text-base border border-red-700 dark:border-red-300'
        variant='outline'
        onClick={goHome}
       >
@@ -58,8 +62,12 @@ export default function FailedReserve({
        variant='destructive'
        size='lg'
        className='w-36 font-medium text-base'
+       asChild
       >
-       {dic.voucherInfo.contactSupport}
+       <Link href={`tel:${contactUs}`}>
+        <span>{contactUs}</span>
+        <BsTelephoneFill />
+       </Link>
       </Button>
      </div>
     </div>

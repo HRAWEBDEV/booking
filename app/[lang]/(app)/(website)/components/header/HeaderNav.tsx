@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/popover';
 import { BsTelephoneFill } from 'react-icons/bs';
 import { Button } from '@/components/ui/button';
+import { contactUs } from '../../utils/contractUs';
 
 export default function HeaderNav() {
  const { localeInfo } = useBaseConfig();
@@ -30,7 +31,7 @@ export default function HeaderNav() {
   },
  } = useShareDictionary();
  const { setIsOpen } = useReserveHotel();
- const supportNo = process.env.NEXT_PUBLIC_HOTEL_SUPPORT || '02191780185';
+ const supportNo = contactUs;
  return (
   <div className='grow ms-10'>
    <div className='hidden lg:block'>

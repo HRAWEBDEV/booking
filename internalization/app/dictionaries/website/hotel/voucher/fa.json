@@ -8,7 +8,10 @@
   "downloadVoucher": "دانلود واچر رزرو",
   "returnBack": "بازگشت",
   "contactSupport": "تماس با پشتیبان",
-  "reserveCheckCodeCopied": "کد‌پیگیری رزرو کپی شد"
+  "reserveCheckCodeCopied": "کد‌پیگیری رزرو کپی شد",
+  "reserveIsProccessing": "پیگیری رزرو",
+  "stayOnPage": "لطفا از صفحه خارج نشوید",
+  "suportNo": "شماره پشتیبانی"
  },
  "metadata": {
   "title": "دریافت واچر",

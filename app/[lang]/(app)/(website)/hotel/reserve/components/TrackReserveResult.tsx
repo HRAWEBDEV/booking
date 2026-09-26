@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import { useBaseConfig } from '@/services/base-config/baseConfigContext';
 import { trackingCodeQueryName } from '../utils/reserveSteps';
 import Link from 'next/link';
+import { contactUs } from '../../../utils/contractUs';
 
 interface LockInfo {
  trackingCode: string | null;
@@ -122,7 +123,7 @@ export default function TrackReserveResult({
   },
  });
 
- const supportNo = process.env.NEXT_PUBLIC_HOTEL_SUPPORT || '02191780185';
+ const supportNo = contactUs;
 
  return (
   <div className='flex flex-col gap-4 h-full overflow-auto p-4'>
