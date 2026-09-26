@@ -188,7 +188,7 @@ export default function HotelRoom({
      {roomType.accommodationImages.length ? (
       roomType.accommodationImages.map(({ imageURL }, index) => (
        <div
-        className={`keen-slider__slide ${imageWrapperClass} cursor-pointer`}
+        className={`keen-slider__slide shrink-0 ${imageWrapperClass} cursor-pointer`}
         key={imageURL}
         onClick={() => handleOpenLightbox(index)}
        >

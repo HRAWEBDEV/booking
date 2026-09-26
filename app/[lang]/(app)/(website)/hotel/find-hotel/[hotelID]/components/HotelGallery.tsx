@@ -87,7 +87,7 @@ export default function HotelGallery({
 
      {hotelImages.map((image, i) => (
       <div
-       className='keen-slider__slide rounded-lg h-92 overflow-hidden cursor-pointer'
+       className='keen-slider__slide shrink-0 rounded-lg h-92 overflow-hidden cursor-pointer'
        key={i}
        onClick={() => handleOpenLightbox(i)}
       >

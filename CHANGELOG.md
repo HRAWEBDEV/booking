@@ -1,3 +1,7 @@
+## v 2.0.7
+
+- add voucher processing reserve loading (hra-done)
+
 ## v 2.0.6
 
 - add refresh reserve lock time functionality (hra-done)
