@@ -1,6 +1,7 @@
 import HeaderProfile from './HeaderProfile';
 import HeaderLogo from '../HeaderLogo';
 import HeaderNav from './HeaderNav';
+import HeaderSupport from './HeaderSupport';
 import { LocaleControllerButton } from '../LocaleController';
 
 export default function Header() {
@@ -9,7 +10,8 @@ export default function Header() {
    <div className='flex items-center p-4 py-2 w-[min(100%,var(--website-container-max-width))] mx-auto h-full'>
     <HeaderLogo />
     <HeaderNav />
-    <div className='flex gap-2 lg:gap-4 items-center'>
+    <div className='flex gap-2 lg:gap-2 items-center'>
+     <HeaderSupport />
      <LocaleControllerButton />
      <HeaderProfile />
     </div>
