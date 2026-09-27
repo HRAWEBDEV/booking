@@ -22,8 +22,6 @@ import {
 } from '../services/reserveApiActions';
 import { appendApiUri } from '../../utils/appendApiUri';
 import { GatewayTypes, SEP, ZARIN_PAL } from '../utils/gatewayTypes';
-import ProcessingVoucherAlert from './components/ProcessingVoucherAlert';
-import { VoucherErrorCodes } from './utils/voucherErrorCodes';
 
 export default async function Voucher(
  props: PageProps<'/[lang]/hotel/voucher'>,
@@ -92,35 +90,31 @@ export default async function Voucher(
  if (gatewayTypeName === ZARIN_PAL) {
   if (status === 'OK' && authority) {
    const res = await confirmBooking({ refNum: authority as string });
-   if (res && res.ok) {
-    bookReserveInfo = await res.json();
+   if (res) {
+    if (res.ok) {
+     bookReserveInfo = await res.json();
+    } else {
+     bookReserveError = (await res.json()) || null;
+    }
    }
-   bookReserveError = (await res?.json()) || null;
   }
  } else if (gatewayTypeName === SEP) {
   if (state === 'OK' && refNum) {
    const res = await confirmBooking({ refNum: refNum as string });
-   if (res && res.ok) {
-    bookReserveInfo = await res.json();
+   if (res) {
+    if (res.ok) {
+     bookReserveInfo = await res.json();
+    } else {
+     bookReserveError = (await res.json()) || null;
+    }
    }
-   bookReserveError = (await res?.json()) || null;
-  }
- }
- if (bookReserveError && 'errorInfo' in bookReserveError) {
-  if (bookReserveError.errorInfo.code === VoucherErrorCodes.processingReserve) {
-   return (
-    <ProcessingVoucherAlert
-     dic={dic}
-
-     trackingCode={(trackingCode as string) || ''}
-    />
-   );
   }
  }
 
  return (
   <VoucherWrapper
    dic={dic}
+   bookReserveError={bookReserveError}
    bookReserveInfo={bookReserveInfo}
    trackingCode={trackingCode as string}
   />
